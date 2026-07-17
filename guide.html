@@ -71,7 +71,7 @@
 <main>
   <div class="wrap">
     <p class="eyebrow">Guide</p>
-    <h1 class="page-title">How this system earns the trust to recommend anything</h1>
+    <h1 class="page-title">A personal recommendation engine, built and run by an AI agent</h1>
     <p class="lede">Six steps, in sequence. Each stands on its own — accountability doesn't depend on finishing the rest. Built to be read by anyone, technical or not: every box below is a real part of the system, not an illustration of an idealized one.</p>
 
     <nav class="pill-nav">
@@ -106,7 +106,7 @@
         <div class="mode-card tint-c">
           <div class="mode-name">Chrome extension</div>
           <div class="mode-role">read your data</div>
-          <ul><li>Netflix &amp; Prime history</li><li>never touches credentials</li><li>drives the Netlify upload</li></ul>
+          <ul><li>Netflix &amp; Prime history</li><li>never touches credentials</li><li>hands data to Cowork for the rebuild</li></ul>
         </div>
         <div class="mode-card tint-d">
           <div class="mode-name">Scheduled tasks</div>
@@ -142,7 +142,7 @@
             <text x="451" y="55" text-anchor="middle" font-size="10.5" font-style="italic" fill="#6b3a3a">read your data</text>
             <text x="451" y="78" text-anchor="middle" font-size="10.5" fill="#4e2c2c">Netflix &amp; Prime history</text>
             <text x="451" y="94" text-anchor="middle" font-size="10.5" fill="#4e2c2c">never touches credentials</text>
-            <text x="451" y="110" text-anchor="middle" font-size="10.5" fill="#4e2c2c">drives the Netlify upload</text>
+            <text x="451" y="110" text-anchor="middle" font-size="10.5" fill="#4e2c2c">hands off to Cowork</text>
 
             <rect x="554" y="14" width="158" height="118" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
             <text x="633" y="38" text-anchor="middle" font-size="13" font-weight="600" fill="#2a2620">Scheduled</text>
@@ -190,11 +190,11 @@
     </div>
 
     <div class="step" id="deploy">
-      <div><span class="step-num">05</span><span class="step-title">Deploy through Netlify's upload page — no Functions yet</span></div>
-      <p class="step-body">This environment blocks direct calls to Netlify's API and CLI — confirmed empirically by a 403 on every Netlify domain attempted, not assumed. The functioning workaround is Netlify's own upload interface, driven through the Chrome extension in place of a terminal; the Monday scheduled run uses the identical path. That path is limited to static files: Netlify Functions, which power the backend of the other two systems, require continuous deployment from a connected Git repository — verified both by a direct functional test and by Netlify's own documentation. Closing that gap means linking this project to GitHub, the same governance model the other two already operate under.</p>
+      <div><span class="step-num">05</span><span class="step-title">Git-connected deploy, and the first real Function</span></div>
+      <p class="step-body">This project is connected to GitHub for continuous deployment — pushes to <code>main</code> auto-deploy, the same governance model as thefitnesslog.org and vinylscout.org, confirmed directly by this page's own rebuild. That connection is what unblocks Netlify Functions, and the first one is now live: a dismiss endpoint backed by Netlify Blobs, so removing a title syncs across every device immediately rather than staying local to the one you dismissed it on.</p>
 
       <figure class="diagram">
-        <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, then drives Netlify's manual upload page to publish streamingscout.org; a Netlify Functions backend is blocked in this environment, unlike the sibling sites">
+        <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and pushes to GitHub, Netlify auto-deploys to streamingscout.org, and a Netlify Function backed by Blobs now runs alongside it">
           <defs>
             <marker id="ssArr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M0,0 L10,5 L0,10 z" fill="#a89f8f"/>
@@ -206,34 +206,34 @@
             <text x="83" y="62" text-anchor="middle" font-size="10" fill="#4e2c2c">read-only, your session</text>
 
             <rect x="196" y="20" width="150" height="62" rx="8" fill="#ece2d0" stroke="#9c7a35"/>
-            <text x="271" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Chrome extension</text>
-            <text x="271" y="62" text-anchor="middle" font-size="10" fill="#5c4c22">no credentials touched</text>
+            <text x="271" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Claude / Cowork</text>
+            <text x="271" y="62" text-anchor="middle" font-size="10" fill="#5c4c22">builds &amp; pushes to GitHub</text>
 
             <rect x="384" y="20" width="150" height="62" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
             <text x="459" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Netlify</text>
-            <text x="459" y="62" text-anchor="middle" font-size="10" fill="#3d4238">manual upload page</text>
+            <text x="459" y="62" text-anchor="middle" font-size="10" fill="#3d4238">git-connected, auto-deploy</text>
 
             <rect x="572" y="20" width="140" height="62" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
             <text x="642" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">streamingscout.org</text>
-            <text x="642" y="62" text-anchor="middle" font-size="10" fill="#3d4a58">static files only</text>
+            <text x="642" y="62" text-anchor="middle" font-size="10" fill="#3d4a58">static pages + one Function</text>
 
             <line x1="158" y1="51" x2="194" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
             <line x1="346" y1="51" x2="382" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
             <line x1="534" y1="51" x2="570" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
 
-            <rect x="196" y="122" width="326" height="52" rx="8" fill="none" stroke="#a24a3f" stroke-width="1.3" stroke-dasharray="5 4"/>
-            <text x="359" y="143" text-anchor="middle" font-size="11.5" font-weight="600" fill="#a24a3f">Netlify Functions — blocked here</text>
-            <text x="359" y="160" text-anchor="middle" font-size="9.5" fill="#7a3a32">requires Git-connected deploy; this project deploys by upload (403 on API/CLI)</text>
-            <line x1="459" y1="82" x2="384" y2="120" stroke="#cf9a85" stroke-width="1.3" stroke-dasharray="4 3"/>
+            <rect x="196" y="122" width="326" height="52" rx="8" fill="#e7e9df" stroke="#4c6b4f" stroke-width="1.3"/>
+            <text x="359" y="143" text-anchor="middle" font-size="11.5" font-weight="600" fill="#3d5240">dismiss.mjs — live, Blobs-backed</text>
+            <text x="359" y="160" text-anchor="middle" font-size="9.5" fill="#3d5240">first Function shipped 2026-07-17; syncs dismissals across devices</text>
+            <line x1="459" y1="82" x2="384" y2="120" stroke="#8fae93" stroke-width="1.3" stroke-dasharray="4 3"/>
           </g>
         </svg>
-        <figcaption>The real path today, and the one gap that isn't closed yet.</figcaption>
+        <figcaption>The real path today — the gap from the earlier version of this page is closed.</figcaption>
       </figure>
     </div>
 
     <div class="step" id="manual">
       <div><span class="step-num">06</span><span class="step-title">What's still manual</span></div>
-      <p class="step-body">Dismissing a title updates your device immediately, but making that exclusion permanent still requires your confirmation in chat — there is no backend authority yet to write <code>EXCLUDED_TITLES.md</code> independently. Equally absent: a health check verifying that the Monday run actually published cleanly. Until both exist, a glance at the live site after each scheduled run remains the control of record.</p>
+      <p class="step-body">Dismissing a title now syncs everywhere immediately, via the Function above. What's still manual: making that exclusion permanent across the <em>next</em> weekly rebuild — Top Picks and Coming Soon are static HTML baked in at publish time from <code>EXCLUDED_TITLES.md</code>, not read live from the Blobs store, so keeping a title out of next week's freshly-rebuilt list still means pasting the copied message to Claude. Equally absent: a health check verifying that the Monday run actually published cleanly. Until both exist, a glance at the live site after each scheduled run remains the control of record.</p>
     </div>
 
     <div class="step-divider"></div>
