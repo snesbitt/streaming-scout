@@ -266,6 +266,31 @@
   var KEY = 'ssDismissedTitles';
   function getDismissed() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
   function setDismissed(list) { localStorage.setItem(KEY, JSON.stringify(list)); }
+  function mergeDismissed(list) {
+    var current = getDismissed();
+    var changed = false;
+    list.forEach(function (t) {
+      if (current.indexOf(t) === -1) { current.push(t); changed = true; }
+    });
+    if (changed) { setDismissed(current); }
+    return changed;
+  }
+  function syncFromServer() {
+    if (!window.fetch) return;
+    fetch('/api/dismiss').then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+      if (!data || !data.dismissed) return;
+      var titles = data.dismissed.map(function (e) { return e.title; });
+      if (mergeDismissed(titles)) { applyDismissed(); }
+    }).catch(function () { /* offline or Function unavailable — local list still applies */ });
+  }
+  function postDismiss(title, section) {
+    if (!window.fetch) return;
+    fetch('/api/dismiss', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: title, section: section })
+    }).catch(function () { /* best-effort cross-device sync; local dismiss already applied */ });
+  }
   function applyDismissed() {
     var dismissed = getDismissed();
     var pickRows = document.querySelectorAll('.pick-row');
@@ -297,6 +322,7 @@
     if (dismissed.indexOf(title) === -1) { dismissed.push(title); setDismissed(dismissed); }
     row.style.display = 'none';
     applyDismissed();
+    postDismiss(title, section);
     var msg = 'Streaming Scout: exclude "' + title + '" from ' + section + ' — don\'t re-add it.';
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(msg).then(function () {
@@ -309,6 +335,7 @@
     }
   };
   applyDismissed();
+  syncFromServer();
 })();
 </script>
 
