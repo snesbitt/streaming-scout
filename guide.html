@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide · Streaming Scout</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<meta name="theme-color" content="#efe9dc">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Streaming Scout">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head><body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="/"><span class="dot">•</span><span class="word">The Streaming Scout</span></a>
+    <nav class="links">
+      <a href="/#top-picks">Top Picks</a>
+      <a href="/#coming-soon">Coming Soon</a>
+      <a href="/#taste">Taste Profile</a>
+      <a href="/roadmap">Roadmap</a>
+      <a class="active" href="/guide">Guide</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Guide</p>
+    <h1 class="page-title">How this system earns the trust to recommend anything</h1>
+    <p class="lede">Six steps, in sequence. Each stands on its own — accountability doesn't depend on finishing the rest.</p>
+
+    <nav class="pill-nav">
+      <a href="#tools"><b>01</b>Tools</a>
+      <a href="#data"><b>02</b>Data</a>
+      <a href="#scoring"><b>03</b>Scoring</a>
+      <a href="#snapshot"><b>04</b>Snapshot</a>
+      <a href="#deploy"><b>05</b>Deploy</a>
+      <a href="#manual"><b>06</b>Manual</a>
+    </nav>
+
+    <div class="field-note">
+      <p class="eyebrow">Field note</p>
+      <p>The first deploy ranked a generic trending chart above your actual taste — a slapstick comedy nearly outscored a spy thriller with Rami Malek, because every genre carried equal weight and every candidate came from the same undifferentiated “trending now” list. Step 03 exists because a recommendation is only as trustworthy as the evidence behind it.</p>
+    </div>
+
+    <div class="step" id="tools">
+      <div><span class="step-num">01</span><span class="step-title">Tools &amp; mode</span></div>
+      <p class="step-body">Built entirely in Cowork — no terminal, by design. The Chrome extension reads your already-authenticated Netflix and Prime sessions directly; no credential is ever requested, stored, or transmitted. Trust in a system starts with what it refuses to collect.</p>
+
+      <div class="mode-grid">
+        <div class="mode-card tint-a">
+          <div class="mode-name">Chat</div>
+          <div class="mode-role">decide</div>
+          <ul><li>signature genre calls</li><li>actor-match weight</li><li>what to permanently exclude</li></ul>
+        </div>
+        <div class="mode-card tint-b">
+          <div class="mode-name">Cowork</div>
+          <div class="mode-role">build &amp; maintain</div>
+          <ul><li>skill &amp; data files</li><li>the scoring script</li><li>this dashboard, end to end</li></ul>
+        </div>
+        <div class="mode-card tint-c">
+          <div class="mode-name">Chrome extension</div>
+          <div class="mode-role">read your data</div>
+          <ul><li>Netflix &amp; Prime history</li><li>never touches credentials</li><li>drives the Netlify upload</li></ul>
+        </div>
+        <div class="mode-card tint-d">
+          <div class="mode-name">Scheduled tasks</div>
+          <div class="mode-role">weekly resync</div>
+          <ul><li>Mondays, automatic</li><li>see Roadmap, phase 04</li><li>stops rather than publishing a partial state</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="data">
+      <div><span class="step-num">02</span><span class="step-title">No metadata — so it gets researched</span></div>
+      <p class="step-body">Netflix and Prime's own history pages disclose a title and a date — nothing else. Every genre tag and cast credit across the full 190-title record was independently sourced through per-title research, not inferred from platform metadata. Watch status is likewise inferred from episode counts and gaps, never presented as scraped fact. Coming Soon draws only from named, verifiable sources — BritBox, PBS Masterpiece, Netflix Tudum, Den of Geek, What's on Netflix, JustWatch — cited so each claim's reliability can be judged independently rather than simply trusted. Where verified art doesn't exist, the record says so plainly with an initials mark, rather than substituting a guess.</p>
+    </div>
+
+    <div class="step" id="scoring">
+      <div><span class="step-num">03</span><span class="step-title">Signature genres in full, generic at a third</span></div>
+      <p class="step-body">Broad categories — Comedy, Drama — are shared across too many unrelated titles to constitute meaningful evidence on their own. Genres with real recurrence in your own history (British Procedural, Spy Thriller, Mystery, Action Thriller) are weighted in full, with an added signal for cast overlap against titles you've already valued. A genre you've explicitly rejected is capped regardless of any other data pointing the other way — expressed preference overrides inferred pattern.</p>
+    </div>
+
+    <div class="step" id="snapshot">
+      <div><span class="step-num">04</span><span class="step-title">A snapshot, not a live connection</span></div>
+      <p class="step-body">As with the other two systems in this portfolio, this one reads from a single published snapshot rather than a live session — nothing touches your Netflix or Prime account while you're using it. Synchronization happens deliberately, in a Cowork session, either at your request or on a fixed Monday schedule, and only then is the static record rebuilt.</p>
+    </div>
+
+    <div class="step" id="deploy">
+      <div><span class="step-num">05</span><span class="step-title">Deploy through Netlify's upload page — no Functions yet</span></div>
+      <p class="step-body">This environment blocks direct calls to Netlify's API and CLI — confirmed empirically by a 403 on every Netlify domain attempted, not assumed. The functioning workaround is Netlify's own upload interface, driven through the Chrome extension in place of a terminal; the Monday scheduled run uses the identical path. That path is limited to static files: Netlify Functions, which power the backend of the other two systems, require continuous deployment from a connected Git repository — verified both by a direct functional test and by Netlify's own documentation. Closing that gap means linking this project to GitHub, the same governance model the other two already operate under.</p>
+    </div>
+
+    <div class="step" id="manual">
+      <div><span class="step-num">06</span><span class="step-title">What's still manual</span></div>
+      <p class="step-body">Dismissing a title updates your device immediately, but making that exclusion permanent still requires your confirmation in chat — there is no backend authority yet to write <code>EXCLUDED_TITLES.md</code> independently. Equally absent: a health check verifying that the Monday run actually published cleanly. Until both exist, a glance at the live site after each scheduled run remains the control of record.</p>
+    </div>
+
+    <div class="field-note" style="margin-top: 2.25rem;">
+      <p class="eyebrow">What this took to learn</p>
+      <p style="margin-bottom:10px;">A recommendation is only as honest as its candidate pool — sourcing from a generic “trending now” list regresses to generic results no matter how the scoring is built.</p>
+      <p>Authorization precedes any expenditure. Even a domain name required its exact identity and cost confirmed before purchase, and entering payment remained a decision left to you, not delegated.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">© 2026</div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap · Streaming Scout</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<meta name="theme-color" content="#efe9dc">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Streaming Scout">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head><body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="/"><span class="dot">•</span><span class="word">The Streaming Scout</span></a>
+    <nav class="links">
+      <a href="/#top-picks">Top Picks</a>
+      <a href="/#coming-soon">Coming Soon</a>
+      <a href="/#taste">Taste Profile</a>
+      <a class="active" href="/roadmap">Roadmap</a>
+      <a href="/guide">Guide</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Roadmap · built in deliberate phases</p>
+    <h1 class="page-title">Streaming Scout is one week old.</h1>
+    <p class="lede">Phase 1 is live: a Cowork plugin, a hosted snapshot dashboard, and now its own domain. What's next is listed honestly below.</p>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-num">01</span>
+        <span class="phase-title">the plugin</span>
+        <span class="phase-status live">Live</span>
+      </div>
+      <p class="phase-body">Five Cowork skills — streaming-setup, sync-watch-history, log-watched, top-picks, coming-soon — read Netflix and Prime Video history directly from your logged-in browser tabs via the Claude in Chrome extension, tag genre and cast through web research (neither platform exposes that metadata itself), and score candidates against a taste profile built from real, multi-year watch history.</p>
+      <p class="phase-value">Recommendations built from what you actually watched, not a generic trending chart.</p>
+      <ul class="phase-log">
+        <li><span class="lg-date">JUL 2026</span>Actor-affinity + signature-genre scoring. Generic buckets (Comedy, Drama, Documentary) count for roughly a third; genres you've shown you love (British Procedural, Spy Thriller, Mystery) count in full, plus a bonus for cast overlap with titles you finished and loved. Added after an early version surfaced generic trending titles — including a slapstick comedy — that didn't match your stated taste.</li>
+        <li><span class="lg-date">JUL 2026</span>190-title watch log. Multi-year Netflix and Prime history, pulled directly from your account pages, deduped and genre/cast-tagged.</li>
+        <li><span class="lg-date">JUL 2026</span>Coming Soon feed. Sourced from BritBox's official schedule, PBS Masterpiece, Den of Geek, and Netflix Tudum — cross-referenced against your log so continuations of shows you're already watching are prioritized.</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-num">02</span>
+        <span class="phase-title">the snapshot dashboard</span>
+        <span class="phase-status live">Live</span>
+      </div>
+      <p class="phase-body">A static, no-build site presenting the latest Top Picks, Taste Profile, and Coming Soon feed. No backend — Claude regenerates it from the plugin's data files and redeploys by hand.</p>
+      <p class="phase-value">Something to open on a phone, without opening a Cowork session first.</p>
+      <ul class="phase-log">
+        <li><span class="lg-date">JUL 2026</span>Visual alignment pass against the other two sites: switched to Fraunces (the same serif Vinyl Scout uses) instead of a Georgia stack, proper-case "The Streaming Scout" wordmark with a bullet-ring mark matching Vinyl Scout's, gold field-note borders instead of a one-off accent color, and a plain-numeral style on About matching this page instead of its own circular badge. Added a last-synced status banner like The Fitness Log's.</li>
+        <li><span class="lg-date">JUL 2026</span>Dismiss control extended to Coming Soon, and checked IMDb as a second art source alongside Wikipedia — real posters now on 7 of 9 upcoming titles, up from 3. The 2 still missing (Marble Hall Murders, Kill Jackie) genuinely have no published art yet on either source, so they keep an honest initials monogram rather than a fabricated image.</li>
+        <li><span class="lg-date">JUL 2026</span>Dismiss control on Top Picks — an × on each row hides it (saved per-device) and copies a message to paste to Claude, which adds it to EXCLUDED_TITLES.md so it's permanently filtered out of future rebuilds. Coming Soon rows now show a poster thumbnail where real art exists, and an honest initials monogram where it doesn't.</li>
+        <li><span class="lg-date">JUL 2026</span>iOS home screen icon and manifest — installs with its own icon and no browser chrome, matching the other two sites. Added a Right Now section for in-theaters and live viewing, and trimmed/visualized the Guide and About pages to match The Vinyl Scout's style.</li>
+        <li><span class="lg-date">JUL 2026</span>Reverted a rust/dark-card redesign that missed the mark, and rebuilt Top Picks as compact rows with real poster art (sourced from Wikipedia), cast, and streaming service all visible without a click — and rewrote the CSS mobile-first.</li>
+        <li><span class="lg-date">JUL 2026</span>Rebuilt to match the shared house style used by the other two sites — persistent nav, cream/serif shell, and this Roadmap/Guide/About set — instead of its original one-off dark theme.</li>
+        <li><span class="lg-date">JUL 2026</span>Deployed to Netlify through the dashboard's own upload page, after this project's sandbox was found to block direct calls to Netlify's API and CLI.</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-num">03</span>
+        <span class="phase-title">a real domain</span>
+        <span class="phase-status live">Live</span>
+      </div>
+      <p class="phase-body">streamingscout.org, matching vinylscout.org and thefitnesslog.org. Registered at $10.49 for the first year through Netlify's own domain search and connected as the project's primary domain, with DNS and an HTTPS certificate provisioning automatically.</p>
+      <p class="phase-value">One address to remember, not a netlify.app subdomain.</p>
+      <ul class="phase-log">
+        <li><span class="lg-date">JUL 2026</span>Registered and connected. An initial attempt was blocked by a declined debit card — entering payment details isn't something Claude does on your behalf, so that step waited on you and went through the next morning.</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-num">04</span>
+        <span class="phase-title">scheduled resync</span>
+        <span class="phase-status live">Live</span>
+      </div>
+      <p class="phase-body">A recurring task that reruns sync-watch-history, top-picks, and coming-soon on its own and republishes the dashboard, instead of only refreshing when you ask.</p>
+      <p class="phase-value">The dashboard stays current between visits, the way the other two already do.</p>
+      <ul class="phase-log">
+        <li><span class="lg-date">JUL 2026</span>Scheduled task set up, runs Monday mornings. Each run resyncs watch history, rebuilds Top Picks and Coming Soon (honoring EXCLUDED_TITLES.md), sources real poster art where it exists, and redeploys to streamingscout.org. If any step fails — login expired, a source unreachable — it stops rather than publishing a partial or guessed state.</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-num">05</span>
+        <span class="phase-title">browse the full watch log</span>
+        <span class="phase-status planned">Planned</span>
+      </div>
+      <p class="phase-body">A searchable view of all 190 logged titles — filter by service, genre, or actor — mirroring The Vinyl Scout's Add/Audit pattern for browsing a full collection instead of just a ranked shortlist.</p>
+      <p class="phase-value">See the evidence behind a recommendation, not just the recommendation.</p>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-num">06</span>
+        <span class="phase-title">a real backend</span>
+        <span class="phase-status planned">Planned</span>
+      </div>
+      <p class="phase-body">Vinyl Scout and The Fitness Log both run Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys on push. This site's dismiss feature would be the first beneficiary — a function backed by Netlify Blobs so a dismissal syncs across devices instantly, no chat round-trip needed.</p>
+      <p class="phase-value">Parity with the other two sites' infrastructure, not just their look.</p>
+      <ul class="phase-log">
+        <li><span class="lg-date">JUL 2026</span>Attempted and blocked. Built and bundled a working Netlify Function (dismiss endpoint backed by Netlify Blobs) and deployed it through the usual upload page — it didn't go live. Confirmed against Netlify's own docs: manual zip/drag-and-drop deploys skip the build pipeline entirely, and Functions only work through Git-connected continuous deployment. No GitHub connector is available in this environment, so this phase is blocked on connecting a GitHub repo to the Netlify project — a real setup step, not something to route around.</li>
+      </ul>
+    </div>
+
+    <p class="phase-value" style="margin-top:1.5rem;">Phases are sequential. A later phase isn't started early, and nothing gets added to an earlier phase just because it would be easy to slot in.</p>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">© 2026</div>
+</footer>
+
+
+
+</body></html>

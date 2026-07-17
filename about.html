@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About · Streaming Scout</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<meta name="theme-color" content="#efe9dc">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Streaming Scout">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head><body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="/"><span class="dot">•</span><span class="word">The Streaming Scout</span></a>
+    <nav class="links">
+      <a href="/#top-picks">Top Picks</a>
+      <a href="/#coming-soon">Coming Soon</a>
+      <a href="/#taste">Taste Profile</a>
+      <a href="/roadmap">Roadmap</a>
+      <a href="/guide">Guide</a>
+      <a class="active" href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">About · how to read this dashboard</p>
+    <h1 class="page-title">What to watch next, matched to what you actually watch.</h1>
+    <p class="lede">Ranked from Susan's real Netflix, Prime Video, BritBox, and PBS Masterpiece history — not a generic trending chart. Anyone with the link can read it; only Susan's Cowork sessions update it.</p>
+
+    <nav class="pill-nav">
+      <a href="#what-it-is"><b>01</b>What it is</a>
+      <a href="#the-stack"><b>02</b>The stack</a>
+      <a href="#on-the-page"><b>03</b>On the page</a>
+      <a href="#roadmap-link"><b>04</b>Roadmap</a>
+      <a href="#wont-do"><b>05</b>Won't do</a>
+    </nav>
+
+    <div class="about-section" id="what-it-is">
+      <div class="about-section-head"><span class="about-num-badge">01</span><h3>what it is</h3></div>
+      <p>Ranks what to watch next from Susan's real, multi-year Netflix and Prime Video history — 190 titles since 2023, including BritBox and PBS Masterpiece — matched against her stated taste (spy, action, British procedurals; no sci-fi, fantasy, rom-coms). Also tracks premieres months ahead, and what she's watching or seeing right now.</p>
+      <p>Refreshes itself Monday mornings via a scheduled task, or sooner if Susan asks Claude to resync directly.</p>
+    </div>
+
+    <div class="about-section" id="the-stack">
+      <div class="about-section-head"><span class="about-num-badge">02</span><h3>the stack</h3></div>
+      <p>Static HTML, no backend, no build step — simpler infrastructure than the other two sites, not the same. Vinyl Scout and The Fitness Log both run real Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys. This one deploys by hand (or by the Monday scheduled task) through Netlify's upload page instead, since that's the one deploy path this sandbox can actually reach.</p>
+      <p>A serverless backend was attempted — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly but Netlify confirmed, and its own docs confirm, that functions only deploy through Git-connected continuous deployment, not a manual zip upload. Closing that gap for real means connecting a GitHub repo to this Netlify project — a real infrastructure change, not something to fake with a documentation edit.</p>
+    </div>
+
+    <div class="about-section" id="on-the-page">
+      <div class="about-section-head"><span class="about-num-badge">03</span><h3>what's on the page</h3></div>
+      <p><strong>Right Now</strong> — what Susan's seeing in theaters and watching live this week.</p>
+      <p><strong>Top Picks</strong> — ranked candidates with matched genre and shared cast as the rationale, dismissible with ×.</p>
+      <p><strong>Taste Profile</strong> — signature vs. generic genres, actor affinity, and explicitly capped genres.</p>
+      <p><strong>Coming Soon</strong> — premieres and next seasons, grouped by how confirmed the date is, also dismissible.</p>
+    </div>
+
+    <div class="about-section" id="roadmap-link">
+      <div class="about-section-head"><span class="about-num-badge">04</span><h3>roadmap</h3></div>
+      <p>Built in phases, like the other two sites. Plugin, dashboard, and domain are live; scheduled resync is next. See the full <a href="/roadmap" style="text-decoration:underline;">roadmap</a> and the <a href="/guide" style="text-decoration:underline;">guide</a> for how it's built.</p>
+    </div>
+
+    <div class="about-section" id="wont-do">
+      <div class="about-section-head"><span class="about-num-badge">05</span><h3>what it won't do</h3></div>
+      <ul class="wont-list">
+        <li>No accounts, no passwords — reading it requires nothing.</li>
+        <li>No analytics, advertising, or third-party tracking.</li>
+        <li>No live connection to Susan's accounts — one published snapshot, refreshed by hand.</li>
+        <li>No selling or sharing the data.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">© 2026</div>
+</footer>
+
+
+
+</body></html>
