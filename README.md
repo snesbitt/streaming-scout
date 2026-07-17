@@ -28,22 +28,26 @@ and reading back their markup/CSS/JS.
   character-by-character for every paragraph the way `about.html` was.
 - `manifest.json` — recovered byte-for-byte (fetched directly).
 - Binary assets referenced in the markup (`apple-touch-icon.png`,
-  `favicon-32.png`, `icon-192.png`, `icon-512.png`) were **not** recovered —
-  only their filenames/paths are known. They'll need to be re-exported or
-  re-created.
+  `favicon-32.png`, `icon-192.png`, `icon-512.png`) have since been
+  recovered from the live site and are present in this repo, verified
+  live (distinct byte sizes, all loading correctly).
 
-## Important architecture note (learned from the live site's own About/Roadmap pages)
+## Important architecture note (updated 2026-07-16)
 
-Unlike its sibling projects (thefitnesslog.org, vinylscout.org), this site
-currently has **no backend, no Netlify Functions, and no build step**. Its
-own About and Roadmap pages explain why: a Netlify Function was built and
-bundled but never went live, because this project deploys via Netlify's
-manual upload page rather than Git-connected continuous deployment (Netlify
-only runs Functions for the latter). So, deliberately, this repo does
-**not** include a `netlify/functions/` directory or a `netlify.toml` —
-adding either would misrepresent the live site's real architecture.
-`app.js` also doesn't exist as a separate file; all client-side JS is a
-single small inline `<script>` at the bottom of `index.html`.
+As of 2026-07-16 this repo is connected to GitHub, and Netlify is
+configured for Git-connected continuous deployment — pushes to `main`
+auto-deploy, the same governance model as thefitnesslog.org and
+vinylscout.org. What's still **not** built is the actual backend: a
+Netlify Function (dismiss endpoint backed by Netlify Blobs) was built and
+bundled once but never shipped, because at the time this project only
+deployed via Netlify's manual upload page, and Functions require
+continuous deployment to run at all. Now that continuous deployment is
+wired up, building and shipping that Function is unblocked but not yet
+done — this repo still does not include a `netlify/functions/` directory
+or a `netlify.toml`, since adding one without the actual Function behind
+it would misrepresent the live site. `app.js` also doesn't exist as a
+separate file; all client-side JS is a single small inline `<script>` at
+the bottom of `index.html`.
 
 ## Is Top Picks / Coming Soon data static or dynamic?
 

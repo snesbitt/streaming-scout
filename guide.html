@@ -93,8 +93,8 @@
     </div>
 
     <div class="step" id="deploy">
-      <div><span class="step-num">05</span><span class="step-title">Deploy through Netlify's upload page — no Functions yet</span></div>
-      <p class="step-body">This environment blocks direct calls to Netlify's API and CLI — confirmed empirically by a 403 on every Netlify domain attempted, not assumed. The functioning workaround is Netlify's own upload interface, driven through the Chrome extension in place of a terminal; the Monday scheduled run uses the identical path. That path is limited to static files: Netlify Functions, which power the backend of the other two systems, require continuous deployment from a connected Git repository — verified both by a direct functional test and by Netlify's own documentation. Closing that gap means linking this project to GitHub, the same governance model the other two already operate under.</p>
+      <div><span class="step-num">05</span><span class="step-title">Deploy via GitHub — Functions still to come</span></div>
+      <p class="step-body">This project's GitHub repo is now connected to Netlify for continuous deployment: a push to <code>main</code> triggers an automatic production deploy, the same governance model Vinyl Scout and The Fitness Log already operate under. Earlier, this environment blocked direct calls to Netlify's API and CLI, so deploys went through Netlify's manual upload interface instead — that path worked for static files, but Netlify Functions require a connected Git repository to run at all, which is why the backend below is still unbuilt. With GitHub now connected, that limitation is gone; building and shipping the actual dismiss Function is the remaining step, tracked on the Roadmap.</p>
     </div>
 
     <div class="step" id="manual">

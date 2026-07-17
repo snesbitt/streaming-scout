@@ -51,15 +51,15 @@
 
     <div class="about-section" id="the-stack">
       <div class="about-section-head"><span class="about-num-badge">02</span><h3>the stack</h3></div>
-      <p>Static HTML, no backend, no build step — simpler infrastructure than the other two sites, not the same. Vinyl Scout and The Fitness Log both run real Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys. This one deploys by hand (or by the Monday scheduled task) through Netlify's upload page instead, since that's the one deploy path this sandbox can actually reach.</p>
-      <p>A serverless backend was attempted — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly but Netlify confirmed, and its own docs confirm, that functions only deploy through Git-connected continuous deployment, not a manual zip upload. Closing that gap for real means connecting a GitHub repo to this Netlify project — a real infrastructure change, not something to fake with a documentation edit.</p>
+      <p>Static HTML, no backend yet — simpler infrastructure than the other two sites, not the same. Vinyl Scout and The Fitness Log both run real Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys. This site now deploys the same way — a GitHub repo connected to Netlify's continuous deployment, pushing to <code>main</code> triggers an automatic production deploy — it just doesn't have a Function running behind it yet.</p>
+      <p>A serverless backend was attempted — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly, but at the time Netlify confirmed, and its own docs confirm, that Functions only deploy through Git-connected continuous deployment, not a manual zip upload — which is what this site used then. That gap is now closed on the infrastructure side; building and shipping the actual dismiss Function against the new setup is the remaining work, tracked on the <a href="/roadmap" style="text-decoration:underline;">roadmap</a>.</p>
     </div>
 
     <div class="about-section" id="on-the-page">
       <div class="about-section-head"><span class="about-num-badge">03</span><h3>what's on the page</h3></div>
       <p><strong>Right Now</strong> — what Susan's seeing in theaters and watching live this week.</p>
       <p><strong>Top Picks</strong> — ranked candidates with matched genre and shared cast as the rationale, dismissible with ×.</p>
-      <p><strong>Taste Profile</strong> — signature vs. generic genres, actor affinity, and explicitly capped genres.</p>
+      <p><strong>Taste Profile</strong> — signature vs. generic genres and actor affinity.</p>
       <p><strong>Coming Soon</strong> — premieres and next seasons, grouped by how confirmed the date is, also dismissible.</p>
     </div>
 
