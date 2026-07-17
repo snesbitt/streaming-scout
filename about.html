@@ -13,11 +13,48 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+  /* About-page-only visual upgrade: stat strip, page cards, stack comparison.
+     Scoped to this page only — nothing here touches style.css. */
+  .stat-strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 1.1rem 0 1.7rem; }
+  @media (min-width: 640px) { .stat-strip { grid-template-columns: repeat(4, 1fr); } }
+  .stat-tile {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 0.75rem 0.85rem; text-align: center;
+  }
+  .stat-tile .stat-num { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 22px; color: var(--accent); }
+  .stat-tile .stat-label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); margin-top: 2px; }
+
+  .page-card-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0.9rem 0 0.4rem; }
+  @media (min-width: 640px) { .page-card-grid { grid-template-columns: 1fr 1fr; } }
+  .page-card {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: 0.8rem 0.95rem;
+  }
+  .page-card h4 { margin: 0 0 4px; font-size: 13px; }
+  .page-card p { margin: 0; font-size: 12px; color: var(--ink-dim); }
+
+  .stack-compare { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 1rem 0 0.4rem; }
+  @media (min-width: 640px) { .stack-compare { grid-template-columns: 1fr 1fr; } }
+  .stack-col { border-radius: 8px; padding: 0.9rem 1rem; }
+  .stack-col.this-site { background: #e2e6ec; border: 1px solid #6d7e93; }
+  .stack-col.siblings { background: var(--card); border: 1px solid var(--border); }
+  .stack-col h4 { margin: 0 0 6px; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stack-col.this-site h4 { color: #3d4a58; }
+  .stack-col.siblings h4 { color: var(--ink-dim); }
+  .stack-col ul { margin: 0; padding-left: 16px; font-size: 12px; color: var(--ink); }
+  .stack-col li { margin-bottom: 3px; }
+
+  .wont-list { list-style: none; padding: 0; margin: 0; }
+  .wont-list li { display: flex; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .wont-list li:last-child { border-bottom: none; }
+  .wont-list li::before { content: "—"; color: var(--bad); flex-shrink: 0; }
+</style>
 </head><body>
 
 <header class="site-nav">
   <div class="nav-inner">
-    <a class="brand" href="/"><span class="dot">⦿</span><span class="word">The Streaming Scout</span></a>
+    <a class="brand" href="/"><span class="dot">•</span><span class="word">The Streaming Scout</span></a>
     <nav class="links">
       <a href="/#top-picks">Top Picks</a>
       <a href="/#coming-soon">Coming Soon</a>
@@ -35,6 +72,13 @@
     <h1 class="page-title">What to watch next, matched to what you actually watch.</h1>
     <p class="lede">Ranked from Susan's real Netflix, Prime Video, BritBox, and PBS Masterpiece history — not a generic trending chart. Anyone with the link can read it; only Susan's Cowork sessions update it.</p>
 
+    <div class="stat-strip">
+      <div class="stat-tile"><div class="stat-num">190</div><div class="stat-label">titles in history</div></div>
+      <div class="stat-tile"><div class="stat-num">4</div><div class="stat-label">services tracked</div></div>
+      <div class="stat-tile"><div class="stat-num">0</div><div class="stat-label">accounts or logins</div></div>
+      <div class="stat-tile"><div class="stat-num">Mon</div><div class="stat-label">weekly resync day</div></div>
+    </div>
+
     <nav class="pill-nav">
       <a href="#what-it-is"><b>01</b>What it is</a>
       <a href="#the-stack"><b>02</b>The stack</a>
@@ -51,16 +95,52 @@
 
     <div class="about-section" id="the-stack">
       <div class="about-section-head"><span class="about-num-badge">02</span><h3>the stack</h3></div>
-      <p>Static HTML, no backend yet — simpler infrastructure than the other two sites, not the same. Vinyl Scout and The Fitness Log both run real Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys. This site now deploys the same way — a GitHub repo connected to Netlify's continuous deployment, pushing to <code>main</code> triggers an automatic production deploy — it just doesn't have a Function running behind it yet.</p>
-      <p>A serverless backend was attempted — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly, but at the time Netlify confirmed, and its own docs confirm, that Functions only deploy through Git-connected continuous deployment, not a manual zip upload — which is what this site used then. That gap is now closed on the infrastructure side; building and shipping the actual dismiss Function against the new setup is the remaining work, tracked on the <a href="/roadmap" style="text-decoration:underline;">roadmap</a>.</p>
+      <p>Static HTML, no backend, no build step — simpler infrastructure than the other two sites, not the same. This one deploys by hand (or by the Monday scheduled task) through Netlify's upload page instead, since that's the one deploy path this sandbox can actually reach.</p>
+
+      <div class="stack-compare">
+        <div class="stack-col this-site">
+          <h4>This site, today</h4>
+          <ul>
+            <li>Static HTML, no build step</li>
+            <li>No Netlify Functions</li>
+            <li>Deploys via manual upload</li>
+            <li>Dismissals need a chat confirm</li>
+          </ul>
+        </div>
+        <div class="stack-col siblings">
+          <h4>Vinyl Scout &amp; The Fitness Log</h4>
+          <ul>
+            <li>Netlify Functions backend</li>
+            <li>Automated backups &amp; health checks</li>
+            <li>GitHub repo, auto-deploy on push</li>
+            <li>Writes happen without a chat round-trip</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>A serverless backend was attempted — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly but Netlify confirmed, and its own docs confirm, that functions only deploy through Git-connected continuous deployment, not a manual zip upload. Closing that gap for real means connecting a GitHub repo to this Netlify project — a real infrastructure change, not something to fake with a documentation edit.</p>
     </div>
 
     <div class="about-section" id="on-the-page">
       <div class="about-section-head"><span class="about-num-badge">03</span><h3>what's on the page</h3></div>
-      <p><strong>Right Now</strong> — what Susan's seeing in theaters and watching live this week.</p>
-      <p><strong>Top Picks</strong> — ranked candidates with matched genre and shared cast as the rationale, dismissible with ×.</p>
-      <p><strong>Taste Profile</strong> — signature vs. generic genres and actor affinity.</p>
-      <p><strong>Coming Soon</strong> — premieres and next seasons, grouped by how confirmed the date is, also dismissible.</p>
+      <div class="page-card-grid">
+        <div class="page-card">
+          <h4>Right Now</h4>
+          <p>What Susan's seeing in theaters and watching live this week.</p>
+        </div>
+        <div class="page-card">
+          <h4>Top Picks</h4>
+          <p>Ranked candidates with matched genre and shared cast as the rationale, dismissible with ×.</p>
+        </div>
+        <div class="page-card">
+          <h4>Taste Profile</h4>
+          <p>Signature vs. generic genres, actor affinity, and explicitly capped genres.</p>
+        </div>
+        <div class="page-card">
+          <h4>Coming Soon</h4>
+          <p>Premieres and next seasons, grouped by how confirmed the date is, also dismissible.</p>
+        </div>
+      </div>
     </div>
 
     <div class="about-section" id="roadmap-link">
