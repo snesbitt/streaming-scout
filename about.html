@@ -102,15 +102,15 @@
           <h4>This site, today</h4>
           <ul>
             <li>Static HTML, no build step</li>
-            <li>No Netlify Functions</li>
-            <li>Deploys via manual upload</li>
-            <li>Dismissals need a chat confirm</li>
+            <li>One Netlify Function: dismiss, Blobs-backed</li>
+            <li>GitHub repo, auto-deploy on push</li>
+            <li>Dismiss syncs instantly; permanent exclusion still needs a chat confirm</li>
           </ul>
         </div>
         <div class="stack-col siblings">
           <h4>Vinyl Scout &amp; The Fitness Log</h4>
           <ul>
-            <li>Netlify Functions backend</li>
+            <li>Full Netlify Functions backend</li>
             <li>Automated backups &amp; health checks</li>
             <li>GitHub repo, auto-deploy on push</li>
             <li>Writes happen without a chat round-trip</li>
@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <p>A serverless backend was attempted — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly but Netlify confirmed, and its own docs confirm, that functions only deploy through Git-connected continuous deployment, not a manual zip upload. Closing that gap for real means connecting a GitHub repo to this Netlify project — a real infrastructure change, not something to fake with a documentation edit.</p>
+      <p>A serverless backend was attempted earlier — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly, but Netlify confirmed functions only deploy through Git-connected continuous deployment, not a manual zip upload, so it went unshipped until this project connected to GitHub. That connection happened 2026-07-16; the Function itself shipped 2026-07-17. What's still missing next to its siblings: automated backups and a health check, and a way to make an exclusion stick through next week's rebuild without a chat round-trip.</p>
     </div>
 
     <div class="about-section" id="on-the-page">

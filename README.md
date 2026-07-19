@@ -32,22 +32,28 @@ and reading back their markup/CSS/JS.
   recovered from the live site and are present in this repo, verified
   live (distinct byte sizes, all loading correctly).
 
-## Important architecture note (updated 2026-07-16)
+## Important architecture note (updated 2026-07-17)
 
 As of 2026-07-16 this repo is connected to GitHub, and Netlify is
 configured for Git-connected continuous deployment — pushes to `main`
 auto-deploy, the same governance model as thefitnesslog.org and
-vinylscout.org. What's still **not** built is the actual backend: a
-Netlify Function (dismiss endpoint backed by Netlify Blobs) was built and
-bundled once but never shipped, because at the time this project only
-deployed via Netlify's manual upload page, and Functions require
-continuous deployment to run at all. Now that continuous deployment is
-wired up, building and shipping that Function is unblocked but not yet
-done — this repo still does not include a `netlify/functions/` directory
-or a `netlify.toml`, since adding one without the actual Function behind
-it would misrepresent the live site. `app.js` also doesn't exist as a
-separate file; all client-side JS is a single small inline `<script>` at
-the bottom of `index.html`.
+vinylscout.org. As of 2026-07-17 the first real backend Function is
+shipped: `netlify/functions/dismiss.mjs`, an open GET/POST/DELETE
+endpoint (no edit key, same rationale as vinyl-scout's wishlist API —
+nothing sensitive in a "not interested" flag, and a passphrase on mobile
+isn't practical for a list this casual) backed by a Netlify Blobs store
+called `dismissed-titles`. `index.html`'s inline `<script>` now calls it
+alongside `localStorage`: dismissing a title still hides it locally and
+instantly, but the dismiss also POSTs to the Function so every other
+device syncs on next load — no chat round-trip needed for that part
+anymore. What the Function does **not** do: make an exclusion permanent
+across the next weekly rebuild. Top Picks and Coming Soon are static HTML
+baked into `index.html` at publish time from `EXCLUDED_TITLES.md`, not
+read live from the Blobs store, so keeping a title out of next week's
+freshly-rebuilt list still means pasting the copied message to Claude and
+updating that file. `app.js` still doesn't exist as a separate file; all
+client-side JS is a single small inline `<script>` at the bottom of
+`index.html`.
 
 ## Is Top Picks / Coming Soon data static or dynamic?
 

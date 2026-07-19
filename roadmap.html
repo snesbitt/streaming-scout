@@ -109,12 +109,12 @@
       <div class="phase-head">
         <span class="phase-num">06</span>
         <span class="phase-title">a real backend</span>
-        <span class="phase-status planned">Planned</span>
+        <span class="phase-status progress">In progress</span>
       </div>
-      <p class="phase-body">Vinyl Scout and The Fitness Log both run Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys on push. This site's dismiss feature would be the first beneficiary — a function backed by Netlify Blobs so a dismissal syncs across devices instantly, no chat round-trip needed.</p>
+      <p class="phase-body">Vinyl Scout and The Fitness Log both run Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys on push. The dismiss feature was the first beneficiary — a function backed by Netlify Blobs so a dismissal syncs across devices instantly, no chat round-trip needed. Automated backups and a health check, matching the other two sites, are still ahead.</p>
       <p class="phase-value">Parity with the other two sites' infrastructure, not just their look.</p>
       <ul class="phase-log">
-        <li><span class="lg-date">JUL 2026</span>Attempted and blocked, then unblocked. Built and bundled a working Netlify Function (dismiss endpoint backed by Netlify Blobs) and deployed it through the usual upload page — it didn't go live. Confirmed against Netlify's own docs: manual zip/drag-and-drop deploys skip the build pipeline entirely, and Functions only work through Git-connected continuous deployment. That setup step is now done — this repo is connected to GitHub and Netlify auto-deploys from it on every push to <code>main</code> — so the remaining work is building and shipping the actual dismiss Function against that pipeline, not any further infrastructure change.</li>
+        <li><span class="lg-date">JUL 2026</span>Attempted and blocked, then unblocked. Built and bundled a working Netlify Function (dismiss endpoint backed by Netlify Blobs) and deployed it through the usual upload page — it didn't go live. Confirmed against Netlify's own docs: manual zip/drag-and-drop deploys skip the build pipeline entirely, and Functions only work through Git-connected continuous deployment. That setup step got done first — this repo connected to GitHub with Netlify auto-deploying from it on every push to <code>main</code> — and the dismiss Function itself shipped against that pipeline shortly after: <code>netlify/functions/dismiss.mjs</code>, live and Blobs-backed.</li>
       </ul>
     </div>
 
