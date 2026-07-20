@@ -92,8 +92,19 @@ background: var(--bg-alt); border: 1px solid var(--border);
 .pick-open { font-size: 11px; color: var(--accent); text-decoration: none; font-weight: 600; white-space: nowrap; }
 .poster-mono { display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; color: var(--ink-faint); font-size: 15px; }
 .pick-dismiss {
+position: relative;
 background: none; border: none; color: var(--ink-faint); font-size: 17px; line-height: 1;
 cursor: pointer; padding: 0 0 0 2px; flex-shrink: 0; font-family: var(--sans);
+}
+/* Hit-slop: expands the clickable area to ~44x44px (touch-target guideline)
+   without changing the glyph's small visible footprint — the pseudo-element
+   is invisible and centered on the button, not part of layout flow. */
+.pick-dismiss::after {
+content: "";
+position: absolute;
+top: 50%; left: 50%;
+width: 44px; height: 44px;
+transform: translate(-50%, -50%);
 }
 .pick-dismiss:hover { color: var(--bad); }
 .ss-toast {
