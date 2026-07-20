@@ -1,5 +1,5 @@
 // netlify/functions/dismiss.mjs
-// version: 1
+// version: 2
 // v1 (2026-07-17): first real backend for streaming-scout. Continuous
 // deployment from GitHub was wired up 2026-07-16 (see README's "Important
 // architecture note"), which unblocks Netlify Functions — this is the first
@@ -13,10 +13,21 @@
 // Top Picks/Coming Soon are static HTML baked in at rebuild time, not read
 // from this store. What this closes is the "which device did I dismiss that
 // on" gap, not the "will next week's rebuild bring it back" gap.
+// v2 (2026-07-20): stays intentionally unauthenticated (unchanged design
+// decision above) but now bounds the two ways an open, unauthenticated POST
+// could be abused: MAX_FIELD_LENGTH rejects any title/section over 200 chars
+// instead of persisting arbitrary-length junk, and MAX_LIST_SIZE caps the
+// Blobs list at 500 entries by evicting the oldest entry (FIFO) once a new
+// dismissal would exceed it, rather than rejecting new writes outright — a
+// flood of junk entries ages itself out instead of either growing the store
+// without bound or leaving the endpoint permanently stuck once full.
 
 import { getStore } from "@netlify/blobs";
 
 export const config = { path: "/api/dismiss" };
+
+const MAX_FIELD_LENGTH = 200;
+const MAX_LIST_SIZE = 500;
 
 function json(body, status) {
   return new Response(JSON.stringify(body), {
@@ -42,10 +53,17 @@ export default async (req) => {
     }
     const title = ((body && body.title) || "").trim();
     if (!title) return json({ error: "title is required" }, 400);
+    if (title.length > MAX_FIELD_LENGTH) {
+      return json({ error: `title must be ${MAX_FIELD_LENGTH} characters or fewer` }, 400);
+    }
     const section = ((body && body.section) || "").trim() || null;
+    if (section && section.length > MAX_FIELD_LENGTH) {
+      return json({ error: `section must be ${MAX_FIELD_LENGTH} characters or fewer` }, 400);
+    }
 
     const list = (await store.get("list", { type: "json" })) || [];
     if (!list.some((e) => e.title === title)) {
+      while (list.length >= MAX_LIST_SIZE) list.shift(); // evict oldest, FIFO
       list.push({ title, section, dismissedAt: new Date().toISOString() });
       await store.setJSON("list", list);
     }
