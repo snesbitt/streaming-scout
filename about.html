@@ -45,10 +45,10 @@
   .stack-col ul { margin: 0; padding-left: 16px; font-size: 12px; color: var(--ink); }
   .stack-col li { margin-bottom: 3px; }
 
-  .wont-list { list-style: none; padding: 0; margin: 0; }
-  .wont-list li { display: flex; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .wont-list li:last-child { border-bottom: none; }
-  .wont-list li::before { content: "—"; color: var(--bad); flex-shrink: 0; }
+  .wont-list--about { list-style: none; padding: 0; margin: 0; }
+  .wont-list--about li { display: flex; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .wont-list--about li:last-child { border-bottom: none; }
+  .wont-list--about li::before { content: "—"; color: var(--bad); flex-shrink: 0; }
 </style>
 </head><body>
 
@@ -150,7 +150,7 @@
 
     <div class="about-section" id="wont-do">
       <div class="about-section-head"><span class="about-num-badge">05</span><h3>what it won't do</h3></div>
-      <ul class="wont-list">
+      <ul class="wont-list--about">
         <li>No accounts, no passwords — reading it requires nothing.</li>
         <li>No analytics, advertising, or third-party tracking.</li>
         <li>No live connection to Susan's accounts — one published snapshot, refreshed by hand.</li>
