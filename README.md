@@ -42,7 +42,12 @@ shipped: `netlify/functions/dismiss.mjs`, an open GET/POST/DELETE
 endpoint (no edit key, same rationale as vinyl-scout's wishlist API —
 nothing sensitive in a "not interested" flag, and a passphrase on mobile
 isn't practical for a list this casual) backed by a Netlify Blobs store
-called `dismissed-titles`. `index.html`'s inline `<script>` now calls it
+called `dismissed-titles`. On 2026-07-20 the Function was hardened without
+changing that no-auth design: a 200-character cap on `title`/`section`
+rejects oversized input, and the stored list evicts its oldest entry
+(FIFO) once a new dismissal would push it past 500, so an open,
+unauthenticated POST can't grow the store without bound. `index.html`'s
+inline `<script>` now calls it
 alongside `localStorage`: dismissing a title still hides it locally and
 instantly, but the dismiss also POSTs to the Function so every other
 device syncs on next load — no chat round-trip needed for that part
