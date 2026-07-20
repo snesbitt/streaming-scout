@@ -320,7 +320,6 @@
     var section = row.classList.contains('soon-row') ? 'Coming Soon' : 'Top Picks';
     var dismissed = getDismissed();
     if (dismissed.indexOf(title) === -1) { dismissed.push(title); setDismissed(dismissed); }
-    row.style.display = 'none';
     applyDismissed();
     postDismiss(title, section);
     var msg = 'Streaming Scout: exclude "' + title + '" from ' + section + ' — don\'t re-add it.';
