@@ -95,14 +95,14 @@
 
     <div class="about-section" id="the-stack">
       <div class="about-section-head"><span class="about-num-badge">02</span><h3>the stack</h3></div>
-      <p>Static HTML, no backend, no build step — simpler infrastructure than the other two sites, not the same. This one deploys by hand (or by the Monday scheduled task) through Netlify's upload page instead, since that's the one deploy path this sandbox can actually reach.</p>
+      <p>Static HTML, plus one small Netlify Function for the dismiss button — simpler infrastructure than the other two sites, not the same. Deploys via GitHub: pushing to main triggers Netlify's Git-connected continuous deployment automatically, the same governance model as the other two sites, whether Susan pushes directly or the Monday scheduled task does.</p>
 
       <div class="stack-compare">
         <div class="stack-col this-site">
           <h4>This site, today</h4>
           <ul>
             <li>Static HTML, no build step</li>
-            <li>One Netlify Function: dismiss, Blobs-backed</li>
+            <li>One Netlify Function: dismiss, Blobs-backed, bounded</li>
             <li>GitHub repo, auto-deploy on push</li>
             <li>Dismiss syncs instantly; permanent exclusion still needs a chat confirm</li>
           </ul>
@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <p>A serverless backend was attempted earlier — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly, but Netlify confirmed functions only deploy through Git-connected continuous deployment, not a manual zip upload, so it went unshipped until this project connected to GitHub. That connection happened 2026-07-16; the Function itself shipped 2026-07-17. What's still missing next to its siblings: automated backups and a health check, and a way to make an exclusion stick through next week's rebuild without a chat round-trip.</p>
+      <p>A serverless backend was attempted earlier — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly, but Netlify confirmed functions only deploy through Git-connected continuous deployment, not a manual zip upload, so it went unshipped until this project connected to GitHub. That connection happened 2026-07-16; the Function itself shipped 2026-07-17, and was bounded on 2026-07-20 — a 200-character cap per field and a 500-entry cap on the Blobs list, so the open, unauthenticated endpoint can't be abused into storing unlimited junk. What's still missing next to its siblings: automated backups and a health check, and a way to make an exclusion stick through next week's rebuild without a chat round-trip.</p>
     </div>
 
     <div class="about-section" id="on-the-page">
