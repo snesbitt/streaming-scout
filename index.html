@@ -217,6 +217,7 @@
             <p class="pick-meta">Paramount+ · Zoe Saldaña, Nicole Kidman, Morgan Freeman</p>
           </div>
         </div>
+        <p id="ss-empty-note-soon" class="pick-meta" style="display:none; padding:6px 2px 0;">All Coming Soon titles dismissed for now — ask Claude to rebuild Coming Soon when you're ready for a fresh list.</p>
       </div>
     </section>
 
@@ -296,14 +297,17 @@
     var pickRows = document.querySelectorAll('.pick-row');
     var soonRows = document.querySelectorAll('.soon-row');
     var visible = 0;
+    var soonVisible = 0;
     pickRows.forEach(function (row) {
       if (dismissed.indexOf(row.dataset.title) !== -1) { row.style.display = 'none'; } else { visible++; }
     });
     soonRows.forEach(function (row) {
-      if (dismissed.indexOf(row.dataset.title) !== -1) { row.style.display = 'none'; }
+      if (dismissed.indexOf(row.dataset.title) !== -1) { row.style.display = 'none'; } else { soonVisible++; }
     });
     var note = document.getElementById('ss-empty-note');
     if (note && pickRows.length) { note.style.display = visible === 0 ? 'block' : 'none'; }
+    var soonNote = document.getElementById('ss-empty-note-soon');
+    if (soonNote && soonRows.length) { soonNote.style.display = soonVisible === 0 ? 'block' : 'none'; }
   }
   function toast(msg) {
     var el = document.getElementById('ss-toast');
