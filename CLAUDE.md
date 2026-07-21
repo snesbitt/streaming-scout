@@ -14,30 +14,50 @@ history (plus BritBox and PBS Masterpiece), matched against her stated
 taste, instead of a generic trending chart. Live at
 https://streamingscout.org.
 
-## Where the real logic lives (this repo is NOT it)
+## Where the real logic lives (this repo is NOT the scoring logic)
 
 This repo is the *published snapshot* — static HTML, CSS, and one small
-Netlify Function. It is not where recommendations get computed and it is
-not where exclusions get tracked. Both of those live outside this repo,
-in Susan's Claude app, as the `streaming-scout` Cowork skill bundle
-(`streaming-setup`, `sync-watch-history`, `log-watched`, `top-picks`,
-`coming-soon`):
+Netlify Function — plus, as of 2026-07-21, the persistent data the
+scoring logic reads and writes (see below). It is still not where
+recommendations get *computed*: the scoring logic itself runs in Susan's
+Claude app, as the `streaming-scout` Cowork skill bundle (`streaming-setup`,
+`sync-watch-history`, `log-watched`, `top-picks`, `coming-soon`).
 
 - **The scoring logic** (signature vs. generic genre weighting, actor-
   affinity bonus, the taste profile) is not in this repo in any form —
   not as a script, not as a data file. It runs inside the Cowork skill
   bundle when Susan (or the Monday scheduled task) asks for a rebuild.
-- **`EXCLUDED_TITLES.md`** — the file that makes a "not interested"
-  dismissal stick across the *next* weekly rebuild — does not exist in
-  this repo either. It's a data file inside the same skill bundle. Top
-  Picks and Coming Soon in `index.html` are static HTML baked in at
-  publish time by reading that file; this repo never reads or writes it
-  directly.
+- **`data/STREAMING_LOG.md`, `data/TASTE_PROFILE.md`, `data/STREAMING_PROFILE.md`,
+  `data/EXCLUDED_TITLES.md`** — these ARE in this repo (see "Where the
+  persistent data actually lives" below). Top Picks and Coming Soon in
+  `index.html` are static HTML baked in at publish time by reading
+  `data/EXCLUDED_TITLES.md`; nothing on the live page reads it at
+  runtime.
 
-If a task looks like "change how a title gets scored" or "make sure X
-never comes back," the fix is in the Cowork skill bundle, not in any file
-here — don't go hunting for a scoring script or an exclusion list in this
-repo, they aren't here on purpose.
+If a task looks like "change how a title gets scored," the fix is in the
+Cowork skill bundle, not in any file here. If a task looks like "make sure
+X never comes back" or "why did an old exclusion disappear," check
+`data/EXCLUDED_TITLES.md` in this repo first.
+
+## Where the persistent data actually lives (corrected 2026-07-21)
+
+Until 2026-07-21, the skill bundle's own docs (and the `streaming-scout-weekly-resync`
+scheduled task) assumed these files could live in a Cowork session's own ephemeral
+output folder — described as "the workspace root" — and that this location was stable
+across sessions. It is not: that folder is only reachable by the exact session that
+created it. The scheduled task silently pointed at a dead session for an unknown
+number of weeks, and the prior watch-history log, taste profile, and most of the
+exclusion list were unrecoverable as a result. One dismissed title was recovered from
+the live `dismissed-titles` Netlify Blobs store (the `dismiss.mjs` Function below);
+everything else in `data/` was reset. See each file's own header in `data/` for exactly
+what was recovered vs. reset.
+
+The fix: `data/` now lives inside this git repo, so it's real, versioned, and
+accessible from any session that has this repo connected. Any skill invocation
+(manual or via the scheduled task) must explicitly treat
+`/Users/snesbitt/Projects/streaming-scout/data/` as the working root for
+`STREAMING_LOG.md` / `TASTE_PROFILE.md` / `STREAMING_PROFILE.md` / `EXCLUDED_TITLES.md`
+— never an ambiguous "current workspace."
 
 What genuinely does live in this repo: the dismiss Function
 (`netlify/functions/dismiss.mjs`), which only makes a dismissal sync
@@ -48,6 +68,12 @@ boundary between the two.
 
 ## Repository layout
 
+- `data/` — persistent state for the recommendation skill bundle
+  (`STREAMING_LOG.md`, `TASTE_PROFILE.md`, `STREAMING_PROFILE.md`,
+  `EXCLUDED_TITLES.md`). Added 2026-07-21; see "Where the persistent
+  data actually lives" above for why. Nothing here is read by the live
+  site at runtime — it's read/written only by the Cowork skill bundle
+  during a rebuild, then baked into `index.html` as static HTML.
 - `index.html` — the dashboard. Everything is inline: styling comes from
   `style.css`, and all client-side JavaScript is a single `<script>` block
   at the bottom of the file. There is no `app.js` and none is planned —

@@ -60,6 +60,19 @@ updating that file. `app.js` still doesn't exist as a separate file; all
 client-side JS is a single small inline `<script>` at the bottom of
 `index.html`.
 
+## 2026-07-21 update: persistent data now lives in this repo
+
+The `streaming-scout-weekly-resync` scheduled task previously pointed at a Cowork
+session's own ephemeral output folder for `STREAMING_LOG.md`, `TASTE_PROFILE.md`,
+`STREAMING_PROFILE.md`, and `EXCLUDED_TITLES.md`, believing it was reachable from any
+session. It wasn't — that task had been silently failing for an unknown number of
+weeks, and most of that data (years of watch history, the derived taste profile, most
+of the exclusion list) is unrecoverable. One exclusion was recovered from the live
+`dismiss.mjs` Blobs store. These four files now live in `data/` in this repo instead,
+so they're real, versioned, and stable across sessions. See `CLAUDE.md`'s "Where the
+persistent data actually lives" section and each file's own header in `data/` for
+details.
+
 ## Is Top Picks / Coming Soon data static or dynamic?
 
 **Static.** The Top Picks and Coming Soon sections are plain HTML baked

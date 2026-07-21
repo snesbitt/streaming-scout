@@ -89,10 +89,11 @@
         <span class="phase-title">scheduled resync</span>
         <span class="phase-status live">Live</span>
       </div>
-      <p class="phase-body">A recurring task that reruns sync-watch-history, top-picks, and coming-soon on its own and republishes the dashboard, instead of only refreshing when you ask.</p>
-      <p class="phase-value">The dashboard stays current between visits, the way the other two already do.</p>
+      <p class="phase-body">A recurring task that reruns sync-watch-history, top-picks, and coming-soon on its own and prepares the dashboard update, instead of only refreshing when you ask. The commit is automatic; publishing it still takes one push command from Susan (the cloud session that runs this task has no GitHub network access — same constraint as the git-connected deploy itself).</p>
+      <p class="phase-value">The dashboard's data stays current between visits; getting it live still takes one copy-pasted command.</p>
       <ul class="phase-log">
-        <li><span class="lg-date">JUL 2026</span>Scheduled task set up, runs Monday mornings. Each run resyncs watch history, rebuilds Top Picks and Coming Soon (honoring EXCLUDED_TITLES.md), sources real poster art where it exists, and redeploys to streamingscout.org. If any step fails — login expired, a source unreachable — it stops rather than publishing a partial or guessed state.</li>
+        <li><span class="lg-date">JUL 2026</span>Corrected after a real incident: the task had pointed at a Cowork session's own temporary folder for all persistent data (watch log, taste profile, exclusions), believing it was reachable from any session. It wasn't — the task had been silently failing for weeks, and that data was lost. Persistent data now lives in this repo's own <code>data/</code> folder instead, and this log entry itself replaces an earlier, inaccurate claim that this task "redeploys to streamingscout.org" on its own — it commits; Susan pushes.</li>
+        <li><span class="lg-date">JUL 2026</span>Scheduled task set up, runs Monday mornings. Each run resyncs watch history, rebuilds Top Picks and Coming Soon (honoring EXCLUDED_TITLES.md), and sources real poster art where it exists. If any step fails — login expired, a source unreachable — it stops rather than publishing a partial or guessed state.</li>
       </ul>
     </div>
 
