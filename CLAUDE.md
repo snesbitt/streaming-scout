@@ -132,6 +132,13 @@ doesn't). Until one exists, verifying a deploy means:
   control on the page) should have a real ~44px tap target even when the
   visible glyph stays small — see the `::after` hit-slop pattern on
   `.pick-dismiss` for how to do that without changing the visual density.
+- **Brand mark matches the family, in both glyph and size.** The nav
+  brand mark is `⦿` (bullseye, not a plain `•`) at 19px/22px (mobile/desktop)
+  next to `.brand .word` at 24px/30px — sized to visually match Vinyl
+  Scout's and The Fitness Log's larger masthead treatment, not just share
+  the same character. (2026-07-21: first the glyph was unified, then Susan
+  flagged the two families still read as different sizes — the type scale
+  was the other half of the fix.)
 - **Spend requires Susan's go-ahead.** Domain registration, paid API keys,
   or any other real spend is her call, never taken on the agent's behalf —
   same rule the sibling sites operate under.
