@@ -191,7 +191,7 @@
 
     <div class="step" id="deploy">
       <div><span class="step-num">05</span><span class="step-title">Git-connected deploy, and the first real Function</span></div>
-      <p class="step-body">This project is connected to GitHub for continuous deployment — pushes to <code>main</code> auto-deploy, the same governance model as thefitnesslog.org and vinylscout.org, confirmed directly by this page's own rebuild. That connection is what unblocks Netlify Functions, and the first one is now live: a dismiss endpoint backed by Netlify Blobs, so removing a title syncs across every device immediately rather than staying local to the one you dismissed it on.</p>
+      <p class="step-body">Every change publishes automatically once it's pushed — the same control every site in this portfolio uses. That's what made it possible to add the first live feature: removing a title now updates every device immediately, not just the one you dismissed it on.</p>
 
       <figure class="diagram">
         <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and pushes to GitHub, Netlify auto-deploys to streamingscout.org, and a Netlify Function backed by Blobs now runs alongside it">
@@ -233,7 +233,7 @@
 
     <div class="step" id="manual">
       <div><span class="step-num">06</span><span class="step-title">What's still manual</span></div>
-      <p class="step-body">Dismissing a title now syncs everywhere immediately, via the Function above. What's still manual: making that exclusion permanent across the <em>next</em> weekly rebuild — Top Picks and Coming Soon are static HTML baked in at publish time from <code>EXCLUDED_TITLES.md</code>, not read live from the Blobs store, so keeping a title out of next week's freshly-rebuilt list still means pasting the copied message to Claude. Equally absent: a health check verifying that the Monday run actually published cleanly. Until both exist, a glance at the live site after each scheduled run remains the control of record.</p>
+      <p class="step-body">Removing a title syncs everywhere instantly. Keeping it off next week's rebuilt list still takes one message to Claude. There's also no automated check that a Monday update actually published — until there is, checking the live site by eye is the control of record.</p>
     </div>
 
     <div class="step-divider"></div>

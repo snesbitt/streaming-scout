@@ -1,6 +1,50 @@
 [build]
+  publish = "."
   ignore = "bash scripts/netlify-ignore.sh"
   functions = "netlify/functions"
+
+# Block direct public access to internal docs and data files. This repo has
+# no separate "public" subdirectory, so without an explicit publish scope
+# Netlify serves the whole repo root — including data/*.md (personal
+# viewing history once the weekly sync repopulates it), CLAUDE.md and
+# README.md (internal working notes, plus a local file path), and
+# package.json. Added 2026-07-23 after an audit found these reachable at
+# predictable public URLs with no authentication.
+[[redirects]]
+  from = "/data/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/CLAUDE.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package.json"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/scripts/*"
+  to = "/index.html"
+  status = 404
+  force = true
 
 [[headers]]
   for = "/index.html"

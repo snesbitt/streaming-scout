@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <p>A serverless backend was attempted earlier — a Netlify Function backed by Netlify Blobs, to make dismissals sync instantly across devices instead of needing a chat round-trip. It built and bundled cleanly, but Netlify confirmed functions only deploy through Git-connected continuous deployment, not a manual zip upload, so it went unshipped until this project connected to GitHub. That connection happened 2026-07-16; the Function itself shipped 2026-07-17, and was bounded on 2026-07-20 — a 200-character cap per field and a 500-entry cap on the Blobs list, so the open, unauthenticated endpoint can't be abused into storing unlimited junk. What's still missing next to its siblings: automated backups and a health check, and a way to make an exclusion stick through next week's rebuild without a chat round-trip.</p>
+      <p>Dismissals now sync across every device the moment you click them. Making an exclusion permanent through the next weekly rebuild still takes one extra step. Two gaps remain versus the sibling sites: automated backups, and a health check that confirms each week's update actually published.</p>
     </div>
 
     <div class="about-section" id="on-the-page">

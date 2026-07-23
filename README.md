@@ -75,23 +75,20 @@ details.
 
 ## Is Top Picks / Coming Soon data static or dynamic?
 
-**Static.** The Top Picks and Coming Soon sections are plain HTML baked
-into `index.html` at publish time (presumably by a Claude-run rebuild
-step, per the Roadmap). The only client-side JavaScript is a small inline
-script that:
+**Mostly static, with one live sync.** The Top Picks and Coming Soon rows
+themselves are plain HTML baked into `index.html` at publish time
+(presumably by a Claude-run rebuild step, per the Roadmap) — there's no
+database and no per-visit content generation. The availability icon
+(subscription-included vs. pay-to-watch) shipped as part of that same
+static markup; it's not a separate feature anymore.
 
-- hides a row locally via `localStorage` when its "×" dismiss button is
-  clicked,
-- copies a message like `Streaming Scout: exclude "TITLE" from SECTION —
-  don't re-add it.` to the clipboard for the user to paste into a Claude
-  chat.
-
-There is no `fetch()` call anywhere on the page — nothing is loaded from
-an API at runtime. This matters for the planned availability-icon
-(subscription-included vs. pay-to-watch) feature: it can be added as pure
-markup/data in the same static rebuild step that already generates the
-Top Picks and Coming Soon rows; it does not need a new backend or client
-fetch.
+The one live piece is dismissals. Clicking a title's "×" calls
+`/api/dismiss` (`netlify/functions/dismiss.mjs`, backed by Netlify Blobs)
+so the dismissal syncs across every device immediately, in addition to
+hiding the row locally via `localStorage`. That's the only `fetch()` on
+the page. Making a dismissal stick through the *next* weekly rebuild
+still requires updating `data/EXCLUDED_TITLES.md` — see `CLAUDE.md` for
+that flow.
 
 ## Before treating this as authoritative
 
