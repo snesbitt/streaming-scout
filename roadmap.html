@@ -60,12 +60,12 @@
       <p class="phase-value">Something to open on a phone, without opening a Cowork session first.</p>
       <ul class="phase-log">
         <li><span class="lg-date">JUL 2026</span>Accessibility and consistency pass: darkened <code>--ink-dim</code>/<code>--ink-faint</code> to clear WCAG AA (4.5:1) contrast, added an <code>onerror</code> fallback to every poster <code>&lt;img&gt;</code> (previously only one of eight had it), enlarged the × dismiss button's tap target to roughly 44px without changing how it looks, added <code>aria-label</code> to all 18 availability badges (a <code>title=""</code> tooltip alone doesn't do anything on touch), renamed About's page-scoped <code>.wont-list</code> to <code>.wont-list--about</code> after it turned out to collide with a rule of the same name in <code>style.css</code>, and reworded the "540 titles" vs. "190 titles" mismatch across every page to describe the watch history qualitatively instead of stating a number only one page's rebuild kept current. Also added an empty-state note to Coming Soon, matching the one Top Picks already had, for when every row's been dismissed.</li>
-        <li><span class="lg-date">JUL 2026</span>Visual alignment pass against the other two sites: switched to Fraunces (the same serif Vinyl Scout uses) instead of a Georgia stack, proper-case "The Streaming Scout" wordmark with a bullet-ring mark matching Vinyl Scout's, gold field-note borders instead of a one-off accent color, and a plain-numeral style on About matching this page instead of its own circular badge. Added a last-synced status banner like The Fitness Log's.</li>
+        <li><span class="lg-date">JUL 2026</span>Visual alignment pass to match the shared house style: switched to Fraunces instead of a Georgia stack, a proper-case "The Streaming Scout" wordmark with a bullet-ring mark, gold field-note borders instead of a one-off accent color, and a plain-numeral style on About matching this page instead of its own circular badge. Added a last-synced status banner.</li>
         <li><span class="lg-date">JUL 2026</span>Dismiss control extended to Coming Soon, and checked IMDb as a second art source alongside Wikipedia — real posters now on 10 of 12 upcoming titles, up from 3. The 2 still missing (Coastal Unit, Kill Jackie) genuinely have no published art yet on either source, so they keep an honest initials monogram rather than a fabricated image.</li>
         <li><span class="lg-date">JUL 2026</span>Dismiss control on Top Picks — an × on each row hides it (saved per-device) and copies a message to paste to Claude, which adds it to EXCLUDED_TITLES.md so it's permanently filtered out of future rebuilds. Coming Soon rows now show a poster thumbnail where real art exists, and an honest initials monogram where it doesn't.</li>
-        <li><span class="lg-date">JUL 2026</span>iOS home screen icon and manifest — installs with its own icon and no browser chrome, matching the other two sites. Added a Right Now section for in-theaters and live viewing, and trimmed/visualized the Guide and About pages to match The Vinyl Scout's style.</li>
+        <li><span class="lg-date">JUL 2026</span>iOS home screen icon and manifest — installs with its own icon and no browser chrome. Added a Right Now section for in-theaters and live viewing, and trimmed/visualized the Guide and About pages to match the shared house style.</li>
         <li><span class="lg-date">JUL 2026</span>Reverted a rust/dark-card redesign that missed the mark, and rebuilt Top Picks as compact rows with real poster art (sourced from Wikipedia), cast, and streaming service all visible without a click — and rewrote the CSS mobile-first.</li>
-        <li><span class="lg-date">JUL 2026</span>Rebuilt to match the shared house style used by the other two sites — persistent nav, cream/serif shell, and this Roadmap/Guide/About set — instead of its original one-off dark theme.</li>
+        <li><span class="lg-date">JUL 2026</span>Rebuilt to match a shared house style — persistent nav, cream/serif shell, and this Roadmap/Guide/About set — instead of its original one-off dark theme.</li>
         <li><span class="lg-date">JUL 2026</span>Deployed to Netlify through the dashboard's own upload page, after this project's sandbox was found to block direct calls to Netlify's API and CLI.</li>
       </ul>
     </div>
@@ -76,7 +76,7 @@
         <span class="phase-title">a real domain</span>
         <span class="phase-status live">Live</span>
       </div>
-      <p class="phase-body">streamingscout.org, matching vinylscout.org and thefitnesslog.org. Registered at $10.49 for the first year through Netlify's own domain search and connected as the project's primary domain, with DNS and an HTTPS certificate provisioning automatically.</p>
+      <p class="phase-body">streamingscout.org. Registered at $10.49 for the first year through Netlify's own domain search and connected as the project's primary domain, with DNS and an HTTPS certificate provisioning automatically.</p>
       <p class="phase-value">One address to remember, not a netlify.app subdomain.</p>
       <ul class="phase-log">
         <li><span class="lg-date">JUL 2026</span>Registered and connected. An initial attempt was blocked by a declined debit card — entering payment details isn't something Claude does on your behalf, so that step waited on you and went through the next morning.</li>
@@ -103,7 +103,7 @@
         <span class="phase-title">browse the full watch log</span>
         <span class="phase-status planned">Planned</span>
       </div>
-      <p class="phase-body">A searchable view of the full logged watch history — filter by service, genre, or actor — mirroring The Vinyl Scout's Add/Audit pattern for browsing a full collection instead of just a ranked shortlist.</p>
+      <p class="phase-body">A searchable view of the full logged watch history — filter by service, genre, or actor.</p>
       <p class="phase-value">See the evidence behind a recommendation, not just the recommendation.</p>
     </div>
 
@@ -113,15 +113,13 @@
         <span class="phase-title">a real backend</span>
         <span class="phase-status progress">In progress</span>
       </div>
-      <p class="phase-body">Vinyl Scout and The Fitness Log both run Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys on push. The dismiss feature was the first beneficiary — a function backed by Netlify Blobs so a dismissal syncs across devices instantly, no chat round-trip needed. Automated backups and a health check, matching the other two sites, are still ahead.</p>
-      <p class="phase-value">Parity with the other two sites' infrastructure, not just their look.</p>
+      <p class="phase-body">A proper backend: Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys on push. The dismiss feature was the first beneficiary — a function backed by Netlify Blobs so a dismissal syncs across devices instantly, no chat round-trip needed. Automated backups and a health check are still ahead.</p>
+      <p class="phase-value">Infrastructure that matches how solid the site looks, not just the look itself.</p>
       <ul class="phase-log">
         <li><span class="lg-date">JUL 2026</span>The dismiss endpoint is open to the internet by design — no login required, because a "not interested" flag isn't sensitive. It's now bounded: oversized input is rejected, and the stored list caps at 500 entries, oldest first out. That closes the obvious abuse case. Automated backups and a health check are still open.</li>
         <li><span class="lg-date">JUL 2026</span>Attempted and blocked, then unblocked. Built and bundled a working Netlify Function (dismiss endpoint backed by Netlify Blobs) and deployed it through the usual upload page — it didn't go live. Confirmed against Netlify's own docs: manual zip/drag-and-drop deploys skip the build pipeline entirely, and Functions only work through Git-connected continuous deployment. That setup step got done first — this repo connected to GitHub with Netlify auto-deploying from it on every push to <code>main</code> — and the dismiss Function itself shipped against that pipeline shortly after: <code>netlify/functions/dismiss.mjs</code>, live and Blobs-backed.</li>
       </ul>
     </div>
-
-    <p class="phase-value" style="margin-top:1.5rem;">Phases are sequential. A later phase isn't started early, and nothing gets added to an earlier phase just because it would be easy to slot in.</p>
 
   </div>
 </main>

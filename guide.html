@@ -72,7 +72,7 @@
   <div class="wrap">
     <p class="eyebrow">Guide</p>
     <h1 class="page-title">A personal recommendation engine, built and run by an AI agent</h1>
-    <p class="lede">Six steps, in sequence. Each stands on its own — accountability doesn't depend on finishing the rest. Built to be read by anyone, technical or not: every box below is a real part of the system, not an illustration of an idealized one.</p>
+    <p class="lede">Six steps, in sequence, written for anyone — no technical background needed. Every box below is a real part of the system, not a simplified illustration of one.</p>
 
     <nav class="pill-nav">
       <a href="#tools"><b>01</b>Tools</a>
@@ -156,7 +156,7 @@
             <line x1="348" y1="73" x2="370" y2="73" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr)"/>
             <line x1="530" y1="73" x2="552" y2="73" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr)"/>
 
-            <text x="360" y="162" text-anchor="middle" font-size="10.5" font-style="italic" fill="#8a8271">no terminal in this stack — Cowork carries the build role the other two projects give to Claude Code</text>
+            <text x="360" y="162" text-anchor="middle" font-size="10.5" font-style="italic" fill="#8a8271">no terminal in this stack — Cowork carries the build role end to end</text>
           </g>
         </svg>
         <figcaption>Which mode carries which responsibility.</figcaption>
@@ -186,15 +186,15 @@
 
     <div class="step" id="snapshot">
       <div><span class="step-num">04</span><span class="step-title">A snapshot, not a live connection</span></div>
-      <p class="step-body">As with the other two systems in this portfolio, this one reads from a single published snapshot rather than a live session — nothing touches your Netflix or Prime account while you're using it. Synchronization happens deliberately, in a Cowork session, either at your request or on a fixed Monday schedule, and only then is the static record rebuilt.</p>
+      <p class="step-body">This reads from a single published snapshot rather than a live session — nothing touches your Netflix or Prime account while you're using it. Synchronization happens deliberately, in a Cowork session, either at your request or on a fixed Monday schedule, and only then is the static record rebuilt.</p>
     </div>
 
     <div class="step" id="deploy">
-      <div><span class="step-num">05</span><span class="step-title">Git-connected deploy, and the first real Function</span></div>
-      <p class="step-body">Every change publishes automatically once it's pushed — the same control every site in this portfolio uses. That's what made it possible to add the first live feature: removing a title now updates every device immediately, not just the one you dismissed it on.</p>
+      <div><span class="step-num">05</span><span class="step-title">Publishing changes automatically</span></div>
+      <p class="step-body">Every change publishes to the live site automatically, with no manual deploy step. That's what made it possible to add the first fully live feature: removing a title now updates every device immediately, not just the one you dismissed it on.</p>
 
       <figure class="diagram">
-        <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and pushes to GitHub, Netlify auto-deploys to streamingscout.org, and a Netlify Function backed by Blobs now runs alongside it">
+        <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and saves the update, Netlify publishes it automatically to streamingscout.org, and one always-on live feature now runs alongside it">
           <defs>
             <marker id="ssArr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M0,0 L10,5 L0,10 z" fill="#a89f8f"/>
@@ -207,27 +207,27 @@
 
             <rect x="196" y="20" width="150" height="62" rx="8" fill="#ece2d0" stroke="#9c7a35"/>
             <text x="271" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Claude / Cowork</text>
-            <text x="271" y="62" text-anchor="middle" font-size="10" fill="#5c4c22">builds &amp; pushes to GitHub</text>
+            <text x="271" y="62" text-anchor="middle" font-size="10" fill="#5c4c22">builds &amp; saves the update</text>
 
             <rect x="384" y="20" width="150" height="62" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
             <text x="459" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Netlify</text>
-            <text x="459" y="62" text-anchor="middle" font-size="10" fill="#3d4238">git-connected, auto-deploy</text>
+            <text x="459" y="62" text-anchor="middle" font-size="10" fill="#3d4238">publishes it automatically</text>
 
             <rect x="572" y="20" width="140" height="62" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
             <text x="642" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">streamingscout.org</text>
-            <text x="642" y="62" text-anchor="middle" font-size="10" fill="#3d4a58">static pages + one Function</text>
+            <text x="642" y="62" text-anchor="middle" font-size="10" fill="#3d4a58">the live site, updated</text>
 
             <line x1="158" y1="51" x2="194" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
             <line x1="346" y1="51" x2="382" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
             <line x1="534" y1="51" x2="570" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
 
             <rect x="196" y="122" width="326" height="52" rx="8" fill="#e7e9df" stroke="#4c6b4f" stroke-width="1.3"/>
-            <text x="359" y="143" text-anchor="middle" font-size="11.5" font-weight="600" fill="#3d5240">dismiss.mjs — live, Blobs-backed</text>
-            <text x="359" y="160" text-anchor="middle" font-size="9.5" fill="#3d5240">first Function shipped 2026-07-17; syncs dismissals across devices</text>
+            <text x="359" y="143" text-anchor="middle" font-size="11.5" font-weight="600" fill="#3d5240">Dismiss button — live everywhere</text>
+            <text x="359" y="160" text-anchor="middle" font-size="9.5" fill="#3d5240">shipped July 17, 2026 — instantly syncs across every device</text>
             <line x1="459" y1="82" x2="384" y2="120" stroke="#8fae93" stroke-width="1.3" stroke-dasharray="4 3"/>
           </g>
         </svg>
-        <figcaption>The real path today — the gap from the earlier version of this page is closed.</figcaption>
+        <figcaption>How an update travels from Claude's workspace to the live site.</figcaption>
       </figure>
     </div>
 
@@ -239,9 +239,14 @@
     <div class="step-divider"></div>
 
     <div class="field-note" style="margin-top: 0;">
-      <p class="eyebrow">What this took to learn</p>
-      <p style="margin-bottom:10px;">A recommendation is only as honest as its candidate pool — sourcing from a generic "trending now" list regresses to generic results no matter how the scoring is built.</p>
-      <p>Authorization precedes any expenditure. Even a domain name required its exact identity and cost confirmed before purchase, and entering payment remained a decision left to you, not delegated.</p>
+      <p class="eyebrow">Two lessons worth knowing</p>
+      <p style="margin-bottom:10px;"><strong>A better formula can't fix a bad starting list.</strong> An early version ranked movies from a generic "trending now" list — the same list every visitor to a streaming site sees. A slapstick comedy nearly outscored a spy thriller starring Rami Malek, because both titles came from that same undifferentiated pool and every genre was weighted equally. The fix wasn't a smarter formula — it was pulling candidates only from Susan's own multi-year watch history instead. No amount of scoring sophistication rescues a candidate list that isn't personalized to begin with.</p>
+      <p><strong>Claude asks before it spends — every time, no exceptions.</strong> Registering this site's domain name is the clearest example: before buying streamingscout.org, Claude confirmed the exact domain and the $10.49 price with Susan, and would not complete the purchase without her card on file and her explicit go-ahead. That's not a one-time courtesy — it's the standing rule applied to every dollar this system touches.</p>
+    </div>
+
+    <div class="field-note" style="margin-top: 0;">
+      <p class="eyebrow">Want one of these yourself?</p>
+      <p>This walkthrough covers how this specific site works. If you'd rather see the actual starting prompt that could kick off something similar for your own topic, it's on the <a href="/start" style="text-decoration:underline;">Build Your Own</a> page.</p>
     </div>
 
   </div>
