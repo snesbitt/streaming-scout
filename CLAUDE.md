@@ -74,12 +74,21 @@ boundary between the two.
   data actually lives" above for why. Nothing here is read by the live
   site at runtime — it's read/written only by the Cowork skill bundle
   during a rebuild, then baked into `index.html` as static HTML.
-- `index.html` — the dashboard. Everything is inline: styling comes from
-  `style.css`, and all client-side JavaScript is a single `<script>` block
-  at the bottom of the file. There is no `app.js` and none is planned —
-  keep it that way; the whole point of this site is that it's simpler
-  infrastructure than the other two sites, not the same shape at a smaller
-  scale.
+- `index.html` — the dashboard. Styling comes from `style.css`. Almost all
+  client-side JavaScript is still a single `<script type="module">` block
+  at the bottom of the file — there is no `app.js` and none is planned,
+  keep it that way. As of 2026-07-23 that script imports its date-based
+  auto-promote logic and its dismiss-merge logic from `src/logic.mjs`
+  instead of defining them inline, purely so that logic can be unit
+  tested (see `tests/` below) — this is not the start of a bigger
+  refactor. Everything else stays inline; the whole point of this site is
+  that it's simpler infrastructure than the other two sites, not the same
+  shape at a smaller scale.
+- `src/logic.mjs` — the only extracted (non-inline) client-side logic:
+  `isReleased`, `serviceLabelFromBadgeTitle`, `mergeDismissedTitles`. Pure
+  functions only — no DOM, no localStorage, no fetch — so they're directly
+  testable. If you add logic here, keep it pure; DOM-touching code stays
+  inline in `index.html`.
 - `about.html`, `roadmap.html`, `guide.html` — public, self-contained
   explainer pages, no build step, no imports. Shared house style with the
   sibling sites (Fraunces serif, cream/serif shell, `.card`, `.pill-nav`,
@@ -101,12 +110,19 @@ boundary between the two.
   bounded: a 200-char cap on `title`/`section`, and the Blobs list evicts
   its oldest entry once it would exceed 500. Backed by a Netlify Blobs
   store named `dismissed-titles`.
-- `package.json` — exists only so Netlify bundles `@netlify/blobs` for the
-  Function above. No build script, no test script, no dev dependencies.
+- `package.json` — bundles `@netlify/blobs` for the Function above, and as
+  of 2026-07-23 runs the test suite via `npm test`. Still no build script,
+  no dev dependencies.
 - `manifest.json`, `netlify.toml`, icon/PNG assets — static PWA/deploy
   config, nothing dynamic.
-- No `tests/`, no CI workflow, no `npm test`. Manual review is the only
-  verification method this repo has — see "How to verify a deploy" below.
+- `tests/logic.test.mjs` — 13 assertions against `src/logic.mjs`, no
+  network, no DOM. Run with `npm test`. This covers the pure logic only;
+  there's still no CI workflow, and no coverage at all for the dismiss
+  Function, the static Top Picks/Coming Soon markup, or the poster-art
+  fallback — manual review (see "How to verify a deploy" below) is still
+  the only check for those. Don't let the presence of `npm test` read as
+  "this site is now fully tested" — it isn't; this is a real but narrow
+  start.
 
 ## Deploy workflow
 
@@ -126,18 +142,25 @@ the exact push command block.
 
 ## How to verify a deploy
 
-There is no automated health check for this site yet (Vinyl Scout and The
-Fitness Log both have one; this is the honest gap Roadmap phase 06 and
-Guide step 06 both call out — don't describe this site as having one it
-doesn't). Until one exists, verifying a deploy means:
+There is no automated *health* check for this site yet — nothing pings the
+live site post-deploy the way Vinyl Scout and The Fitness Log's checks do;
+that's the honest gap Roadmap phase 06 and Guide step 06 both call out,
+don't describe this site as having one it doesn't. There is now a small
+*unit* test suite (`npm test`, added 2026-07-23) — run it before any change
+touching `src/logic.mjs` or the auto-promote/dismiss logic in
+`index.html`'s script, but it doesn't touch a browser or the live site, so
+it's not a substitute for the manual check below. Verifying a deploy means:
 
-1. Confirm the Netlify build succeeded (green build ≠ nothing, but it only
+1. Run `npm test` if the change touched `src/logic.mjs` or the inline
+   `<script>`'s dismiss/promote logic. It only proves that logic still
+   behaves correctly in isolation — not that the page renders.
+2. Confirm the Netlify build succeeded (green build ≠ nothing, but it only
    proves the files uploaded, not that a visitor sees a working page).
-2. Open https://streamingscout.org (and any page you changed —
+3. Open https://streamingscout.org (and any page you changed —
    `/about`, `/roadmap`, `/guide`) and actually look at it. Check that the
    change rendered, that nothing above/below it broke, and on a change
    touching `index.html`'s script, that dismiss still works.
-3. Say so plainly in the post-flight summary — "checked the live site"
+4. Say so plainly in the post-flight summary — "checked the live site"
    is the real control of record here, not a claim of automated
    verification that doesn't exist.
 

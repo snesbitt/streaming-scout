@@ -56,9 +56,31 @@ across the next weekly rebuild. Top Picks and Coming Soon are static HTML
 baked into `index.html` at publish time from `EXCLUDED_TITLES.md`, not
 read live from the Blobs store, so keeping a title out of next week's
 freshly-rebuilt list still means pasting the copied message to Claude and
-updating that file. `app.js` still doesn't exist as a separate file; all
-client-side JS is a single small inline `<script>` at the bottom of
-`index.html`.
+updating that file. `app.js` still doesn't exist as a separate file; almost
+all client-side JS is still a single small inline `<script>` at the bottom
+of `index.html` — as of 2026-07-23 that script is a `type="module"` script
+and imports its date/dismiss logic from `src/logic.mjs` rather than
+defining it inline, so that logic now has real unit tests (see Tests,
+below).
+
+## Tests
+
+`src/logic.mjs` holds the pure logic behind two features: Coming Soon's
+date-based auto-promotion into Top Picks (added 2026-07-23, so titles like
+`Gone` move up on their own once the release date arrives, instead of
+needing a manual edit), and the dismiss system's list-merge logic. Both are
+plain functions with no DOM/localStorage/fetch dependency, so they're
+directly unit tested — the same "export the pure logic for testability"
+pattern vinyl-scout's `audio-preview.mjs` and travel-intelligence's
+`fares.mjs` use. `index.html`'s inline script imports from this module
+rather than duplicating the logic, so the tested code and the live code
+are the same code, not two copies that can drift apart.
+
+Run `npm test` (`node tests/logic.test.mjs`) — 13 assertions, no network,
+no DOM. Everything else on this site (the dismiss Function, the static
+Top Picks/Coming Soon markup, the poster-art fallback) doesn't have
+automated coverage yet; that's a real gap, not an oversight, and would be
+the next thing to close.
 
 ## 2026-07-21 update: persistent data now lives in this repo
 

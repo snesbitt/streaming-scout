@@ -244,19 +244,16 @@
 </footer>
 
 <div id="ss-toast" class="ss-toast"></div>
-<script>
+<script type="module">
+import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './src/logic.mjs';
 (function () {
   var KEY = 'ssDismissedTitles';
   function getDismissed() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
   function setDismissed(list) { localStorage.setItem(KEY, JSON.stringify(list)); }
   function mergeDismissed(list) {
-    var current = getDismissed();
-    var changed = false;
-    list.forEach(function (t) {
-      if (current.indexOf(t) === -1) { current.push(t); changed = true; }
-    });
-    if (changed) { setDismissed(current); }
-    return changed;
+    var result = mergeDismissedTitles(getDismissed(), list);
+    if (result.changed) { setDismissed(result.list); }
+    return result.changed;
   }
   function syncFromServer() {
     if (!window.fetch) return;
@@ -281,19 +278,12 @@
     today.setHours(0, 0, 0, 0);
     var soonRows = Array.prototype.slice.call(document.querySelectorAll('.soon-row[data-date]'));
     soonRows.forEach(function (row) {
-      var dateStr = row.dataset.date;
-      if (!dateStr) return;
-      var released = new Date(dateStr + 'T00:00:00');
-      if (isNaN(released.getTime()) || released > today) return;
+      if (!isReleased(row.dataset.date, today)) return;
       var title = row.dataset.title;
       var posterWrap = row.querySelector('.poster-wrap');
       var badge = row.querySelector('.avail-badge');
       var metaEl = row.querySelector('.pick-meta');
-      var serviceLabel = '';
-      if (badge) {
-        serviceLabel = (badge.getAttribute('title') || '')
-          .replace(/^Included with /, '').replace(/^Requires /, '').split(' — ')[0];
-      }
+      var serviceLabel = badge ? serviceLabelFromBadgeTitle(badge.getAttribute('title')) : '';
       var pickRow = document.createElement('div');
       pickRow.className = 'pick-row';
       pickRow.dataset.title = title;
