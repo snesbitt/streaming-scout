@@ -122,6 +122,16 @@
       </ul>
     </div>
 
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-num">07</span>
+        <span class="phase-title">protect saved changes</span>
+        <span class="phase-status planned">Planned</span>
+      </div>
+      <p class="phase-body">Dismissing a title is currently open to anyone with the link — no login, by design, since a "not interested" flag felt low-stakes when this shipped. As the dashboard link gets shared more, that's worth tightening: gate the dismiss endpoint's POST and DELETE behind a shared edit key (the same pattern Vinyl Scout's catalog uses), remembered in the browser after it's entered once so it doesn't cost a retype on every visit. Browsing Top Picks and Coming Soon stays open to anyone, unchanged.</p>
+      <p class="phase-value">A shared link lets anyone see what's recommended, not quietly reshape what's recommended.</p>
+    </div>
+
   </div>
 </main>
 
