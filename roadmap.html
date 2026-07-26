@@ -36,7 +36,18 @@
     <h1 class="page-title">Streaming Scout is one week old.</h1>
     <p class="lede">Phase 1 is live: a Cowork plugin, a hosted snapshot dashboard, and now its own domain. What's next is listed honestly below.</p>
 
-    <div class="phase">
+    <nav class="roadmap-overview" aria-label="All phases at a glance">
+      <a href="#phase-01" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>01 the plugin</a>
+      <a href="#phase-02" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>02 snapshot dashboard</a>
+      <a href="#phase-03" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>03 a real domain</a>
+      <a href="#phase-04" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>04 scheduled resync</a>
+      <a href="#phase-05" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>05 browse full watch log</a>
+      <a href="#phase-06" class="ro-chip ro-progress"><span class="ro-dot" aria-hidden="true">◐</span>06 a real backend</a>
+      <a href="#phase-07" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>07 protect saved changes</a>
+      <a href="#phase-08" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>08 content refresh &amp; polish</a>
+    </nav>
+
+    <div class="phase" id="phase-01">
       <div class="phase-head">
         <span class="phase-num">01</span>
         <span class="phase-title">the plugin</span>
@@ -51,7 +62,7 @@
       </ul>
     </div>
 
-    <div class="phase">
+    <div class="phase" id="phase-02">
       <div class="phase-head">
         <span class="phase-num">02</span>
         <span class="phase-title">the snapshot dashboard</span>
@@ -71,7 +82,7 @@
       </ul>
     </div>
 
-    <div class="phase">
+    <div class="phase" id="phase-03">
       <div class="phase-head">
         <span class="phase-num">03</span>
         <span class="phase-title">a real domain</span>
@@ -84,7 +95,7 @@
       </ul>
     </div>
 
-    <div class="phase">
+    <div class="phase" id="phase-04">
       <div class="phase-head">
         <span class="phase-num">04</span>
         <span class="phase-title">scheduled resync</span>
@@ -98,7 +109,7 @@
       </ul>
     </div>
 
-    <div class="phase">
+    <div class="phase" id="phase-05">
       <div class="phase-head">
         <span class="phase-num">05</span>
         <span class="phase-title">browse the full watch log</span>
@@ -108,7 +119,7 @@
       <p class="phase-value">See the evidence behind a recommendation, not just the recommendation.</p>
     </div>
 
-    <div class="phase">
+    <div class="phase" id="phase-06">
       <div class="phase-head">
         <span class="phase-num">06</span>
         <span class="phase-title">a real backend</span>
@@ -122,7 +133,7 @@
       </ul>
     </div>
 
-    <div class="phase">
+    <div class="phase" id="phase-07">
       <div class="phase-head">
         <span class="phase-num">07</span>
         <span class="phase-title">protect saved changes</span>
@@ -130,6 +141,23 @@
       </div>
       <p class="phase-body">Dismissing a title is currently open to anyone with the link — no login, by design, since a "not interested" flag felt low-stakes when this shipped. As the dashboard link gets shared more, that's worth tightening: gate the dismiss endpoint's POST and DELETE behind a shared edit key (the same pattern Vinyl Scout's catalog uses), remembered in the browser after it's entered once so it doesn't cost a retype on every visit. Browsing Top Picks and Coming Soon stays open to anyone, unchanged.</p>
       <p class="phase-value">A shared link lets anyone see what's recommended, not quietly reshape what's recommended.</p>
+    </div>
+
+    <div class="phase" id="phase-08">
+      <div class="phase-head">
+        <span class="phase-num">08</span>
+        <span class="phase-title">content refresh &amp; 2026 polish</span>
+        <span class="phase-status live">Live</span>
+      </div>
+      <p class="phase-body">A full-history resync and a round of content and performance work: the taste profile now runs on the complete 919-title, 2010-2026 log instead of a partial one, Top Picks was rebuilt across six distinct veins with a real actor list and diversified so it isn't just one genre repeated, and Currently Watching / Coming Soon caught up to what's actually being watched. Fraunces and IBM Plex were also moved off Google Fonts onto self-hosted files, and every poster image got explicit dimensions plus lazy-loading below the fold.</p>
+      <p class="phase-value">Recommendations grounded in the whole history, not last month's slice of it &mdash; and a faster, more honest-looking page around them.</p>
+      <ul class="phase-log">
+        <li><span class="lg-date">JUL 2026</span>Full-history re-sync: 919 titles (2010-2026) pulled in, and the taste profile rebuilt on top of the full set instead of a partial resync.</li>
+        <li><span class="lg-date">JUL 2026</span>Top Picks rebuilt from the full 16-year profile: 6 picks across 6 distinct veins, backed by a real actor list rather than genre alone; later restored, promoted, and diversified to 13 picks with verified artwork.</li>
+        <li><span class="lg-date">JUL 2026</span>Currently Watching: added Tucci in Italy (S1-2, Nat Geo), per Susan. Hulu and Apple TV+ added to the pick pool (Slow Horses, Say Nothing, Only Murders); Slow Horses and Only Murders were then marked watched (S1-5 each, loved) and moved to watch-for.</li>
+        <li><span class="lg-date">JUL 2026</span>Coming Soon now sorts by date, then match %, with a score badge on every row instead of only some.</li>
+        <li><span class="lg-date">JUL 2026</span>Fraunces and IBM Plex self-hosted (no Google Fonts request chain, immutable 1-year cache on <code>/fonts/*</code>), verified headless with zero external font requests. All 25 posters given explicit dimensions and <code>decoding="async"</code>, with <code>loading="lazy"</code> below the fold (the first two stay eager, for LCP).</li>
+      </ul>
     </div>
 
   </div>
