@@ -1,25 +1,987 @@
 # Streaming Log
 
-**Last updated:** 2026-07-21 (reset)
+**Last updated:** 2026-07-25 (full-history backfill)
 
-## 2026-07-21 — data loss notice
 
-The prior watch-history log was written to a Cowork session's own ephemeral output
-folder rather than a stable location, and that session is no longer reachable — the
-log (multiple years of Netflix/Prime viewing history) could not be recovered.
+## 2026-07-25 — full-history backfill note
 
-This file is intentionally empty going forward. The next run of the `sync-watch-history`
-skill will repopulate it from Netflix's and Prime Video's own "Viewing activity" /
-"Watch history" pages, most-recent-first, per that skill's normal format below. Netflix in
-particular exposes a long scrollable history, so a full re-sync should recover a
-substantial amount of real signal — it just won't be a byte-identical copy of the old log.
+Rebuilt from the live, logged-in account pages in one pass (replacing the empty
+post-data-loss file): Netflix "Viewing activity" read back to its first entry
+(Feb 2010, 1,212 episode rows) and Prime Video "Watch History" read back to its
+first entry (Mar 2017). Entries below are aggregated to one per title per
+service — episode counts and first/last watch dates preserved — rather than one
+entry per episode, because a 16-year backfill at per-episode grain would be
+~1,700 entries of noise the taste profile doesn't need. Future incremental
+syncs may keep using the per-date format from the skill for NEW activity; both
+formats coexist fine, most-recent-first. Two unparseable blank/`:`-titled
+Netflix rows were dropped. Cast fields are not stored here (the account pages
+don't expose cast); actor affinity lives in TASTE_PROFILE.md.
 
-## Entry format (unchanged)
+## Entry format (backfill)
 
-```markdown
-## [Date]
-**Title:** [name]
-**Service:** [Netflix / Prime]
-**Status:** [finished / in progress / abandoned]
-**Cast:** [lead actors, if known]
-```
+**Title** · Service · episodes/plays · first watched → last watched
+
+
+## 2026
+
+- **The Amateur** · Prime · 1 play · 2026-07-22
+- **Ride or Die** · Prime · 4 plays · 2026-07-15 → 2026-07-19
+- **Summer ’36** · Netflix · 1 play · 2026-07-14
+- **Big Mistakes** · Netflix · 8 plays · 2026-06-12 → 2026-07-14
+- **Call My Agent** · Prime · 2 plays · 2026-07-09 → 2026-07-14
+- **Below Deck** · Prime · 1 play · 2026-07-14
+- **Memory of a Killer** · Prime · 7 plays · 2026-06-18 → 2026-07-14
+- **Revolver Lily** · Prime · 1 play · 2026-07-12
+- **Grantchester Season 1** · Prime · 1 play · 2026-07-09
+- **Getting On S3** · Prime · 3 plays · 2026-07-07 → 2026-07-09
+- **Getting On S2** · Prime · 3 plays · 2026-07-05 → 2026-07-07
+- **The Four Seasons** · Netflix · 2 plays · 2025-05-12 → 2026-07-05
+- **Getting On S1** · Prime · 1 play · 2026-07-05
+- **Grantchester** · Prime · 1 play · 2026-07-02
+- **I Will Find You** · Netflix · 2 plays · 2026-06-29
+- **Endeavour** · Prime · 4 plays · 2023-01-10 → 2026-06-24
+- **Last Tango in Halifax** · Prime · 3 plays · 2023-03-25 → 2026-06-24
+- **Downton Abbey: The Grand Finale** · Netflix · 1 play · 2026-06-21
+- **Grantchester Season 2** · Prime · 1 play · 2026-06-14
+- **Bang** · Prime · 1 play · 2026-06-14
+- **Patience** · Prime · 1 play · 2026-06-13
+- **Agent Zeta** · Prime · 1 play · 2026-06-13
+- **Fast Charlie** · Netflix · 1 play · 2026-06-11
+- **The Rip** · Netflix · 1 play · 2026-06-11
+- **A French Village** · Prime · 14 plays · 2026-04-25 → 2026-06-11
+- **The Wagner Method** · Prime · 2 plays · 2026-05-06 → 2026-06-11
+- **HIS & HERS** · Netflix · 1 play · 2026-06-10
+- **A Fortunate Man** · Netflix · 1 play · 2026-06-09
+- **Vera** · Prime · 1 play · 2026-06-08
+- **This Farming Life S8** · Prime · 1 play · 2026-06-08
+- **Carpe Diem** · Prime · 1 play · 2026-06-08
+- **Office Romance** · Netflix · 1 play · 2026-06-07
+- **Citadel** · Prime · 3 plays · 2023-05-29 → 2026-06-04
+- **Seven Dials Mystery** · Prime · 2 plays · 2023-11-25 → 2026-05-26
+- **Wide Sargasso Sea** · Prime · 1 play · 2026-05-26
+- **Run Away** · Netflix · 8 plays · 2026-05-19 → 2026-05-23
+- **Ladies First** · Netflix · 1 play · 2026-05-22
+- **It's Not Like That** · Prime · 1 play · 2026-05-22
+- **Tom Clancy's Jack Ryan: Ghost War** · Prime · 1 play · 2026-05-21
+- **Shetland S10** · Prime · 2 plays · 2026-02-28 → 2026-05-18
+- **Maigret** · Prime · 1 play · 2026-05-18
+- **The Spy** · Prime · 2 plays · 2026-05-13 → 2026-05-18
+- **Mother's Day** · Netflix · 1 play · 2026-05-17
+- **Remarkably Bright Creatures** · Netflix · 1 play · 2026-05-17
+- **Legends** · Netflix · 8 plays · 2015-11-23 → 2026-05-17
+- **Coroner S2** · Prime · 1 play · 2026-05-11
+- **Coroner S1** · Prime · 3 plays · 2026-05-07 → 2026-05-11
+- **Agatha Christie: The Pale Horse** · Prime · 1 play · 2026-05-07
+- **Fisk** · Netflix · 14 plays · 2023-12-12 → 2026-05-06
+- **A Taste for Murder S1** · Prime · 5 plays · 2026-04-19 → 2026-05-06
+- **Grandpa Was An Emperor** · Prime · 1 play · 2026-05-05
+- **Margo's Got Money Troubles** · Prime · 1 play · 2026-05-04
+- **The Persians: A History of Iran** · Prime · 1 play · 2026-05-04
+- **Detective Hole** · Netflix · 3 plays · 2026-03-30 → 2026-05-03
+- **The Nordic Murders** · Prime · 1 play · 2026-05-03
+- **Mademoiselle Holmes** · Prime · 5 plays · 2026-04-29 → 2026-05-03
+- **American Godfathers: The Five Families: American Godfathers: The Five Families** · Netflix · 3 plays · 2026-04-20 → 2026-04-26
+- **Sister My Sister** · Prime · 1 play · 2026-04-26
+- **The Forsytes** · Prime · 1 play · 2026-04-25
+- **Father Brown** · Prime · 1 play · 2026-04-20
+- **A Working Man** · Prime · 1 play · 2026-04-19
+- **BEEF** · Netflix · 3 plays · 2023-04-17 → 2026-04-18
+- **Crime 101** · Prime · 1 play · 2026-04-09
+- **The Count of Monte Cristo** · Prime · 3 plays · 2026-04-04 → 2026-04-06
+- **The Night Agent** · Netflix · 13 plays · 2024-01-04 → 2026-03-29
+- **Riot Women S1** · Prime · 3 plays · 2026-01-17 → 2026-03-28
+- **Steely Dan - Aja (Classic Album)** · Prime · 2 plays · 2023-09-05 → 2026-03-25
+- **Bill Evans Time Remembered** · Prime · 1 play · 2026-03-24
+- **Monarch: Legacy of Monsters** · Prime · 1 play · 2026-03-23
+- **Shelter** · Prime · 1 play · 2026-03-23
+- **Hope Street S5** · Prime · 1 play · 2026-03-23
+- **Mercy (2025)** · Prime · 1 play · 2026-03-22
+- **MELANIA** · Prime · 1 play · 2026-03-22
+- **Diane Warren: Relentless** · Prime · 1 play · 2026-03-22
+- **War Machine** · Netflix · 1 play · 2026-03-18
+- **Vladimir** · Netflix · 5 plays · 2026-03-10 → 2026-03-13
+- **The Swedish Connection** · Netflix · 1 play · 2026-03-11
+- **Nuremberg** · Prime · 1 play · 2026-02-26
+- **How To Get To Heaven From Belfast** · Netflix · 2 plays · 2026-02-18
+- **Grantchester** · Netflix · 2 plays · 2026-01-28 → 2026-02-10
+- **Queen of Chess** · Netflix · 1 play · 2026-02-10
+- **Unfamiliar** · Netflix · 2 plays · 2026-02-05
+- **Dr. No** · Netflix · 1 play · 2026-01-28
+- **Agatha Christie's Seven Dials** · Netflix · 3 plays · 2026-01-26 → 2026-01-28
+- **Skyscraper Live** · Netflix · 1 play · 2026-01-28
+- **Gracepoint Season 1** · Prime · 1 play · 2026-01-17
+- **The Game S1** · Prime · 1 play · 2026-01-17
+- **Cross Season 1** · Prime · 1 play · 2026-01-15
+- **The Night Manager** · Prime · 5 plays · 2020-12-05 → 2026-01-15
+- **Fallout** · Prime · 1 play · 2026-01-15
+- **Depeche Mode: M** · Netflix · 1 play · 2026-01-12
+- **Bookish** · Prime · 1 play · 2026-01-12
+
+## 2025
+
+- **Ripple** · Netflix · 6 plays · 2025-12-12
+- **My Secret Santa** · Netflix · 1 play · 2025-12-11
+- **The Abandons** · Netflix · 1 play · 2025-12-11
+- **Jay Kelly** · Netflix · 1 play · 2025-12-07
+- **Stranger Things** · Netflix · 1 play · 2025-12-05
+- **Frankenstein** · Netflix · 1 play · 2025-12-04
+- **This Is Going To Hurt** · Netflix · 3 plays · 2025-11-19
+- **The Beast in Me** · Netflix · 1 play · 2025-11-16
+- **The Interpreter** · Netflix · 1 play · 2025-11-03
+- **The Asset** · Netflix · 1 play · 2025-10-28
+- **The Diplomat** · Netflix · 8 plays · 2023-04-21 → 2025-10-24
+- **A HOUSE OF DYNAMITE** · Netflix · 1 play · 2025-10-24
+- **The Woman in Cabin 10** · Netflix · 1 play · 2025-10-22
+- **Doc** · Netflix · 4 plays · 2025-10-14 → 2025-10-22
+- **Housewife 49** · Prime · 1 play · 2025-10-14
+- **Nurse Jackie** · Netflix · 18 plays · 2016-01-06 → 2025-10-09
+- **Black Rabbit** · Netflix · 4 plays · 2025-10-01 → 2025-10-07
+- **House of Guinness** · Netflix · 5 plays · 2025-09-25 → 2025-09-27
+- **Lynley S1** · Prime · 1 play · 2025-09-19
+- **Killer Elite** · Prime · 1 play · 2025-09-18
+- **Portlandia** · Netflix · 9 plays · 2019-10-16 → 2025-09-15
+- **The Thursday Murder Club** · Netflix · 1 play · 2025-09-03
+- **Hostage** · Netflix · 2 plays · 2025-08-24
+- **Kandahar** · Netflix · 1 play · 2025-08-12
+- **The Hunting Wives** · Netflix · 4 plays · 2025-08-01
+- **Red Notice** · Netflix · 1 play · 2025-07-28
+- **Havoc** · Netflix · 1 play · 2025-07-28
+- **Tour de France: Unchained** · Netflix · 19 plays · 2023-06-17 → 2025-07-09
+- **September 5** · Prime · 1 play · 2025-07-05
+- **The Old Guard 2** · Netflix · 1 play · 2025-07-02
+- **The Old Guard** · Netflix · 1 play · 2025-06-29
+- **FUBAR** · Netflix · 1 play · 2025-06-19
+- **A Cruel Love: The Ruth Ellis Story S1** · Prime · 1 play · 2025-06-01
+- **Another Simple Favor** · Prime · 1 play · 2025-06-01
+- **The Better Sister** · Prime · 1 play · 2025-06-01
+- **Motherland S1** · Prime · 1 play · 2025-05-31
+- **Dept. Q** · Netflix · 3 plays · 2025-05-30
+- **SS-GB** · Prime · 1 play · 2025-05-25
+- **Death in Paradise S14** · Prime · 1 play · 2025-05-25
+- **I, Jack Wright S1** · Prime · 4 plays · 2025-04-29 → 2025-05-25
+- **Douglas is Cancelled S1** · Prime · 1 play · 2025-05-22
+- **2025 BAFTA Television Awards with P&O Cruises** · Prime · 1 play · 2025-05-22
+- **White House down** · Prime · 1 play · 2025-05-18
+- **Survivor** · Prime · 1 play · 2025-05-18
+- **London Kills** · Prime · 2 plays · 2025-05-11 → 2025-05-13
+- **The Responder** · Prime · 2 plays · 2025-05-04 → 2025-05-05
+- **The Old Man Season 1** · Prime · 2 plays · 2022-07-18 → 2025-05-03
+- **Spectre** · Prime · 3 plays · 2020-09-05 → 2025-04-30
+- **Ludwig S1** · Prime · 2 plays · 2025-04-29 → 2025-04-30
+- **Murder in Provence** · Prime · 1 play · 2025-04-29
+- **Leverage: Redemption** · Prime · 1 play · 2025-04-29
+- **Agatha Christie's Murder is Easy S1** · Prime · 2 plays · 2024-03-03 → 2025-04-28
+- **Agatha Christie's Towards Zero S1** · Prime · 2 plays · 2025-04-27 → 2025-04-28
+- **Furious 7 - Extended Edition** · Prime · 1 play · 2025-04-25
+- **Bosch: Legacy Season 1** · Prime · 1 play · 2025-04-08
+- **The Bank Job** · Prime · 3 plays · 2020-10-19 → 2025-04-07
+- **Spy** · Prime · 1 play · 2025-04-06
+- **Adolescence** · Netflix · 4 plays · 2025-03-28
+- **Chelsea Handler: The Feeling** · Netflix · 1 play · 2025-03-26
+- **Redemption** · Prime · 1 play · 2025-03-17
+- **The Recruit** · Netflix · 1 play · 2025-03-16
+- **Running Point** · Netflix · 5 plays · 2025-03-15
+- **Mo** · Netflix · 4 plays · 2025-03-14
+- **The Wheel of Time** · Prime · 1 play · 2025-03-14
+- **Season 3** · Prime · 3 plays · 2024-07-06 → 2025-03-14
+- **The Accountant** · Prime · 1 play · 2025-03-06
+- **The Only Girl in the Orchestra** · Netflix · 1 play · 2025-03-05
+- **Blink Twice** · Prime · 1 play · 2025-03-04
+- **Focus** · Prime · 1 play · 2025-03-04
+- **Nickel Boys** · Prime · 1 play · 2025-02-28
+- **The Chronicles of Riddick** · Prime · 1 play · 2025-02-28
+- **The Last Samurai (2003)** · Prime · 1 play · 2025-02-28
+- **House of David, S1** · Prime · 1 play · 2025-02-28
+- **Five Star Chef** · Netflix · 1 play · 2025-02-21
+- **Trial by Fire** · Netflix · 1 play · 2025-02-21
+- **The Contractor** · Prime · 2 plays · 2023-09-16 → 2025-02-18
+- **The Åre Murders** · Netflix · 3 plays · 2025-02-16
+- **You're Cordially Invited** · Prime · 1 play · 2025-02-16
+- **Babygirl** · Prime · 1 play · 2025-02-16
+- **All We Imagine as Light** · Prime · 1 play · 2025-02-15
+- **The Equalizer 2** · Prime · 1 play · 2025-02-12
+- **The Equalizer** · Prime · 1 play · 2025-02-12
+- **The Equalizer 3** · Prime · 1 play · 2025-02-10
+- **Alone Australia** · Netflix · 3 plays · 2025-02-08 → 2025-02-09
+- **Number 24** · Netflix · 1 play · 2025-01-22
+- **One Hundred Years of Solitude** · Netflix · 2 plays · 2025-01-08
+- **His Three Daughters** · Netflix · 1 play · 2025-01-06
+
+## 2024
+
+- **No Good Deed** · Netflix · 8 plays · 2024-12-15
+- **Black Doves** · Netflix · 1 play · 2024-12-07
+- **Crisis** · Prime · 1 play · 2024-11-11
+- **The Operative** · Prime · 1 play · 2024-11-10
+- **After the Flood** · Prime · 2 plays · 2024-11-09 → 2024-11-10
+- **The Great British Baking Show** · Netflix · 12 plays · 2017-04-19 → 2024-11-08
+- **Martha** · Netflix · 1 play · 2024-11-07
+- **Jack Reacher** · Netflix · 1 play · 2024-10-27
+- **Infinite** · Prime · 1 play · 2024-10-27
+- **Canary Black** · Prime · 1 play · 2024-10-27
+- **The Lincoln Lawyer** · Netflix · 6 plays · 2023-08-07 → 2024-10-26
+- **Damascus Cover** · Prime · 1 play · 2024-10-25
+- **Redemption** · Netflix · 1 play · 2024-10-23
+- **Tulsa King** · Prime · 1 play · 2024-10-14
+- **Safe** · Prime · 1 play · 2024-10-14
+- **Vera Season 1** · Prime · 2 plays · 2024-10-13 → 2024-10-14
+- **Cassandra's Dream** · Prime · 1 play · 2024-10-13
+- **Citadel: Diana** · Prime · 1 play · 2024-10-13
+- **Nobody Wants This** · Netflix · 5 plays · 2024-10-12
+- **Dirty Rotten Scoundrels** · Prime · 1 play · 2024-10-12
+- **Mechanic: Resurrection** · Prime · 1 play · 2024-10-11
+- **The Mechanic** · Netflix · 1 play · 2024-10-09
+- **Wild Card** · Prime · 1 play · 2024-10-08
+- **Marguerite's Theorem** · Prime · 1 play · 2024-10-05
+- **Homefront** · Prime · 1 play · 2024-10-03
+- **Fast & Furious Presents: Hobbs & Shaw** · Prime · 1 play · 2024-10-01
+- **In the Land of Saints and Sinners** · Prime · 1 play · 2024-09-25
+- **A Very British Scandal** · Prime · 1 play · 2024-09-25
+- **Maria By Callas** · Prime · 1 play · 2024-09-18
+- **MI-5: The Greater Good** · Prime · 1 play · 2024-09-17
+- **The Fabulous Four** · Prime · 1 play · 2024-09-16
+- **Treasure** · Prime · 1 play · 2024-09-13
+- **The Perfect Couple** · Netflix · 6 plays · 2024-09-05 → 2024-09-12
+- **KAOS** · Netflix · 1 play · 2024-09-12
+- **Marlowe** · Prime · 1 play · 2024-09-04
+- **The Killing of a Sacred Deer** · Prime · 1 play · 2024-09-03
+- **The Idea of You** · Prime · 1 play · 2024-09-01
+- **Transporter 3** · Prime · 1 play · 2024-08-28
+- **Chaos** · Prime · 1 play · 2024-08-24
+- **Last Tango in Halifax** · Netflix · 8 plays · 2023-03-11 → 2024-08-18
+- **Blitz** · Prime · 1 play · 2024-08-18
+- **Last Tango in Halifax** · Netflix · 6 plays · 2024-08-17
+- **The Union** · Netflix · 1 play · 2024-08-17
+- **McDonald & Dodds** · Prime · 3 plays · 2024-08-07 → 2024-08-16
+- **Designated Survivor** · Netflix · 2 plays · 2024-08-15
+- **Brooklyn Nine-Nine** · Netflix · 1 play · 2024-08-15
+- **Split** · Prime · 1 play · 2024-08-12
+- **Jack Reacher: Never Go Back** · Netflix · 1 play · 2024-08-06
+- **Wicked Little Letters** · Netflix · 1 play · 2024-08-04
+- **The Bay S4** · Prime · 2 plays · 2024-08-03 → 2024-08-04
+- **The Bay S3** · Prime · 2 plays · 2024-08-02 → 2024-08-03
+- **Season 2** · Prime · 2 plays · 2024-08-01 → 2024-08-02
+- **The Bay** · Prime · 3 plays · 2023-10-15 → 2024-07-31
+- **Hotel Portofino** · Prime · 1 play · 2024-07-31
+- **Endeavour Season 3** · Prime · 1 play · 2024-07-16
+- **Endeavour Season 2** · Prime · 2 plays · 2024-07-15 → 2024-07-16
+- **Masterpiece: Endeavour, Season One** · Prime · 2 plays · 2024-07-14 → 2024-07-15
+- **Endeavour: Season 6** · Prime · 1 play · 2024-07-10
+- **Firebrand** · Prime · 1 play · 2024-07-09
+- **Mr. Holmes** · Prime · 1 play · 2024-07-08
+- **Chef! Season 1** · Prime · 1 play · 2024-07-07
+- **Three Little Birds S1** · Prime · 2 plays · 2024-07-06 → 2024-07-07
+- **London Road** · Prime · 1 play · 2024-07-05
+- **Origin** · Prime · 1 play · 2024-07-05
+- **30 for 30: Lance: 30 for 30: Lance** · Netflix · 2 plays · 2024-07-02
+- **A Family Affair** · Netflix · 1 play · 2024-07-02
+- **The Dry** · Prime · 1 play · 2024-07-01
+- **Casino Royale** · Prime · 2 plays · 2022-06-25 → 2024-06-19
+- **Jack Reacher: Never Go Back** · Prime · 1 play · 2024-06-19
+- **Fingersmith Season 1** · Prime · 1 play · 2024-06-12
+- **Falling in Love** · Netflix · 1 play · 2024-05-31
+- **Black Lotus** · Prime · 1 play · 2024-05-27
+- **The Painter** · Prime · 1 play · 2024-05-20
+- **Meg 2: The Trench** · Netflix · 1 play · 2024-05-14
+- **Guy Ritchie's The Covenant** · Prime · 1 play · 2024-05-14
+- **The Beekeeper** · Prime · 1 play · 2024-05-13
+- **One Life** · Prime · 1 play · 2024-05-13
+- **Mr. & Mrs. Smith** · Prime · 1 play · 2024-05-12
+- **Baby Reindeer** · Netflix · 7 plays · 2024-05-10 → 2024-05-11
+- **CB Strike: Troubled Blood:** · Prime · 1 play · 2024-05-11
+- **Unfrosted** · Netflix · 1 play · 2024-05-10
+- **A Man in Full** · Netflix · 5 plays · 2024-05-07 → 2024-05-08
+- **Bob Marley: One Love** · Prime · 1 play · 2024-05-06
+- **Screw** · Prime · 2 plays · 2024-05-03 → 2024-05-04
+- **Deadloch** · Prime · 1 play · 2024-05-02
+- **A Gentleman in Moscow** · Prime · 2 plays · 2024-04-29 → 2024-05-02
+- **The Bricklayer** · Netflix · 1 play · 2024-04-16
+- **Jamie's One-Pan Wonders S1** · Prime · 1 play · 2024-04-16
+- **No Offence** · Prime · 1 play · 2024-04-03
+- **Tig Notaro: Hello Again** · Prime · 1 play · 2024-04-02
+- **Sherwood Season 1** · Prime · 1 play · 2024-03-27
+- **All of Us Strangers** · Prime · 1 play · 2024-03-25
+- **Staged** · Prime · 1 play · 2024-03-24
+- **The Three Drinkers in Ireland** · Prime · 1 play · 2024-03-24
+- **Dinner Party Diaries with José Andrés** · Prime · 1 play · 2024-03-24
+- **Next of Kin** · Prime · 1 play · 2024-03-24
+- **The Real Mad Men of Advertising** · Prime · 1 play · 2024-03-23
+- **The Other Shore: The Diana Nyad Story** · Netflix · 1 play · 2024-03-21
+- **Road House** · Prime · 1 play · 2024-03-21
+- **Bill Russell: Legend: Bill Russell: Legend** · Netflix · 1 play · 2024-03-19
+- **Miss Americana** · Netflix · 1 play · 2024-03-19
+- **Suspect S1** · Prime · 1 play · 2024-03-19
+- **The Office (UK) Season 1** · Prime · 1 play · 2024-03-19
+- **Ferrari** · Prime · 1 play · 2024-03-16
+- **The Gentlemen** · Netflix · 5 plays · 2024-03-13 → 2024-03-14
+- **Tracker** · Prime · 1 play · 2024-03-12
+- **Poor Things** · Prime · 1 play · 2024-03-12
+- **Episode 101: Bonus: Unforgotten** · Prime · 1 play · 2024-03-09
+- **Unforgotten: Season 3** · Prime · 3 plays · 2024-03-07 → 2024-03-09
+- **Unforgotten Season 2** · Prime · 2 plays · 2024-03-04 → 2024-03-05
+- **Unforgotten Season 1** · Prime · 1 play · 2024-03-04
+- **Chewing Gum** · Prime · 3 plays · 2024-02-29 → 2024-03-01
+- **The Boys in The Boat** · Prime · 1 play · 2024-02-28
+- **Special Ops: Lioness** · Prime · 5 plays · 2023-08-27 → 2024-02-25
+- **Avatar: The Last Airbender** · Netflix · 2 plays · 2024-02-23
+- **Orange Is the New Black** · Netflix · 71 plays · 2014-06-09 → 2024-02-23
+- **Monsieur Spade** · Prime · 1 play · 2024-02-19
+- **Griselda** · Netflix · 6 plays · 2024-02-04 → 2024-02-13
+- **One Day** · Netflix · 2 plays · 2024-02-10
+- **Past Lives** · Prime · 1 play · 2024-02-10
+- **Expats** · Prime · 2 plays · 2024-02-09 → 2024-02-10
+- **Gen V** · Prime · 1 play · 2024-02-06
+- **Reacher** · Prime · 8 plays · 2022-02-26 → 2024-02-06
+- **The Nest** · Prime · 1 play · 2024-02-04
+- **Houseboat** · Prime · 1 play · 2024-01-09
+- **The Bricklayer** · Prime · 1 play · 2024-01-08
+- **Ford v Ferrari** · Prime · 1 play · 2024-01-06
+- **Agatha Christie's Marple** · Prime · 1 play · 2024-01-05
+- **Sound of Freedom** · Prime · 1 play · 2024-01-05
+- **Berlin and the Jewels of Paris** · Netflix · 1 play · 2024-01-04
+- **The Confessions of Frannie Langton** · Prime · 1 play · 2024-01-03
+
+## 2023
+
+- **Anthony Bourdain: No Reservations** · Prime · 3 plays · 2023-12-29 → 2023-12-31
+- **Mission: Impossible - Dead Reckoning** · Prime · 1 play · 2023-12-31
+- **The Collective** · Prime · 1 play · 2023-12-30
+- **Quirke** · Prime · 1 play · 2023-12-29
+- **Travel Man** · Prime · 1 play · 2023-12-28
+- **The Ex-Wife S1** · Prime · 2 plays · 2023-12-27 → 2023-12-28
+- **Ricky Gervais: Armageddon** · Netflix · 1 play · 2023-12-27
+- **Saltburn** · Prime · 1 play · 2023-12-27
+- **Fellow Travelers** · Prime · 4 plays · 2023-12-23 → 2023-12-26
+- **Maestro** · Netflix · 1 play · 2023-12-23
+- **MotherFatherSon** · Prime · 3 plays · 2023-12-20 → 2023-12-22
+- **My Life With the Walter Boys** · Netflix · 3 plays · 2023-12-18
+- **Shetland** · Prime · 2 plays · 2023-12-17 → 2023-12-18
+- **Top Chef** · Netflix · 5 plays · 2023-12-17
+- **Archie S1** · Prime · 4 plays · 2023-12-09 → 2023-12-17
+- **The Crown** · Netflix · 20 plays · 2017-12-09 → 2023-12-15
+- **Friends from College** · Netflix · 9 plays · 2023-12-11
+- **Upstairs Downstairs** · Prime · 2 plays · 2023-11-20 → 2023-12-11
+- **Live Italian** · Prime · 1 play · 2023-12-11
+- **A Nearly Normal Family** · Netflix · 1 play · 2023-12-09
+- **Golda** · Prime · 1 play · 2023-12-09
+- **Leave the World Behind** · Netflix · 1 play · 2023-12-08
+- **Episode 7: BONUS: The Ipcress File: Behind the Scenes** · Prime · 1 play · 2023-12-02
+- **The Ipcress File Season 1** · Prime · 3 plays · 2023-11-30 → 2023-12-02
+- **May December** · Netflix · 1 play · 2023-12-01
+- **007: Road To A Million** · Prime · 1 play · 2023-11-29
+- **Indian Summers** · Prime · 7 plays · 2021-07-26 → 2023-11-26
+- **The French Chef with Julia Child** · Prime · 1 play · 2023-11-25
+- **Race to the Summit** · Netflix · 1 play · 2023-11-23
+- **Big Night (1996)** · Prime · 1 play · 2023-11-23
+- **Squaring the Circle (The Story of...** · Netflix · 1 play · 2023-11-21
+- **Upstairs Downstairs (2010)** · Prime · 2 plays · 2023-11-19 → 2023-11-20
+- **Payback S1** · Prime · 2 plays · 2023-11-14 → 2023-11-15
+- **Dead Poets Society** · Prime · 1 play · 2023-11-13
+- **All the Light We Cannot See** · Netflix · 1 play · 2023-11-08
+- **Stonehouse** · Prime · 1 play · 2023-11-08
+- **Leslie Caron: The Reluctant Star** · Prime · 1 play · 2023-11-08
+- **My Name Is Fleming, Ian Fleming** · Prime · 1 play · 2023-11-08
+- **Raja Rasoi Aur Andaaz Anokha** · Prime · 1 play · 2023-11-08
+- **Sly** · Netflix · 1 play · 2023-11-05
+- **Billions S7** · Prime · 1 play · 2023-11-05
+- **Denial** · Prime · 1 play · 2023-10-31
+- **Woman In Gold** · Prime · 1 play · 2023-10-31
+- **A Mighty Heart** · Prime · 1 play · 2023-10-26
+- **Why Didn't They Ask Evans? S1** · Prime · 2 plays · 2023-10-24 → 2023-10-25
+- **The Sixth Commandment** · Prime · 1 play · 2023-10-24
+- **Redemption S1** · Prime · 2 plays · 2023-10-22 → 2023-10-23
+- **The Untouchables** · Prime · 1 play · 2023-10-14
+- **The Remains of the Day** · Prime · 1 play · 2023-10-11
+- **Treason** · Netflix · 3 plays · 2023-10-09
+- **Beckham** · Netflix · 1 play · 2023-10-09
+- **Blithe Spirit** · Prime · 1 play · 2023-10-05
+- **The Lost King** · Prime · 1 play · 2023-10-05
+- **Inside (2023)** · Prime · 1 play · 2023-10-05
+- **Raja, Rasoi aur Anya Kahaniyan** · Netflix · 11 plays · 2017-06-26 → 2023-10-03
+- **Heavenly Bites: Mexico: Heavenly Bites: Mexico** · Netflix · 1 play · 2023-10-03
+- **Poison** · Netflix · 1 play · 2023-10-03
+- **Luxor** · Prime · 1 play · 2023-10-03
+- **The Tudors** · Prime · 1 play · 2023-09-30
+- **Mission: Impossible III** · Prime · 1 play · 2023-09-26
+- **Enough Said** · Prime · 1 play · 2023-09-25
+- **Grace of Monaco** · Prime · 1 play · 2023-09-24
+- **Workin' Moms** · Netflix · 42 plays · 2019-08-31 → 2023-09-21
+- **Legacy of Lies** · Prime · 2 plays · 2023-09-20
+- **George Michael - Live in London** · Prime · 1 play · 2023-09-16
+- **Queen of the Desert** · Prime · 1 play · 2023-09-12
+- **Made In Italy** · Prime · 1 play · 2023-09-09
+- **Made in Heaven** · Prime · 2 plays · 2023-09-05 → 2023-09-08
+- **Rogue Agent** · Prime · 1 play · 2023-09-08
+- **Live to 100: Secrets of the Blue Zones** · Netflix · 4 plays · 2023-08-31 → 2023-09-06
+- **Mont Saint-Michel: Resistance Through the Ages** · Prime · 1 play · 2023-09-05
+- **Wellmania** · Netflix · 4 plays · 2023-09-04
+- **Tom Clancy's Jack Ryan** · Prime · 13 plays · 2020-11-06 → 2023-09-04
+- **Suits** · Netflix · 3 plays · 2023-09-02
+- **Love Again** · Netflix · 1 play · 2023-09-02
+- **Without Remorse** · Prime · 1 play · 2023-08-29
+- **Official Secrets** · Prime · 1 play · 2023-08-28
+- **Great British Menu** · Prime · 2 plays · 2023-08-26 → 2023-08-27
+- **Escape to the Country S22** · Prime · 2 plays · 2022-10-01 → 2023-08-26
+- **Promising Young Woman** · Prime · 1 play · 2023-08-26
+- **Mark Cavendish: Never Enough** · Netflix · 1 play · 2023-08-24
+- **The Ultimatum: Marry or Move On** · Netflix · 1 play · 2023-08-24
+- **The Lost Flowers of Alice Hart** · Prime · 1 play · 2023-08-17
+- **Mission: Impossible - Fallout** · Prime · 1 play · 2023-08-14
+- **Mission: Impossible - Rogue Nation** · Prime · 1 play · 2023-08-14
+- **Heart of Stone** · Netflix · 1 play · 2023-08-13
+- **80 for Brady** · Prime · 1 play · 2023-08-13
+- **Book Club** · Prime · 1 play · 2023-08-13
+- **Book Club: The Next Chapter** · Prime · 1 play · 2023-08-13
+- **Red, White & Royal Blue** · Prime · 2 plays · 2023-08-12
+- **Rabbit Hole Season 1** · Prime · 1 play · 2023-08-11
+- **We Are Ayenda** · Prime · 1 play · 2023-08-03
+- **Sinatra in Palm Springs** · Prime · 1 play · 2023-08-01
+- **Happy Valley S3** · Prime · 1 play · 2023-07-29
+- **Quarterback** · Netflix · 1 play · 2023-07-28
+- **Mission: Impossible II** · Prime · 1 play · 2023-07-28
+- **The Godfather, Part II** · Prime · 1 play · 2023-07-23
+- **GoodFellas** · Prime · 2 plays · 2020-09-20 → 2023-07-19
+- **The Offer Season 01** · Prime · 1 play · 2023-07-16
+- **Break Point** · Netflix · 2 plays · 2023-07-13
+- **Arnold** · Netflix · 2 plays · 2023-07-11
+- **Glamorous** · Netflix · 1 play · 2023-06-27
+- **Food and Romance** · Prime · 1 play · 2023-06-24
+- **Mapplethorpe** · Prime · 1 play · 2023-06-20
+- **John Wick: Chapter 4** · Prime · 2 plays · 2023-06-16
+- **A Spy Among Friends** · Prime · 1 play · 2023-05-31
+- **Queer Eye** · Netflix · 7 plays · 2018-02-10 → 2023-05-27
+- **The Legend of Valentino** · Prime · 1 play · 2023-05-13
+- **Whitney Houston: I Wanna Dance with...** · Netflix · 1 play · 2023-05-09
+- **A Simple Favor** · Prime · 1 play · 2023-05-09
+- **Top Chef** · Prime · 3 plays · 2022-05-27 → 2023-05-07
+- **She Said** · Prime · 1 play · 2023-05-04
+- **Quintessentially British** · Prime · 1 play · 2023-05-03
+- **Dead Ringers** · Prime · 1 play · 2023-05-03
+- **Judy Blume Forever** · Prime · 1 play · 2023-05-02
+- **Firefly Lane** · Netflix · 1 play · 2023-04-30
+- **Gardeners' World 2023** · Prime · 1 play · 2023-04-21
+- **Obsession** · Netflix · 1 play · 2023-04-13
+- **Juniper** · Prime · 1 play · 2023-04-12
+- **Beyond Paradise S1** · Prime · 1 play · 2023-03-14
+- **Gaslit** · Prime · 3 plays · 2022-05-04 → 2023-03-14
+- **Somebody I Used To Know** · Prime · 1 play · 2023-03-14
+- **Daisy Jones & the Six** · Prime · 2 plays · 2023-03-04 → 2023-03-13
+- **The Whale** · Prime · 2 plays · 2023-03-10
+- **Women Talking** · Prime · 2 plays · 2023-03-05
+- **Episode 0: Daisy Jones and The Six: This Season On** · Prime · 1 play · 2023-03-04
+- **Gardeners' World 2022** · Prime · 1 play · 2023-03-04
+- **Mad Men Season 1** · Prime · 5 plays · 2022-12-03 → 2023-02-25
+- **Bros** · Prime · 1 play · 2023-02-17
+- **The Makanai: Cooking for the Maiko House: The Makanai: Cooking for the Maiko House** · Netflix · 1 play · 2023-01-30
+- **The L Word: Generation Q** · Prime · 6 plays · 2021-07-18 → 2023-01-27
+- **New Amsterdam** · Netflix · 4 plays · 2023-01-19 → 2023-01-23
+- **New Amsterdam** · Netflix · 4 plays · 2023-01-19
+- **Human Playground** · Netflix · 6 plays · 2022-12-19 → 2023-01-05
+
+## 2022
+
+- **Casablanca** · Prime · 1 play · 2022-12-25
+- **Mary Queen of Scots** · Prime · 1 play · 2022-12-21
+- **Ray Donovan: The Movie** · Prime · 1 play · 2022-12-13
+- **Meet Me In The Bathroom** · Prime · 2 plays · 2022-12-13
+- **Amsterdam** · Prime · 2 plays · 2022-12-13
+- **The Art Dealer** · Prime · 1 play · 2022-12-06
+- **The White Lotus: The Complete First Season** · Prime · 2 plays · 2022-12-02 → 2022-12-03
+- **The Noel Diary** · Netflix · 1 play · 2022-11-29
+- **Alone** · Netflix · 1 play · 2022-11-28
+- **Catastrophe** · Prime · 2 plays · 2022-11-18 → 2022-11-19
+- **Megan Leavey** · Prime · 1 play · 2022-11-18
+- **Wrath of Man** · Prime · 1 play · 2022-11-16
+- **Madonna: Goddess of Pop** · Prime · 1 play · 2022-11-07
+- **The Gray Man** · Netflix · 1 play · 2022-10-10
+- **No Time to Die** · Prime · 1 play · 2022-10-04
+- **The Protégé** · Prime · 1 play · 2022-10-03
+- **The Misfits** · Prime · 1 play · 2022-10-02
+- **Memory** · Prime · 1 play · 2022-10-02
+- **Wallander Season 1** · Prime · 1 play · 2022-09-30
+- **Jack Ryan: Shadow Recruit** · Prime · 1 play · 2022-09-30
+- **Chef's Table: Pizza** · Netflix · 5 plays · 2022-09-22
+- **The Lørenskog Disappearance** · Netflix · 1 play · 2022-09-18
+- **The Outfit** · Prime · 1 play · 2022-09-18
+- **Parallel Mothers** · Prime · 1 play · 2022-09-18
+- **Home2Home** · Netflix · 1 play · 2022-09-15
+- **A Private Affair** · Prime · 1 play · 2022-09-15
+- **Our Great National Parks** · Netflix · 1 play · 2022-09-13
+- **Laurel Canyon** · Prime · 1 play · 2022-09-13
+- **Jack Reacher** · Prime · 1 play · 2022-09-13
+- **The Lost City** · Prime · 2 plays · 2022-09-12
+- **Making the Cut** · Prime · 2 plays · 2022-09-10 → 2022-09-11
+- **The L Word Season 6** · Prime · 2 plays · 2021-07-14 → 2022-09-09
+- **Biking Borders** · Netflix · 1 play · 2022-09-08
+- **The Lunchbox** · Prime · 1 play · 2022-09-08
+- **W1A** · Prime · 1 play · 2022-08-21
+- **Eat. Race. Win.** · Prime · 2 plays · 2022-08-17 → 2022-08-18
+- **Delicious** · Prime · 1 play · 2022-08-06
+- **Oyler House: Richard Neutra's Desert Retreat, The** · Prime · 1 play · 2022-07-26
+- **The 355** · Prime · 1 play · 2022-07-17
+- **Evil Under the Sun** · Prime · 1 play · 2022-07-09
+- **Mystic Pizza** · Prime · 2 plays · 2022-07-06
+- **Top Gun** · Prime · 2 plays · 2022-07-06
+- **The Thomas Crown Affair (1968)** · Prime · 2 plays · 2022-06-25
+- **The First Lady Season 1** · Prime · 2 plays · 2022-06-13 → 2022-06-24
+- **This Is Us Season 6** · Prime · 9 plays · 2022-03-18 → 2022-05-27
+- **All the Old Knives** · Prime · 1 play · 2022-05-24
+- **Mick & Margaret** · Prime · 1 play · 2022-05-22
+- **Anatomy of a Scandal** · Netflix · 1 play · 2022-04-16
+- **Licorice Pizza** · Prime · 1 play · 2022-04-06
+- **La Fortuna** · Prime · 1 play · 2022-04-03
+- **The Marvelous Mrs. Maisel** · Prime · 14 plays · 2018-10-22 → 2022-03-21
+- **Killing Eve** · Prime · 1 play · 2022-03-20
+- **Respect** · Prime · 1 play · 2022-02-18
+- **Inventing Anna** · Netflix · 1 play · 2022-02-12
+- **House of Gucci** · Prime · 1 play · 2022-02-12
+- **Stevie Ray Vaughan - 1984-1989: Lonestar** · Prime · 1 play · 2022-02-11
+- **After Life** · Netflix · 3 plays · 2022-01-29
+- **Yellowjackets** · Prime · 2 plays · 2022-01-25 → 2022-01-26
+- **Led Zeppelin: Dazed and Confused** · Prime · 1 play · 2022-01-23
+- **Margrete: Queen of the North** · Prime · 1 play · 2022-01-20
+- **The Tender Bar** · Prime · 1 play · 2022-01-15
+- **BITCHIN': The Sound and Fury of Rick James** · Prime · 1 play · 2022-01-08
+- **Murder on the Orient Express (1974)** · Prime · 1 play · 2022-01-05
+- **Six Minutes to Midnight** · Prime · 2 plays · 2022-01-04
+
+## 2021
+
+- **Julia** · Prime · 2 plays · 2020-10-10 → 2021-12-26
+- **Quantum of Solace** · Prime · 2 plays · 2021-12-25
+- **The Power of the Dog** · Netflix · 1 play · 2021-12-24
+- **Being the Ricardos** · Prime · 1 play · 2021-12-24
+- **The French Dispatch** · Prime · 2 plays · 2021-12-23
+- **Under the Volcano** · Prime · 1 play · 2021-12-11
+- **The Devil Wears Prada** · Prime · 1 play · 2021-12-10
+- **Last Night in Soho** · Prime · 2 plays · 2021-12-07
+- **Dinner Club** · Prime · 1 play · 2021-12-07
+- **Nose** · Prime · 1 play · 2021-11-15
+- **L Word Mississippi: Hate The Sin** · Prime · 1 play · 2021-11-14
+- **Food Club** · Prime · 1 play · 2021-11-05
+- **Broadchurch** · Netflix · 7 plays · 2021-10-05 → 2021-10-24
+- **Work in Progress Season 2** · Prime · 5 plays · 2021-09-06 → 2021-10-22
+- **L Word, The: Generation Q Season 2** · Prime · 10 plays · 2021-08-08 → 2021-10-08
+- **Gays in Prison** · Prime · 1 play · 2021-10-05
+- **Knives Out** · Prime · 2 plays · 2021-10-03
+- **P!nk: All I Know So Far** · Prime · 1 play · 2021-10-02
+- **House of Cards** · Netflix · 56 plays · 2014-02-28 → 2021-10-01
+- **Goliath** · Prime · 8 plays · 2018-07-23 → 2021-09-28
+- **Diana Vreeland: The Eye Has to Travel** · Prime · 1 play · 2021-09-26
+- **The World's Most Amazing Vacation Rentals** · Netflix · 2 plays · 2021-09-25
+- **The Russia House** · Prime · 1 play · 2021-09-25
+- **The Real L Word** · Prime · 1 play · 2021-09-12
+- **The L Word Season 2** · Prime · 1 play · 2021-09-11
+- **The Courier** · Prime · 1 play · 2021-09-10
+- **Bloodline** · Netflix · 3 plays · 2021-08-26 → 2021-08-28
+- **Making The Cut** · Prime · 2 plays · 2021-08-02 → 2021-08-03
+- **Indian Summers Season 2** · Prime · 3 plays · 2021-07-30 → 2021-08-01
+- **Episode 0: Snapshot into History** · Prime · 1 play · 2021-07-30
+- **Feel Good** · Netflix · 3 plays · 2021-07-28
+- **Feel Good: Season 1 (Channel 4)** · Netflix · 6 plays · 2021-07-25 → 2021-07-28
+- **The L Word Season 5** · Prime · 3 plays · 2021-07-10 → 2021-07-13
+- **The L Word Season 4** · Prime · 1 play · 2021-07-10
+- **The L Word Season 3** · Prime · 6 plays · 2021-07-05 → 2021-07-10
+- **The Story of India** · Prime · 3 plays · 2021-07-03 → 2021-07-05
+- **Garbo, the Spy** · Prime · 1 play · 2021-07-03
+- **The Girlfriend Experience** · Prime · 9 plays · 2021-06-22 → 2021-06-30
+- **Keith Haring: Street Art Boy** · Prime · 2 plays · 2021-06-22
+- **Beatrix Farrand's American Landscapes** · Prime · 1 play · 2021-06-13
+- **Marley** · Prime · 1 play · 2021-06-12
+- **The Kominsky Method** · Netflix · 1 play · 2021-06-11
+- **THEM: Covenant** · Prime · 2 plays · 2021-05-29 → 2021-05-30
+- **Gardeners' World** · Prime · 19 plays · 2021-04-12 → 2021-05-28
+- **This is Us Season 5** · Prime · 15 plays · 2020-11-08 → 2021-05-26
+- **Dominick Dunne: After The Party** · Prime · 1 play · 2021-05-25
+- **Japan - Philosophical Landscapes** · Prime · 1 play · 2021-05-22
+- **The Oceans 11 Story** · Prime · 1 play · 2021-05-22
+- **The Booksellers** · Prime · 1 play · 2021-05-22
+- **Frederick Law Olmsted: Designing America** · Prime · 1 play · 2021-05-15
+- **Halston** · Prime · 1 play · 2021-05-10
+- **Seeding Change: The Power of Conscious Commerce** · Prime · 1 play · 2021-05-08
+- **RuPaul's Drag Race** · Prime · 23 plays · 2021-01-09 → 2021-04-25
+- **Episode 102: Corona Can't Keep A Good Queen Down** · Prime · 1 play · 2021-04-19
+- **RuPaul's Drag Race: Vegas Revue Season 1** · Prime · 1 play · 2021-04-18
+- **Big Dreams Small Spaces** · Prime · 3 plays · 2021-04-13 → 2021-04-15
+- **The Gentlemen** · Prime · 2 plays · 2021-04-09
+- **Gandhi** · Prime · 1 play · 2021-04-08
+- **My Greatest Dishes** · Prime · 3 plays · 2021-03-16 → 2021-04-06
+- **Great Artists with Tim Marlow** · Prime · 1 play · 2021-04-05
+- **Lidia's Kitchen** · Prime · 3 plays · 2021-04-03 → 2021-04-05
+- **Magic City** · Prime · 1 play · 2021-03-26
+- **Magic City Season 1** · Prime · 3 plays · 2021-03-23 → 2021-03-25
+- **RuPaul's Drag Race Season 5** · Prime · 4 plays · 2021-03-01 → 2021-03-16
+- **RuPaul's Drag Race Season 4** · Prime · 5 plays · 2021-03-07 → 2021-03-14
+- **Mandi** · Prime · 1 play · 2021-03-09
+- **Long Strange Trip** · Prime · 1 play · 2021-03-09
+- **Great Greek Myths** · Prime · 5 plays · 2021-01-02 → 2021-03-08
+- **RuPaul's Drag Race Season 10** · Prime · 3 plays · 2021-02-27 → 2021-03-07
+- **Coming 2 America** · Prime · 1 play · 2021-03-04
+- **Alone** · Prime · 3 plays · 2021-01-02 → 2021-03-01
+- **The Split** · Prime · 5 plays · 2021-02-24 → 2021-02-28
+- **The Split Season 1** · Prime · 3 plays · 2021-02-22 → 2021-02-24
+- **RuPaul's Drag Race Season 1** · Prime · 1 play · 2021-02-22
+- **C.B. Strike** · Prime · 5 plays · 2020-11-03 → 2021-02-12
+- **Alias Season 2** · Prime · 6 plays · 2021-01-10 → 2021-02-05
+- **George Michael: Easy to Pretend** · Prime · 1 play · 2021-02-02
+- **The Bee Gees: How Can You Mend a Broken Heart** · Prime · 2 plays · 2021-02-02
+- **The Italian Job** · Prime · 1 play · 2021-01-28
+- **England Is Mine** · Prime · 2 plays · 2021-01-12
+- **Reggae in a Babylon** · Prime · 1 play · 2021-01-12
+- **Rudeboy: The Story Of Trojan Records** · Prime · 1 play · 2021-01-12
+- **Alias Season 1** · Prime · 10 plays · 2020-12-25 → 2021-01-10
+- **The Joy Luck Club** · Prime · 1 play · 2021-01-01
+
+## 2020
+
+- **The Americans Season 6** · Prime · 2 plays · 2020-12-22 → 2020-12-23
+- **The Americans Season 5** · Prime · 3 plays · 2020-12-20 → 2020-12-22
+- **The Americans Season 4** · Prime · 2 plays · 2020-12-19 → 2020-12-20
+- **Small Axe** · Prime · 5 plays · 2020-11-21 → 2020-12-18
+- **The Americans Season 3** · Prime · 3 plays · 2020-12-15 → 2020-12-17
+- **The Americans Season 2** · Prime · 4 plays · 2020-12-11 → 2020-12-15
+- **The Americans Season 1** · Prime · 6 plays · 2020-11-27 → 2020-12-10
+- **Jayde Adams: Serious Black Jumper** · Prime · 1 play · 2020-12-03
+- **Episode 0: Small Axe - Red, White and Blue Trailer** · Prime · 1 play · 2020-11-26
+- **Raja Rasoi Aur Anya Kahaniyaan** · Prime · 4 plays · 2020-11-15 → 2020-11-24
+- **Victoria Season 2** · Prime · 1 play · 2020-11-18
+- **Victoria Season 1** · Prime · 4 plays · 2020-11-11 → 2020-11-14
+- **A Call To Spy** · Prime · 1 play · 2020-11-11
+- **The Little Drummer Girl** · Prime · 1 play · 2020-11-07
+- **The Forsyte Saga Season 1** · Prime · 5 plays · 2020-07-03 → 2020-10-31
+- **Agatha Christie's The ABC Murders** · Prime · 3 plays · 2020-10-01 → 2020-10-31
+- **Rebecca** · Netflix · 1 play · 2020-10-24
+- **Borat Subsequent Moviefilm** · Prime · 1 play · 2020-10-23
+- **Red 2** · Prime · 2 plays · 2020-10-21
+- **Red** · Prime · 2 plays · 2020-10-20
+- **The Pale Horse** · Prime · 2 plays · 2020-09-29 → 2020-09-30
+- **The International** · Prime · 1 play · 2020-09-25
+- **The Kingmaker** · Prime · 1 play · 2020-09-25
+- **Get On Up** · Prime · 1 play · 2020-09-24
+- **Gentleman Jack** · Prime · 2 plays · 2020-09-06 → 2020-09-19
+- **Aria** · Prime · 1 play · 2020-09-05
+- **Skyfall** · Prime · 2 plays · 2020-09-03
+- **Marvel Studios' Black Panther** · Prime · 2 plays · 2020-08-30
+- **Licence to Kill** · Prime · 3 plays · 2020-08-13
+- **The Goldfinch** · Prime · 1 play · 2020-08-12
+- **The Living Daylights** · Prime · 3 plays · 2020-08-04
+- **A View to a Kill** · Prime · 3 plays · 2020-08-01
+- **Rocketman** · Prime · 1 play · 2020-07-23
+- **Never Say Never Again** · Prime · 2 plays · 2020-07-20
+- **Octopussy** · Prime · 3 plays · 2020-07-17
+- **Onward** · Prime · 1 play · 2020-07-06
+- **For Your Eyes Only** · Prime · 3 plays · 2020-07-04
+- **Moonraker** · Prime · 2 plays · 2020-06-30
+- **Best in Show** · Prime · 1 play · 2020-06-19
+- **Bao** · Prime · 1 play · 2020-06-12
+- **Ratatouille** · Prime · 2 plays · 2020-06-12
+- **Just Mercy** · Prime · 1 play · 2020-06-10
+- **The Spy Who Loved Me** · Prime · 2 plays · 2020-06-08
+- **Sunset Boulevard** · Prime · 1 play · 2020-06-07
+- **Like Water For Chocolate** · Prime · 1 play · 2020-06-06
+- **The Man with the Golden Gun** · Prime · 1 play · 2020-06-05
+- **Orlando** · Prime · 1 play · 2020-06-01
+- **The Girl Who Kicked the Hornet's Nest** · Prime · 1 play · 2020-05-28
+- **Trading Places** · Prime · 1 play · 2020-05-27
+- **Live and Let Die** · Prime · 2 plays · 2020-05-20
+- **Fleabag** · Prime · 1 play · 2020-05-20
+- **The Girl Who Played With Fire (English Subtitles)** · Prime · 2 plays · 2020-05-19
+- **Labyrinth Of Passion** · Prime · 1 play · 2020-05-15
+- **Diamonds are Forever** · Prime · 2 plays · 2020-05-14
+- **The Girl with the Dragon Tattoo** · Prime · 2 plays · 2020-05-13
+- **On Her Majesty's Secret Service** · Prime · 2 plays · 2020-05-12
+- **Fleabag Season 1** · Prime · 2 plays · 2020-01-16 → 2020-05-11
+- **You Only Live Twice** · Prime · 2 plays · 2020-05-06
+- **Thunderball** · Prime · 2 plays · 2020-05-05
+- **Circus of Books** · Netflix · 1 play · 2020-05-03
+- **The Fast And The Furious** · Prime · 1 play · 2020-05-01
+- **Goldfinger** · Prime · 3 plays · 2020-04-30
+- **From Russia with Love** · Prime · 3 plays · 2020-04-29
+- **Dr. No** · Prime · 2 plays · 2020-04-27
+- **The Sopranos: Season 1** · Prime · 1 play · 2020-04-27
+- **Homeland Season 8** · Prime · 7 plays · 2020-03-31 → 2020-04-26
+- **Jiro Dreams of Sushi** · Netflix · 1 play · 2020-04-24
+- **Ocean's Thirteen** · Prime · 1 play · 2020-04-24
+- **Ocean's Twelve** · Prime · 1 play · 2020-04-23
+- **Ocean's Eleven (2001)** · Prime · 1 play · 2020-04-21
+- **Ocean's 11** · Prime · 1 play · 2020-04-21
+- **The Thomas Crown Affair (1999)** · Prime · 1 play · 2020-04-20
+- **This is Us Season 4** · Prime · 11 plays · 2019-09-26 → 2020-04-14
+- **Empire of the Sun** · Prime · 1 play · 2020-04-11
+- **The Farewell** · Prime · 1 play · 2020-04-11
+- **Can't Stand Losing You: Surviving The Police** · Prime · 1 play · 2020-04-07
+- **Ozark** · Netflix · 10 plays · 2017-08-05 → 2020-04-04
+- **Homeland Season 7** · Prime · 3 plays · 2020-03-28 → 2020-03-30
+- **Homeland Season 6** · Prime · 5 plays · 2020-03-22 → 2020-03-28
+- **London Spy** · Netflix · 1 play · 2020-03-25
+- **Homeland Season 5** · Prime · 5 plays · 2020-03-17 → 2020-03-22
+- **Homeland Season 4** · Prime · 4 plays · 2020-03-14 → 2020-03-17
+- **Homeland Season 3** · Prime · 4 plays · 2020-03-10 → 2020-03-13
+- **Homeland Season 2** · Prime · 3 plays · 2020-03-07 → 2020-03-09
+- **The Vampire Diaries** · Netflix · 1 play · 2020-03-06
+- **13 Reasons Why** · Netflix · 1 play · 2020-03-06
+- **Riverdale** · Netflix · 2 plays · 2020-03-06
+- **Money Heist** · Netflix · 4 plays · 2020-03-06
+- **Lucifer** · Netflix · 1 play · 2020-03-06
+- **Homeland Season 1** · Prime · 5 plays · 2020-02-27 → 2020-03-05
+- **Next in Fashion** · Netflix · 6 plays · 2020-02-07 → 2020-02-15
+- **The Sinner** · Netflix · 1 play · 2020-02-02
+- **Grace and Frankie** · Netflix · 33 plays · 2015-06-19 → 2020-02-02
+- **The Politician** · Netflix · 3 plays · 2020-01-11 → 2020-01-24
+- **Very Ralph** · Prime · 2 plays · 2020-01-09
+
+## 2019
+
+- **The Two Popes** · Netflix · 1 play · 2019-12-28
+- **Marriage Story** · Netflix · 1 play · 2019-12-27
+- **Lindsey Vonn: The Final Season** · Prime · 2 plays · 2019-12-25
+- **Won't You Be My Neighbor?** · Prime · 1 play · 2019-12-12
+- **Peter Gabriel - So (Classic Album)** · Prime · 2 plays · 2019-10-31
+- **The Game Changers** · Netflix · 1 play · 2019-10-27
+- **Catherine the Great** · Prime · 1 play · 2019-10-27
+- **A Star Is Born** · Prime · 2 plays · 2019-10-22
+- **Schitt's Creek** · Netflix · 6 plays · 2019-10-20
+- **Tidying Up with Marie Kondo** · Netflix · 3 plays · 2019-10-19
+- **The Laundromat** · Netflix · 1 play · 2019-10-19
+- **Abstract: The Art of Design** · Netflix · 9 plays · 2017-02-20 → 2019-09-28
+- **Sinbad Season 1** · Prime · 1 play · 2019-09-22
+- **Shameless (U.S.)** · Netflix · 10 plays · 2019-08-15 → 2019-08-31
+- **The Last Emperor** · Prime · 2 plays · 2019-07-07
+- **Suspiria** · Prime · 2 plays · 2019-05-17
+- **Green Zone** · Prime · 1 play · 2019-05-16
+- **This is Us Season 3** · Prime · 2 plays · 2018-10-30 → 2019-04-03
+- **The Story of Queen: Mercury Rising** · Prime · 1 play · 2019-03-13
+- **Tokyo Vampire Hotel** · Prime · 1 play · 2019-03-13
+- **Game of Thrones** · Prime · 12 plays · 2018-11-24 → 2019-01-24
+
+## 2018
+
+- **ROMA** · Netflix · 1 play · 2018-12-16
+- **Comedians in Cars Getting Coffee: First Cup** · Netflix · 1 play · 2018-12-01
+- **The Fundamentals of Caring** · Netflix · 1 play · 2018-12-01
+- **Unbreakable Kimmy Schmidt** · Netflix · 1 play · 2018-12-01
+- **Baby** · Netflix · 1 play · 2018-12-01
+- **Kim Swims** · Prime · 1 play · 2018-11-22
+- **They’ll Love Me When I’m Dead** · Netflix · 1 play · 2018-11-13
+- **The Romanoffs** · Prime · 2 plays · 2018-11-03 → 2018-11-04
+- **Salt Fat Acid Heat** · Netflix · 1 play · 2018-10-30
+- **A to Zeppelin: The Story of Led Zeppelin** · Prime · 1 play · 2018-10-25
+- **The Land of Steady Habits** · Netflix · 1 play · 2018-10-07
+- **Kim's Convenience** · Netflix · 3 plays · 2018-10-01
+- **Chef's Table** · Netflix · 13 plays · 2015-08-02 → 2018-10-01
+- **Season 1** · Prime · 1 play · 2018-09-25
+- **Once in a Lifetime Sessions with Nile...** · Netflix · 1 play · 2018-08-22
+- **Once in a Lifetime Sessions with Moby** · Netflix · 1 play · 2018-08-09
+- **Sons of Anarchy** · Netflix · 2 plays · 2018-07-14 → 2018-07-21
+- **20 Feet From Stardom** · Prime · 1 play · 2018-07-11
+- **A Very English Scandal** · Prime · 2 plays · 2018-07-10 → 2018-07-11
+- **Paris Is Burning** · Netflix · 1 play · 2018-07-05
+- **Stories by Rabindranath Tagore** · Netflix · 1 play · 2018-07-05
+- **After the Raves** · Netflix · 1 play · 2018-07-04
+- **Hannah Gadsby: Nanette** · Netflix · 1 play · 2018-07-03
+- **Karl Meltzer: Made to Be Broken** · Netflix · 1 play · 2018-06-25
+- **George Harrison: Living in the Material...** · Netflix · 1 play · 2018-06-25
+- **Sense8** · Netflix · 20 plays · 2015-09-06 → 2018-06-22
+- **Social Fabric** · Netflix · 2 plays · 2018-06-20
+- **Schitt's Creek** · Netflix · 5 plays · 2018-05-21 → 2018-06-17
+- **My Next Guest Needs No Introduction...** · Netflix · 4 plays · 2018-03-25 → 2018-06-16
+- **Rush: Beyond the Lighted Stage** · Netflix · 1 play · 2018-06-11
+- **27: Gone Too Soon** · Netflix · 1 play · 2018-06-09
+- **A Little Help with Carol Burnett** · Netflix · 1 play · 2018-06-09
+- **This is Us Season 2** · Prime · 5 plays · 2018-05-15 → 2018-05-25
+- **Altered Carbon** · Netflix · 1 play · 2018-05-21
+- **Great British Menu** · Netflix · 1 play · 2018-05-21
+- **This is Us Season 1** · Prime · 6 plays · 2018-05-06 → 2018-05-14
+- **God's Own Country** · Netflix · 1 play · 2018-05-03
+- **Wild Wild Country** · Netflix · 3 plays · 2018-04-17 → 2018-04-21
+- **The Doors: When You're Strange** · Netflix · 1 play · 2018-04-11
+- **100 Men** · Netflix · 1 play · 2018-04-11
+- **Metallica: Some Kind of Monster: Metallica: Some Kind of Monster** · Netflix · 1 play · 2018-04-06
+- **Extract** · Netflix · 1 play · 2018-03-27
+- **Wind River** · Netflix · 1 play · 2018-03-25
+- **Ugly Delicious** · Netflix · 1 play · 2018-02-27
+- **On Yoga: The Architecture of Peace** · Netflix · 1 play · 2018-01-15
+- **Blurred Lines: Inside the Art World** · Netflix · 1 play · 2018-01-05
+
+## 2017
+
+- **Bright** · Netflix · 1 play · 2017-12-27
+- **Easy** · Netflix · 7 plays · 2017-03-17 → 2017-12-26
+- **Hired Gun** · Netflix · 1 play · 2017-12-19
+- **Chelsea: Season 2 (2017)** · Netflix · 12 plays · 2017-04-19 → 2017-12-19
+- **Dream Boat** · Netflix · 1 play · 2017-12-07
+- **Godless** · Netflix · 1 play · 2017-12-03
+- **The Sex Changes That Made History** · Netflix · 1 play · 2017-11-25
+- **Below Her Mouth** · Netflix · 1 play · 2017-11-25
+- **Duran Duran: Unstaged** · Netflix · 1 play · 2017-11-25
+- **Chris Brown: Welcome to My Life** · Netflix · 1 play · 2017-11-25
+- **Chasing Trane** · Netflix · 1 play · 2017-11-19
+- **Mudbound** · Netflix · 1 play · 2017-11-18
+- **MINDHUNTER** · Netflix · 10 plays · 2017-11-15 → 2017-11-17
+- **13TH** · Netflix · 1 play · 2017-11-12
+- **Who the F**k Is That Guy?** · Netflix · 1 play · 2017-11-09
+- **Mr. Dynamite: The Rise of James Brown** · Netflix · 1 play · 2017-10-18
+- **Gaga: Five Foot Two** · Netflix · 1 play · 2017-10-02
+- **Mad Men** · Netflix · 4 plays · 2017-09-07 → 2017-10-01
+- **Blue Is the Warmest Color** · Netflix · 1 play · 2017-10-01
+- **A Cook Abroad** · Netflix · 1 play · 2017-09-07
+- **Anthony Bourdain: Parts Unknown** · Netflix · 6 plays · 2015-10-17 → 2017-09-04
+- **Pee-wee's Big Adventure** · Netflix · 1 play · 2017-09-01
+- **The Quon Dynasty** · Netflix · 2 plays · 2017-08-30
+- **The Incredible Jessica James** · Netflix · 1 play · 2017-08-30
+- **I Called Him Morgan** · Netflix · 1 play · 2017-08-20
+- **SHOT! The Psycho-Spiritual Mantra of Rock** · Netflix · 1 play · 2017-08-16
+- **Genius of the Ancient World** · Netflix · 2 plays · 2017-08-14
+- **Daughters of Destiny** · Netflix · 1 play · 2017-07-30
+- **Midnight Diner** · Netflix · 2 plays · 2017-06-30 → 2017-07-27
+- **Master of None** · Netflix · 16 plays · 2015-11-06 → 2017-07-27
+- **Secrets of Her Majesty's Secret Service** · Netflix · 1 play · 2017-07-27
+- **Japanese Style Originator** · Netflix · 1 play · 2017-07-20
+- **Dear White People** · Netflix · 9 plays · 2017-07-05 → 2017-07-20
+- **Bowie: The Man Who Changed the World** · Netflix · 1 play · 2017-07-04
+- **Gypsy** · Netflix · 1 play · 2017-07-04
+- **Saving Banksy** · Netflix · 1 play · 2017-06-26
+- **The Get Down** · Netflix · 7 plays · 2016-08-24 → 2017-04-29
+- **Strike a Pose** · Netflix · 1 play · 2017-04-22
+- **Street Food** · Netflix · 3 plays · 2017-02-09 → 2017-04-19
+- **Louis C.K. 2017** · Netflix · 1 play · 2017-04-19
+- **Joe Cocker: Mad Dog with Soul** · Netflix · 1 play · 2017-04-03
+- **Dave Chappelle: Collection** · Netflix · 1 play · 2017-03-31
+- **Mystery Science Theater 3000 Collection...** · Netflix · 1 play · 2017-03-30
+- **Step Brothers** · Prime · 2 plays · 2017-03-23
+- **Danny Says** · Netflix · 1 play · 2017-03-21
+- **Escape to the Country Collection** · Netflix · 1 play · 2017-03-17
+- **Woman in Gold** · Netflix · 1 play · 2017-03-13
+- **Rolling Stones: Crossfire Hurricane** · Netflix · 1 play · 2017-03-12
+- **The White Helmets** · Netflix · 1 play · 2017-02-28
+- **It's So Easy and Other Lies** · Netflix · 1 play · 2017-02-06
+- **Miss Sharon Jones!** · Netflix · 1 play · 2017-02-06
+- **Chef's Table: France** · Netflix · 1 play · 2017-02-06
+- **The Inn of the Sixth Happiness** · Netflix · 1 play · 2017-02-06
+
+## 2016
+
+- **Chelsea: Best of 2016** · Netflix · 8 plays · 2016-05-11 → 2016-09-09
+- **Crazy Ex-Girlfriend** · Netflix · 2 plays · 2016-07-29
+- **Jaco** · Netflix · 1 play · 2016-07-25
+- **Fittest on Earth 2015** · Netflix · 1 play · 2016-07-15
+- **Tab Hunter Confidential** · Netflix · 1 play · 2016-07-02
+- **Janis: Little Girl Blue** · Netflix · 1 play · 2016-06-27
+- **Woody Allen: A Documentary: Parts 1 & 2** · Netflix · 1 play · 2016-05-29
+- **Lady Dynamite** · Netflix · 1 play · 2016-05-29
+- **Desk Set** · Netflix · 1 play · 2016-04-04
+- **Lemmy** · Netflix · 1 play · 2016-04-04
+- **Bigger, Stronger, Faster** · Netflix · 1 play · 2016-03-21
+- **Ida** · Netflix · 1 play · 2016-03-19
+- **Adult Beginners** · Netflix · 1 play · 2016-03-19
+- **Pee-wee's Big Holiday** · Netflix · 1 play · 2016-03-18
+- **Finding Vivian Maier** · Netflix · 1 play · 2016-03-14
+- **Living on One Dollar** · Netflix · 1 play · 2016-03-13
+- **Raiders of the Lost Art** · Netflix · 1 play · 2016-03-13
+- **Seymour: An Introduction** · Netflix · 1 play · 2016-03-13
+- **Flaked** · Netflix · 4 plays · 2016-03-12
+- **Unlikely Animal Friends** · Netflix · 2 plays · 2016-03-12
+- **The Barkley Marathons: The Race That...** · Netflix · 1 play · 2016-03-12
+- **Finding Fela** · Netflix · 1 play · 2016-02-27
+- **Tangerine** · Netflix · 1 play · 2016-02-26
+- **Sunset Strip** · Netflix · 1 play · 2016-02-22
+- **Chelsea Does** · Netflix · 4 plays · 2016-01-24 → 2016-02-22
+- **How to Steal a Million** · Netflix · 1 play · 2016-02-13
+- **Moana with Sound - 1926 Version** · Netflix · 1 play · 2016-02-13
+- **The Young Girls of Rochefort** · Netflix · 1 play · 2016-02-13
+- **Meet the Patels** · Netflix · 1 play · 2016-02-13
+- **Hollywood's Best Film Directors** · Netflix · 2 plays · 2016-01-20
+- **The Propaganda Game** · Netflix · 1 play · 2016-01-18
+- **Antarctica: A Year on Ice** · Netflix · 1 play · 2016-01-18
+- **The Best of Me** · Netflix · 1 play · 2016-01-18
+- **Haute Cuisine** · Netflix · 1 play · 2016-01-15
+- **Beltracchi: The Art of Forgery** · Netflix · 1 play · 2016-01-13
+- **Making a Murderer** · Netflix · 1 play · 2016-01-12
+
+## 2015
+
+- **Narcos** · Netflix · 9 plays · 2015-10-05 → 2015-12-19
+- **Marley** · Netflix · 1 play · 2015-12-19
+- **Mademoiselle C** · Netflix · 1 play · 2015-12-19
+- **The Da Vinci Detective** · Netflix · 1 play · 2015-12-17
+- **The Punk Singer** · Netflix · 1 play · 2015-12-15
+- **Soaked in Bleach** · Netflix · 1 play · 2015-12-11
+- **Beware of Mr. Baker** · Netflix · 1 play · 2015-12-08
+- **CBGB** · Netflix · 1 play · 2015-12-07
+- **The Search for General Tso** · Netflix · 1 play · 2015-11-30
+- **Yves Saint Laurent** · Netflix · 1 play · 2015-11-28
+- **Bettie Page Reveals All** · Netflix · 1 play · 2015-11-28
+- **Secrets of Underground London** · Netflix · 1 play · 2015-11-23
+- **The Real Beauty and the Beast** · Netflix · 1 play · 2015-11-23
+- **Scatter My Ashes at Bergdorf's** · Netflix · 1 play · 2015-11-21
+- **Bill Cunningham New York** · Netflix · 1 play · 2015-11-21
+- **The Layover** · Netflix · 3 plays · 2015-11-18
+- **Hitler's Riches** · Netflix · 1 play · 2015-11-18
+- **Boogie Nights** · Netflix · 1 play · 2015-11-14
+- **Women Who Kill** · Netflix · 1 play · 2015-11-14
+- **Ballet 422** · Netflix · 1 play · 2015-11-14
+- **The Wolfpack** · Netflix · 1 play · 2015-11-13
+- **Awake: The Life of Yogananda** · Netflix · 1 play · 2015-11-13
+- **Blondie's New York** · Netflix · 1 play · 2015-11-11
+- **Iris** · Netflix · 1 play · 2015-11-06
+- **Advanced Style** · Netflix · 1 play · 2015-10-17
+- **Inside the Court of Henry VIII** · Netflix · 1 play · 2015-10-17
+- **Archer** · Netflix · 1 play · 2015-10-16
+- **Peaky Blinders** · Netflix · 12 plays · 2015-09-06 → 2015-10-04
+- **Keith Richards: Under the Influence** · Netflix · 1 play · 2015-09-25
+- **The Office (U.S.)** · Netflix · 7 plays · 2015-09-17 → 2015-09-24
+- **Comedy Bang! Bang!** · Netflix · 1 play · 2015-09-17
+- **Louie** · Netflix · 5 plays · 2015-08-29
+- **Rectify** · Netflix · 10 plays · 2015-08-25 → 2015-08-29
+- **Rectify** · Netflix · 3 plays · 2015-08-23 → 2015-08-25
+- **Louie** · Netflix · 13 plays · 2015-08-14 → 2015-08-15
+- **Casting By** · Netflix · 1 play · 2015-08-07
+- **Arrested Development** · Netflix · 31 plays · 2015-04-22 → 2015-07-28
+- **What Happened, Miss Simone?** · Netflix · 1 play · 2015-07-26
+- **Tig** · Netflix · 1 play · 2015-07-21
+- **Snowpiercer** · Netflix · 1 play · 2015-07-16
+- **Scandal** · Netflix · 42 plays · 2015-04-19 → 2015-06-27
+- **How to Train Your Dragon 2** · Netflix · 1 play · 2015-05-03
+- **Spy Kids** · Netflix · 1 play · 2015-05-03
+
+## 2014
+
+- **Behind the Bars with Piper** · Netflix · 1 play · 2014-07-02
+- **20 Feet From Stardom** · Netflix · 1 play · 2014-06-28
+- **Interior. Leather Bar.** · Netflix · 1 play · 2014-06-28
+- **Orange Is the New Black: Season 1 (Recap)** · Netflix · 1 play · 2014-06-09
+
+## 2011
+
+- **The Wedding Banquet** · Netflix · 1 play · 2011-09-09
+- **2 Days in Paris** · Netflix · 1 play · 2011-09-09
+- **Charade** · Netflix · 1 play · 2011-09-03
+- **All in This Tea** · Netflix · 1 play · 2011-08-31
+- **Ashtanga, NY** · Netflix · 1 play · 2011-08-31
+- **The Man of My Life** · Netflix · 1 play · 2011-08-30
+- **The Naked Gun: From the Files of Police...** · Netflix · 1 play · 2011-08-19
+- **The Lovers & Friends Show** · Netflix · 1 play · 2011-08-06
+- **Gosford Park** · Netflix · 1 play · 2011-07-16
+- **Enlighten Up!** · Netflix · 1 play · 2011-07-10
+- **The Universe of Keith Haring** · Netflix · 1 play · 2011-07-01
+- **Herb & Dorothy** · Netflix · 1 play · 2011-07-01
+- **A Night in Casablanca** · Netflix · 1 play · 2011-06-26
+- **Tapped** · Netflix · 1 play · 2011-06-26
+- **35 Shots of Rum** · Netflix · 1 play · 2011-06-20
+- **Italian for Beginners** · Netflix · 1 play · 2011-06-18
+- **Ocean's Eleven** · Netflix · 1 play · 2011-06-15
+- **Sierra Leone's Refugee All Stars** · Netflix · 1 play · 2011-06-08
+- **Mondovino** · Netflix · 1 play · 2011-06-06
+- **Boys Life 6** · Netflix · 1 play · 2011-03-07
+- **The Girl Who Kicked the Hornets' Nest** · Netflix · 1 play · 2011-03-05
+
+## 2010
+
+- **Puccini for Beginners** · Netflix · 1 play · 2010-11-19
+- **Séraphine** · Netflix · 1 play · 2010-11-14
+- **32 Short Films About Glenn Gould** · Netflix · 1 play · 2010-10-02
+- **Ponyo** · Netflix · 1 play · 2010-09-12
+- **M. Hulot's Holiday** · Netflix · 1 play · 2010-07-23
+- **Mon Oncle** · Netflix · 1 play · 2010-07-08
+- **Spartacus: Blood and Sand** · Netflix · 1 play · 2010-05-06
+- **The Pink Panther Classic Cartoon...** · Netflix · 1 play · 2010-02-17
