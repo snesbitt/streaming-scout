@@ -206,3 +206,14 @@ it's not a substitute for the manual check below. Verifying a deploy means:
   there's no deep git history to lean on the way the sibling repos have.
   Treat anything not independently verified against the live site with
   appropriate caution, especially in `roadmap.html`/`guide.html`.
+
+## 2026-07-26 — fonts + poster hygiene
+
+- Fonts are SELF-HOSTED in `/fonts` (Fraunces variable latin-full
+  normal+italic, official Fontsource releases); the Google Fonts link tags
+  are gone and netlify.toml serves `/fonts/*` immutable for a year. Don't
+  reintroduce a Google Fonts request.
+- Every poster `<img>` carries `decoding="async" width="1000" height="1500"`,
+  and `loading="lazy"` on all but the first two (those stay eager for LCP).
+  When the weekly artwork sweep adds or replaces a poster, keep these
+  attributes intact and give new imgs the same set.
