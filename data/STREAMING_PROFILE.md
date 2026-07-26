@@ -10,6 +10,15 @@
 - BritBox (via Prime Video channel)
 - PBS Masterpiece (via Prime Video channel)
 
+## Off-Platform Viewing (reported in chat, not syncable)
+- Nat Geo — Tucci in Italy S1–S2, in progress (Susan, 2026-07-25). No account
+  page to sync; log via the log-watched skill when she reports progress.
+
+## Other-Services Recommendations Policy (Susan, 2026-07-25)
+High-match titles on services beyond the tracked four may appear in Top Picks,
+clearly badged with their service (e.g. MGM+). This widens the pool; it does
+not add those services to sync.
+
 ## Sync Cadence
 Weekly (Monday, via the `streaming-scout-weekly-resync` scheduled task)
 

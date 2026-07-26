@@ -16,6 +16,12 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
   pick from a long-tail interest (music doc, food, art/design, garden/country).
 - **2026-07-25, Susan, directly:** the actor-affinity list should be real and
   well-populated (it was empty after the data loss).
+- **2026-07-25, Susan, directly:** Top Picks may include high-match titles on
+  services OUTSIDE the tracked four (example she gave: The Westies on MGM+) —
+  badge them clearly with the service so she can decide; never silently limit
+  the pool to current subscriptions.
+- **2026-07-25, Susan, directly:** currently watching Tucci in Italy S1–S2 on
+  Nat Geo — active, off-platform confirmation of the food & food-travel vein.
 
 ## Signature Genres
 
