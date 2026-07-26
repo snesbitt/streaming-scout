@@ -60,3 +60,9 @@
   for = "/style.css"
   [headers.values]
     Cache-Control = "public, max-age=600, must-revalidate"
+
+# 2026-07-26: self-hosted fonts are content-stable — cache them for a year.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
