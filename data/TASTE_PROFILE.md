@@ -22,6 +22,13 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
   the pool to current subscriptions.
 - **2026-07-25, Susan, directly:** currently watching Tucci in Italy S1–S2 on
   Nat Geo — active, off-platform confirmation of the food & food-travel vein.
+- **2026-07-26, Susan, directly:** has already seen ALL of Slow Horses (S1–5,
+  Apple TV+) and Only Murders in the Building (S1–5, Hulu) — both loved. Keep
+  a standing eye out for their next seasons AND for similar titles: Mick
+  Herron-class workplace spy drama (Slough House adjacents), and cozy-mystery
+  comedy in the OMITB register. This also confirms the spy vein and promotes
+  cozy-mystery comedy to a real, completed-run interest — and adds Gary
+  Oldman and the Martin/Short/Gomez trio as affinity signals.
 
 ## Signature Genres
 
@@ -103,6 +110,8 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
 
 Weights reflect repeated, completed viewing across multiple titles in the log.
 
+- **Gary Oldman** (0.85) — Slow Horses S1–5 complete (reported 2026-07-26),
+  Darkest-Hour-class prestige leads
 - **Nicola Walker** (1.0) — Unforgotten S1–S3, Last Tango in Halifax (17 plays
   across services into 2026), The Split (8), Annika-adjacent picks
 - **Sarah Lancashire** (0.9) — Happy Valley, Last Tango in Halifax, Julia ×2

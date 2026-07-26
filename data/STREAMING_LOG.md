@@ -25,6 +25,8 @@ don't expose cast); actor affinity lives in TASTE_PROFILE.md.
 ## 2026
 
 - **Tucci in Italy (Seasons 1–2)** · Nat Geo (off-platform — reported by Susan directly, 2026-07-25) · in progress
+- **Slow Horses (Seasons 1–5)** · Apple TV+ (off-platform — reported by Susan directly, 2026-07-26) · finished, loved — watch for S6
+- **Only Murders in the Building (Seasons 1–5)** · Hulu (off-platform — reported by Susan directly, 2026-07-26) · finished, loved — watch for S6 (London)
 - **The Amateur** · Prime · 1 play · 2026-07-22
 - **Ride or Die** · Prime · 4 plays · 2026-07-15 → 2026-07-19
 - **Summer ’36** · Netflix · 1 play · 2026-07-14
