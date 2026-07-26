@@ -14,10 +14,13 @@
 - Nat Geo — Tucci in Italy S1–S2, in progress (Susan, 2026-07-25). No account
   page to sync; log via the log-watched skill when she reports progress.
 
-## Other-Services Recommendations Policy (Susan, 2026-07-25)
+## Other-Services Recommendations Policy (Susan, 2026-07-25; expanded 2026-07-26)
 High-match titles on services beyond the tracked four may appear in Top Picks,
-clearly badged with their service (e.g. MGM+). This widens the pool; it does
-not add those services to sync.
+clearly badged with their service. Susan confirmed 2026-07-26 that **Hulu and
+Apple TV+ must always be checked** alongside MGM+-class opportunities — treat
+both as accessible to her. This widens the candidate pool; it does not add
+those services to watch-history sync (no page-scrape wired for them yet —
+log Hulu/Apple viewing via the log-watched skill when she reports it).
 
 ## Sync Cadence
 Weekly (Monday, via the `streaming-scout-weekly-resync` scheduled task)
