@@ -45,6 +45,7 @@
       <a href="#phase-06" class="ro-chip ro-progress"><span class="ro-dot" aria-hidden="true">◐</span>06 a real backend</a>
       <a href="#phase-07" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>07 protect saved changes</a>
       <a href="#phase-08" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>08 content refresh &amp; polish</a>
+      <a href="#phase-09" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>09 a real scoring formula</a>
     </nav>
 
     <div class="phase" id="phase-01">
@@ -158,6 +159,16 @@
         <li><span class="lg-date">JUL 2026</span>Coming Soon now sorts by date, then match %, with a score badge on every row instead of only some.</li>
         <li><span class="lg-date">JUL 2026</span>Fraunces and IBM Plex self-hosted (no Google Fonts request chain, immutable 1-year cache on <code>/fonts/*</code>), verified headless with zero external font requests. All 25 posters given explicit dimensions and <code>decoding="async"</code>, with <code>loading="lazy"</code> below the fold (the first two stay eager, for LCP).</li>
       </ul>
+    </div>
+
+    <div class="phase" id="phase-09">
+      <div class="phase-head">
+        <span class="phase-num">09</span>
+        <span class="phase-title">a real scoring formula</span>
+        <span class="phase-status planned">Planned</span>
+      </div>
+      <p class="phase-body">Every match percentage today is Claude applying the same documented weighting rules fresh each rebuild (signature genre at full weight, actor affinity as a proportional bonus, generic genre at roughly a third) and writing a number that reflects that judgment &mdash; consistent by rule, not by equation. This phase turns that into a literal, stored formula: fixed numeric weights per signature genre and per actor in <code>TASTE_PROFILE.md</code>, and one small scoring function that takes a title's tagged genre and cast and returns a number, the same pattern Travel Intelligence already uses for flight scoring. What stays judgment either way: deciding what genre a brand-new title even is and whether its cast really overlaps &mdash; that still comes from reading a page or a web search, not from a database. The equation only replaces the combining step, not the research step underneath it.</p>
+      <p class="phase-value">A score you could re-add by hand and get the same number, not just a number you have to trust.</p>
     </div>
 
   </div>
