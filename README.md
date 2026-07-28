@@ -4,29 +4,29 @@
 
 This repository was **reconstructed on 2026-07-16** from the live deployed
 site at https://streamingscout.org. No original source files or git history
-existed anywhere — the site only existed as deployed static assets on
+existed anywhere; the site only existed as deployed static assets on
 Netlify. Every file here was rebuilt by fetching the live pages and assets
 and reading back their markup/CSS/JS.
 
 **Confidence by file:**
 
-- `style.css` — recovered byte-for-byte (fetched twice via two independent
+- `style.css`: recovered byte-for-byte (fetched twice via two independent
   methods that agreed exactly).
-- `about.html` — recovered byte-for-byte via a full raw extraction of the
+- `about.html`: recovered byte-for-byte via a full raw extraction of the
   live DOM.
-- `index.html` — recovered with very high fidelity: the `<head>`, nav,
+- `index.html`: recovered with very high fidelity: the `<head>`, nav,
   "Right Now", footer, and the inline `<script>` block were extracted raw
   and verified character-for-character. The five Top Picks rows and ten
   Coming Soon rows were reconstructed from the same verified row template
   filled in with data (titles, scores, cast, poster URLs, hrefs) that was
   independently confirmed against the live page.
-- `roadmap.html` / `guide.html` — the page shell, and the repeating
+- `roadmap.html` / `guide.html`: the page shell, and the repeating
   "phase" / "step" block templates, were extracted raw and verified.
   The prose content of each phase/step was taken verbatim from the
   rendered page text, then placed into the verified template. This is a
   high-confidence reconstruction but was not independently byte-verified
   character-by-character for every paragraph the way `about.html` was.
-- `manifest.json` — recovered byte-for-byte (fetched directly).
+- `manifest.json`: recovered byte-for-byte (fetched directly).
 - Binary assets referenced in the markup (`apple-touch-icon.png`,
   `favicon-32.png`, `icon-192.png`, `icon-512.png`) have since been
   recovered from the live site and are present in this repo, verified
@@ -35,11 +35,11 @@ and reading back their markup/CSS/JS.
 ## Important architecture note (updated 2026-07-17)
 
 As of 2026-07-16 this repo is connected to GitHub, and Netlify is
-configured for Git-connected continuous deployment — pushes to `main`
+configured for Git-connected continuous deployment: pushes to `main`
 auto-deploy, the same governance model as thefitnesslog.org and
 vinylscout.org. As of 2026-07-17 the first real backend Function is
 shipped: `netlify/functions/dismiss.mjs`, an open GET/POST/DELETE
-endpoint (no edit key, same rationale as vinyl-scout's wishlist API —
+endpoint (no edit key, same rationale as vinyl-scout's wishlist API:
 nothing sensitive in a "not interested" flag, and a passphrase on mobile
 isn't practical for a list this casual) backed by a Netlify Blobs store
 called `dismissed-titles`. On 2026-07-20 the Function was hardened without
@@ -50,7 +50,7 @@ unauthenticated POST can't grow the store without bound. `index.html`'s
 inline `<script>` now calls it
 alongside `localStorage`: dismissing a title still hides it locally and
 instantly, but the dismiss also POSTs to the Function so every other
-device syncs on next load — no chat round-trip needed for that part
+device syncs on next load; no chat round-trip needed for that part
 anymore. What the Function does **not** do: make an exclusion permanent
 across the next weekly rebuild. Top Picks and Coming Soon are static HTML
 baked into `index.html` at publish time from `EXCLUDED_TITLES.md`, not
@@ -58,7 +58,7 @@ read live from the Blobs store, so keeping a title out of next week's
 freshly-rebuilt list still means pasting the copied message to Claude and
 updating that file. `app.js` still doesn't exist as a separate file; almost
 all client-side JS is still a single small inline `<script>` at the bottom
-of `index.html` — as of 2026-07-23 that script is a `type="module"` script
+of `index.html`; as of 2026-07-23 that script is a `type="module"` script
 and imports its date/dismiss logic from `src/logic.mjs` rather than
 defining it inline, so that logic now has real unit tests (see Tests,
 below).
@@ -70,13 +70,13 @@ date-based auto-promotion into Top Picks (added 2026-07-23, so titles like
 `Gone` move up on their own once the release date arrives, instead of
 needing a manual edit), and the dismiss system's list-merge logic. Both are
 plain functions with no DOM/localStorage/fetch dependency, so they're
-directly unit tested — the same "export the pure logic for testability"
+directly unit tested, using the same "export the pure logic for testability"
 pattern vinyl-scout's `audio-preview.mjs` and travel-intelligence's
 `fares.mjs` use. `index.html`'s inline script imports from this module
 rather than duplicating the logic, so the tested code and the live code
 are the same code, not two copies that can drift apart.
 
-Run `npm test` (`node tests/logic.test.mjs`) — 13 assertions, no network,
+Run `npm test` (`node tests/logic.test.mjs`): 13 assertions, no network,
 no DOM. Everything else on this site (the dismiss Function, the static
 Top Picks/Coming Soon markup, the poster-art fallback) doesn't have
 automated coverage yet; that's a real gap, not an oversight, and would be
@@ -87,7 +87,7 @@ the next thing to close.
 The `streaming-scout-weekly-resync` scheduled task previously pointed at a Cowork
 session's own ephemeral output folder for `STREAMING_LOG.md`, `TASTE_PROFILE.md`,
 `STREAMING_PROFILE.md`, and `EXCLUDED_TITLES.md`, believing it was reachable from any
-session. It wasn't — that task had been silently failing for an unknown number of
+session. It wasn't; that task had been silently failing for an unknown number of
 weeks, and most of that data (years of watch history, the derived taste profile, most
 of the exclusion list) is unrecoverable. One exclusion was recovered from the live
 `dismiss.mjs` Blobs store. These four files now live in `data/` in this repo instead,
@@ -99,7 +99,7 @@ details.
 
 **Mostly static, with one live sync.** The Top Picks and Coming Soon rows
 themselves are plain HTML baked into `index.html` at publish time
-(presumably by a Claude-run rebuild step, per the Roadmap) — there's no
+(presumably by a Claude-run rebuild step, per the Roadmap); there's no
 database and no per-visit content generation. The availability icon
 (subscription-included vs. pay-to-watch) shipped as part of that same
 static markup; it's not a separate feature anymore.
@@ -109,13 +109,13 @@ The one live piece is dismissals. Clicking a title's "×" calls
 so the dismissal syncs across every device immediately, in addition to
 hiding the row locally via `localStorage`. That's the only `fetch()` on
 the page. Making a dismissal stick through the *next* weekly rebuild
-still requires updating `data/EXCLUDED_TITLES.md` — see `CLAUDE.md` for
+still requires updating `data/EXCLUDED_TITLES.md`; see `CLAUDE.md` for
 that flow.
 
 ## Before treating this as authoritative
 
 Do a careful diff/review against the live site before relying on this as
-the source of truth — parts of `roadmap.html` and `guide.html` were
+the source of truth: parts of `roadmap.html` and `guide.html` were
 reconstructed from rendered text plus a verified template rather than
 extracted byte-for-byte, and the four icon/image binary assets are
 missing entirely.

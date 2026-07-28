@@ -56,12 +56,12 @@
         <span class="phase-title">the plugin</span>
         <span class="phase-status live">Live</span>
       </div>
-      <p class="phase-body">Five Cowork skills — streaming-setup, sync-watch-history, log-watched, top-picks, coming-soon — read Netflix and Prime Video history directly from your logged-in browser tabs via the Claude in Chrome extension, tag genre and cast through web research (neither platform exposes that metadata itself), and score candidates against a taste profile built from real, multi-year watch history.</p>
+      <p class="phase-body">Five Cowork skills (streaming-setup, sync-watch-history, log-watched, top-picks, coming-soon) read Netflix and Prime Video history directly from your logged-in browser tabs via the Claude in Chrome extension, tag genre and cast through web research (neither platform exposes that metadata itself), and score candidates against a taste profile built from real, multi-year watch history.</p>
       <p class="phase-value">Recommendations built from what you actually watched, not a generic trending chart.</p>
       <ul class="phase-log">
-        <li><span class="lg-date">JUL 2026</span>Actor-affinity + signature-genre scoring. Generic buckets (Comedy, Drama, Documentary) count for roughly a third; genres you've shown you love (British Procedural, Spy Thriller, Mystery) count in full, plus a bonus for cast overlap with titles you finished and loved. Added after an early version surfaced generic trending titles — including a slapstick comedy — that didn't match your stated taste.</li>
+        <li><span class="lg-date">JUL 2026</span>Actor-affinity + signature-genre scoring. Generic buckets (Comedy, Drama, Documentary) count for roughly a third; genres you've shown you love (British Procedural, Spy Thriller, Mystery) count in full, plus a bonus for cast overlap with titles you finished and loved. Added after an early version surfaced generic trending titles, including a slapstick comedy, that didn't match your stated taste.</li>
         <li><span class="lg-date">JUL 2026</span>Full watch log. Multi-year Netflix and Prime history, pulled directly from your account pages, deduped and genre/cast-tagged.</li>
-        <li><span class="lg-date">JUL 2026</span>Coming Soon feed. Sourced from BritBox's official schedule, PBS Masterpiece, Den of Geek, and Netflix Tudum — cross-referenced against your log so continuations of shows you're already watching are prioritized.</li>
+        <li><span class="lg-date">JUL 2026</span>Coming Soon feed. Sourced from BritBox's official schedule, PBS Masterpiece, Den of Geek, and Netflix Tudum, cross-referenced against your log so continuations of shows you're already watching are prioritized.</li>
       </ul>
     </div>
 
@@ -71,16 +71,16 @@
         <span class="phase-title">the snapshot dashboard</span>
         <span class="phase-status live">Live</span>
       </div>
-      <p class="phase-body">A static, no-build site presenting the latest Top Picks, Taste Profile, and Coming Soon feed. No backend — Claude regenerates it from the plugin's data files and redeploys by hand.</p>
+      <p class="phase-body">A static, no-build site presenting the latest Top Picks, Taste Profile, and Coming Soon feed. No backend: Claude regenerates it from the plugin's data files and redeploys by hand.</p>
       <p class="phase-value">Something to open on a phone, without opening a Cowork session first.</p>
       <ul class="phase-log">
         <li><span class="lg-date">JUL 2026</span>Accessibility and consistency pass: darkened <code>--ink-dim</code>/<code>--ink-faint</code> to clear WCAG AA (4.5:1) contrast, added an <code>onerror</code> fallback to every poster <code>&lt;img&gt;</code> (previously only one of eight had it), enlarged the × dismiss button's tap target to roughly 44px without changing how it looks, added <code>aria-label</code> to all 18 availability badges (a <code>title=""</code> tooltip alone doesn't do anything on touch), renamed About's page-scoped <code>.wont-list</code> to <code>.wont-list--about</code> after it turned out to collide with a rule of the same name in <code>style.css</code>, and reworded the "540 titles" vs. "190 titles" mismatch across every page to describe the watch history qualitatively instead of stating a number only one page's rebuild kept current. Also added an empty-state note to Coming Soon, matching the one Top Picks already had, for when every row's been dismissed.</li>
         <li><span class="lg-date">JUL 2026</span>Visual alignment pass to match the shared house style: switched to Fraunces instead of a Georgia stack, a proper-case "The Streaming Scout" wordmark with a bullet-ring mark, gold field-note borders instead of a one-off accent color, and a plain-numeral style on About matching this page instead of its own circular badge. Added a last-synced status banner.</li>
-        <li><span class="lg-date">JUL 2026</span>Dismiss control extended to Coming Soon, and checked IMDb as a second art source alongside Wikipedia — real posters now on 10 of 12 upcoming titles, up from 3. The 2 still missing (Coastal Unit, Kill Jackie) genuinely have no published art yet on either source, so they keep an honest initials monogram rather than a fabricated image.</li>
-        <li><span class="lg-date">JUL 2026</span>Dismiss control on Top Picks — an × on each row hides it (saved per-device) and copies a message to paste to Claude, which adds it to EXCLUDED_TITLES.md so it's permanently filtered out of future rebuilds. Coming Soon rows now show a poster thumbnail where real art exists, and an honest initials monogram where it doesn't.</li>
-        <li><span class="lg-date">JUL 2026</span>iOS home screen icon and manifest — installs with its own icon and no browser chrome. Added a Right Now section for in-theaters and live viewing, and trimmed/visualized the Guide and About pages to match the shared house style.</li>
-        <li><span class="lg-date">JUL 2026</span>Reverted a rust/dark-card redesign that missed the mark, and rebuilt Top Picks as compact rows with real poster art (sourced from Wikipedia), cast, and streaming service all visible without a click — and rewrote the CSS mobile-first.</li>
-        <li><span class="lg-date">JUL 2026</span>Rebuilt to match a shared house style — persistent nav, cream/serif shell, and this Roadmap/Guide/About set — instead of its original one-off dark theme.</li>
+        <li><span class="lg-date">JUL 2026</span>Dismiss control extended to Coming Soon, and checked IMDb as a second art source alongside Wikipedia; real posters now on 10 of 12 upcoming titles, up from 3. The 2 still missing (Coastal Unit, Kill Jackie) genuinely have no published art yet on either source, so they keep an honest initials monogram rather than a fabricated image.</li>
+        <li><span class="lg-date">JUL 2026</span>Dismiss control on Top Picks: an × on each row hides it (saved per-device) and copies a message to paste to Claude, which adds it to EXCLUDED_TITLES.md so it's permanently filtered out of future rebuilds. Coming Soon rows now show a poster thumbnail where real art exists, and an honest initials monogram where it doesn't.</li>
+        <li><span class="lg-date">JUL 2026</span>iOS home screen icon and manifest: installs with its own icon and no browser chrome. Added a Right Now section for in-theaters and live viewing, and trimmed/visualized the Guide and About pages to match the shared house style.</li>
+        <li><span class="lg-date">JUL 2026</span>Reverted a rust/dark-card redesign that missed the mark, and rebuilt Top Picks as compact rows with real poster art (sourced from Wikipedia), cast, and streaming service all visible without a click, and rewrote the CSS mobile-first.</li>
+        <li><span class="lg-date">JUL 2026</span>Rebuilt to match a shared house style (persistent nav, cream/serif shell, and this Roadmap/Guide/About set) instead of its original one-off dark theme.</li>
         <li><span class="lg-date">JUL 2026</span>Deployed to Netlify through the dashboard's own upload page, after this project's sandbox was found to block direct calls to Netlify's API and CLI.</li>
       </ul>
     </div>
@@ -94,7 +94,7 @@
       <p class="phase-body">streamingscout.org. Registered at $10.49 for the first year through Netlify's own domain search and connected as the project's primary domain, with DNS and an HTTPS certificate provisioning automatically.</p>
       <p class="phase-value">One address to remember, not a netlify.app subdomain.</p>
       <ul class="phase-log">
-        <li><span class="lg-date">JUL 2026</span>Registered and connected. An initial attempt was blocked by a declined debit card — entering payment details isn't something Claude does on your behalf, so that step waited on you and went through the next morning.</li>
+        <li><span class="lg-date">JUL 2026</span>Registered and connected. An initial attempt was blocked by a declined debit card; entering payment details isn't something Claude does on your behalf, so that step waited on you and went through the next morning.</li>
       </ul>
     </div>
 
@@ -104,11 +104,11 @@
         <span class="phase-title">scheduled resync</span>
         <span class="phase-status live">Live</span>
       </div>
-      <p class="phase-body">A recurring task that reruns sync-watch-history, top-picks, and coming-soon on its own and prepares the dashboard update, instead of only refreshing when you ask. The commit is automatic; publishing it still takes one push command from Susan (the cloud session that runs this task has no GitHub network access — same constraint as the git-connected deploy itself).</p>
+      <p class="phase-body">A recurring task that reruns sync-watch-history, top-picks, and coming-soon on its own and prepares the dashboard update, instead of only refreshing when you ask. The commit is automatic; publishing it still takes one push command from Susan (the cloud session that runs this task has no GitHub network access, the same constraint as the git-connected deploy itself).</p>
       <p class="phase-value">The dashboard's data stays current between visits; getting it live still takes one copy-pasted command.</p>
       <ul class="phase-log">
         <li><span class="lg-date">JUL 2026</span>A scheduled task pointed at a temporary session folder instead of stable storage. That folder wasn't reachable between runs, so years of watch history, the taste profile, and most of the exclusion list were lost. Persistent data now lives in this repo's <code>data/</code> folder. The task commits changes; Susan still pushes them.</li>
-        <li><span class="lg-date">JUL 2026</span>Scheduled task set up, runs Monday mornings. Each run resyncs watch history, rebuilds Top Picks and Coming Soon (honoring EXCLUDED_TITLES.md), and sources real poster art where it exists. If any step fails — login expired, a source unreachable — it stops rather than publishing a partial or guessed state.</li>
+        <li><span class="lg-date">JUL 2026</span>Scheduled task set up, runs Monday mornings. Each run resyncs watch history, rebuilds Top Picks and Coming Soon (honoring EXCLUDED_TITLES.md), and sources real poster art where it exists. If any step fails (login expired, a source unreachable), it stops rather than publishing a partial or guessed state.</li>
       </ul>
     </div>
 
@@ -118,7 +118,7 @@
         <span class="phase-title">browse the full watch log</span>
         <span class="phase-status planned">Planned</span>
       </div>
-      <p class="phase-body">A searchable view of the full logged watch history — filter by service, genre, or actor.</p>
+      <p class="phase-body">A searchable view of the full logged watch history: filter by service, genre, or actor.</p>
       <p class="phase-value">See the evidence behind a recommendation, not just the recommendation.</p>
     </div>
 
@@ -128,11 +128,11 @@
         <span class="phase-title">a real backend</span>
         <span class="phase-status progress">In progress</span>
       </div>
-      <p class="phase-body">A proper backend: Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys on push. The dismiss feature was the first beneficiary — a function backed by Netlify Blobs so a dismissal syncs across devices instantly, no chat round-trip needed. Automated backups and a health check are still ahead.</p>
+      <p class="phase-body">A proper backend: Netlify Functions with automated backups and health checks, on a GitHub repo that auto-deploys on push. The dismiss feature was the first beneficiary: a function backed by Netlify Blobs so a dismissal syncs across devices instantly, no chat round-trip needed. Automated backups and a health check are still ahead.</p>
       <p class="phase-value">Infrastructure that matches how solid the site looks, not just the look itself.</p>
       <ul class="phase-log">
-        <li><span class="lg-date">JUL 2026</span>The dismiss endpoint is open to the internet by design — no login required, because a "not interested" flag isn't sensitive. It's now bounded: oversized input is rejected, and the stored list caps at 500 entries, oldest first out. That closes the obvious abuse case. Automated backups and a health check are still open.</li>
-        <li><span class="lg-date">JUL 2026</span>Attempted and blocked, then unblocked. Built and bundled a working Netlify Function (dismiss endpoint backed by Netlify Blobs) and deployed it through the usual upload page — it didn't go live. Confirmed against Netlify's own docs: manual zip/drag-and-drop deploys skip the build pipeline entirely, and Functions only work through Git-connected continuous deployment. That setup step got done first — this repo connected to GitHub with Netlify auto-deploying from it on every push to <code>main</code> — and the dismiss Function itself shipped against that pipeline shortly after: <code>netlify/functions/dismiss.mjs</code>, live and Blobs-backed.</li>
+        <li><span class="lg-date">JUL 2026</span>The dismiss endpoint is open to the internet by design: no login required, because a "not interested" flag isn't sensitive. It's now bounded: oversized input is rejected, and the stored list caps at 500 entries, oldest first out. That closes the obvious abuse case. Automated backups and a health check are still open.</li>
+        <li><span class="lg-date">JUL 2026</span>Attempted and blocked, then unblocked. Built and bundled a working Netlify Function (dismiss endpoint backed by Netlify Blobs) and deployed it through the usual upload page; it didn't go live. Confirmed against Netlify's own docs: manual zip/drag-and-drop deploys skip the build pipeline entirely, and Functions only work through Git-connected continuous deployment. That setup step got done first: this repo connected to GitHub with Netlify auto-deploying from it on every push to <code>main</code>, and the dismiss Function itself shipped against that pipeline shortly after: <code>netlify/functions/dismiss.mjs</code>, live and Blobs-backed.</li>
       </ul>
     </div>
 
@@ -142,7 +142,7 @@
         <span class="phase-title">protect saved changes</span>
         <span class="phase-status planned">Planned</span>
       </div>
-      <p class="phase-body">Dismissing a title is currently open to anyone with the link — no login, by design, since a "not interested" flag felt low-stakes when this shipped. As the dashboard link gets shared more, that's worth tightening: gate the dismiss endpoint's POST and DELETE behind a shared edit key (the same pattern Vinyl Scout's catalog uses), remembered in the browser after it's entered once so it doesn't cost a retype on every visit. Browsing Top Picks and Coming Soon stays open to anyone, unchanged.</p>
+      <p class="phase-body">Dismissing a title is currently open to anyone with the link: no login, by design, since a "not interested" flag felt low-stakes when this shipped. As the dashboard link gets shared more, that's worth tightening: gate the dismiss endpoint's POST and DELETE behind a shared edit key (the same pattern Vinyl Scout's catalog uses), remembered in the browser after it's entered once so it doesn't cost a retype on every visit. Browsing Top Picks and Coming Soon stays open to anyone, unchanged.</p>
       <p class="phase-value">A shared link lets anyone see what's recommended, not quietly reshape what's recommended.</p>
     </div>
 
@@ -153,7 +153,7 @@
         <span class="phase-status live">Live</span>
       </div>
       <p class="phase-body">A full-history resync and a round of content and performance work: the taste profile now runs on the complete 919-title, 2010-2026 log instead of a partial one, Top Picks was rebuilt across six distinct veins with a real actor list and diversified so it isn't just one genre repeated, and Currently Watching / Coming Soon caught up to what's actually being watched. Fraunces and IBM Plex were also moved off Google Fonts onto self-hosted files, and every poster image got explicit dimensions plus lazy-loading below the fold.</p>
-      <p class="phase-value">Recommendations grounded in the whole history, not last month's slice of it &mdash; and a faster, more honest-looking page around them.</p>
+      <p class="phase-value">Recommendations grounded in the whole history, not last month's slice of it, and a faster, more honest-looking page around them.</p>
       <ul class="phase-log">
         <li><span class="lg-date">JUL 2026</span>Full-history re-sync: 919 titles (2010-2026) pulled in, and the taste profile rebuilt on top of the full set instead of a partial resync.</li>
         <li><span class="lg-date">JUL 2026</span>Top Picks rebuilt from the full 16-year profile: 6 picks across 6 distinct veins, backed by a real actor list rather than genre alone; later restored, promoted, and diversified to 13 picks with verified artwork.</li>
@@ -169,7 +169,7 @@
         <span class="phase-title">a real scoring formula</span>
         <span class="phase-status planned">Planned</span>
       </div>
-      <p class="phase-body">Every match percentage today is Claude applying the same documented weighting rules fresh each rebuild (signature genre at full weight, actor affinity as a proportional bonus, generic genre at roughly a third) and writing a number that reflects that judgment &mdash; consistent by rule, not by equation. This phase turns that into a literal, stored formula: fixed numeric weights per signature genre and per actor in <code>TASTE_PROFILE.md</code>, and one small scoring function that takes a title's tagged genre and cast and returns a number, the same pattern Travel Intelligence already uses for flight scoring. What stays judgment either way: deciding what genre a brand-new title even is and whether its cast really overlaps &mdash; that still comes from reading a page or a web search, not from a database. The equation only replaces the combining step, not the research step underneath it.</p>
+      <p class="phase-body">Every match percentage today is Claude applying the same documented weighting rules fresh each rebuild (signature genre at full weight, actor affinity as a proportional bonus, generic genre at roughly a third) and writing a number that reflects that judgment; consistent by rule, not by equation. This phase turns that into a literal, stored formula: fixed numeric weights per signature genre and per actor in <code>TASTE_PROFILE.md</code>, and one small scoring function that takes a title's tagged genre and cast and returns a number, the same pattern Travel Intelligence already uses for flight scoring. What stays judgment either way: deciding what genre a brand-new title even is and whether its cast really overlaps; that still comes from reading a page or a web search, not from a database. The equation only replaces the combining step, not the research step underneath it.</p>
       <p class="phase-value">A score you could re-add by hand and get the same number, not just a number you have to trust.</p>
     </div>
 
