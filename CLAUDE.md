@@ -217,3 +217,7 @@ it's not a substitute for the manual check below. Verifying a deploy means:
   and `loading="lazy"` on all but the first two (those stay eager for LCP).
   When the weekly artwork sweep adds or replaces a poster, keep these
   attributes intact and give new imgs the same set.
+
+## Editorial standard
+
+Editorial standard for external-facing docs: see ~/Projects/project-hub/EDITORIAL_STYLE.md (added 2026-07-28). Also re-verify watch-history-span claims against data/STREAMING_LOG.md; they drift.
