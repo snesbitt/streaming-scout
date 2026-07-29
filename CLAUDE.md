@@ -110,6 +110,13 @@ boundary between the two.
   bounded: a 200-char cap on `title`/`section`, and the Blobs list evicts
   its oldest entry once it would exceed 500. Backed by a Netlify Blobs
   store named `dismissed-titles`.
+- `netlify/functions/status.mjs` — added 2026-07-29. Same open,
+  bounded design as dismiss.mjs above (200-char field cap, 500-entry FIFO
+  Blobs list, no auth), in its own store (`title-status`) since a watch
+  status is a different signal than a dismissal. Tracks `watching`/
+  `watched` per title so the Currently Watching (▶) and Watched (✓)
+  buttons next to every pick sync across devices. Also does not touch
+  the next weekly rebuild by itself — same gap as dismiss.mjs.
 - `package.json` — bundles `@netlify/blobs` for the Function above, and as
   of 2026-07-23 runs the test suite via `npm test`. Still no build script,
   no dev dependencies.
@@ -181,6 +188,9 @@ it's not a substitute for the manual check below. Verifying a deploy means:
   control on the page) should have a real ~44px tap target even when the
   visible glyph stays small — see the `::after` hit-slop pattern on
   `.pick-dismiss` for how to do that without changing the visual density.
+  The 2026-07-29 watching/watched buttons (`.pick-watching`, `.pick-watched`)
+  reuse the same pattern at a slightly smaller 40px hit-slop, to fit three
+  controls in the same row without crowding.
 - **Brand mark matches the family, in both glyph and size.** The nav
   brand mark is `⦿` (bullseye, not a plain `•`) at 19px/22px (mobile/desktop)
   next to `.brand .word` at 24px/30px — sized to visually match Vinyl
