@@ -23,18 +23,25 @@
     padding: 0.95rem 1rem 1.05rem;
   }
   .mode-card .mode-name {
-    font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 17px;
+    font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 19px;
     margin-bottom: 2px;
   }
+  .mode-card .mode-role { font-size: 11px; }
+  .mode-card ul { font-size: 13.5px; }
   .mode-card.tint-a { border-left-color: var(--good); }
   .mode-card.tint-b { border-left-color: var(--mid); }
   .mode-card.tint-c { border-left-color: var(--accent); }
   .mode-card.tint-d { border-left-color: #6d7e93; }
 
+  .mode-caption {
+    font-family: var(--sans); font-size: 13px; font-style: italic;
+    color: var(--ink-faint); text-align: center; margin: 10px 0 4px;
+  }
+
   figure.diagram { margin: 1.4rem 0 1.8rem; text-align: center; }
   figure.diagram svg { max-width: 100%; height: auto; }
   figure.diagram figcaption {
-    font-family: var(--sans); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--ink-faint); margin-top: 8px;
   }
 
@@ -150,52 +157,7 @@
         </div>
       </div>
 
-      <figure class="diagram">
-        <svg viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four boxes: Chat decides, Cowork builds and maintains, Chrome extension reads your data, Scheduled tasks resync weekly, connected left to right">
-          <defs>
-            <marker id="ssArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-              <path d="M0,0 L10,5 L0,10 z" fill="#a89f8f"/>
-            </marker>
-          </defs>
-          <g font-family="-apple-system, Helvetica, sans-serif">
-            <rect x="8" y="14" width="158" height="118" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
-            <text x="87" y="38" text-anchor="middle" font-size="13" font-weight="600" fill="#2a2620">Chat</text>
-            <text x="87" y="55" text-anchor="middle" font-size="10.5" font-style="italic" fill="#4c6b4f">decide</text>
-            <text x="87" y="78" text-anchor="middle" font-size="10.5" fill="#3d4238">signature genre calls</text>
-            <text x="87" y="94" text-anchor="middle" font-size="10.5" fill="#3d4238">actor-match weight</text>
-            <text x="87" y="110" text-anchor="middle" font-size="10.5" fill="#3d4238">what to exclude</text>
-
-            <rect x="190" y="14" width="158" height="118" rx="8" fill="#ece2d0" stroke="#9c7a35"/>
-            <text x="269" y="38" text-anchor="middle" font-size="13" font-weight="600" fill="#2a2620">Cowork</text>
-            <text x="269" y="55" text-anchor="middle" font-size="10.5" font-style="italic" fill="#8a6a2e">build &amp; maintain</text>
-            <text x="269" y="78" text-anchor="middle" font-size="10.5" fill="#5c4c22">skill &amp; data files</text>
-            <text x="269" y="94" text-anchor="middle" font-size="10.5" fill="#5c4c22">the scoring script</text>
-            <text x="269" y="110" text-anchor="middle" font-size="10.5" fill="#5c4c22">shipped this page</text>
-
-            <rect x="372" y="14" width="158" height="118" rx="8" fill="#e3d9d9" stroke="#6b3a3a"/>
-            <text x="451" y="38" text-anchor="middle" font-size="13" font-weight="600" fill="#2a2620">Chrome ext.</text>
-            <text x="451" y="55" text-anchor="middle" font-size="10.5" font-style="italic" fill="#6b3a3a">read your data</text>
-            <text x="451" y="78" text-anchor="middle" font-size="10.5" fill="#4e2c2c">Netflix &amp; Prime history</text>
-            <text x="451" y="94" text-anchor="middle" font-size="10.5" fill="#4e2c2c">never touches credentials</text>
-            <text x="451" y="110" text-anchor="middle" font-size="10.5" fill="#4e2c2c">hands off to Cowork</text>
-
-            <rect x="554" y="14" width="158" height="118" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
-            <text x="633" y="38" text-anchor="middle" font-size="13" font-weight="600" fill="#2a2620">Scheduled</text>
-            <text x="633" y="55" text-anchor="middle" font-size="10.5" font-style="italic" fill="#54657a">weekly resync</text>
-            <text x="633" y="78" text-anchor="middle" font-size="10.5" fill="#3d4a58">Mondays, automatic</text>
-            <text x="633" y="94" text-anchor="middle" font-size="10.5" fill="#3d4a58">Roadmap, phase 04</text>
-            <text x="633" y="110" text-anchor="middle" font-size="10.5" fill="#3d4a58">stops rather than</text>
-            <text x="633" y="122" text-anchor="middle" font-size="10.5" fill="#3d4a58">publishing partial data</text>
-
-            <line x1="166" y1="73" x2="188" y2="73" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr)"/>
-            <line x1="348" y1="73" x2="370" y2="73" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr)"/>
-            <line x1="530" y1="73" x2="552" y2="73" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr)"/>
-
-            <text x="360" y="162" text-anchor="middle" font-size="10.5" font-style="italic" fill="#8a8271">no terminal in this stack; Cowork carries the build role end to end</text>
-          </g>
-        </svg>
-        <figcaption>Which mode carries which responsibility.</figcaption>
-      </figure>
+      <p class="mode-caption">No terminal in this stack: Cowork carries the build role end to end.</p>
     </div>
 
     <div class="step" id="data">
@@ -230,37 +192,37 @@
       <p class="step-body">Every change publishes to the live site automatically, with no manual deploy step. That's what made it possible to add the first fully live feature: removing a title now updates every device immediately, not just the one you dismissed it on.</p>
 
       <figure class="diagram">
-        <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and saves the update, Netlify publishes it automatically to streamingscout.org, and one always-on live feature now runs alongside it">
+        <svg viewBox="0 0 720 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and saves the update, Netlify publishes it automatically to streamingscout.org, and one always-on live feature now runs alongside it">
           <defs>
             <marker id="ssArr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M0,0 L10,5 L0,10 z" fill="#a89f8f"/>
             </marker>
           </defs>
           <g font-family="-apple-system, Helvetica, sans-serif">
-            <rect x="8" y="20" width="150" height="62" rx="8" fill="#e3d9d9" stroke="#6b3a3a"/>
-            <text x="83" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Netflix / Prime</text>
-            <text x="83" y="62" text-anchor="middle" font-size="10" fill="#4e2c2c">read-only, your session</text>
+            <rect x="8" y="20" width="150" height="70" rx="8" fill="#e3d9d9" stroke="#6b3a3a"/>
+            <text x="83" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">Netflix / Prime</text>
+            <text x="83" y="68" text-anchor="middle" font-size="12" fill="#4e2c2c">read-only, your session</text>
 
-            <rect x="196" y="20" width="150" height="62" rx="8" fill="#ece2d0" stroke="#9c7a35"/>
-            <text x="271" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Claude / Cowork</text>
-            <text x="271" y="62" text-anchor="middle" font-size="10" fill="#5c4c22">builds &amp; saves the update</text>
+            <rect x="196" y="20" width="150" height="70" rx="8" fill="#ece2d0" stroke="#9c7a35"/>
+            <text x="271" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">Claude / Cowork</text>
+            <text x="271" y="68" text-anchor="middle" font-size="12" fill="#5c4c22">builds &amp; saves the update</text>
 
-            <rect x="384" y="20" width="150" height="62" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
-            <text x="459" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Netlify</text>
-            <text x="459" y="62" text-anchor="middle" font-size="10" fill="#3d4238">publishes it automatically</text>
+            <rect x="384" y="20" width="150" height="70" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
+            <text x="459" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">Netlify</text>
+            <text x="459" y="68" text-anchor="middle" font-size="12" fill="#3d4238">publishes it automatically</text>
 
-            <rect x="572" y="20" width="140" height="62" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
-            <text x="642" y="45" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">streamingscout.org</text>
-            <text x="642" y="62" text-anchor="middle" font-size="10" fill="#3d4a58">the live site, updated</text>
+            <rect x="572" y="20" width="140" height="70" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
+            <text x="642" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">streamingscout.org</text>
+            <text x="642" y="68" text-anchor="middle" font-size="12" fill="#3d4a58">the live site, updated</text>
 
-            <line x1="158" y1="51" x2="194" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
-            <line x1="346" y1="51" x2="382" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
-            <line x1="534" y1="51" x2="570" y2="51" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+            <line x1="158" y1="55" x2="194" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+            <line x1="346" y1="55" x2="382" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+            <line x1="534" y1="55" x2="570" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
 
-            <rect x="196" y="122" width="326" height="52" rx="8" fill="#e7e9df" stroke="#4c6b4f" stroke-width="1.3"/>
-            <text x="359" y="143" text-anchor="middle" font-size="11.5" font-weight="600" fill="#3d5240">Dismiss button: live everywhere</text>
-            <text x="359" y="160" text-anchor="middle" font-size="9.5" fill="#3d5240">shipped July 17, 2026; instantly syncs across every device</text>
-            <line x1="459" y1="82" x2="384" y2="120" stroke="#8fae93" stroke-width="1.3" stroke-dasharray="4 3"/>
+            <rect x="196" y="132" width="326" height="60" rx="8" fill="#e7e9df" stroke="#4c6b4f" stroke-width="1.3"/>
+            <text x="359" y="155" text-anchor="middle" font-size="13" font-weight="600" fill="#3d5240">Dismiss button: live everywhere</text>
+            <text x="359" y="174" text-anchor="middle" font-size="12" fill="#3d5240">shipped July 17, 2026; instantly syncs across every device</text>
+            <line x1="459" y1="90" x2="384" y2="130" stroke="#8fae93" stroke-width="1.3" stroke-dasharray="4 3"/>
           </g>
         </svg>
         <figcaption>How an update travels from Claude's workspace to the live site.</figcaption>
