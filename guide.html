@@ -53,6 +53,38 @@
   .callout p { margin: 0; font-size: 12.5px; color: var(--ink); }
 
   .step-divider { margin: 2.4rem 0 1.6rem; border-top: 1px solid var(--border); }
+
+  .prompt-box {
+    background: #2a2620; border: 1px solid #4a4438; border-radius: 9px;
+    padding: 1.1rem 1.2rem; margin: 1.1rem 0 1.6rem; position: relative;
+  }
+  .prompt-box pre {
+    margin: 0; white-space: pre-wrap; word-wrap: break-word;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; line-height: 1.6; color: #efe9dc;
+  }
+  .prompt-copy {
+    position: absolute; top: 10px; right: 10px;
+    background: #efe9dc; color: #2a2620; border: none; border-radius: 6px;
+    font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
+    padding: 6px 11px; cursor: pointer;
+  }
+  .prompt-copy:hover { background: #fff; }
+
+  .next-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0.9rem 0 1.7rem; }
+  @media (min-width: 640px) { .next-grid { grid-template-columns: 1fr 1fr; } }
+  .next-card {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: 0.8rem 0.95rem;
+  }
+  .next-card .next-num { font-family: var(--serif); font-style: italic; font-weight: 600; color: var(--accent); font-size: 13px; }
+  .next-card h4 { margin: 2px 0 4px; font-size: 13px; }
+  .next-card p { margin: 0; font-size: 12px; color: var(--ink-dim); }
+
+  .need-list { list-style: none; padding: 0; margin: 0 0 1.7rem; }
+  .need-list li { display: flex; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .need-list li:last-child { border-bottom: none; }
+  .need-list li::before { content: "\2022"; color: var(--good); flex-shrink: 0; }
 </style>
 </head><body>
 
@@ -66,7 +98,6 @@
       <a href="/roadmap">Roadmap</a>
       <a class="active" href="/guide">Guide</a>
       <a href="/about">About</a>
-      <a href="/start">Build Your Own</a>
     </nav>
   </div>
 </header>
@@ -77,6 +108,10 @@
     <h1 class="page-title">A personal recommendation engine, built and run by an AI agent</h1>
     <p class="lede">Six steps, in sequence, written for anyone: no technical background needed. Every box below is a real part of the system, not a simplified illustration of one.</p>
 
+    <p class="callout" style="margin:0 0 1.4rem;">
+      <strong>This page is the how-to:</strong> the method and the exact prompt to build a site like this yourself, for any topic. For what this dashboard does today, its scoring, its stack, read <a href="/about">About</a> instead.
+    </p>
+
     <nav class="pill-nav">
       <a href="#tools"><b>01</b>Tools</a>
       <a href="#data"><b>02</b>Data</a>
@@ -84,6 +119,8 @@
       <a href="#snapshot"><b>04</b>Snapshot</a>
       <a href="#deploy"><b>05</b>Deploy</a>
       <a href="#manual"><b>06</b>Manual</a>
+      <a href="#build-your-own">Build your own</a>
+      <a href="#field-notes">Field notes</a>
     </nav>
 
     <div class="step" id="tools">
@@ -237,15 +274,64 @@
 
     <div class="step-divider"></div>
 
-    <div class="field-note" style="margin-top: 0;">
-      <p class="eyebrow">Two lessons worth knowing</p>
-      <p style="margin-bottom:10px;"><strong>A better formula can't fix a bad starting list.</strong> An early version ranked movies from a generic "trending now" list: the same list every visitor to a streaming site sees. A slapstick comedy nearly outscored a spy thriller starring Rami Malek, because both titles came from that same undifferentiated pool and every genre was weighted equally. The fix wasn't a smarter formula; it was pulling candidates only from Susan's own multi-year watch history instead. No amount of scoring sophistication rescues a candidate list that isn't personalized to begin with.</p>
-      <p><strong>Claude asks before it spends, every time, no exceptions.</strong> Registering this site's domain name is the clearest example: before buying streamingscout.org, Claude confirmed the exact domain and the $10.49 price with Susan, and would not complete the purchase without her card on file and her explicit go-ahead. That's not a one-time courtesy; it's the standing rule applied to every dollar this system touches.</p>
+    <p class="eyebrow" id="build-your-own">Build your own · a starting point</p>
+    <h2 style="margin:0 0 8px;">Copy this prompt to start</h2>
+    <p class="lede" style="font-size:15px;">This entire site (the recommendation logic, the dashboard, the domain, the self-updating schedule) started from a single written request to Claude. It was built in stages, in conversation, with every irreversible step (spending money, publishing, connecting accounts) held for explicit approval along the way. Below is a version of that starting request. Copy it, adapt it to your own topic, and paste it into a new Claude conversation.</p>
+
+    <div class="prompt-box">
+      <button class="prompt-copy" id="startCopyBtn" onclick="startCopyPrompt()">Copy</button>
+      <pre id="startPromptText">I want to build a small personal recommendation site for [your topic, e.g. books I've read, restaurants I've tried, podcasts, wine, whatever you actually track].
+
+Here's the pattern I want it to follow:
+1. Pull my real history from wherever it already lives (an account, a spreadsheet, an app). I don't want to re-enter anything by hand.
+2. Rank new candidates against what I've actually liked before, not a generic popularity or trending list.
+3. Publish it as a small, real website I can bookmark and check from my phone. No login needed for me to view it day to day.
+4. Let me dismiss things I'm not interested in with one click, and have that stick permanently.
+5. Refresh itself on a schedule, so it stays current without me having to ask every time.
+6. Be honest in the interface about what's automatic versus what still needs me. Never invent or guess at data it can't verify.
+
+Please help me scope this into a first small version we can finish today, tell me exactly what you'd need from me at each step (any account access, any purchase like a domain name, anything you can't do without my say-so), and don't do anything irreversible without checking with me first.</pre>
     </div>
 
+    <p class="lede" style="font-size:13px;">Swap the bracketed topic for your own, or hand it to Claude exactly as written and answer its follow-up questions. Either works.</p>
+
+    <div class="next-grid">
+      <div class="next-card">
+        <div class="next-num">01</div>
+        <h4>Claude asks before it assumes</h4>
+        <p>Expect clarifying questions about what "good" means for your topic before anything gets built.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">02</div>
+        <h4>A first version, same session</h4>
+        <p>A working, if small, version is realistic to see before the conversation ends.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">03</div>
+        <h4>You approve anything with a consequence</h4>
+        <p>Spending money, connecting an account, or publishing something public always waits for your yes.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">04</div>
+        <h4>It grows in later sessions</h4>
+        <p>Everything on this site, the domain, the self-refresh, the dismiss button, arrived in later passes, not all at once. See the <a href="/roadmap">Roadmap</a> for the real order it happened in.</p>
+      </div>
+    </div>
+
+    <p class="eyebrow" style="margin-top:0.4rem;">What it takes on your end</p>
+    <ul class="need-list">
+      <li>A Claude account with access to Cowork (or Claude Code, for a more technical, terminal-based version of the same idea).</li>
+      <li>A few short check-ins over the following days or weeks. This kind of project improves in passes, not one sitting.</li>
+      <li>A willingness to say yes or no when Claude asks. It will hold at anything with a real-world consequence rather than guess.</li>
+    </ul>
+
+    <div class="step-divider"></div>
+
+    <p class="eyebrow" id="field-notes">Field notes</p>
+    <h2 style="margin:0 0 12px;">What we'd tell you before you start</h2>
     <div class="field-note" style="margin-top: 0;">
-      <p class="eyebrow">Want one of these yourself?</p>
-      <p>This walkthrough covers how this specific site works. If you'd rather see the actual starting prompt that could kick off something similar for your own topic, it's on the <a href="/start" style="text-decoration:underline;">Build Your Own</a> page.</p>
+      <p style="margin-bottom:10px;"><strong>A better formula can't fix a bad starting list.</strong> An early version ranked movies from a generic "trending now" list: the same list every visitor to a streaming site sees. A slapstick comedy nearly outscored a spy thriller starring Rami Malek, because both titles came from that same undifferentiated pool and every genre was weighted equally. The fix wasn't a smarter formula. It was pulling candidates only from Susan's own multi-year watch history instead. No amount of scoring sophistication rescues a candidate list that isn't personalized to begin with.</p>
+      <p><strong>Claude asks before it spends, every time, no exceptions.</strong> Registering this site's domain name is the clearest example: before buying streamingscout.org, Claude confirmed the exact domain and the $10.49 price with Susan, and would not complete the purchase without her card on file and her explicit go-ahead. That's not a one-time courtesy. It's the standing rule applied to every dollar this system touches.</p>
     </div>
 
   </div>
@@ -255,6 +341,22 @@
   <div class="wrap">© 2026</div>
 </footer>
 
-
+<script>
+function startCopyPrompt() {
+  var text = document.getElementById('startPromptText').textContent;
+  var btn = document.getElementById('startCopyBtn');
+  function done(ok) {
+    if (!btn) return;
+    var original = 'Copy';
+    btn.textContent = ok ? 'Copied' : 'Select & copy manually';
+    setTimeout(function () { btn.textContent = original; }, 2200);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { done(true); }).catch(function () { done(false); });
+  } else {
+    done(false);
+  }
+}
+</script>
 
 </body></html>
