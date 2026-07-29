@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-07-25 (full-history backfill)
+**Last updated:** 2026-07-29 (incremental sync; prior full-history backfill 2026-07-25)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -20,6 +20,30 @@ don't expose cast); actor affinity lives in TASTE_PROFILE.md.
 ## Entry format (backfill)
 
 **Title** · Service · episodes/plays · first watched → last watched
+
+
+## 2026-07-26 (incremental sync, 2026-07-29)
+
+**Title:** Return to Paradise (Season 2)
+**Service:** Prime (BritBox channel)
+**Status:** in progress
+**Cast:** Anna Samson
+
+**Title:** Spooks (Season 1)
+**Service:** Prime
+**Status:** in progress
+**Cast:** Matthew Macfadyen, Keeley Hawes, Peter Firth
+
+**Title:** The Odyssey (1997 NBC miniseries)
+**Service:** Prime
+**Status:** watched
+**Cast:** Armand Assante, Greta Scacchi, Isabella Rossellini
+
+**Title:** Grantchester (Season 2)
+**Service:** Prime
+**Status:** in progress (additional episodes beyond the backfill row below)
+
+No new Netflix activity since the backfill (viewing activity ends 7/14/26, all logged).
 
 
 ## 2026

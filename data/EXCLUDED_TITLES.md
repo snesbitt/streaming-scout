@@ -17,3 +17,10 @@ before. If a previously-dismissed title reappears in Top Picks or Coming Soon, t
 ## Excluded
 
 - **Wake Up Dead Man: A Knives Out Mystery** — Top Picks — dismissed 2026-07-21 (recovered from live Blobs store)
+- **Gone** — Top Picks — dismissed on-site 2026-07-26
+- **Hamnet** — Top Picks — dismissed on-site 2026-07-26
+- **Return to Paradise, season 2** — Top Picks — dismissed on-site 2026-07-28. Not a dislike: she started watching it on Prime 2026-07-26 (see STREAMING_LOG.md), so it's excluded from picks as already-watching, not as negative taste signal.
+- **Dark Winds** — Top Picks — dismissed on-site 2026-07-28
+- **Coastal Unit** — Coming Soon — dismissed on-site 2026-07-28
+
+*(Synced from the live dismiss store 2026-07-29.)*

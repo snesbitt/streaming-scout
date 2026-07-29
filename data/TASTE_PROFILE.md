@@ -1,7 +1,7 @@
 # Taste Profile
 
 **Derived from:** STREAMING_LOG.md (auto-generated — do not hand-edit)
-**Last updated:** 2026-07-25 (regenerated from the full-history backfill: 919 titles, Netflix Feb 2010 → Jul 2026 + Prime Mar 2017 → Jul 2026)
+**Last updated:** 2026-07-29 (incremental: 2026-07-26 sync added Spooks S1, Return to Paradise S2, The Odyssey '97 — reinforces veins 1, 2, and 8 below; no rank changes)
 
 Genre and actor attributions below are knowledge-derived for these well-known
 titles (the account pages expose no metadata); each claim is anchored to named
@@ -49,7 +49,8 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
    (rewatched into 2026), Alias (S1–S2), The Diplomat, The Night Agent, Black
    Doves, The Recruit, Treason, The Asset, Citadel (+Diana), A Spy Among
    Friends, The Ipcress File, The Courier, All the Old Knives, SS-GB, London
-   Spy, Restless-class Le Carré adjacents (Little Drummer Girl, Russia House).
+   Spy, Restless-class Le Carré adjacents (Little Drummer Girl, Russia House),
+   Spooks S1 (started 2026-07-26).
 3. **Action thriller, working-class-hero flavor** (0.8) — the Statham/Neeson/
    Reacher/Equalizer shelf, steady since 2020: Reacher (series + both films),
    Equalizer 1–3, The Beekeeper, Wrath of Man, The Bank Job, Mechanic ×2,
@@ -85,7 +86,8 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
    versions), Indian Summers (S1–S2), Wolf-Hall-class adaptations, A
    Gentleman in Moscow, Hotel Portofino, Wide Sargasso Sea, The Count of
    Monte Cristo (2026), One Hundred Years of Solitude, A Fortunate Man,
-   House of Guinness, Remains of the Day, Gosford Park.
+   House of Guinness, Remains of the Day, Gosford Park, The Odyssey '97
+   miniseries (watched 2026-07-26, after seeing the Nolan film in theaters).
 
 ## Generic Genres (lower confidence on their own)
 
