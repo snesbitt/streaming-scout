@@ -286,7 +286,9 @@ font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; font-weight
 color: var(--accent); background: var(--accent-dim); padding: 2px 8px; border-radius: 5px;
 display: inline-block; margin-bottom: 4px;
 }
-.watching-row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--border); gap: 10px; }
+.watching-row { display: flex; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); gap: 10px; }
+.watching-row .poster-wrap { width: 40px; height: 58px; }
+.watching-info { flex: 1; min-width: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .watching-row:last-child { border-bottom: none; }
 .watching-title { font-size: 13px; font-weight: 700; }
 .watching-meta { font-size: 11px; color: var(--ink-dim); margin-left: 6px; }

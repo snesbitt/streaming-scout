@@ -52,8 +52,8 @@
           <h2 class="card-title">Currently Watching</h2>
           <div class="watching-list" id="watching-list">
           <div class="watching-row" data-title="Tucci in Italy">
-            <span><span class="watching-title">Tucci in Italy</span><span class="watching-meta">Seasons 1–2 · in progress</span></span>
-            <span class="watching-badge">Nat Geo</span>
+            <div class="poster-wrap"><div class="poster-mono">TI</div></div>
+            <div class="watching-info"><span><span class="watching-title">Tucci in Italy</span><span class="watching-meta">Seasons 1–2 · in progress</span></span><span class="watching-badge">Nat Geo</span></div>
           </div>
           </div>
         </div>
@@ -436,7 +436,7 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
     });
     updateEmptyNotes();
   }
-  function renderWatchingRow(title, meta) {
+  function renderWatchingRow(title, meta, posterHTML) {
     var list = document.getElementById('watching-list');
     if (!list) return;
     var existing = Array.prototype.slice.call(list.querySelectorAll('.watching-row')).some(function (r) { return r.dataset.title === title; });
@@ -444,7 +444,9 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
     var row = document.createElement('div');
     row.className = 'watching-row';
     row.dataset.title = title;
-    row.innerHTML = '<span><span class="watching-title">' + title + '</span>' + (meta ? '<span class="watching-meta">' + meta + '</span>' : '') + '</span>';
+    var initials = (title || '').slice(0, 2).toUpperCase();
+    var poster = posterHTML || ('<div class="poster-wrap"><div class="poster-mono">' + initials + '</div></div>');
+    row.innerHTML = poster + '<div class="watching-info"><span><span class="watching-title">' + title + '</span>' + (meta ? '<span class="watching-meta">' + meta + '</span>' : '') + '</span></div>';
     list.appendChild(row);
   }
   function applyStatuses() {
@@ -495,11 +497,13 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
     var section = row.classList.contains('soon-row') ? 'Coming Soon' : 'Top Picks';
     var scoreEl = row.querySelector('.pick-score');
     var meta = scoreEl ? scoreEl.textContent : '';
+    var posterWrapEl = row.querySelector('.poster-wrap');
+    var posterHTML = posterWrapEl ? posterWrapEl.outerHTML.replace('poster-wrap soon', 'poster-wrap') : '';
     var map = getStatusMap();
     map[title] = { status: status, meta: meta };
     setStatusMap(map);
     row.style.display = 'none';
-    if (status === 'watching') { renderWatchingRow(title, meta); }
+    if (status === 'watching') { renderWatchingRow(title, meta, posterHTML); }
     updateEmptyNotes();
     postStatus(title, status, meta, section);
     var msg = status === 'watching'
