@@ -91,7 +91,7 @@ boundary between the two.
   inline in `index.html`.
 - `about.html`, `roadmap.html`, `guide.html` — public, self-contained
   explainer pages, no build step, no imports. Shared house style with the
-  sibling sites (Fraunces serif, cream/serif shell, `.card`, `.pill-nav`,
+  sibling sites (Lora serif, cream/serif shell, `.card`, `.pill-nav`,
   `.phase`, `.step`, `.stat-strip`, `.field-note`). `about.html` and
   `guide.html` each carry a small page-scoped `<style>` block for
   page-only components (stat strip, stack comparison, diagram figures) —
@@ -219,8 +219,8 @@ it's not a substitute for the manual check below. Verifying a deploy means:
 
 ## 2026-07-26 — fonts + poster hygiene
 
-- Fonts are SELF-HOSTED in `/fonts` (Fraunces variable latin-full
-  normal+italic, official Fontsource releases); the Google Fonts link tags
+- Fonts are SELF-HOSTED in `/fonts` (Lora latin-400
+  normal+italic, official Fontsource release); the Google Fonts link tags
   are gone and netlify.toml serves `/fonts/*` immutable for a year. Don't
   reintroduce a Google Fonts request.
 - Every poster `<img>` carries `decoding="async" width="1000" height="1500"`,
@@ -231,3 +231,14 @@ it's not a substitute for the manual check below. Verifying a deploy means:
 ## Editorial standard
 
 Editorial standard for external-facing docs: see ~/Projects/project-hub/EDITORIAL_STYLE.md (added 2026-07-28). Also re-verify watch-history-span claims against data/STREAMING_LOG.md; they drift.
+
+## 2026-07-29 — serif swap: Instrument Serif to Lora
+
+Susan didn't like Instrument Serif's high-contrast display feel. Replaced
+with Lora everywhere the serif shows up (wordmark, page titles, poster
+monograms, phase rails, stat numbers) — same self-hosted pattern, same
+italic-only usage, same 400-weight-only files (`fonts/lora-latin-400-normal.
+woff2` + `-italic.woff2`, official Fontsource release). This is scoped to
+Streaming Scout only — the other 4 sites in the portfolio still use
+Instrument Serif. Old `fonts/instrument-serif-*.woff2` files were left in
+place rather than deleted (small, harmless, avoids touching netlify.toml).

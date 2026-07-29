@@ -14,7 +14,7 @@
 --mid-dim: #f0e6cd;
 --bad: #a24a3f;
 --bad-dim: #f2e2de;
---serif: "Instrument Serif", Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+--serif: "Lora", Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
 --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 * { box-sizing: border-box; }
