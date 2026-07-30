@@ -242,3 +242,30 @@ woff2` + `-italic.woff2`, official Fontsource release). This is scoped to
 Streaming Scout only — the other 4 sites in the portfolio still use
 Instrument Serif. Old `fonts/instrument-serif-*.woff2` files were left in
 place rather than deleted (small, harmless, avoids touching netlify.toml).
+
+## 2026-07-30 — Currently Watching fixes, tap-target bug, roadmap/guide cleanup
+
+- Fixed a real bug: clicking "watching" could register as "watched" instead,
+  because the old hit-slop technique (an invisible `::after` pseudo-element,
+  absolutely positioned and centered on each button) let adjacent buttons'
+  clickable zones overlap by ~20px when spaced only 1px apart. Replaced with
+  real padding on the button elements themselves (`display:inline-flex;
+  padding:9px 6px`) so each button's own box is the hit area and siblings
+  can never overlap. Verified via `getBoundingClientRect()` before/after.
+- Added visible `title` tooltips (matching existing `aria-label`s) to all
+  `pick-watching`/`pick-watched`/`pick-dismiss` buttons — they had
+  accessible names for screen readers but nothing for sighted mouse users.
+- Added a `row-dismiss` (×) button to Currently Watching and In Theaters
+  rows, reusing the existing dismiss/localStorage-sync infrastructure
+  (`ssDismiss`, `applyDismissed`, `/api/dismiss`), extended to also match
+  `.watching-row`/`.theater-row`.
+- Removed the 23 redundant green-checkmark `avail-included` badges from
+  Top Picks rows (kept the $ `avail-pay` badge, which still carries real
+  information).
+- Currently Watching now has 4 permanent static entries: Tucci in Italy,
+  Grantchester (season 11), The Westies, and Say Nothing — all previously
+  only reachable via the ephemeral client-side "watching" button, now
+  committed directly so they persist regardless of localStorage state.
+  Tucci's poster is Susan's own photo at `posters/tucci-in-italy.jpg`.
+- Simplified the Taste Profile subheading (dropped the "full weight
+  (rebuilt ... from the full 16-year history of 919 titles)" aside).
