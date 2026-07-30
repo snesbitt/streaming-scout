@@ -91,36 +91,21 @@ background: var(--bg-alt); border: 1px solid var(--border); overflow: hidden;
 .pick-cast strong { color: var(--ink-dim); font-weight: 600; margin-right: 3px; }
 .pick-open { font-size: 11px; color: var(--accent); text-decoration: none; font-weight: 600; white-space: nowrap; }
 .poster-mono { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; color: var(--ink-faint); font-size: 15px; }
-.pick-actions { display: flex; align-items: center; gap: 1px; flex-shrink: 0; }
-.pick-dismiss {
-position: relative;
-background: none; border: none; color: var(--ink-faint); font-size: 17px; line-height: 1;
-cursor: pointer; padding: 0 0 0 2px; flex-shrink: 0; font-family: var(--sans);
+.pick-actions { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+/* Real padding, not an absolutely-positioned hit-slop overlay: each button's
+   clickable box now participates in normal flex layout, so adjacent buttons
+   can never overlap and steal each other's clicks (confirmed bug: a click
+   meant for "watching" could land on "watched" because their old invisible
+   40px/44px ::after hit-slop zones overlapped by ~20px). */
+.pick-dismiss, .pick-watching, .pick-watched {
+display: inline-flex; align-items: center; justify-content: center;
+background: none; border: none; color: var(--ink-faint); line-height: 1;
+cursor: pointer; font-family: var(--sans); padding: 9px 6px;
 }
-.pick-watching, .pick-watched {
-position: relative;
-background: none; border: none; color: var(--ink-faint); font-size: 14px; line-height: 1;
-cursor: pointer; padding: 0 0 0 4px; flex-shrink: 0; font-family: var(--sans);
-}
-.pick-watching::after, .pick-watched::after {
-content: "";
-position: absolute;
-top: 50%; left: 50%;
-width: 40px; height: 40px;
-transform: translate(-50%, -50%);
-}
+.pick-dismiss { font-size: 17px; }
+.pick-watching, .pick-watched { font-size: 14px; }
 .pick-watching:hover { color: var(--accent); }
 .pick-watched:hover { color: var(--good); }
-/* Hit-slop: expands the clickable area to ~44x44px (touch-target guideline)
-   without changing the glyph's small visible footprint — the pseudo-element
-   is invisible and centered on the button, not part of layout flow. */
-.pick-dismiss::after {
-content: "";
-position: absolute;
-top: 50%; left: 50%;
-width: 44px; height: 44px;
-transform: translate(-50%, -50%);
-}
 .pick-dismiss:hover { color: var(--bad); }
 .ss-toast {
 position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%) translateY(8px);
@@ -290,6 +275,12 @@ display: inline-block; margin-bottom: 4px;
 .watching-row .poster-wrap { width: 40px; height: 58px; }
 .watching-info { flex: 1; min-width: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .watching-row:last-child { border-bottom: none; }
+.row-dismiss {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: none; border: none; color: var(--ink-faint); font-size: 17px; line-height: 1;
+  cursor: pointer; font-family: var(--sans); padding: 9px 6px; flex-shrink: 0; align-self: center;
+}
+.row-dismiss:hover { color: var(--bad); }
 .watching-title { font-size: 13px; font-weight: 700; }
 .watching-meta { font-size: 11px; color: var(--ink-dim); margin-left: 6px; }
 .watching-badge { font-size: 10px; color: var(--good); font-weight: 700; white-space: nowrap; }
