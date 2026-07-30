@@ -34,7 +34,7 @@
 <main>
   <div class="wrap">
     <p class="eyebrow">Roadmap · built in deliberate phases</p>
-    <h1 class="page-title">Five phases live. Four to go.</h1>
+    <h1 class="page-title">Five phases live. Five to go.</h1>
     <p class="lede">The plugin, the dashboard, the domain, scheduled resync, and this month's content refresh are done. A real backend is underway. What's next is listed honestly below.</p>
 
     <nav class="roadmap-overview" aria-label="All phases at a glance">
@@ -47,6 +47,7 @@
       <a href="#phase-07" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>07 protect saved changes</a>
       <a href="#phase-08" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>08 content refresh &amp; polish</a>
       <a href="#phase-09" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>09 a real scoring formula</a>
+      <a href="#phase-10" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>10 catch account list up to reality</a>
     </nav>
 
     <div class="phase" id="phase-01">
@@ -154,6 +155,18 @@
         </div>
         <p class="phase__focus">A score you could re-add by hand</p>
         <p class="phase__covers">Every match percentage today comes from Claude applying the same documented weighting rules fresh each rebuild. This turns that into a literal stored formula: fixed weights per genre and actor, one small function that combines them, the same shape Travel Intelligence uses for flight scoring. Judging what genre a brand-new title even is stays a judgment call, not a lookup.</p>
+      </div>
+    </div>
+
+    <div class="phase" id="phase-10">
+      <div class="phase__rail">10</div>
+      <div class="phase__body">
+        <div class="phase__head">
+          <h2 class="phase__name">Catch the account list up to reality</h2>
+          <span class="phase__status phase__status--planned">Planned</span>
+        </div>
+        <p class="phase__focus">The tracked-services list stopped matching what's actually watched</p>
+        <p class="phase__covers">Currently Watching now includes Nat Geo, MGM+, and Hulu titles, none of which are in the four tracked services the About page states or in the Coming Soon skill's source list. This is an audit, not a new feature: confirm every service Susan actually subscribes to, correct the tracked-services stat and STREAMING_PROFILE.md to match, extend Coming Soon's per-service sources the same way BritBox and PBS Masterpiece are covered today, and re-derive the Taste Profile's genre list from the full watch history instead of the current fixed set. No new sections or controls, just existing ones catching up to the real data.</p>
       </div>
     </div>
 
