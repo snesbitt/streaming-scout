@@ -269,3 +269,16 @@ place rather than deleted (small, harmless, avoids touching netlify.toml).
   Tucci's poster is Susan's own photo at `posters/tucci-in-italy.jpg`.
 - Simplified the Taste Profile subheading (dropped the "full weight
   (rebuilt ... from the full 16-year history of 919 titles)" aside).
+
+## 2026-07-31 — Security audit fix: stored XSS in Currently Watching
+
+`renderWatchingRow(title, meta, posterHTML)` interpolated `title`/`meta`
+straight into innerHTML. Both come from `/api/status`, which length-caps
+them (200 chars) but never HTML-escapes them server-side — an attacker
+could plant a script via that open endpoint. Added an `esc()` helper
+(`&<>"'` character-map) and escaped `title`/`meta` everywhere they're
+used in the row template, including the dismiss button's `title=`/
+`aria-label=` attributes. `row.dataset.title` (a property assignment, not
+an innerHTML sink) was correctly left unescaped. Top Picks/Coming Soon
+rows are a separate render path fed from static rebuild-time HTML, not
+this endpoint, so out of scope. Committed `335be2b`.
