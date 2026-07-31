@@ -337,6 +337,18 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
 (function () {
   var KEY = 'ssDismissedTitles';
   var STATUS_KEY = 'ssTitleStatus';
+  // 2026-07-31: title/meta reach here from POST /api/status (open, no auth
+  // -- same governance model as dismiss.mjs, by design) via
+  // syncStatusFromServer() -> getStatusMap() -> renderWatchingRow(). The
+  // backend only length-caps them, it never escapes them, so they must be
+  // escaped here, right before they land in innerHTML/an attribute. Top
+  // Picks/Coming Soon rows don't need this: their titles come from static
+  // HTML baked in at rebuild time, not from an open write endpoint.
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
   function getDismissed() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
   function setDismissed(list) { localStorage.setItem(KEY, JSON.stringify(list)); }
   function getStatusMap() { try { return JSON.parse(localStorage.getItem(STATUS_KEY) || '{}'); } catch (e) { return {}; } }
@@ -434,11 +446,12 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
     if (existing) return;
     var row = document.createElement('div');
     row.className = 'watching-row';
-    row.dataset.title = title;
+    row.dataset.title = title; // .dataset assignment, not innerHTML -- not a sink
     var initials = (title || '').slice(0, 2).toUpperCase();
-    var poster = posterHTML || ('<div class="poster-wrap"><div class="poster-mono">' + initials + '</div></div>');
-    row.innerHTML = poster + '<div class="watching-info"><span><span class="watching-title">' + title + '</span>' + (meta ? '<span class="watching-meta">' + meta + '</span>' : '') + '</span></div>' +
-      '<button type="button" class="row-dismiss" title="Watched: remove ' + title + '" aria-label="Watched: remove ' + title + '" onclick="ssDismiss(this)">&times;</button>';
+    var poster = posterHTML || ('<div class="poster-wrap"><div class="poster-mono">' + esc(initials) + '</div></div>');
+    var safeTitle = esc(title), safeMeta = esc(meta);
+    row.innerHTML = poster + '<div class="watching-info"><span><span class="watching-title">' + safeTitle + '</span>' + (meta ? '<span class="watching-meta">' + safeMeta + '</span>' : '') + '</span></div>' +
+      '<button type="button" class="row-dismiss" title="Watched: remove ' + safeTitle + '" aria-label="Watched: remove ' + safeTitle + '" onclick="ssDismiss(this)">&times;</button>';
     list.appendChild(row);
   }
   function applyStatuses() {
