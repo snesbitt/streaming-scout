@@ -507,10 +507,31 @@ import { isReleased, serviceLabelFromBadgeTitle } from './src/logic.mjs';
     var map = getStatusMap();
     Object.keys(map).forEach(function (title) {
       var entry = map[title];
+      var posterHTML = '';
       document.querySelectorAll('.pick-row, .soon-row').forEach(function (row) {
-        if (row.dataset.title === title) { row.style.display = 'none'; }
+        if (row.dataset.title !== title) return;
+        // 2026-08-05 (Susan: "lioness is missing artwork ... this type of
+        // thing should be caught during regular checks"): markStatus()
+        // captures the row's real poster art at CLICK time and passes it
+        // straight to renderWatchingRow, but only status+meta ever made it
+        // into the persisted status map -- so the very next page load (or
+        // a sync to another device via /api/status) called
+        // renderWatchingRow with no poster at all and silently fell back
+        // to the initials monogram. That's true for EVERY title ever
+        // marked "watching," not just this one -- it just happened to be
+        // Lioness Susan noticed first. Re-deriving posterHTML here, from
+        // whatever poster markup this device's own freshly-rendered page
+        // already has for the title (same technique markStatus uses,
+        // "poster-wrap soon" -> "poster-wrap"), fixes it without ever
+        // persisting raw HTML through localStorage or the open,
+        // unauthenticated /api/status endpoint -- storing
+        // attacker-reachable HTML there would reopen the stored-XSS class
+        // the 2026-07-31 esc() fix closed.
+        var posterWrapEl = row.querySelector('.poster-wrap');
+        if (posterWrapEl) { posterHTML = posterWrapEl.outerHTML.replace('poster-wrap soon', 'poster-wrap'); }
+        row.style.display = 'none';
       });
-      if (entry.status === 'watching') { renderWatchingRow(title, entry.meta); }
+      if (entry.status === 'watching') { renderWatchingRow(title, entry.meta, posterHTML); }
     });
     updateEmptyNotes();
   }

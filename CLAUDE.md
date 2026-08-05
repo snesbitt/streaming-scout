@@ -167,7 +167,13 @@ it's not a substitute for the manual check below. Verifying a deploy means:
    `/about`, `/roadmap`, `/guide`) and actually look at it. Check that the
    change rendered, that nothing above/below it broke, and on a change
    touching `index.html`'s script, that dismiss still works.
-4. Say so plainly in the post-flight summary — "checked the live site"
+4. On any change touching `index.html`'s script, also click a pick's
+   ▶ (currently watching) button, then RELOAD THE PAGE and confirm the
+   row still shows real poster art, not just the initials monogram. A
+   "poster references check out" grep of the HTML source is not enough —
+   see the 2026-08-05 entry below for the bug this exact check would have
+   caught before Susan had to report it.
+5. Say so plainly in the post-flight summary — "checked the live site"
    is the real control of record here, not a claim of automated
    verification that doesn't exist.
 
@@ -331,3 +337,56 @@ this endpoint, so out of scope. Committed `335be2b`.
   `.mode-card`/`.mode-card.tint-*`, which duplicated rules already in
   `style.css` (the same class of issue `.wont-list--about` was renamed
   to avoid — see "Repository layout" above).
+
+## 2026-08-05 — Currently Watching poster art lost on reload (Susan: "lioness is missing artwork ... do better")
+
+Susan reported "Special Ops: Lioness, season 3" showing a gray "SP"
+monogram instead of its real poster in Currently Watching. The actual bug
+is more general than one title's image URL: `markStatus()` (fired by the
+▶ button) captures the row's real `posterHTML` at click time and passes
+it straight to `renderWatchingRow`, so it displays correctly in that
+instant — but only `{status, meta}` were ever written into the persisted
+status map (`getStatusMap`/`setStatusMap`, and the mirrored server copy
+via `/api/status`). `applyStatuses()`, which is what actually rebuilds
+Currently Watching on every page load and on every cross-device sync via
+`syncStatusFromServer()`, called `renderWatchingRow(title, entry.meta)`
+with no poster argument at all — so EVERY title ever marked "watching"
+lost its poster the moment the page was reloaded or opened on another
+device, not just Lioness. It happened to be the one Susan noticed first.
+
+Fixed in `applyStatuses()`: before hiding the now-redundant `.pick-row`/
+`.soon-row` for a watching title, it re-derives `posterHTML` from that
+row's still-present `.poster-wrap` (same DOM the row was rendered with on
+this page load, same technique `markStatus()` already uses) and passes it
+through to `renderWatchingRow`. Deliberately NOT persisting posterHTML
+itself into localStorage or the open, unauthenticated `/api/status`
+endpoint — round-tripping raw HTML through that endpoint would reopen the
+exact stored-XSS class the 2026-07-31 `esc()` fix closed for `title`/
+`meta`. Re-deriving locally from markup this device already trusts avoids
+that entirely.
+
+**Why the earlier 2026-08-05 audit missed this:** that pass's frontend
+review checked that every poster `<img src>` reference in the static HTML
+was well-formed and that the `onerror="this.remove()"` fallback mechanism
+existed — true, and irrelevant here, since this isn't a bad URL or a
+broken fallback. It's a state bug: real poster markup gets fetched
+correctly, then thrown away one render later. A static/grep-based review
+of markup can't catch a "collected but never persisted" bug — it only
+shows up by actually clicking the control and reloading. Added that exact
+click-then-reload check to "How to verify a deploy" above so it's a
+standing step, not a one-off; also this class of bug ("a value is read
+correctly once but never carried through to the next render/reload") is
+now a named thing to check for across the whole portfolio, not just here.
+
+Separately, while tracing this: the Lioness poster's own source URL
+(`upload.wikimedia.org/.../Lioness_%282025%29_title_card.jpg`) is the
+only poster in this file sourced from Wikipedia rather than IMDb
+(`m.media-amazon.com`, the pattern every other row uses and the only one
+independently verified working here), and its filename's "(2025)" doesn't
+match the show's 2023 premiere year — worth Susan's own eyeball check
+next time the page is open; WebFetch cannot reach `upload.wikimedia.org`
+to verify it directly (cache-only domain), and IMDb blocks automated
+fetches via robots.txt, so this couldn't be confirmed or fixed
+independently this session. If it does turn out broken, the existing
+`onerror` fallback means it was already failing safely (monogram, not a
+broken-image icon) — this note is about correctness, not an outage.
