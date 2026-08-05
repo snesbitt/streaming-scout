@@ -16,23 +16,11 @@
 </style>
 <link rel="stylesheet" href="style.css">
 <style>
-  /* Guide-page-only visual upgrade: richer mode cards, diagram figures.
-     Scoped to this page only; nothing here touches style.css. */
-  .mode-card {
-    border-left: 3px solid var(--border);
-    padding: 0.95rem 1rem 1.05rem;
-  }
-  .mode-card .mode-name {
-    font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 19px;
-    margin-bottom: 2px;
-  }
-  .mode-card .mode-role { font-size: 11px; }
-  .mode-card ul { font-size: 13.5px; }
-  .mode-card.tint-a { border-left-color: var(--good); }
-  .mode-card.tint-b { border-left-color: var(--mid); }
-  .mode-card.tint-c { border-left-color: var(--accent); }
-  .mode-card.tint-d { border-left-color: #6d7e93; }
-
+  /* Guide-page-only visual upgrade: diagram figures, callouts. .mode-card's
+     richer treatment (colored left rail, serif italic name) now lives in
+     style.css itself -- it used to be redefined here, duplicating rules
+     already in style.css (the same class of issue `.wont-list--about` was
+     renamed to avoid, see CLAUDE.md's "Repository layout"). */
   .mode-caption {
     font-family: var(--sans); font-size: 13px; font-style: italic;
     color: var(--ink-faint); text-align: center; margin: 10px 0 4px;

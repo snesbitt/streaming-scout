@@ -9,6 +9,9 @@
 # exactly what's in the repo:
 #   *.html        pages (index, about, guide, roadmap)
 #   style.css
+#   src/**        logic.mjs, imported live as an ES module by index.html
+#   fonts/**      self-hosted Lora files, referenced by every page's <style>
+#   posters/**    locally-hosted poster art (e.g. posters/tucci-in-italy.jpg)
 #   apple-touch-icon.png, favicon-32.png, icon-192.png, icon-512.png
 #   manifest.json
 #   netlify/**, netlify.toml, package.json/package-lock.json
@@ -29,6 +32,9 @@ fi
 if git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- \
   '*.html' \
   style.css \
+  src \
+  fonts \
+  posters \
   apple-touch-icon.png favicon-32.png icon-192.png icon-512.png \
   manifest.json \
   netlify \

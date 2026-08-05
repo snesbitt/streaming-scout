@@ -333,7 +333,7 @@
 
 <div id="ss-toast" class="ss-toast"></div>
 <script type="module">
-import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './src/logic.mjs';
+import { isReleased, serviceLabelFromBadgeTitle } from './src/logic.mjs';
 (function () {
   var KEY = 'ssDismissedTitles';
   var STATUS_KEY = 'ssTitleStatus';
@@ -349,21 +349,63 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
-  function getDismissed() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
+  // A dismiss means one of two different things depending on which row
+  // triggered it, and they must not be conflated: "not-interested" (Top
+  // Picks/Coming Soon "don't recommend this") vs. "finished" (Currently
+  // Watching/In Theaters "I'm done with this, take it off the list"). Both
+  // used to write a bare title into the same flat list, so marking
+  // something finished silently made it permanently ineligible to ever
+  // reappear as a Top Pick. Storage is now a list of
+  // {title, reason, dismissedAt} entries; each row type only checks the
+  // reason(s) relevant to it (see applyDismissed()).
+  function reasonForSection(section) {
+    return (section === 'Currently Watching' || section === 'In Theaters') ? 'finished' : 'not-interested';
+  }
+  function getDismissed() {
+    var raw;
+    try { raw = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; }
+    // Back-compat: pre-fix storage was a flat array of bare title strings
+    // with no reason at all. Treat those as 'not-interested' -- the more
+    // conservative default, since it preserves their original effect of
+    // staying out of Top Picks/Coming Soon rather than silently
+    // reappearing there.
+    return raw.map(function (e) {
+      return (typeof e === 'string') ? { title: e, reason: 'not-interested', dismissedAt: null } : e;
+    });
+  }
   function setDismissed(list) { localStorage.setItem(KEY, JSON.stringify(list)); }
   function getStatusMap() { try { return JSON.parse(localStorage.getItem(STATUS_KEY) || '{}'); } catch (e) { return {}; } }
   function setStatusMap(map) { localStorage.setItem(STATUS_KEY, JSON.stringify(map)); }
-  function mergeDismissed(list) {
-    var result = mergeDismissedTitles(getDismissed(), list);
-    if (result.changed) { setDismissed(result.list); }
-    return result.changed;
+  function isDismissedFor(title, reasons) {
+    return getDismissed().some(function (e) { return e.title === title && reasons.indexOf(e.reason) !== -1; });
+  }
+  function addDismissed(title, reason) {
+    var list = getDismissed();
+    if (!list.some(function (e) { return e.title === title && e.reason === reason; })) {
+      list.push({ title: title, reason: reason, dismissedAt: new Date().toISOString() });
+      setDismissed(list);
+    }
+  }
+  // Merge dismissals fetched from /api/dismiss (which already records
+  // `section`, see dismiss.mjs) into the local reason-aware list.
+  function mergeDismissedFromServer(entries) {
+    var list = getDismissed();
+    var changed = false;
+    entries.forEach(function (e) {
+      var reason = reasonForSection(e.section);
+      if (!list.some(function (x) { return x.title === e.title && x.reason === reason; })) {
+        list.push({ title: e.title, reason: reason, dismissedAt: e.dismissedAt || null });
+        changed = true;
+      }
+    });
+    if (changed) { setDismissed(list); }
+    return changed;
   }
   function syncFromServer() {
     if (!window.fetch) return;
     fetch('/api/dismiss').then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
       if (!data || !data.dismissed) return;
-      var titles = data.dismissed.map(function (e) { return e.title; });
-      if (mergeDismissed(titles)) { applyDismissed(); }
+      if (mergeDismissedFromServer(data.dismissed)) { applyDismissed(); }
     }).catch(function () { /* offline or Function unavailable; local list still applies */ });
   }
   function syncStatusFromServer() {
@@ -433,9 +475,16 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
     if (soonNote && soonRows.length) { soonNote.style.display = soonVisible === 0 ? 'block' : 'none'; }
   }
   function applyDismissed() {
-    var dismissed = getDismissed();
-    document.querySelectorAll('.pick-row, .soon-row, .watching-row, .theater-row').forEach(function (row) {
-      if (dismissed.indexOf(row.dataset.title) !== -1) { row.style.display = 'none'; }
+    // Top Picks/Coming Soon: hide on "not interested", not on "finished"
+    // (finishing something Susan is currently watching shouldn't make it
+    // permanently ineligible as a future recommendation).
+    document.querySelectorAll('.pick-row, .soon-row').forEach(function (row) {
+      if (isDismissedFor(row.dataset.title, ['not-interested'])) { row.style.display = 'none'; }
+    });
+    // Currently Watching/In Theaters: hide on "finished", the only reason
+    // their own × button ever produces.
+    document.querySelectorAll('.watching-row, .theater-row').forEach(function (row) {
+      if (isDismissedFor(row.dataset.title, ['finished'])) { row.style.display = 'none'; }
     });
     updateEmptyNotes();
   }
@@ -492,8 +541,7 @@ import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from './
       : row.classList.contains('watching-row') ? 'Currently Watching'
       : row.classList.contains('theater-row') ? 'In Theaters'
       : 'Top Picks';
-    var dismissed = getDismissed();
-    if (dismissed.indexOf(title) === -1) { dismissed.push(title); setDismissed(dismissed); }
+    addDismissed(title, reasonForSection(section));
     applyDismissed();
     postDismiss(title, section);
     var msg = (section === 'Currently Watching' || section === 'In Theaters')

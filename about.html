@@ -132,16 +132,16 @@
 
     <div class="about-section" id="the-stack">
       <div class="about-section-head"><span class="about-num-badge">03</span><h3>the stack</h3></div>
-      <p>Static HTML, plus one small Netlify Function for the dismiss button. Deploys via GitHub: pushing to main triggers Netlify's Git-connected continuous deployment automatically, whether Susan pushes directly or the Monday scheduled task does.</p>
+      <p>Static HTML, plus two small Netlify Functions: dismiss (for the "not interested"/"finished" buttons) and status (for the currently-watching/watched buttons). Deploys via GitHub: pushing to main triggers Netlify's Git-connected continuous deployment automatically, whether Susan pushes directly or the Monday scheduled task does.</p>
 
       <div class="stack-compare">
         <div class="stack-col this-site">
           <h4>This site, today</h4>
           <ul>
             <li>Static HTML, no build step</li>
-            <li>One Netlify Function: dismiss, Blobs-backed, bounded</li>
+            <li>Two Netlify Functions: dismiss and status, both Blobs-backed, bounded</li>
             <li>GitHub repo, auto-deploy on push</li>
-            <li>Dismiss syncs instantly; permanent exclusion still needs a chat confirm</li>
+            <li>Dismiss and watch-status sync instantly; permanent exclusion still needs a chat confirm</li>
           </ul>
         </div>
         <div class="stack-col siblings">

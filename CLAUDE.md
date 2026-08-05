@@ -185,12 +185,15 @@ it's not a substitute for the manual check below. Verifying a deploy means:
   reintroducing a number that only one page's rebuild step updates.
 - **Mobile-first, and mind tap targets.** Susan mostly opens this on her
   phone. Interactive controls (`.pick-dismiss` in particular, the busiest
-  control on the page) should have a real ~44px tap target even when the
-  visible glyph stays small — see the `::after` hit-slop pattern on
-  `.pick-dismiss` for how to do that without changing the visual density.
-  The 2026-07-29 watching/watched buttons (`.pick-watching`, `.pick-watched`)
-  reuse the same pattern at a slightly smaller 40px hit-slop, to fit three
-  controls in the same row without crowding.
+  control on the page) should have a real ~40-44px tap target even when the
+  visible glyph stays small. As of 2026-07-30 this is real padding on the
+  button box itself (`display:inline-flex; padding:13px 8px`), shared by
+  `.pick-dismiss`, `.pick-watching`, and `.pick-watched` — not the old
+  `::after` hit-slop overlay (an invisible, absolutely-positioned pseudo-
+  element), which let adjacent buttons' clickable zones overlap and steal
+  each other's clicks. Real padding means each button's own box is the hit
+  area, so siblings can never overlap; see the 2026-07-30 changelog entry
+  below for the bug that prompted the change.
 - **Brand mark matches the family, in both glyph and size.** The nav
   brand mark is `⦿` (bullseye, not a plain `•`) at 19px/22px (mobile/desktop)
   next to `.brand .word` at 24px/30px — sized to visually match Vinyl
@@ -282,3 +285,49 @@ used in the row template, including the dismiss button's `title=`/
 an innerHTML sink) was correctly left unescaped. Top Picks/Coming Soon
 rows are a separate render path fed from static rebuild-time HTML, not
 this endpoint, so out of scope. Committed `335be2b`.
+
+## 2026-08-05 — audit fixes: deploy-skip gap, contrast, dismiss/finished conflation, tap targets, docs
+
+- `scripts/netlify-ignore.sh` only watched `*.html`/`style.css`/icons/
+  `manifest.json`/`netlify/**`/`netlify.toml`/`package*.json` — not `src/`,
+  even though `index.html` imports `src/logic.mjs` as a live ES module. A
+  commit that only changed `src/logic.mjs` was silently treated as a
+  no-op deploy. Added `src`, plus `fonts` and `posters` (also referenced
+  by the pages, also uncovered), to the watched-path list.
+- Two real WCAG AA contrast failures, despite roadmap.html's claim of
+  meeting AA: `--mid` on `--mid-dim` (used by `.soon-date.tbd`,
+  `.avail-badge.avail-pay`, and also `.chip.mid`/`.ro-chip.ro-progress`/
+  `.phase__status--progress`, which share the same pair) measured
+  3.22:1; darkened `--mid` from `#9c7a35` to `#7a5f29`, now 4.84:1.
+  `.soon-date.unconfirmed` (`--ink-dim` on `--accent-dim`) measured
+  4.35:1; switched its foreground to `--accent` (the pairing
+  `.theater-badge` already uses successfully), now 7.10:1. `--ink-dim`
+  itself was left untouched — it's tuned against `--bg`/`--card`
+  elsewhere and touching it would have had a much wider blast radius than
+  this one selector needed.
+- `ssDismiss()`/`applyDismissed()` shared one flat `ssDismissedTitles`
+  list for two different meanings: "not interested" (Top Picks/Coming
+  Soon) and "finished watching" (Currently Watching/In Theaters).
+  Marking something finished silently made it permanently ineligible to
+  ever reappear as a Top Pick. Storage is now a list of
+  `{title, reason, dismissedAt}` entries (`reason` is `"not-interested"`
+  or `"finished"`); each row type in `applyDismissed()` only checks its
+  own relevant reason. Old bare-string entries in a browser's existing
+  localStorage are read as `"not-interested"` for backward compatibility.
+  `/api/dismiss` already recorded `section` server-side, so
+  `syncFromServer()` now derives `reason` from that instead of discarding
+  it. `data/EXCLUDED_TITLES.md`'s own format is untouched — this only
+  affects the client-side/localStorage + Blobs sync layer, not that file.
+- Bumped `.pick-dismiss`/`.pick-watching`/`.pick-watched` padding from
+  `9px 6px` to `13px 8px` — the real computed tap target after the
+  2026-07-30 fix was only ~32-37px tall, short of the ~40-44px this file
+  promised. Now ~40-45px tall across breakpoints. Horizontal padding was
+  bumped more conservatively (6px → 8px) to avoid crowding three buttons
+  plus the title/score into one row on narrow phones.
+- about.html and roadmap.html both still said "one Netlify Function"
+  (dismiss only); `status.mjs` has been live since 2026-07-29. Updated
+  both to describe both functions.
+- Removed guide.html's page-scoped `<style>` redefinition of
+  `.mode-card`/`.mode-card.tint-*`, which duplicated rules already in
+  `style.css` (the same class of issue `.wont-list--about` was renamed
+  to avoid — see "Repository layout" above).
