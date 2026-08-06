@@ -476,4 +476,30 @@ More importantly, Season 2 already premiered (UK: Jul 20, 2026; a Prime
 Video listing for it already exists), so it isn't "coming soon" — it's
 already out. Left off Coming Soon pending Susan's steer: log it as
 watched/currently-watching instead, or was a different, still-unreleased
-season/title actually meant?
+season/title actually meant? **2026-08-06 update: Susan said "ignore for
+now" — still parked, no further action.**
+
+## 2026-08-06, later — Ted Lasso S4 art filled in; Kill Jackie art upgraded
+
+Susan sent two images directly, unlabeled — matched them by content since
+the only real open art gap was Ted Lasso S4:
+
+- **Ted Lasso, season 4**: official Apple TV+ key art (full cast, "TED
+  LASSO" wordmark) — this was the one title still on monogram-only per
+  the audit above. Hosted locally at `posters/ted-lasso-s4.jpg`, same
+  no-unverified-hotlink pattern as every other locally-hosted poster in
+  this file. `index.html` row updated; the "no poster art" sentence
+  removed from its `pick-meta` note since it's no longer true.
+- **Kill Jackie**: the second image (Catherine Zeta-Jones in a red gown,
+  cinematic still) wasn't explicitly labeled as Kill Jackie art — inferred
+  from content (matches "Catherine Zeta-Jones, Action Thriller," the only
+  other title this session touched art for) since there was no other open
+  art request it could reasonably answer. Flagged this assumption to
+  Susan rather than silently guessing. Replaces the earlier low-res
+  (~201×251) key art at the same path, `posters/kill-jackie.jpg` — same
+  file, better source image, no `index.html` change needed since the
+  `src` was already correct.
+
+**Full artwork audit is now clean: zero monogram-only titles in Coming
+Soon.** Worth a periodic re-check as new titles get added, same as the
+2026-08-06 audit above did once.
