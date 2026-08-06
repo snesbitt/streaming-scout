@@ -443,3 +443,37 @@ verified image search path for poster art — so for any title still
 showing monogram-only, the honest move is to say so plainly rather than
 leave it looking like an oversight, and ask Susan to send the art directly
 if she wants it filled in before a real fix (working search access) exists.
+
+## 2026-08-06 — Full Coming Soon artwork audit (per Susan's "find and replace it all") + Babylon Berlin S5 added
+
+Scanned every row in Coming Soon, Currently Watching, and Top Picks for a
+missing `<img>` inside its `poster-wrap`. Result: **Ted Lasso, season 4 is
+the only remaining gap** — Kill Jackie (above) already closed the other
+one. Same root cause and same fix path as documented above: no working
+IMDb/Wikipedia search from this environment, so no new hotlink was
+guessed. If Susan wants it filled in, sending the official key art
+directly (same as Kill Jackie) is the fastest real fix.
+
+Also added, same session: **Babylon Berlin, season 5** (final season) to
+Coming Soon, per Susan's direct request. Real facts checked via web search
+before adding (see below) — not assumed. US/Canada premiere is exclusive
+to **MHz Choice**, not one of the three tracked services (Netflix/Prime
+Video/Apple TV+) or the two Premium/Channel Add-ons already listed
+(BritBox, PBS Masterpiece) — badged the same `avail-pay` "$" way Lioness's
+Paramount+ requirement already is, per Susan's own standing preference
+that off-tracked-service picks stay in the pool but get clearly badged.
+No exact US date yet ("early 2027" per MHz Choice's own announcement,
+German premiere confirmed Sep 2026) — `tbd` class, same convention as
+Kill Jackie. No poster art, same reasoning as Ted Lasso S4 above. Not run
+through a full taste-profile rescore (direct add, not a rebuild).
+
+**Also surfaced, NOT added — flagging instead of guessing:** Susan asked
+to add "the crow girl on prime" to Coming Soon. Checked before adding:
+*The Crow Girl* is fundamentally a **Paramount+** production (UK: Channel
+5), reachable via Prime Video only as a paid Channels add-on — same
+category as BritBox/PBS Masterpiece, not a native Prime Video Original.
+More importantly, Season 2 already premiered (UK: Jul 20, 2026; a Prime
+Video listing for it already exists), so it isn't "coming soon" — it's
+already out. Left off Coming Soon pending Susan's steer: log it as
+watched/currently-watching instead, or was a different, still-unreleased
+season/title actually meant?
