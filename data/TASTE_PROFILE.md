@@ -1,7 +1,7 @@
 # Taste Profile
 
 **Derived from:** STREAMING_LOG.md (auto-generated — do not hand-edit)
-**Last updated:** 2026-07-29 (incremental: 2026-07-26 sync added Spooks S1, Return to Paradise S2, The Odyssey '97 — reinforces veins 1, 2, and 8 below; no rank changes)
+**Last updated:** 2026-08-06 (incremental: added Gillian Anderson to Actor Affinity per Susan's direct request — not log-derived, see entry for basis; prior update 2026-07-29: 2026-07-26 sync added Spooks S1, Return to Paradise S2, The Odyssey '97 — reinforces veins 1, 2, and 8 below; no rank changes)
 
 Genre and actor attributions below are knowledge-derived for these well-known
 titles (the account pages expose no metadata); each claim is anchored to named
@@ -112,6 +112,13 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
 
 Weights reflect repeated, completed viewing across multiple titles in the log.
 
+- **Gillian Anderson** (0.5, Susan-requested 2026-08-06) — added directly as
+  an ongoing Top Picks/Coming Soon filter, not (yet) log-derived from
+  repeated viewing the way the entries below are: the only anchor actually
+  in STREAMING_LOG.md is The Crown (20 plays, S1–6 — Anderson is S4-only,
+  as Thatcher), so this is a forward-looking interest signal on Susan's
+  word, not a completed-pattern claim. Should firm up (or adjust) once real
+  viewing of Anderson-led titles shows up in the log.
 - **Gary Oldman** (0.85) — Slow Horses S1–5 complete (reported 2026-07-26),
   Darkest-Hour-class prestige leads
 - **Nicola Walker** (1.0) — Unforgotten S1–S3, Last Tango in Halifax (17 plays
