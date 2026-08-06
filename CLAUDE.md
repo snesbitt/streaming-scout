@@ -378,6 +378,36 @@ standing step, not a one-off; also this class of bug ("a value is read
 correctly once but never carried through to the next render/reload") is
 now a named thing to check for across the whole portfolio, not just here.
 
+**Follow-up same day — the fix above was real but incomplete for Lioness
+specifically.** At the time this entry was first written, the Lioness
+`<img src>` pointed at
+`upload.wikimedia.org/.../Lioness_%282025%29_title_card.jpg` — flagged in
+that session's own notes as a suspected wrong file (the filename says
+"(2025)"; the show premiered 2023) but left unfixed because Wikipedia's
+domains all returned "cache-only, cannot be fetched" to WebFetch and IMDb
+returned `ROBOTS_DISALLOWED`, so the URL couldn't be verified from this
+environment and guessing a replacement risked shipping an equally wrong
+one. That caveat should have been surfaced to Susan more clearly as "the
+underlying image itself may still be broken, please check" rather than
+implied only in an internal note — it wasn't, and the reload-persistence
+fix above, while a real and separate bug, did NOT fix what Susan actually
+saw: if the source image 404s, `onerror="this.remove()"` deletes the `img`
+element itself, so `markStatus()`'s "capture the current poster markup"
+step had nothing to capture in the first place, on every page load, reload
+fix or not. Susan sent the correct official artwork directly. Rather than
+re-attempt an external hotlink (Wikipedia or otherwise) that this
+environment still can't verify loads, it's now hosted locally at
+`posters/lioness.jpg` — the same pattern already established for Tucci in
+Italy (`posters/tucci-in-italy.jpg`, per the Repository Layout section
+above), which removes the "unverifiable remote URL" failure mode for this
+title entirely rather than trading one unverified link for another.
+`index.html`'s Coming Soon row updated to `src="posters/lioness.jpg"`.
+**Worth a broader pass:** every other remote (non-`posters/`) poster URL in
+this file carries the same unverified risk — a follow-up session should
+spot-check each one loads (a live browser check, not another WebFetch
+attempt against domains already confirmed to block it) rather than wait
+for Susan to notice each broken one individually.
+
 Separately, while tracing this: the Lioness poster's own source URL
 (`upload.wikimedia.org/.../Lioness_%282025%29_title_card.jpg`) is the
 only poster in this file sourced from Wikipedia rather than IMDb
@@ -390,3 +420,26 @@ fetches via robots.txt, so this couldn't be confirmed or fixed
 independently this session. If it does turn out broken, the existing
 `onerror` fallback means it was already failing safely (monogram, not a
 broken-image icon) — this note is about correctness, not an outage.
+
+## 2026-08-06 — Kill Jackie poster art added
+
+"Kill Jackie" (Prime Video, Catherine Zeta-Jones, Action Thriller) had
+shipped in Coming Soon with no `<img>` at all — monogram-only ("KJ") — per
+the note on Ted Lasso S4 above ("not sourcing an unverified hotlink after
+the Lioness lesson"): no IMDb/Wikipedia search was attempted for it either,
+same reasoning. Susan sent the official Prime Video key art directly
+(a small, low-res promo still, ~200x251 — noticeably softer than the
+1000x1500 IMDb-sourced posters elsewhere on this page, but real, sourced,
+and hers). Hosted locally at `posters/kill-jackie.jpg`, same pattern as
+`posters/lioness.jpg` and `posters/tucci-in-italy.jpg` — no unverified
+remote hotlink. `index.html`'s Kill Jackie row updated to reference it;
+the date label was also tightened from generic "TBD 2026" to "Fall 2026"
+to match what the key art itself states, still marked with the `tbd` CSS
+class since no specific date has been announced.
+
+**Process note for future sessions:** this environment cannot browse
+Wikipedia/IMDb (cache-only / robots-blocked, see above) and has no other
+verified image search path for poster art — so for any title still
+showing monogram-only, the honest move is to say so plainly rather than
+leave it looking like an oversight, and ask Susan to send the art directly
+if she wants it filled in before a real fix (working search access) exists.
