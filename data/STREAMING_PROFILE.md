@@ -1,6 +1,6 @@
 # Streaming Profile
 
-**Last updated:** 2026-07-21
+**Last updated:** 2026-08-06 (added MGM+ as a real subscription — see Premium/Channel Add-ons; prior update 2026-07-21)
 
 ## Services Tracked
 - Netflix — active
@@ -16,6 +16,14 @@
 ## Premium/Channel Add-ons (tracked for Coming Soon schedules, not watch-history sync)
 - BritBox (via Prime Video channel)
 - PBS Masterpiece (via Prime Video channel)
+- MGM+ — added 2026-08-06 (Susan: "just got their subscription," add it as
+  a feed reviewed regularly for Coming Soon). Previously only referenced as
+  an example "outside tracked services" badge case (see the Other-Services
+  Recommendations Policy note below, e.g. The Westies) — now a real
+  subscription, so Coming Soon candidate-checking should treat it the same
+  as BritBox/PBS Masterpiece: reviewed regularly, badged plainly, no
+  watch-history sync (no account activity page wired for it, same as the
+  other two).
 
 ## Off-Platform Viewing (reported in chat, not syncable)
 - Nat Geo — Tucci in Italy S1–S2, in progress (Susan, 2026-07-25). No account
