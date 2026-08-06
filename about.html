@@ -15,52 +15,6 @@
 @font-face{font-family:"Lora";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/lora-latin-400-italic.woff2) format("woff2")}
 </style>
 <link rel="stylesheet" href="style.css">
-<style>
-  /* About-page-only visual upgrade: stat strip, page cards, stack comparison.
-     Scoped to this page only; nothing here touches style.css. */
-  .stat-strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 1.1rem 0 1.7rem; }
-  @media (min-width: 640px) { .stat-strip { grid-template-columns: repeat(4, 1fr); } }
-  .stat-tile {
-    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
-    padding: 0.75rem 0.85rem; text-align: center;
-  }
-  .stat-tile .stat-num { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 22px; color: var(--accent); }
-  .stat-tile .stat-label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); margin-top: 2px; }
-
-  .page-card-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0.9rem 0 0.4rem; }
-  @media (min-width: 640px) { .page-card-grid { grid-template-columns: 1fr 1fr; } }
-  .page-card {
-    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
-    border-radius: 6px; padding: 0.8rem 0.95rem;
-  }
-  .page-card h4 { margin: 0 0 4px; font-size: 13px; }
-  .page-card p { margin: 0; font-size: 12px; color: var(--ink-dim); }
-
-  .stack-compare { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 1rem 0 0.4rem; }
-  @media (min-width: 640px) { .stack-compare { grid-template-columns: 1fr 1fr; } }
-  .stack-col { border-radius: 8px; padding: 0.9rem 1rem; }
-  .stack-col.this-site { background: #e2e6ec; border: 1px solid #6d7e93; }
-  .stack-col.siblings { background: var(--card); border: 1px solid var(--border); }
-  .stack-col h4 { margin: 0 0 6px; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; }
-  .stack-col.this-site h4 { color: #3d4a58; }
-  .stack-col.siblings h4 { color: var(--ink-dim); }
-  .stack-col ul { margin: 0; padding-left: 16px; font-size: 12px; color: var(--ink); }
-  .stack-col li { margin-bottom: 3px; }
-
-  .wont-list--about { list-style: none; padding: 0; margin: 0; }
-  .wont-list--about li { display: flex; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .wont-list--about li:last-child { border-bottom: none; }
-  .wont-list--about li::before { content: "\2022"; color: var(--bad); flex-shrink: 0; }
-
-  /* how-scored section: reuses style.css's .card/.bar-track/.bar-fill/.bar-fill.mid */
-  .factor-row { margin-bottom: 12px; }
-  .factor-row:last-child { margin-bottom: 0; }
-  .factor-row-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
-  .factor-row-name { font-size: 12.5px; font-weight: 600; color: var(--ink); }
-  .factor-row-weight { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
-  .bar-fill.faint { background: var(--border); }
-  .how-scored-note { font-size: 12px; color: var(--ink-dim); margin: 12px 0 0; }
-</style>
 </head><body>
 
 <header class="site-nav">
@@ -88,10 +42,10 @@
     </p>
 
     <div class="stat-strip">
-      <div class="stat-tile"><div class="stat-num">16-yr</div><div class="stat-label">Netflix + Prime history</div></div>
-      <div class="stat-tile"><div class="stat-num">4</div><div class="stat-label">services tracked</div></div>
-      <div class="stat-tile"><div class="stat-num">0</div><div class="stat-label">accounts or logins</div></div>
-      <div class="stat-tile"><div class="stat-num">Mon</div><div class="stat-label">weekly resync day</div></div>
+      <div class="stat-tile"><div class="stat-tile__num">16-yr</div><div class="stat-tile__label">Netflix + Prime history</div></div>
+      <div class="stat-tile"><div class="stat-tile__num">4</div><div class="stat-tile__label">services tracked</div></div>
+      <div class="stat-tile"><div class="stat-tile__num">0</div><div class="stat-tile__label">accounts or logins</div></div>
+      <div class="stat-tile"><div class="stat-tile__num">Mon</div><div class="stat-tile__label">weekly resync day</div></div>
     </div>
 
     <nav class="pill-nav">
@@ -160,20 +114,20 @@
       <div class="about-section-head"><span class="about-num-badge">04</span><h3>what's on the page</h3></div>
       <div class="page-card-grid">
         <div class="page-card">
-          <h4>Right Now</h4>
-          <p>What Susan's seeing in theaters and watching live this week.</p>
+          <h4 class="page-card__title">Right Now</h4>
+          <p class="page-card__desc">What Susan's seeing in theaters and watching live this week.</p>
         </div>
         <div class="page-card">
-          <h4>Top Picks</h4>
-          <p>Ranked candidates with matched genre and shared cast as the rationale, dismissible with ×.</p>
+          <h4 class="page-card__title">Top Picks</h4>
+          <p class="page-card__desc">Ranked candidates with matched genre and shared cast as the rationale, dismissible with ×.</p>
         </div>
         <div class="page-card">
-          <h4>Taste Profile</h4>
-          <p>Signature vs. generic genres, actor affinity, and explicitly capped genres.</p>
+          <h4 class="page-card__title">Taste Profile</h4>
+          <p class="page-card__desc">Signature vs. generic genres, actor affinity, and explicitly capped genres.</p>
         </div>
         <div class="page-card">
-          <h4>Coming Soon</h4>
-          <p>Premieres and next seasons, grouped by how confirmed the date is, also dismissible.</p>
+          <h4 class="page-card__title">Coming Soon</h4>
+          <p class="page-card__desc">Premieres and next seasons, grouped by how confirmed the date is, also dismissible.</p>
         </div>
       </div>
     </div>
@@ -185,7 +139,7 @@
 
     <div class="about-section" id="wont-do">
       <div class="about-section-head"><span class="about-num-badge">06</span><h3>what it won't do</h3></div>
-      <ul class="wont-list--about">
+      <ul class="wont-list">
         <li>No accounts, no passwords: reading it requires nothing.</li>
         <li>No analytics, advertising, or third-party tracking.</li>
         <li>No live connection to Susan's accounts: one published snapshot, refreshed by hand.</li>

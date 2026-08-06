@@ -15,72 +15,6 @@
 @font-face{font-family:"Lora";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/lora-latin-400-italic.woff2) format("woff2")}
 </style>
 <link rel="stylesheet" href="style.css">
-<style>
-  /* Guide-page-only visual upgrade: diagram figures, callouts. .mode-card's
-     richer treatment (colored left rail, serif italic name) now lives in
-     style.css itself -- it used to be redefined here, duplicating rules
-     already in style.css (the same class of issue `.wont-list--about` was
-     renamed to avoid, see CLAUDE.md's "Repository layout"). */
-  .mode-caption {
-    font-family: var(--sans); font-size: 13px; font-style: italic;
-    color: var(--ink-faint); text-align: center; margin: 10px 0 4px;
-  }
-
-  figure.diagram { margin: 1.4rem 0 1.8rem; text-align: center; }
-  figure.diagram svg { max-width: 100%; height: auto; }
-  figure.diagram figcaption {
-    font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--ink-faint); margin-top: 8px;
-  }
-
-  .callout-row { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 1rem 0 1.6rem; }
-  @media (min-width: 640px) { .callout-row { grid-template-columns: 1fr 1fr; } }
-  .callout {
-    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
-    padding: 0.85rem 1rem;
-  }
-  .callout .callout-kicker {
-    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .callout.good .callout-kicker { color: var(--good); }
-  .callout.bad .callout-kicker { color: var(--bad); }
-  .callout p { margin: 0; font-size: 12.5px; color: var(--ink); }
-
-  .step-divider { margin: 2.4rem 0 1.6rem; border-top: 1px solid var(--border); }
-
-  .prompt-box {
-    background: #2a2620; border: 1px solid #4a4438; border-radius: 9px;
-    padding: 1.1rem 1.2rem; margin: 1.1rem 0 1.6rem; position: relative;
-  }
-  .prompt-box pre {
-    margin: 0; white-space: pre-wrap; word-wrap: break-word;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 12.5px; line-height: 1.6; color: #efe9dc;
-  }
-  .prompt-copy {
-    position: absolute; top: 10px; right: 10px;
-    background: #efe9dc; color: #2a2620; border: none; border-radius: 6px;
-    font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
-    padding: 6px 11px; cursor: pointer;
-  }
-  .prompt-copy:hover { background: #fff; }
-
-  .next-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0.9rem 0 1.7rem; }
-  @media (min-width: 640px) { .next-grid { grid-template-columns: 1fr 1fr; } }
-  .next-card {
-    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
-    border-radius: 6px; padding: 0.8rem 0.95rem;
-  }
-  .next-card .next-num { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); font-size: 13px; }
-  .next-card h4 { margin: 2px 0 4px; font-size: 13px; }
-  .next-card p { margin: 0; font-size: 12px; color: var(--ink-dim); }
-
-  .need-list { list-style: none; padding: 0; margin: 0 0 1.7rem; }
-  .need-list li { display: flex; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .need-list li:last-child { border-bottom: none; }
-  .need-list li::before { content: "\2022"; color: var(--good); flex-shrink: 0; }
-</style>
 </head><body>
 
 <header class="site-nav">
@@ -123,24 +57,24 @@
       <p class="step-body">Built entirely in Cowork: no terminal, by design. The Chrome extension reads your already-authenticated Netflix and Prime sessions directly; no credential is ever requested, stored, or transmitted. Trust in a system starts with what it refuses to collect.</p>
 
       <div class="mode-grid">
-        <div class="mode-card tint-a">
-          <div class="mode-name">Chat</div>
-          <div class="mode-role">decide</div>
+        <div class="mode-card mode-card--a">
+          <div class="mode-card__name">Chat</div>
+          <div class="mode-card__role">decide</div>
           <ul><li>signature genre calls</li><li>actor-match weight</li><li>what to permanently exclude</li></ul>
         </div>
-        <div class="mode-card tint-b">
-          <div class="mode-name">Cowork</div>
-          <div class="mode-role">build &amp; maintain</div>
+        <div class="mode-card mode-card--b">
+          <div class="mode-card__name">Cowork</div>
+          <div class="mode-card__role">build &amp; maintain</div>
           <ul><li>skill &amp; data files</li><li>the scoring script</li><li>this dashboard, end to end</li></ul>
         </div>
-        <div class="mode-card tint-c">
-          <div class="mode-name">Chrome extension</div>
-          <div class="mode-role">read your data</div>
+        <div class="mode-card mode-card--c">
+          <div class="mode-card__name">Chrome extension</div>
+          <div class="mode-card__role">read your data</div>
           <ul><li>Netflix &amp; Prime history</li><li>never touches credentials</li><li>hands data to Cowork for the rebuild</li></ul>
         </div>
-        <div class="mode-card tint-d">
-          <div class="mode-name">Scheduled tasks</div>
-          <div class="mode-role">weekly resync</div>
+        <div class="mode-card mode-card--d">
+          <div class="mode-card__name">Scheduled tasks</div>
+          <div class="mode-card__role">weekly resync</div>
           <ul><li>Mondays, automatic</li><li>see Roadmap, phase 04</li><li>stops rather than publishing a partial state</li></ul>
         </div>
       </div>
@@ -158,13 +92,13 @@
       <div><span class="step-num">03</span><span class="step-title">Signature genres in full, generic at a third</span></div>
       <p class="step-body">Broad categories (Comedy, Drama) are shared across too many unrelated titles to constitute meaningful evidence on their own. Genres with real recurrence in your own history (British Procedural, Spy Thriller, Mystery, Action Thriller) are weighted in full, with an added signal for cast overlap against titles you've already valued. A genre you've explicitly rejected is capped regardless of any other data pointing the other way: expressed preference overrides inferred pattern.</p>
 
-      <div class="callout-row">
-        <div class="callout good">
-          <p class="callout-kicker">Full weight</p>
+      <div class="compare-row">
+        <div class="compare-card compare-card--good">
+          <p class="compare-card__kicker">Full weight</p>
           <p>British Procedural, Spy Thriller, Mystery, Action Thriller: genres with real recurrence in your own watch history, plus cast-overlap bonus.</p>
         </div>
-        <div class="callout bad">
-          <p class="callout-kicker">Capped, regardless of score</p>
+        <div class="compare-card compare-card--bad">
+          <p class="compare-card__kicker">Capped, regardless of score</p>
           <p>Sci-fi, fantasy, rom-com: explicitly rejected. A high score elsewhere can't override a genre you've already ruled out.</p>
         </div>
       </div>
@@ -247,22 +181,22 @@ Please help me scope this into a first small version we can finish today, tell m
 
     <div class="next-grid">
       <div class="next-card">
-        <div class="next-num">01</div>
+        <div class="next-card__n">01</div>
         <h4>Claude asks before it assumes</h4>
         <p>Expect clarifying questions about what "good" means for your topic before anything gets built.</p>
       </div>
       <div class="next-card">
-        <div class="next-num">02</div>
+        <div class="next-card__n">02</div>
         <h4>A first version, same session</h4>
         <p>A working, if small, version is realistic to see before the conversation ends.</p>
       </div>
       <div class="next-card">
-        <div class="next-num">03</div>
+        <div class="next-card__n">03</div>
         <h4>You approve anything with a consequence</h4>
         <p>Spending money, connecting an account, or publishing something public always waits for your yes.</p>
       </div>
       <div class="next-card">
-        <div class="next-num">04</div>
+        <div class="next-card__n">04</div>
         <h4>It grows in later sessions</h4>
         <p>Everything on this site, the domain, the self-refresh, the dismiss button, arrived in later passes, not all at once. See the <a href="/roadmap">Roadmap</a> for the real order it happened in.</p>
       </div>

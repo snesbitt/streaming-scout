@@ -207,8 +207,8 @@ opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; max-
 .step-body { font-size: 13px; color: var(--ink); margin-top: 6px; }
 .mode-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 1rem 0; }
 .mode-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--border); border-radius: 8px; padding: 0.95rem 1rem 1.05rem; }
-.mode-card .mode-name { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 19px; margin-bottom: 2px; }
-.mode-card .mode-role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin: 2px 0 6px; }
+.mode-card__name { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 19px; margin-bottom: 2px; }
+.mode-card__role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin: 2px 0 6px; }
 .mode-card ul { margin: 0; padding-left: 15px; font-size: 13.5px; color: var(--ink-dim); }
 .mode-card ul li { margin-bottom: 2px; }
 @media (min-width: 640px) {
@@ -222,9 +222,16 @@ opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; max-
 .about-section { margin-bottom: 1.4rem; }
 .about-section h3 { font-size: 14.5px; margin: 0 0 6px; }
 .about-section p { font-size: 13px; color: var(--ink); margin: 0 0 6px; }
+/* Canonical wont-list (2026-08-06 reconciliation): promoted and renamed
+   from about.html's page-scoped .wont-list--about -- that suffix existed
+   specifically to avoid colliding with this rule's old, unused, un-bulleted
+   predecessor (see CLAUDE.md's "Repository layout"); that dead rule is
+   gone now, so the canonical name is free again. Bullet matches Travel
+   Intelligence/Vinyl Scout's canonical mark. */
 .wont-list { list-style: none; padding: 0; margin: 0; }
-.wont-list li { font-size: 13px; color: var(--ink); padding: 8px 0; border-bottom: 1px solid var(--border); }
+.wont-list li { display: flex; gap: 8px; font-size: 13px; color: var(--ink); padding: 8px 0; border-bottom: 1px solid var(--border); }
 .wont-list li:last-child { border-bottom: none; }
+.wont-list li::before { content: "\2715"; color: var(--accent); flex-shrink: 0; font-size: 12px; }
 @media (min-width: 640px) {
 .about-section { margin-bottom: 1.9rem; }
 .about-section h3 { font-size: 16px; }
@@ -251,11 +258,14 @@ padding: 5px 12px 5px 8px;
 .pill-nav a b { color: var(--accent); font-weight: 700; margin-right: 4px; }
 .pill-nav a:hover { color: var(--ink); border-color: var(--ink-faint); }
 
-/* ---- tinted cards (visual variety, like vinylscout's mode grid) ---- */
-.mode-card.tint-a { background: #e7e9df; border-left-color: var(--good); }
-.mode-card.tint-b { background: #ece2d0; border-left-color: var(--mid); }
-.mode-card.tint-c { background: #e3e8de; border-left-color: var(--accent); }
-.mode-card.tint-d { background: #f0e6df; border-left-color: #6d7e93; }
+/* ---- tinted cards (visual variety, like vinylscout's mode grid) ----
+   Renamed from .tint-a/b/c/d to BEM modifiers (2026-08-06 reconciliation),
+   matching Travel Intelligence/Vinyl Scout's canonical .mode-card--*
+   naming. Same colors, name only changed. */
+.mode-card--a { background: #e7e9df; border-left-color: var(--good); }
+.mode-card--b { background: #ece2d0; border-left-color: var(--mid); }
+.mode-card--c { background: #e3e8de; border-left-color: var(--accent); }
+.mode-card--d { background: #f0e6df; border-left-color: #6d7e93; }
 
 .about-num-badge {
 font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 17px; margin-right: 6px;
@@ -263,6 +273,84 @@ font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 
 .about-section-head { display: flex; align-items: baseline; margin-bottom: 6px; }
 .about-section-head h3 { margin: 0; }
 @media (min-width: 640px) { .about-num-badge { font-size: 20px; } }
+
+/* ---- stat strip (promoted from about.html's page-scoped <style>,
+   2026-08-06 canonical-library reconciliation) ---- */
+.stat-strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 1.1rem 0 1.7rem; }
+@media (min-width: 640px) { .stat-strip { grid-template-columns: repeat(4, 1fr); } }
+.stat-tile { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 0.85rem; text-align: center; }
+.stat-tile__num { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 22px; color: var(--accent); }
+.stat-tile__label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); margin-top: 2px; }
+
+.page-card-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0.9rem 0 0.4rem; }
+@media (min-width: 640px) { .page-card-grid { grid-template-columns: 1fr 1fr; } }
+.page-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 0.8rem 0.95rem; }
+.page-card__title { margin: 0 0 4px; font-size: 13px; }
+.page-card__desc { margin: 0; font-size: 12px; color: var(--ink-dim); }
+
+/* This site vs. where it's headed comparison -- Streaming-Scout-specific,
+   no equivalent on Travel Intelligence/Vinyl Scout's About pages. */
+.stack-compare { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 1rem 0 0.4rem; }
+@media (min-width: 640px) { .stack-compare { grid-template-columns: 1fr 1fr; } }
+.stack-col { border-radius: 8px; padding: 0.9rem 1rem; }
+.stack-col.this-site { background: #e2e6ec; border: 1px solid #6d7e93; }
+.stack-col.siblings { background: var(--card); border: 1px solid var(--border); }
+.stack-col h4 { margin: 0 0 6px; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+.stack-col.this-site h4 { color: #3d4a58; }
+.stack-col.siblings h4 { color: var(--ink-dim); }
+.stack-col ul { margin: 0; padding-left: 16px; font-size: 12px; color: var(--ink); }
+.stack-col li { margin-bottom: 3px; }
+
+/* How-scored factor bars -- Streaming-Scout-specific (about.html only). */
+.factor-row { margin-bottom: 12px; }
+.factor-row:last-child { margin-bottom: 0; }
+.factor-row-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
+.factor-row-name { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.factor-row-weight { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
+.bar-fill.faint { background: var(--border); }
+.how-scored-note { font-size: 12px; color: var(--ink-dim); margin: 12px 0 0; }
+
+/* ---- guide-page components (promoted from guide.html's page-scoped
+   <style>, 2026-08-06 canonical-library reconciliation) ---- */
+.mode-caption { font-family: var(--sans); font-size: 13px; font-style: italic; color: var(--ink-faint); text-align: center; margin: 10px 0 4px; }
+
+figure.diagram { margin: 1.4rem 0 1.8rem; text-align: center; }
+figure.diagram svg { max-width: 100%; height: auto; }
+figure.diagram figcaption { font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); margin-top: 8px; }
+
+.callout { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 1rem; }
+
+/* Renamed from .callout-row/.callout.good|bad (2026-08-06 canonical-library
+   reconciliation): this was a two-up comparison-card pattern sharing the
+   ".callout" name with the single reference-note .callout above -- same
+   internal collision Travel Intelligence had, fixed the same way. Same
+   visuals, new name only. */
+.compare-row { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 1rem 0 1.6rem; }
+@media (min-width: 640px) { .compare-row { grid-template-columns: 1fr 1fr; } }
+.compare-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 1rem; }
+.compare-card__kicker { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+.compare-card--good .compare-card__kicker { color: var(--good); }
+.compare-card--bad .compare-card__kicker { color: var(--bad); }
+.compare-card p { margin: 0; font-size: 12.5px; color: var(--ink); }
+
+.step-divider { margin: 2.4rem 0 1.6rem; border-top: 1px solid var(--border); }
+
+.prompt-box { background: #2a2620; border: 1px solid #4a4438; border-radius: 9px; padding: 1.1rem 1.2rem; margin: 1.1rem 0 1.6rem; position: relative; }
+.prompt-box pre { margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; line-height: 1.6; color: #efe9dc; }
+.prompt-copy { position: absolute; top: 10px; right: 10px; background: #efe9dc; color: #2a2620; border: none; border-radius: 6px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.03em; padding: 6px 11px; cursor: pointer; }
+.prompt-copy:hover { background: #fff; }
+
+.next-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0.9rem 0 1.7rem; }
+@media (min-width: 640px) { .next-grid { grid-template-columns: 1fr 1fr; } }
+.next-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 0.8rem 0.95rem; }
+.next-card__n { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); font-size: 13px; }
+.next-card h4 { margin: 2px 0 4px; font-size: 13px; }
+.next-card p { margin: 0; font-size: 12px; color: var(--ink-dim); }
+
+.need-list { list-style: none; padding: 0; margin: 0 0 1.7rem; }
+.need-list li { display: flex; gap: 8px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.need-list li:last-child { border-bottom: none; }
+.need-list li::before { content: "\2022"; color: var(--good); flex-shrink: 0; }
 
 /* ---- right now: in theaters + currently watching ---- */
 .theater-row { display: flex; gap: 10px; padding: 4px 0; }
