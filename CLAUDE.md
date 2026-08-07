@@ -519,3 +519,65 @@ the only real open art gap was Ted Lasso S4:
 **Full artwork audit is now clean: zero monogram-only titles in Coming
 Soon.** Worth a periodic re-check as new titles get added, same as the
 2026-08-06 audit above did once.
+## 2026-08-07 — Coming Soon had a real coverage gap: Prime Video/Amazon originals and actor-affinity films weren't being checked
+
+Susan, directly: she's seeing Instagram ads for titles that never showed up
+in Coming Soon, and asked us to do better. Investigated rather than just
+apologizing — pulled the live Coming Soon list and found it genuinely
+skewed: 6 of 15 rows BritBox, 2 PBS Masterpiece, 2 Apple TV+, 1 Paramount+,
+1 MHz Choice, and only ONE native Netflix original (Black Doves S2) and
+ONE native Prime Video original (Kill Jackie) — despite Prime Video and
+Netflix being two of the three fully-tracked services, and despite Prime
+Video specifically being home to her single deepest completed-run vein
+(action thriller / Reacher-Statham-Neeson shelf, 0.8 weight, "steady since
+2020" per TASTE_PROFILE.md).
+
+**Root cause:** the `coming-soon` skill's own source list (britishtv.com,
+pbs.org, denofgeek, Tudum, whats-on-netflix, justwatch) has no dedicated
+Amazon/Prime Video source and leans on general Netflix-calendar sites that
+don't reliably surface big single-service tentpole content — so a
+franchise premiere as major as **Reacher season 4** (Prime Video, premieres
+Aug 12 2026, 5 days out at the time this was caught) was never on the
+radar at all. Same gap on the actor-affinity side: TASTE_PROFILE.md lists
+specific named actors (Gillian Anderson, Denzel Washington, etc.) as
+explicit signals, including Gillian Anderson added directly at Susan's
+request just one day before this session — but no Coming Soon pass has
+ever run a direct "what's this actor doing next" search per top-weighted
+affinity name; it only searches by genre/outlet.
+
+**Fixed this session — four titles added to the live Coming Soon list**
+(delivered directly to `index.html` via the device bridge, verified via
+reread, no CSS/cache-bust change needed):
+
+- **Reacher, season 4** — Prime Video, confirmed Aug 12, 2026 (weekly
+  through Sep 16) — Alan Ritchson, direct continuation of a franchise in
+  the log since 2022. The single biggest miss found.
+- **Animals** — Netflix, TBD 2026 — Ben Affleck/Gillian Anderson/Kerry
+  Washington crime thriller (kidnap-ransom plot). Direct match on the
+  Gillian Anderson affinity Susan added 2026-08-06.
+- **Here Comes the Flood** — Netflix, TBD 2026 — Denzel Washington/Robert
+  Pattinson/Daisy Edgar-Jones heist thriller (Fernando Meirelles).
+- **Nocturne** — Apple TV+, confirmed Oct 30, 2026 — Liev Schreiber/Zazie
+  Beetz/Stephen Graham crime drama, matches the British/Euro crime vein.
+
+All four sourced from primary/trade outlets (Wikipedia, Netflix Tudum,
+Apple TV Press, Hollywood Reporter, About Amazon) with real facts checked
+before adding, not guessed. None run through a full taste-profile rescore
+— each row says so plainly (no `pick-score` badge, meta text flags it as a
+direct add), same honesty convention as the Ted Lasso S4 row. No poster
+art sourced (same no-fabrication reasoning as Kill Jackie/Ted Lasso before
+Susan supplied real images) — monogram-only for now.
+
+**Standing lesson — added as a real process gap, not a one-off miss:**
+future Coming Soon passes should not rely solely on the skill's own
+source list. Two additions worth making a habit (and worth eventually
+folding into the `coming-soon` skill itself, not just this doc): (1) check
+press.amazonmgmstudios.com / Apple TV Press directly for tracked-service
+tentpole originals, not just British/PBS-weighted outlets; (2) run a
+direct "[actor name] new movie/show 2026" search for each top-weighted
+name in TASTE_PROFILE.md's Actor Affinity section, especially any added
+recently at Susan's explicit request (like Gillian Anderson) — genre/venue
+search alone will keep missing these.
+
+**Susan still needs to `git add`/`commit`/`push`:** `index.html` (the four
+new Coming Soon rows above).
