@@ -37,138 +37,125 @@
     <h1 class="page-title">Five phases live. Five to go.</h1>
     <p class="lede">The plugin, the dashboard, the domain, scheduled resync, and this month's content refresh are done. A real backend is underway. What's next is listed honestly below.</p>
 
-    <nav class="roadmap-overview" aria-label="All phases at a glance, live first in ship order, then in progress, then planned">
-      <a href="#phase-01" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>01 the plugin</a>
-      <a href="#phase-02" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>02 snapshot dashboard</a>
-      <a href="#phase-03" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>03 a real domain</a>
-      <a href="#phase-04" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>04 scheduled resync</a>
-      <a href="#phase-08" class="ro-chip ro-live"><span class="ro-dot" aria-hidden="true">●</span>08 content refresh &amp; polish</a>
-      <a href="#phase-06" class="ro-chip ro-progress"><span class="ro-dot" aria-hidden="true">◐</span>06 a real backend</a>
-      <a href="#phase-05" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>05 browse full watch log</a>
-      <a href="#phase-07" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>07 protect saved changes</a>
-      <a href="#phase-09" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>09 a real scoring formula</a>
-      <a href="#phase-10" class="ro-chip ro-planned"><span class="ro-dot" aria-hidden="true">○</span>10 catch account list up to reality</a>
-    </nav>
-
-    <div class="phase" id="phase-01">
-      <div class="phase__rail phase__rail--live">1</div>
+    <section class="phase phase--live" id="phase-01">
+      <div class="phase__rail">1</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">The plugin</h2>
+          <h3 class="phase__name">The plugin</h3>
           <span class="phase__status phase__status--live">Live</span>
         </div>
         <p class="phase__focus">Recommendations built from what you actually watched</p>
         <p class="phase__covers">Five Cowork skills read your Netflix and Prime Video history straight from the browser, tag genre and cast through web research, and score every candidate against a taste profile built from real, multi-year viewing. Broad genres count for about a third of a title's score; genres you've shown you love count in full, with a bonus when the cast overlaps a show you finished and loved. The Coming Soon feed draws on BritBox, PBS Masterpiece, Den of Geek, and Netflix Tudum.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-02">
-      <div class="phase__rail phase__rail--live">2</div>
+    <section class="phase phase--live" id="phase-02">
+      <div class="phase__rail">2</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">The snapshot dashboard</h2>
+          <h3 class="phase__name">The snapshot dashboard</h3>
           <span class="phase__status phase__status--live">Live</span>
         </div>
         <p class="phase__focus">A page you can open on a phone</p>
         <p class="phase__covers">A static site with the latest Top Picks, Taste Profile, and Coming Soon feed, rebuilt to the shared house style: Lora, cream shell, the same wordmark family as the other sites. Installable to the Home Screen, meets WCAG AA contrast, and every poster and control has a fallback so nothing shows up broken.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-03">
-      <div class="phase__rail phase__rail--live">3</div>
+    <section class="phase phase--live" id="phase-03">
+      <div class="phase__rail">3</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">A real domain</h2>
+          <h3 class="phase__name">A real domain</h3>
           <span class="phase__status phase__status--live">Live</span>
         </div>
         <p class="phase__focus">One address, not a netlify.app subdomain</p>
         <p class="phase__covers">streamingscout.org, registered through Netlify's own domain search and connected as the project's primary domain. DNS and the HTTPS certificate provision automatically.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-04">
-      <div class="phase__rail phase__rail--live">4</div>
+    <section class="phase phase--live" id="phase-04">
+      <div class="phase__rail">4</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">Scheduled resync</h2>
+          <h3 class="phase__name">Scheduled resync</h3>
           <span class="phase__status phase__status--live">Live</span>
         </div>
         <p class="phase__focus">Stays current without being asked</p>
         <p class="phase__covers">A Monday-morning task resyncs your watch history and rebuilds Top Picks and Coming Soon on its own, honoring your exclusion list and stopping rather than publishing a partial result if a step fails. Persistent data now lives in this repo's data folder, after an earlier version pointed at a folder that vanished between runs and cost most of the watch history. Susan still runs the push that publishes it.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-08">
-      <div class="phase__rail phase__rail--live">8</div>
+    <section class="phase phase--live" id="phase-08">
+      <div class="phase__rail">8</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">Content refresh &amp; 2026 polish</h2>
+          <h3 class="phase__name">Content refresh &amp; 2026 polish</h3>
           <span class="phase__status phase__status--live">Live</span>
         </div>
         <p class="phase__focus">Grounded in the whole history</p>
         <p class="phase__covers">A full resync onto the complete 919-title, 2010&ndash;2026 log, Top Picks rebuilt across six distinct veins with a real actor list instead of one repeated genre, and Currently Watching and Coming Soon caught up to what's actually airing. Fonts are now self-hosted and posters lazy-load below the fold, for a faster page.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-06">
-      <div class="phase__rail phase__rail--progress">6</div>
+    <section class="phase phase--progress" id="phase-06">
+      <div class="phase__rail">6</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">A real backend</h2>
+          <h3 class="phase__name">A real backend</h3>
           <span class="phase__status phase__status--progress">In progress</span>
         </div>
         <p class="phase__focus">Infrastructure that matches the polish</p>
         <p class="phase__covers">Netlify Functions with automated backups and health checks, on a GitHub repo that redeploys itself on push. Two pieces are live so far: dismiss and status, both bounded and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly. Backups and a health check are still ahead.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-05">
+    <section class="phase phase--future" id="phase-05">
       <div class="phase__rail">5</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">Browse the full watch log</h2>
-          <span class="phase__status phase__status--planned">Planned</span>
+          <h3 class="phase__name">Browse the full watch log</h3>
+          <span class="phase__status phase__status--future">Future</span>
         </div>
         <p class="phase__focus">See the evidence, not just the answer</p>
         <p class="phase__covers">A searchable view of the full logged watch history, filterable by service, genre, or actor, so you can see what's behind a recommendation.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-07">
+    <section class="phase phase--future" id="phase-07">
       <div class="phase__rail">7</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">Protect saved changes</h2>
-          <span class="phase__status phase__status--planned">Planned</span>
+          <h3 class="phase__name">Protect saved changes</h3>
+          <span class="phase__status phase__status--future">Future</span>
         </div>
         <p class="phase__focus">A shared link can't quietly change what's recommended</p>
         <p class="phase__covers">Dismissing a title is open to anyone with the link today, since a "not interested" flag felt low-stakes at first. This gates it behind the same shared edit key Vinyl Scout's catalog uses, remembered per device so it doesn't cost a retype every visit. Browsing stays open to anyone.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-09">
+    <section class="phase phase--future" id="phase-09">
       <div class="phase__rail">9</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">A real scoring formula</h2>
-          <span class="phase__status phase__status--planned">Planned</span>
+          <h3 class="phase__name">A real scoring formula</h3>
+          <span class="phase__status phase__status--future">Future</span>
         </div>
         <p class="phase__focus">A score you could re-add by hand</p>
         <p class="phase__covers">Every match percentage today comes from Claude applying the same documented weighting rules fresh each rebuild. This turns that into a literal stored formula: fixed weights per genre and actor, one small function that combines them, the same shape Travel Intelligence uses for flight scoring. Judging what genre a brand-new title even is stays a judgment call, not a lookup.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="phase" id="phase-10">
+    <section class="phase phase--future" id="phase-10">
       <div class="phase__rail">10</div>
       <div class="phase__body">
         <div class="phase__head">
-          <h2 class="phase__name">Catch the account list up to reality</h2>
-          <span class="phase__status phase__status--planned">Planned</span>
+          <h3 class="phase__name">Catch the account list up to reality</h3>
+          <span class="phase__status phase__status--future">Future</span>
         </div>
         <p class="phase__focus">The tracked-services list stopped matching what's actually watched</p>
         <p class="phase__covers">Currently Watching now includes Nat Geo, MGM+, and Hulu titles, none of which are in the four tracked services the About page states or in the Coming Soon skill's source list. This is an audit, not a new feature: confirm every service Susan actually subscribes to, correct the tracked-services stat and STREAMING_PROFILE.md to match, extend Coming Soon's per-service sources the same way BritBox and PBS Masterpiece are covered today, and re-derive the Taste Profile's genre list from the full watch history instead of the current fixed set. No new sections or controls, just existing ones catching up to the real data.</p>
       </div>
-    </div>
+    </section>
 
   </div>
 </main>
