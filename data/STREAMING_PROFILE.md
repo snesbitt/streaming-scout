@@ -1,6 +1,6 @@
 # Streaming Profile
 
-**Last updated:** 2026-08-06 (added MGM+ as a real subscription — see Premium/Channel Add-ons; prior update 2026-07-21)
+**Last updated:** 2026-08-06 (added Paramount+ as a real subscription — see Premium/Channel Add-ons; also added MGM+ same day; prior update 2026-07-21)
 
 ## Services Tracked
 - Netflix — active
@@ -24,6 +24,13 @@
   as BritBox/PBS Masterpiece: reviewed regularly, badged plainly, no
   watch-history sync (no account activity page wired for it, same as the
   other two).
+- Paramount+ — added 2026-08-06 (Susan flagged the live Coming Soon list
+  badging "Special Ops: Lioness, season 3" as "Requires Paramount+, not one
+  of your tracked services," and confirmed it should now count as tracked).
+  Treated the same as MGM+/BritBox/PBS Masterpiece: reviewed regularly,
+  badged plainly, no watch-history sync (no account activity page wired for
+  it). The stale untracked-service badge on that title was removed from
+  `index.html` the same day to match.
 
 ## Off-Platform Viewing (reported in chat, not syncable)
 - Nat Geo — Tucci in Italy S1–S2, in progress (Susan, 2026-07-25). No account
