@@ -581,3 +581,25 @@ search alone will keep missing these.
 
 **Susan still needs to `git add`/`commit`/`push`:** `index.html` (the four
 new Coming Soon rows above).
+
+## 2026-08-07, later — GitHub Actions CI wired for real, first genuine run
+
+Part of a portfolio-wide push (see Travel Intelligence's own CLAUDE.md,
+2026-08-07 entry, for the full write-up shared across all three repos'
+Actions setup) to make every sibling site more GitHub-based rather than
+relying on manual `device_bash`/Netlify-only workflows. This repo's
+`.github/workflows/test.yml` ran for real for the first time this session
+and failed on `npm ci`, which requires a committed `package-lock.json` —
+this repo never had one, having only ever run `npm install` by hand.
+Fixed by generating a real lockfile via `npm install` against the actual
+npm registry (Node 20, no `EBADENGINE` warnings — nothing here is
+version-sensitive the way Vinyl Scout's `jsdom` dependency turned out to
+be) and committing it. No code changes; this repo's tests (`tests/
+logic.test.mjs`) were already real and already passing locally, so once
+the lockfile existed the run went green immediately. Verified: full test
+suite unchanged and passing, Actions run #3 green (17s). Delivered and
+committed by Susan as `7a0df79`.
+
+Nothing user-facing changed — this is CI/dependency-management plumbing
+only, so no front-end (roadmap/about) update is needed alongside this
+entry.
