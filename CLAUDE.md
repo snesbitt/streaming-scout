@@ -809,3 +809,15 @@ passes (unaffected by this change, re-run as a routine sanity check).
 
 **Susan still needs to `git add`/`commit`/`push`:** `index.html`,
 `src/logic.mjs`, `tests/logic.test.mjs`.
+
+## 2026-08-08, later still — Tony (2026, A24's Anthony Bourdain biopic) added to In Theaters and Top Picks
+
+Susan: "add Tony to in theaters and top picks" with a Rotten Tomatoes link (rottentomatoes.com/m/tony_2026). Sourced real details before writing anything: RT page (94% Tomatometer, 63 reviews; US limited release Aug 7, 2026; dir. Matt Johnson; cast Dominic Sessa as young Anthony Bourdain, Emilia Jones, Leo Woodall, Antonio Banderas), cross-checked against Wikipedia's infobox for the release date and full cast list. Poster art verified as a real, loading image before use (not guessed): found the infobox `<img>` on Wikipedia's live page via Claude-in-Chrome, resolved its thumb path to the full-resolution original (`/wikipedia/en/6/68/Tony_%282026_film%29_poster.jpg`), and confirmed it loads (259x384, no error) via a `new Image()` check before writing the URL into the page.
+
+Added two entries, matching each section's exact existing markup pattern:
+- **In Theaters** (`#right-now`): a second `.theater-row`, after The Odyssey (same card, both now visible — this card was single-item until now, nothing in the CSS/JS restricts it to one).
+- **Top Picks** (`#top-picks`): a new `.pick-row` at the top of the list (94% ties the current top score; placed first given it opened yesterday). Score tag reads "94% · In Theaters" rather than a streaming-service badge, since it's a fresh theatrical release, not on any tracked service yet. The reason line ties to a real, logged taste signal rather than a generic guess: Susan has already watched Bourdain's own Parts Unknown, No Reservations, and The Layover, plus the full Chef's Table franchise (STREAMING_LOG.md / TASTE_PROFILE.md, Food/cooking vein). "Open" link points to the Rotten Tomatoes page Susan gave, since there's no streaming listing yet.
+
+No data-file changes (STREAMING_LOG.md is watched history, not upcoming picks; this follows the same pattern as every other Top Picks/Coming Soon entry, which also has no log entry until actually watched).
+
+Verified before delivery: div-balance check (239/239), a full `html.parser` parse with no exceptions, and the real test suite (`npm test` — 15/15 logic tests + content-drift check, both pass unrelated to this change but confirms nothing broke).
