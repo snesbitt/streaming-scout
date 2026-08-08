@@ -821,3 +821,13 @@ Added two entries, matching each section's exact existing markup pattern:
 No data-file changes (STREAMING_LOG.md is watched history, not upcoming picks; this follows the same pattern as every other Top Picks/Coming Soon entry, which also has no log entry until actually watched).
 
 Verified before delivery: div-balance check (239/239), a full `html.parser` parse with no exceptions, and the real test suite (`npm test` — 15/15 logic tests + content-drift check, both pass unrelated to this change but confirms nothing broke).
+
+## 2026-08-08, later — doc alignment pass: Phase 10 and the "what it is" section were both behind reality
+
+Per Susan's "check review align and update as needed all the roadmaps, guides and about pages" request. Two real fixes:
+
+`roadmap.html` Phase 10 ("Catch the account list up to reality") was still marked Future and described the tracked-services audit as entirely undone — but the tracked-services stat correction, the STREAMING_PROFILE.md update, and MGM+/Paramount+'s promotion to reviewed services all already happened 2026-08-06, and the content-drift check (2026-08-08) now guards the stat number itself. Moved Phase 10 to In Progress and rewrote it to state plainly what's done versus what's still open (MGM+/Paramount+ still lack a dedicated Coming Soon source the way BritBox/PBS Masterpiece have; Nat Geo and Hulu are intentionally off the tracked list, not an oversight).
+
+`about.html`'s "what it is" section (01) still described only Netflix/Prime/BritBox/PBS Masterpiece, while the page's own lede paragraph and stat tile above it already say 7 tracked services including Apple TV+, MGM+, and Paramount+ — an internal contradiction on the same page. Rewrote it to match.
+
+Checked `guide.html` against the actual Coming Soon skill's source list (BritBox, PBS Masterpiece, Netflix Tudum, Den of Geek, What's on Netflix, JustWatch) — still accurate, no dedicated MGM+/Paramount+ source exists yet, consistent with the Phase 10 rewrite above. No change needed there. Verified: all 15 logic tests plus the content-drift check still pass.

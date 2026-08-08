@@ -145,15 +145,15 @@
       </div>
     </section>
 
-    <section class="phase phase--future" id="phase-10">
+    <section class="phase phase--progress" id="phase-10">
       <div class="phase__rail">10</div>
       <div class="phase__body">
         <div class="phase__head">
           <h3 class="phase__name">Catch the account list up to reality</h3>
-          <span class="phase__status phase__status--future">Future</span>
+          <span class="phase__status phase__status--progress">In progress</span>
         </div>
         <p class="phase__focus">The tracked-services list stopped matching what's actually watched</p>
-        <p class="phase__covers">Currently Watching now includes Nat Geo, MGM+, and Hulu titles, none of which are in the four tracked services the About page states or in the Coming Soon skill's source list. This is an audit, not a new feature: confirm every service Susan actually subscribes to, correct the tracked-services stat and STREAMING_PROFILE.md to match, extend Coming Soon's per-service sources the same way BritBox and PBS Masterpiece are covered today, and re-derive the Taste Profile's genre list from the full watch history instead of the current fixed set. No new sections or controls, just existing ones catching up to the real data.</p>
+        <p class="phase__covers">Started as an audit after Currently Watching outgrew the four services the About page and Coming Soon skill knew about. Done: MGM+ and Paramount+ confirmed as real subscriptions and promoted to reviewed, badged services; the tracked-services stat and STREAMING_PROFILE.md corrected to 7 (2026-08-06), with an automated content-drift check now guarding that number against silently going stale again (2026-08-08). Still open: MGM+ and Paramount+ don't yet have a named, per-service Coming Soon source the way BritBox and PBS Masterpiece do, so their premieres are only caught incidentally through JustWatch's cross-service calendar; and Nat Geo and Hulu stay intentionally off the tracked list (both handled instead through off-platform logging and the always-checked candidate policy, since neither has a syncable account page), which is a real design decision, not an oversight, but is worth documenting here plainly rather than leaving as implicit.</p>
       </div>
     </section>
 
