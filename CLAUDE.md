@@ -603,3 +603,148 @@ committed by Susan as `7a0df79`.
 Nothing user-facing changed — this is CI/dependency-management plumbing
 only, so no front-end (roadmap/about) update is needed alongside this
 entry.
+
+## 2026-08-08 — Coming Soon copy tightened; artwork sweep #2 (2 of 5 sourced, 3 confirmed not yet released)
+
+Susan flagged the four most-recently-added Coming Soon cards (Reacher S4,
+Nocturne, Animals, Here Comes the Flood) as too verbose against the
+established house style, with an exact before/after example (Black
+Doves' terse card as the target). Ted Lasso S4's card had the same
+problem (leftover meta-commentary about its own scoring status) and was
+included in the same pass even though not explicitly named. All five
+`pick-meta` lines were rewritten to drop full cast lists down to 1-2
+names, remove source-attribution clauses that weren't carrying real
+information, and remove every trace of internal process commentary
+("not yet scored against your taste profile," "added directly after
+being flagged as a gap, not part of a full rebuild") — none of that
+belongs in front of Susan; it was leftover from how the entries were
+built, not decided display copy. Verified via `grep` that the terse
+versions render as single-line `pick-meta` paragraphs with no meta
+commentary remaining; `tests/logic.test.mjs` re-run clean (13/13,
+unaffected by this — pure copy change, no logic touched).
+
+**Artwork sweep, second pass (first pass logged above, 2026-08-06/07):**
+Susan asked for a recurring sweep of Coming Soon titles missing artwork,
+explicitly asked to make this a regular practice, not a one-off. Five
+titles had no poster art as of this pass: Reacher S4, Nocturne, Animals,
+Here Comes the Flood, Babylon Berlin S5.
+
+- **Reacher S4** — sourced from Amazon MGM Studios' own press site
+  (press.amazonmgmstudios.com), key art wired in. One honest caveat: the
+  press release page hosts two images with no alt text distinguishing
+  Reacher S4 art from the "Neagley" spinoff teaser; the URL used is
+  positioned immediately before the "Watch the Official Reacher S4
+  Trailer" heading, which is strong but not certain confirmation it's
+  the right image. Worth a visual spot-check next time the site is open.
+- **Nocturne** — sourced from Apple's own official TV press site
+  (apple.com/tv-pr), key art wired in. High confidence: found via the
+  official press release itself, URL path literally says "key-art-01."
+- **Animals, Here Comes the Flood** (both 2026 Netflix films) — **no
+  official poster or key art exists in circulation yet**, confirmed via
+  Wikipedia and Netflix Tudum: neither film has an announced release
+  date or a launched marketing campaign as of this check. Left as
+  monogram-only; not a sourcing failure, there is genuinely nothing to
+  source yet. Worth re-checking on a future sweep once either film gets
+  closer to release.
+- **Babylon Berlin S5** — still not sourced, now for a second time (see
+  the 2026-08-06/07 entry above for the first attempt). Confirmed this
+  pass that Wikipedia's own infobox references a real file
+  ("Babylon Berlin.png"), but every path to the actual image binary
+  (Wikimedia Commons, Special:FilePath, the Wikipedia API, any
+  non-already-cached Wikipedia URL) is blocked in this environment as
+  "cache-only, cannot be fetched." IMDb blocks via `robots.txt`. This is
+  a tooling ceiling, not a due-diligence gap — left as an honest
+  placeholder per this project's standing no-fabrication rule. If Susan
+  wants this one specifically, the fastest path is her supplying the
+  image directly, same as Ted Lasso S4/Black Doves/The Gold/Kill Jackie.
+
+**Standing lesson for the next sweep:** official press sites (Apple TV
+Press, Amazon MGM Studios press site) reliably work with this session's
+web tools; Wikipedia/Wikimedia does not, for anything not already in
+this environment's page cache. Check press sites first for any tracked
+tentpole title going forward, rather than defaulting to Wikipedia.
+
+**Susan still needs to `git add`/`commit`/`push`:** `index.html` (the
+copy tightening plus the Reacher S4/Nocturne poster wiring above).
+
+## 2026-08-08, later — small agentification step: automated content-drift check, weekly-scheduled
+
+Per `claude/github-agentic-architecture-review-2026-08-07.md`'s recommendation
+5 (automated maintenance checks, the lowest-risk piece of it doable without
+any new credentials), added a genuinely small, concrete step: a script that
+catches the exact "About page says X, the real data says Y" bug class this
+project has hit by hand at least three times (the "4 services tracked" vs.
+real-7 gap, 2026-08-06, documented in `claude/travel-intelligence-build-log.md`).
+
+**What it does:** `scripts/check-content-drift.mjs` parses
+`data/STREAMING_PROFILE.md`'s "Services Tracked" and "Premium/Channel
+Add-ons" sections, counts the real number of tracked services, and compares
+it against the number `about.html`'s "N services tracked" stat tile
+actually shows. Exits non-zero with a specific, actionable message on any
+mismatch; zero dependencies, zero secrets, safe in CI. Wired into
+`package.json`'s `test` script, so it runs every time `npm test` does.
+
+**Also added a weekly `schedule:` trigger to `.github/workflows/test.yml`**
+(`cron: "0 13 * * 1"`, Mondays), on top of the existing push/PR triggers.
+This means the drift check (and the full test suite generally) now runs
+even in a week with zero code changes, catching the case where the data
+file and the page copy drift apart from two *separate* edits days or weeks
+apart, not just from one bad commit. No new secrets needed since this
+reuses the exact same `actions/checkout` + `npm ci` + `npm test` job that's
+already running and already green.
+
+**Verified before delivery:** ran the script directly against the real
+files (passes, 7 matches 7); ran it a second time against a deliberately
+corrupted copy of `about.html` in an isolated `/tmp` directory (fails with
+the expected specific message, real files untouched); validated the edited
+`.github/workflows/test.yml` parses as valid YAML via `python3 -c "import
+yaml; yaml.safe_load(...)"`.
+
+**Why this is a good "one small step," not a bigger swing at recommendation
+1:** it needs no PAT, no credential handling of any kind (the standing
+blocker on direct-to-GitHub commits), extends infrastructure that's
+already built and already green (the CI workflow from recommendation 2),
+and it directly targets a bug class this specific project has proven, by
+its own history, that a human/manual pass reliably misses. It's a genuine
+first instance of "GitHub Actions catches something a person would
+otherwise have to remember to check," the exact shape recommendation 5
+describes, just scoped down to something buildable today with zero new
+infrastructure.
+
+**Susan still needs to `git add`/`commit`/`push`:** `scripts/check-content-drift.mjs`
+(new), `package.json`, `.github/workflows/test.yml`.
+
+## 2026-08-08, later — Sugar, season 2 added to Currently Watching (Susan: "i'm watching Sugar season 2")
+
+Added a new `.watching-row` to `index.html`'s Currently Watching list, same
+markup pattern as the existing four rows (poster-wrap, watching-info,
+dismiss button). Badged Apple TV+, confirmed via web search (Sugar is a
+Colin Farrell series, season 2 renewed and now airing on Apple TV+).
+
+**Poster art:** sourced from Apple's own press site
+(apple.com/tv-pr/originals/sugar), a video-poster thumbnail
+(`Poster_0201.jpg`) rather than a true portrait key-art asset; confirmed
+as a real, resolvable image (not a 404) before wiring it in. It renders
+inside the existing `.poster-wrap img { object-fit: cover }` rule, so a
+non-portrait source image gets center-cropped into the fixed poster slot
+the same way any mismatched-aspect image would; worth a visual spot-check
+once this deploys, and swapping in a true portrait asset later if one
+becomes available.
+
+**Also logged to `data/STREAMING_LOG.md`**, under the "reported by Susan
+directly" convention already used for Tucci in Italy/Slow Horses/Only
+Murders in the Building, since Apple TV+ watch-history sync is not yet
+verified working (see `STREAMING_PROFILE.md`).
+
+**Verified before delivery:** an exact-match-count guarded Python patch
+(caught and fixed a real self-inflicted bug the first attempt introduced,
+a missing closing `</div>` on the prior row plus one extra closing `</div>`
+after the new row, both from an imprecise string-replace anchor); a global
+`<div>`/`</div>` count balance check (230/230 after the fix); a plain
+`html.parser` parse with no exceptions; `tests/logic.test.mjs` re-run
+clean (13/13, unrelated to this change but a routine sanity check).
+
+**Susan still needs to `git add`/`commit`/`push`:** `index.html`,
+`data/STREAMING_LOG.md`, plus everything already queued from the earlier
+2026-08-08 entry above (`CLAUDE.md`, `package.json`,
+`.github/workflows/test.yml`, `scripts/check-content-drift.mjs`).

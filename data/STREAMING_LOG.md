@@ -48,6 +48,7 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 ## 2026
 
+- **Sugar (Season 2)** · Apple TV+ (reported by Susan directly, 2026-08-08; Apple TV+ watch-history sync not yet verified working, see STREAMING_PROFILE.md) · in progress
 - **Tucci in Italy (Seasons 1–2)** · Nat Geo (off-platform — reported by Susan directly, 2026-07-25) · in progress
 - **Slow Horses (Seasons 1–5)** · Apple TV+ (off-platform — reported by Susan directly, 2026-07-26) · finished, loved — watch for S6
 - **Only Murders in the Building (Seasons 1–5)** · Hulu (off-platform — reported by Susan directly, 2026-07-26) · finished, loved — watch for S6 (London)
