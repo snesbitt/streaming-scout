@@ -4,7 +4,7 @@
 // (also wired into `npm test`, see package.json). No DOM, no network.
 
 import assert from "node:assert/strict";
-import { isReleased, serviceLabelFromBadgeTitle, mergeDismissedTitles } from "../src/logic.mjs";
+import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel, mergeDismissedTitles } from "../src/logic.mjs";
 
 let passed = 0;
 function test(name, fn) {
@@ -58,6 +58,18 @@ test("serviceLabelFromBadgeTitle: 'Requires X — not one of your tracked servic
 test("serviceLabelFromBadgeTitle: empty/missing title returns an empty string, not a crash", () => {
   assert.equal(serviceLabelFromBadgeTitle(""), "");
   assert.equal(serviceLabelFromBadgeTitle(undefined), "");
+});
+
+/* ---------- newPickScoreLabel ---------- */
+
+test("newPickScoreLabel: a real service label joins with the separator", () => {
+  assert.equal(newPickScoreLabel("BritBox"), "New · BritBox");
+  assert.equal(newPickScoreLabel("Paramount+"), "New · Paramount+");
+});
+
+test("newPickScoreLabel: no service label (badge-less title) never leaves a dangling separator", () => {
+  assert.equal(newPickScoreLabel(""), "New");
+  assert.equal(newPickScoreLabel(undefined), "New");
 });
 
 /* ---------- mergeDismissedTitles ---------- */

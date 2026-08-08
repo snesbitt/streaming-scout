@@ -748,3 +748,64 @@ clean (13/13, unrelated to this change but a routine sanity check).
 `data/STREAMING_LOG.md`, plus everything already queued from the earlier
 2026-08-08 entry above (`CLAUDE.md`, `package.json`,
 `.github/workflows/test.yml`, `scripts/check-content-drift.mjs`).
+
+## 2026-08-08, later still — real bug fixed: stale "watching" status text frozen forever, plus a dangling label it exposed
+
+Susan reported "not seeing" the earlier changes; live-checking the deployed
+site turned up two real, separate things worth telling apart. Reacher
+S4/Nocturne posters were both actually fine, an earlier screenshot had
+just caught Nocturne mid-lazy-load before scrolling gave it time to
+render; re-checked and confirmed loaded (472x266, `complete: true`) via
+the page's own JS, no code change needed there.
+
+**The real bug: Special Ops: Lioness, season 3 was still showing "New ·
+Paramount+, not one of your tracked services" under Currently Watching**,
+days after Paramount+ became a tracked service and that badge was removed
+from the source. Root cause, confirmed by reading Susan's own
+`localStorage` directly rather than guessing: `markStatus()` captures a
+row's `.pick-score` text (`meta`) at the moment its "Currently Watching"
+button is clicked, and `applyStatuses()` (which re-renders watching rows
+on every page load) trusted that frozen snapshot forever. This is the
+exact same staleness class the 2026-08-05 posterHTML fix already closed,
+documented in the code comment right above it, just never applied to
+`meta`. Susan clicked "Currently Watching" on Lioness before the
+Paramount+ fix; the stale badge text got frozen into her `ssTitleStatus`
+localStorage entry and no source-code fix since could ever reach it.
+
+**Fix:** `applyStatuses()` now re-derives `meta` fresh from the
+currently-rendered row's `.pick-score` (same technique already used for
+`posterHTML`) every time it runs, falling back to the stored `entry.meta`
+only when no matching row exists in the source at all. This self-heals on
+the very next page load, no localStorage clearing needed, and fixes the
+bug for every title that's ever been marked "watching," not just Lioness.
+
+**Fixing that exposed a second, smaller, real bug**, confirmed by
+simulating the fix against the live DOM before shipping it: Lioness's
+`.soon-row` had already been client-side promoted to a `.pick-row` (its
+Aug 2 date has passed), and `promoteReleased()`'s inline `'New · ' +
+serviceLabel` string leaves a dangling `"New · "` with a trailing
+separator and no service name whenever a promoted title has no
+`.avail-badge` at all (exactly Lioness's case, now that it's tracked).
+Extracted `newPickScoreLabel(serviceLabel)` into `src/logic.mjs` (the same
+"export the pure logic for testability" pattern the file's other
+functions use) so a badge-less title reads clean `"New"` instead. Two new
+tests in `tests/logic.test.mjs`.
+
+**Tucci in Italy's disappearance from Currently Watching is NOT a bug.**
+Checked Susan's own `ssDismissedTitles` directly: she genuinely marked it
+finished on 2026-08-05 (`reason: "finished"`). The site is correctly
+honoring a real, deliberate action, not silently losing data. Left
+untouched, said so plainly rather than "fixing" something that was
+already working.
+
+**Verified before delivery:** the exact `freshMeta` value the fix will
+produce was simulated directly against the live page's real DOM and
+`localStorage` via the browser console before writing a line of the fix,
+not assumed; `tests/logic.test.mjs` re-run clean (15/15, up from 13, the
+two new tests cover both branches of `newPickScoreLabel`); the extracted
+inline `<script type="module">` block parses clean via `node --check`;
+`div`/`</div>` balance still 230/230; the content-drift check still
+passes (unaffected by this change, re-run as a routine sanity check).
+
+**Susan still needs to `git add`/`commit`/`push`:** `index.html`,
+`src/logic.mjs`, `tests/logic.test.mjs`.

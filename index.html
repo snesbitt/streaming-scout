@@ -362,7 +362,7 @@
 
 <div id="ss-toast" class="ss-toast"></div>
 <script type="module">
-import { isReleased, serviceLabelFromBadgeTitle } from './src/logic.mjs';
+import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src/logic.mjs';
 (function () {
   var KEY = 'ssDismissedTitles';
   var STATUS_KEY = 'ssTitleStatus';
@@ -485,7 +485,7 @@ import { isReleased, serviceLabelFromBadgeTitle } from './src/logic.mjs';
       pickRow.innerHTML =
         posterHTML +
         '<div class="pick-body">' +
-          '<div class="pick-top"><span class="pick-title">' + title + '</span><span class="pick-score">New · ' + serviceLabel + '</span>' + (badge ? badge.outerHTML : '') + '<span class="pick-actions"><button class="pick-watching" title="Currently watching: ' + title + '" aria-label="Currently watching: ' + title + '" onclick="ssWatching(this)">&#9654;</button><button class="pick-watched" title="Mark watched: ' + title + '" aria-label="Mark watched: ' + title + '" onclick="ssWatched(this)">&#10003;</button><button class="pick-dismiss" title="Not interested: remove ' + title + '" aria-label="Not interested: remove ' + title + '" onclick="ssDismiss(this)">&times;</button></span></div>' +
+          '<div class="pick-top"><span class="pick-title">' + title + '</span><span class="pick-score">' + esc(newPickScoreLabel(serviceLabel)) + '</span>' + (badge ? badge.outerHTML : '') + '<span class="pick-actions"><button class="pick-watching" title="Currently watching: ' + title + '" aria-label="Currently watching: ' + title + '" onclick="ssWatching(this)">&#9654;</button><button class="pick-watched" title="Mark watched: ' + title + '" aria-label="Mark watched: ' + title + '" onclick="ssWatched(this)">&#10003;</button><button class="pick-dismiss" title="Not interested: remove ' + title + '" aria-label="Not interested: remove ' + title + '" onclick="ssDismiss(this)">&times;</button></span></div>' +
           '<p class="pick-meta">' + (metaEl ? metaEl.innerHTML : '') + '</p>' +
         '</div>';
       pickList.insertBefore(pickRow, pickList.firstChild);
@@ -537,6 +537,7 @@ import { isReleased, serviceLabelFromBadgeTitle } from './src/logic.mjs';
     Object.keys(map).forEach(function (title) {
       var entry = map[title];
       var posterHTML = '';
+      var freshMeta = null;
       document.querySelectorAll('.pick-row, .soon-row').forEach(function (row) {
         if (row.dataset.title !== title) return;
         // 2026-08-05 (Susan: "lioness is missing artwork ... this type of
@@ -558,9 +559,23 @@ import { isReleased, serviceLabelFromBadgeTitle } from './src/logic.mjs';
         // the 2026-07-31 esc() fix closed.
         var posterWrapEl = row.querySelector('.poster-wrap');
         if (posterWrapEl) { posterHTML = posterWrapEl.outerHTML.replace('poster-wrap soon', 'poster-wrap'); }
+        // 2026-08-08 (Susan: Special Ops: Lioness kept showing "New ·
+        // Paramount+, not one of your tracked services" under Currently
+        // Watching days after Paramount+ became a tracked service and that
+        // badge was removed from the source): markStatus() also captures
+        // `meta` (the .pick-score text) at CLICK time, and this function
+        // used to trust that frozen copy forever -- the exact same
+        // staleness class the posterHTML fix above already closed in
+        // 2026-08-05, just never applied to meta. Re-derive meta fresh
+        // from this device's own currently-rendered row too, same
+        // technique: it can only get more current, never regress, and the
+        // stored entry.meta below is only used as a fallback for a title
+        // whose row no longer exists in the source at all.
+        var scoreEl = row.querySelector('.pick-score');
+        if (scoreEl) { freshMeta = scoreEl.textContent; }
         row.style.display = 'none';
       });
-      if (entry.status === 'watching') { renderWatchingRow(title, entry.meta, posterHTML); }
+      if (entry.status === 'watching') { renderWatchingRow(title, freshMeta !== null ? freshMeta : entry.meta, posterHTML); }
     });
     updateEmptyNotes();
   }

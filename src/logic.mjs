@@ -29,6 +29,16 @@ export function serviceLabelFromBadgeTitle(titleAttr) {
     .split(" — ")[0];
 }
 
+// Builds a promoted row's "New" score label. A promoted title with a real
+// tracked-service badge gets "New · <service>"; a title with no badge at
+// all (e.g. already on a fully-tracked service, no badge needed) used to
+// get a dangling "New · " with an empty service name -- caught 2026-08-08
+// while fixing a related staleness bug (see applyStatuses() in index.html)
+// that made this exact case visible for the first time in Top Picks.
+export function newPickScoreLabel(serviceLabel) {
+  return serviceLabel ? `New · ${serviceLabel}` : "New";
+}
+
 // Merges a list of newly-dismissed titles into the current dismissed list.
 // Pure — takes and returns plain arrays, no localStorage. Returns both the
 // merged list and whether anything actually changed, so a caller can skip
