@@ -139,6 +139,12 @@ Weights reflect repeated, completed viewing across multiple titles in the log.
 - **Suranne Jones** (0.6) — Gentleman Jack, Vigil-class British thrillers
 - **Shaun Evans / Roger Allam** (0.6) — Endeavour, every season
 - **Brenda Blethyn** (0.6) — Vera across years (2024 → 2026)
+- **Charlize Theron** (0.55, added 2026-08-09): The Old Guard, The Old
+  Guard 2 (2025, both completed), plus Apex (2026, Susan-requested add,
+  see STREAMING_LOG.md). A real completed-viewing pattern, not just a
+  bare request, and fits the existing grounded-thriller action taste
+  (Statham, Neeson) rather than the superhero/franchise pattern flagged
+  below as thin.
 - **Daniel Craig** (0.55) — complete Craig-era Bond + Knives Out ×2
 - **Jennifer Saunders / UK ensemble regulars** (0.5) — Getting On (complete,
   July 2026), Motherland, Douglas is Cancelled

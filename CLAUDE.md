@@ -853,3 +853,18 @@ Susan asked directly: "be sure to always remember when i delete a suggestion fro
 **Made into a real recurring practice, not just a fix, matching the exact pattern already used for the poster-artwork sourcing sweep:** a new Claude Code Remote scheduled task ("Streaming Scout dismissed-title sync") fires weekly, Mondays at 14:00 UTC. Each firing starts a fresh session with a self-contained prompt: fetch `GET https://streamingscout.org/api/dismiss` live, stage the current `data/EXCLUDED_TITLES.md` from the device bridge, diff the two, append any titles present in the live store but missing from the file (same format as existing entries — title, section, dismissed-on date), leave everything else untouched, and deliver back through the usual staged-file path. Never commits or pushes directly; Susan still reviews and pushes the file update herself like every other change in this repo.
 
 This closes the gap for real going forward, not just for the 8 titles found this pass — any future on-site dismiss will be reflected in `EXCLUDED_TITLES.md` within a week automatically, without anyone having to remember to run the sync by hand.
+
+## 2026-08-09, later: manually added Apex (Charlize Theron) to Currently Watching, folded into taste profile
+
+Susan asked directly to add "Apex with Charlize Theron" to the Watching list. Verified it is a real title before touching anything (this repo's standing no-fabrication rule): "Apex" (2026) is a real Netflix survival/action thriller starring Charlize Theron and Taron Egerton, confirmed via Wikipedia, Netflix Tudum, and multiple review outlets. Exact critical reception is contested across outlets (some report a strong score, some a weak one), so no specific rating number was invented or recorded, only the verified fact of the title and service.
+
+Two things done, both following existing conventions rather than inventing new ones:
+
+1. **Live sync:** POST to `/api/status` (title: Apex, status: watching, meta: Netflix), same mechanism the site's own "mark as watching" button uses, so this shows up immediately on every device. Confirmed live via a read-back GET.
+2. **Permanent record:** added to `data/STREAMING_LOG.md` under the 2026 section, same "reported by Susan directly" format already used for Sugar/Slow Horses/Only Murders, so it survives the next weekly rebuild instead of only living in the (rebuild-blind) live Blobs store per this file's own documented governance model.
+
+Susan also asked that manual adds like this one factor into the recommendation logic going forward, not just get logged. Checked `data/STREAMING_LOG.md` for prior Theron history first rather than treating this as a cold request: found The Old Guard and The Old Guard 2 both completed in 2025, a real prior pattern, not just today's ask. Added a new Actor Affinity entry to `data/TASTE_PROFILE.md` (Charlize Theron, 0.55, positioned near Daniel Craig/Alan Ritchson by weight) citing both the Old Guard duology and this Apex add, and noting it fits the already-established grounded-thriller action taste (Statham, Neeson) rather than the superhero/franchise pattern the same file flags as thin. This means the next `coming-soon`/`top-picks` skill run will actually weight Theron-led titles higher, not just this one.
+
+A mistake caught and fixed in the same pass, not shipped: the first draft of both the STREAMING_LOG.md and TASTE_PROFILE.md additions used an em dash, this repo's one hard style rule prohibits that unconditionally. Caught before committing, both entries rewritten with parentheses/a colon instead.
+
+Not committed or pushed yet; sitting on disk alongside anything else pending review.
