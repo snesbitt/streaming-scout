@@ -868,3 +868,25 @@ Susan also asked that manual adds like this one factor into the recommendation l
 A mistake caught and fixed in the same pass, not shipped: the first draft of both the STREAMING_LOG.md and TASTE_PROFILE.md additions used an em dash, this repo's one hard style rule prohibits that unconditionally. Caught before committing, both entries rewritten with parentheses/a colon instead.
 
 Not committed or pushed yet; sitting on disk alongside anything else pending review.
+
+## 2026-08-10: three Currently Watching titles stuck on "New" instead of "in progress"; permanent fix and the render bug both closed
+
+Susan flagged Special Ops: Lioness season 3 showing "New" in Currently Watching when it should read "in progress," then the same symptom on Ted Lasso season 4 and The Hardacres season 2.
+
+**Root cause:** the same incomplete-workflow gap as the dismissed-title sync issue from 2026-08-09, applied to a different feature. `status.mjs`'s own header comment already says a status flag written through `/api/status` is not permanent past the next weekly rebuild; the real fix is supposed to happen when the clipboard message the "mark as watching" button generates gets folded into `data/STREAMING_LOG.md` and rebaked into the static Currently Watching markup, the same way the site's other titles are hardcoded into `index.html`. That follow-through step happened for the original five titles and never happened for these three, so the live page kept rendering a frozen snapshot of the original Top Picks blurb text (`meta`, captured at the moment the button was first clicked) instead of real progress.
+
+**Fixed, two layers:**
+1. **Permanent record:** all three titles folded into `data/STREAMING_LOG.md` under the 2026 section (commit `36ff08b`), matching the existing "reported by Susan directly" format.
+2. **Static render:** three new `.watching-row` blocks baked directly into `index.html` (commit `96831bf`), matching the exact markup pattern, real poster art, and badge already used for the other five Currently Watching titles (Paramount+ for Lioness, Apple TV+ for Ted Lasso, BritBox for Hardacres), rather than relying on the dynamic/localStorage render path that produced the bug in the first place.
+
+A first attempt at a quicker fix (writing directly to the browser's localStorage) was tried and abandoned: fragile, per-device, and Susan explicitly asked for a permanent fix instead. Both commits confirmed live via Netlify's own deploy record (commit_ref: 96831bf) after an early check read stale because it ran before the automatic build had finished, not because the fix was wrong.
+
+## 2026-08-11: Apex kept resurrecting after being marked finished; the actual gap in the dismiss flow, not another purge
+
+Susan reported having to remove Apex from Currently Watching more than once, it kept coming back on reload.
+
+**Root cause, read directly from `window.ssDismiss` and its helpers in `index.html`:** dismissing a Currently Watching/In Theaters row only ever called `addDismissed()` (a local hide-flag) and `postDismiss()` (a separate `/api/dismiss` tracking store). It never touched the actual "watching" status record, not the local `getStatusMap()`/`setStatusMap()` map, not the server-side `/api/status` record. That record is exactly what `applyStatuses()` reads on every page load to decide what to render, so a "finished" title with no static markup of its own (Apex never got baked into `index.html` the way the five original titles did) would always come back, no matter how many times the X button was clicked or the server record purged by hand after the fact.
+
+**Fixed at the source (commit `f988408`):** `ssDismiss()` now checks whether the dismissal reason is `finished`, and if so, deletes the title from the local status map and calls a new `deleteStatus(title)` function (`DELETE /api/status?title=...`, matching the existing `postStatus()`/`postDismiss()` pattern) to clear the server record too. This does not depend on the order `applyDismissed()` and `applyStatuses()` run in, the underlying record simply no longer exists for a later page load to find.
+
+Verified independently at every layer, not assumed: the source diff before commit, a live grep against the deployed page confirming the new code was actually served (deleteStatus appearing twice), and a live server-side check after Susan re-clicked the X confirming Apex's record was actually gone from /api/status.
