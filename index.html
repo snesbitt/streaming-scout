@@ -498,6 +498,12 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
       body: JSON.stringify({ title: title, status: status, meta: meta, section: section })
     }).catch(function () { /* best-effort cross-device sync; local status already applied */ });
   }
+  function deleteStatus(title) {
+    if (!window.fetch) return;
+    fetch('/api/status?title=' + encodeURIComponent(title), {
+      method: 'DELETE'
+    }).catch(function () { /* best-effort cross-device sync; local status already cleared */ });
+  }
   function promoteReleased() {
     var pickList = document.querySelector('#top-picks .pick-list');
     if (!pickList) return;
@@ -639,9 +645,21 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
       : row.classList.contains('watching-row') ? 'Currently Watching'
       : row.classList.contains('theater-row') ? 'In Theaters'
       : 'Top Picks';
-    addDismissed(title, reasonForSection(section));
+    var reason = reasonForSection(section);
+    addDismissed(title, reason);
     applyDismissed();
     postDismiss(title, section);
+    // 2026-08-11 (Susan: Apex kept resurrecting in Currently Watching after
+    // being dismissed as finished): dismissing only ever recorded a
+    // separate hide flag, it never cleared the underlying watching status
+    // record itself, local or server, so the very next page load read
+    // that still-present status entry and recreated the row. Clearing the
+    // status record here, not just hiding it, is what stops it for good.
+    if (reason === 'finished') {
+      var map = getStatusMap();
+      if (map[title]) { delete map[title]; setStatusMap(map); }
+      deleteStatus(title);
+    }
     var msg = (section === 'Currently Watching' || section === 'In Theaters')
       ? 'Streaming Scout: I finished "' + title + '" — log it as watched and take it off ' + section + '.'
       : 'Streaming Scout: exclude "' + title + '" from ' + section + '; don\'t re-add it.';
