@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-08-09 (incremental sync; prior full-history backfill 2026-07-25)
+**Last updated:** 2026-08-10 (incremental sync; prior full-history backfill 2026-07-25)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -48,6 +48,9 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 ## 2026
 
+- **Special Ops: Lioness (Season 3)** · Paramount+ (off-platform, reported by Susan directly, 2026-08-10) · in progress
+- **Ted Lasso (Season 4)** · Apple TV+ (reported by Susan directly, 2026-08-10) · in progress
+- **The Hardacres (Season 2)** · BritBox (off-platform, reported by Susan directly, 2026-08-10) · in progress
 - **Apex** · Netflix (reported by Susan directly, 2026-08-09) · in progress (Charlize Theron, Taron Egerton survival/action thriller)
 - **Sugar (Season 2)** · Apple TV+ (reported by Susan directly, 2026-08-08; Apple TV+ watch-history sync not yet verified working, see STREAMING_PROFILE.md) · in progress
 - **Tucci in Italy (Seasons 1–2)** · Nat Geo (off-platform — reported by Susan directly, 2026-07-25) · in progress
