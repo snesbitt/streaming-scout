@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/logic.test.mjs && node scripts/check-content-drift.mjs"
+    "test": "node tests/logic.test.mjs && node scripts/check-content-drift.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "smoke:local": "node scripts/smoke.mjs http://localhost:8888"
   },
   "dependencies": {
     "@netlify/blobs": "^10.7.9"

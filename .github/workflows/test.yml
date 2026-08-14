@@ -11,6 +11,25 @@ on:
     # even on a week with no code changes at all. Runs the same job as a
     # normal push, so no separate workflow file or new failure mode.
     - cron: "0 13 * * 1"
+    # 2026-08-14: a second weekly run, 2 hours after the one above and 1
+    # hour after the "Streaming Scout dismissed-title sync" scheduled task
+    # (Mondays 14:00 UTC) — feeds the new `smoke` job below, a real answer
+    # to roadmap.html Phase 06 / guide.html step 06's own "no automated
+    # check that a Monday update actually published" gap. Deliberately a
+    # second cron entry rather than reusing the one above: the `smoke` job
+    # (see its own `if:` below) only runs on a schedule/manual trigger,
+    # never on push — hitting the live site right after a push races
+    # Netlify's own deploy, which can take longer than the push itself to
+    # go live (confirmed the hard way on vinylscout.org, 2026-08-14 — its
+    # deploy record was still showing the previous commit 30+ minutes
+    # after a push landed on GitHub). A periodic check that doesn't assume
+    # "just pushed" == "just deployed" is a more honest signal than a
+    # push-triggered one would be.
+    - cron: "0 15 * * 1"
+  workflow_dispatch: {}
+    # 2026-08-14: lets Susan (or a Claude session) trigger the smoke job
+    # on demand from the Actions tab's "Run workflow" button, without
+    # waiting for Monday.
 
 jobs:
   test:
@@ -29,3 +48,28 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  # 2026-08-14: closes the "no automated health check yet" gap roadmap.html
+  # Phase 06 and guide.html step 06 both explicitly call out. Mirrors Vinyl
+  # Scout's scripts/smoke.mjs pattern (read-only checks against the LIVE
+  # site — home page loads, internal docs stay blocked, both Functions are
+  # reachable and validating input) but, unlike Vinyl Scout's (manual-only,
+  # `npm run smoke`), this one is actually wired into CI on a schedule, not
+  # left as a command someone has to remember to run. Deliberately does
+  # NOT run on every push (see the cron comment above) — only on the two
+  # scheduled triggers or a manual workflow_dispatch, so it never races a
+  # not-yet-finished Netlify deploy.
+  smoke:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Smoke test the live site
+        run: npm run smoke

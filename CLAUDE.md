@@ -165,14 +165,19 @@ the exact push command block.
 
 ## How to verify a deploy
 
-There is no automated *health* check for this site yet — nothing pings the
-live site post-deploy the way Vinyl Scout and The Fitness Log's checks do;
-that's the honest gap Roadmap phase 06 and Guide step 06 both call out,
-don't describe this site as having one it doesn't. There is now a small
-*unit* test suite (`npm test`, added 2026-07-23) — run it before any change
-touching `src/logic.mjs` or the auto-promote/dismiss logic in
-`index.html`'s script, but it doesn't touch a browser or the live site, so
-it's not a substitute for the manual check below. Verifying a deploy means:
+As of 2026-08-14, there IS an automated *health* check (`scripts/smoke.mjs`
++ the `smoke` job in `.github/workflows/test.yml`) — but it is schedule-
+triggered (weekly, Mondays 15:00 UTC, plus manual `workflow_dispatch`), not
+push-triggered, and read-only against whatever is live at the moment it
+runs. It answers "is the site fundamentally healthy right now" — home page
+loads, `/CLAUDE.md` stays blocked, `/api/dismiss` and `/api/status` are
+reachable and validating input — not "did the change I just pushed
+actually publish." Don't describe it as more than that; the manual check
+below is still the real control of record for any specific change. There
+is also a small *unit* test suite (`npm test`, added 2026-07-23) — run it
+before any change touching `src/logic.mjs` or the auto-promote/dismiss
+logic in `index.html`'s script, but it doesn't touch a browser or the live
+site either. Verifying a deploy means:
 
 1. Run `npm test` if the change touched `src/logic.mjs` or the inline
    `<script>`'s dismiss/promote logic. It only proves that logic still
@@ -890,3 +895,17 @@ Susan reported having to remove Apex from Currently Watching more than once, it 
 **Fixed at the source (commit `f988408`):** `ssDismiss()` now checks whether the dismissal reason is `finished`, and if so, deletes the title from the local status map and calls a new `deleteStatus(title)` function (`DELETE /api/status?title=...`, matching the existing `postStatus()`/`postDismiss()` pattern) to clear the server record too. This does not depend on the order `applyDismissed()` and `applyStatuses()` run in, the underlying record simply no longer exists for a later page load to find.
 
 Verified independently at every layer, not assumed: the source diff before commit, a live grep against the deployed page confirming the new code was actually served (deleteStatus appearing twice), and a live server-side check after Susan re-clicked the X confirming Apex's record was actually gone from /api/status.
+
+## 2026-08-14 — automated post-deploy health check (roadmap Phase 06 / guide step 06's honest gap, closed)
+
+Part of a cross-project punch-list pass (Vinyl Scout, Streaming Scout, Travel Intelligence, Fitness Log). This site's own docs already named the exact gap plainly: roadmap.html Phase 06 said "backups and a health check are still ahead," and guide.html step 06 said "there's also no automated check that a Monday update actually published." Closed the health-check half.
+
+**What was added:** `scripts/smoke.mjs`, mirroring Vinyl Scout's own `scripts/smoke.mjs` pattern — read-only, zero secrets, safe against production anytime. Checks: the home page loads and contains real title text; `/CLAUDE.md` still 404s (netlify.toml's own redirect rule blocking internal docs, confirmed still working, not just configured); `/api/dismiss` and `/api/status` are both reachable and return the expected `{dismissed: [...]}`/`{statuses: [...]}` shape; a malformed `/api/dismiss` POST (no `title`) is rejected with 400, not silently accepted or 500ing. Deliberately does not exercise a real write round-trip — both Functions are intentionally unauthenticated, so a real POST would insert real junk into Susan's live Blobs stores, the same non-goal Vinyl Scout's own smoke test documents for its wishlist API.
+
+**Wired into CI on a schedule, not left manual-only (the one place this deliberately does MORE than Vinyl Scout's own smoke.mjs, which is `npm run smoke` only, no CI wiring yet there).** `.github/workflows/test.yml` gained a `smoke` job and a second weekly cron (`0 15 * * 1` — Mondays 15:00 UTC, one hour after the "Streaming Scout dismissed-title sync" scheduled task at 14:00 UTC) plus `workflow_dispatch` for on-demand runs. The `smoke` job's own `if:` restricts it to `schedule`/`workflow_dispatch` events only — it deliberately does NOT run on every push. Reason: hitting the live site immediately after a push races Netlify's own deploy, which is not guaranteed to have finished by the time the push itself lands on GitHub — confirmed the hard way the same day on vinylscout.org, where Netlify's deploy record was still showing the previous commit 30+ minutes after a push had already landed and passed CI. A scheduled check that doesn't assume "just pushed" means "just deployed" is a more honest signal than a push-triggered one would have been.
+
+**Honest scope of what this catches vs. doesn't, updated in both roadmap.html and guide.html rather than oversold:** this answers "is the site fundamentally healthy right now," not "did today's specific change actually publish" — it's a general trip-wire, not per-change verification. The manual live-site check in this file's own "How to verify a deploy" section is still the real control of record for any specific change; that section's own intro paragraph was updated to say so explicitly rather than let the new automation read as more than it is.
+
+**Verified:** `node --check scripts/smoke.mjs` (syntax); the edited `.github/workflows/test.yml` parses as valid YAML (`python3 -c "import yaml; yaml.safe_load(...)"`) and passes `action-validator` (the real GitHub Actions schema validator, not just a YAML parse — this repo's own history has one prior instance, in Vinyl Scout, of a schema-invalid-but-YAML-valid workflow silently breaking an entire run); full `npm test` (15 logic assertions + content-drift check) still passes clean, unaffected by this change. Not run against the live site from this session — no network access to streamingscout.org from this environment, same standing constraint as every other from-this-session check; worth Susan or a future live-capable session running `npm run smoke` for real once this deploys, and confirming the new `smoke` job goes green on its first real Monday run (2026-08-17 UTC) or via a manual "Run workflow" click.
+
+**Delivered:** `scripts/smoke.mjs` (new), `package.json`, `.github/workflows/test.yml`, `roadmap.html`, `guide.html`, this file. Committed locally, not pushed directly — same standing rule as every other project.

@@ -105,7 +105,7 @@
           <span class="phase__status phase__status--progress">In progress</span>
         </div>
         <p class="phase__focus">Infrastructure that matches the polish</p>
-        <p class="phase__covers">Netlify Functions with automated backups and health checks, on a GitHub repo that redeploys itself on push. Two pieces are live so far: dismiss and status, both bounded and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly. Backups and a health check are still ahead.</p>
+        <p class="phase__covers">Netlify Functions with automated backups and health checks, on a GitHub repo that redeploys itself on push. Three pieces are live so far: dismiss and status, both bounded and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly; and, as of 2026-08-14, a scheduled health check (<code>scripts/smoke.mjs</code>, wired into CI on a weekly schedule plus on-demand) that confirms the live site is actually up and both Functions are reachable and validating input. Automated backups are still ahead.</p>
       </div>
     </section>
 
