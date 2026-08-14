@@ -1,6 +1,6 @@
 # Streaming Profile
 
-**Last updated:** 2026-08-06 (added Paramount+ as a real subscription — see Premium/Channel Add-ons; also added MGM+ same day; prior update 2026-07-21)
+**Last updated:** 2026-08-14 (promoted Hulu to full watch-history sync tier — see Services Tracked; prior update 2026-08-06)
 
 ## Services Tracked
 - Netflix — active
@@ -12,6 +12,7 @@
   TV+ was already active before this (see the policy note below, now
   partly superseded); this promotes it to the same tracked tier as
   Netflix/Prime for watch-history sync specifically.
+  - Hulu — promoted to full watch-history sync tier 2026-08-14 (Susan logged in via Claude in Chrome specifically for this). Previously candidates-only per the Other-Services Recommendations Policy below; that note is now superseded for Hulu specifically (Apple TV+ precedent). Sync flow not yet verified live — needs the same first-run check Apple TV+ is still pending.
 
 ## Premium/Channel Add-ons (tracked for Coming Soon schedules, not watch-history sync)
 - BritBox (via Prime Video channel)
@@ -44,9 +45,7 @@ both as accessible to her. This widens the candidate pool; it does not add
 those services to watch-history sync (no page-scrape wired for them yet —
 log Hulu/Apple viewing via the log-watched skill when she reports it).
 **2026-08-05 update:** Apple TV+ has since moved to Services Tracked above
-for the recommendation-widening purpose this note already describes — Hulu
-stays exactly as this note originally described (checked for candidates,
-not synced).
+for the recommendation-widening purpose this note already describes. **2026-08-14 update:** Hulu has since moved to Services Tracked above too (full watch-history sync tier, same as Apple TV+), so this note is now fully superseded — both services this note originally described are tracked, not just checked for candidates.
 
 ## 2026-08-05 — Apple TV+ watch-history sync: honest status
 
