@@ -32,20 +32,38 @@ on:
     # waiting for Monday.
 
 permissions:
-  contents: read
+  contents: write
   issues: write
   pull-requests: write
   # 2026-08-16: issues:write and pull-requests:write are new. issues:write
   # is used by the failure-reporting step in the smoke/status-drift jobs
-  # below (opens/updates a tracking issue). pull-requests:write is used
-  # only by the dismiss-drift job's auto-fix step, which opens a PR when it
-  # finds and fixes real drift. Both use the default, automatically-scoped
-  # GITHUB_TOKEN — no PAT or other secret involved anywhere in this file.
-  # This repo's standing rule that only Susan pushes from her own Terminal
-  # is about interactive Claude sessions, not this repo's own CI robot
-  # acting through GitHub's own scoped token within a single Actions run —
-  # same trust boundary as any other bot (e.g. Dependabot) opening a PR.
-  # The `test` job itself never needs write access to anything.
+  # below (opens/updates a tracking issue). pull-requests:write is used only
+  # by the dismiss-drift job's auto-fix step, which opens a PR when it finds
+  # and fixes real drift.
+  #
+  # contents was `read` until run #23 (2026-08-16, the first real
+  # workflow_dispatch), which failed with git exit code 128 at "Pushing pull
+  # request branch to 'origin/auto/dismiss-drift-sync'". create-pull-request
+  # has to push a branch before it can open a PR, and a read-scoped token
+  # cannot push anything. Hence contents: write.
+  #
+  # That widens the token for this whole file, so state plainly what still
+  # cannot happen: nothing here pushes to main. dismiss-drift writes only
+  # the auto/dismiss-drift-sync branch and opens a PR against main for
+  # review; the other jobs never write to the repo at all. Susan's standing
+  # rule that only she pushes to main is intact.
+  #
+  # All of this uses the default, automatically-scoped GITHUB_TOKEN. No PAT
+  # or other secret is involved anywhere in this file. The rule about only
+  # Susan pushing is about interactive Claude sessions, not this repo's own
+  # CI robot acting through GitHub's scoped token inside a single Actions
+  # run, which is the same trust boundary as any other bot (e.g. Dependabot)
+  # opening a PR.
+  #
+  # NOTE: the token scope is only half the gate. The repo setting
+  # Settings > Actions > General > "Allow GitHub Actions to create and
+  # approve pull requests" must also be on, or the PR step fails even with
+  # contents: write. Enabled 2026-08-16.
 
 jobs:
   test:

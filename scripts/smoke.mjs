@@ -27,12 +27,40 @@ async function check(name, fn) {
 
 function assert(cond, msg) { if (!cond) throw new Error(msg); }
 
+// 2026-08-16: every network call goes through this instead of bare fetch().
+// Run #23 failed the whole job (and opened a GitHub issue) on a single
+// `fetch failed`, which is undici's raw network error, not an HTTP status.
+// /api/status was verifiably healthy at the time, so that was a transient
+// blip or a Netlify Function cold start, not a real outage. A smoke check
+// that cries wolf gets ignored, so: a hard per-attempt timeout plus two
+// retries with backoff. A genuine outage still fails all three attempts and
+// still reports; one dropped connection no longer does.
+const ATTEMPTS = 3;
+const TIMEOUT_MS = 10000;
+
+async function fetchWithRetry(url, init) {
+  let lastErr;
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+    try {
+      return await fetch(url, { ...init, signal: AbortSignal.timeout(TIMEOUT_MS) });
+    } catch (err) {
+      lastErr = err;
+      const why = err.name === 'TimeoutError' ? 'timed out after ' + TIMEOUT_MS + 'ms' : err.message;
+      if (attempt < ATTEMPTS) {
+        console.log('  ..   ' + url + ' attempt ' + attempt + '/' + ATTEMPTS + ' failed (' + why + '), retrying');
+        await new Promise((r) => setTimeout(r, 1000 * attempt));
+      }
+    }
+  }
+  throw new Error('network error after ' + ATTEMPTS + ' attempts: ' + lastErr.message);
+}
+
 console.log('Streaming Scout smoke test → ' + BASE + '\n');
 
 // 1. Home page loads and is the real app, not a Netlify error/placeholder page.
 let homeHtml = '';
 await check('home page', async () => {
-  const res = await fetch(BASE + '/');
+  const res = await fetchWithRetry(BASE + '/');
   assert(res.ok, 'GET / returned ' + res.status);
   assert((res.headers.get('content-type') || '').includes('text/html'), 'not text/html');
   homeHtml = await res.text();
@@ -75,14 +103,14 @@ await check('currently watching poster coverage', async () => {
 // rules — CLAUDE.md, README.md, package.json, data/*.md should all 404 to
 // index.html, not serve their real contents publicly).
 await check('internal files blocked', async () => {
-  const res = await fetch(BASE + '/CLAUDE.md');
+  const res = await fetchWithRetry(BASE + '/CLAUDE.md');
   assert(res.status === 404, 'GET /CLAUDE.md returned ' + res.status + ' (expected 404)');
   ok('GET /CLAUDE.md → 404 (not publicly served)');
 });
 
 // 3. /api/dismiss is reachable and returns the expected shape.
 await check('dismiss API', async () => {
-  const res = await fetch(BASE + '/api/dismiss');
+  const res = await fetchWithRetry(BASE + '/api/dismiss');
   assert(res.ok, 'GET /api/dismiss returned ' + res.status);
   const data = await res.json();
   assert(Array.isArray(data.dismissed), 'response.dismissed is not an array');
@@ -91,7 +119,7 @@ await check('dismiss API', async () => {
 
 // 4. /api/status is reachable and returns the expected shape.
 await check('status API', async () => {
-  const res = await fetch(BASE + '/api/status');
+  const res = await fetchWithRetry(BASE + '/api/status');
   assert(res.ok, 'GET /api/status returned ' + res.status);
   const data = await res.json();
   assert(Array.isArray(data.statuses), 'response.statuses is not an array');
@@ -101,7 +129,7 @@ await check('status API', async () => {
 // 5. Malformed input is rejected with 400, not a 500 (endpoints are wired
 // and validating, not just present).
 await check('dismiss input validation', async () => {
-  const res = await fetch(BASE + '/api/dismiss', {
+  const res = await fetchWithRetry(BASE + '/api/dismiss', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({}), // missing required "title"
