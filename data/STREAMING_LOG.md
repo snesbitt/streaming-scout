@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-08-16 (backfilled five titles from the live status/dismiss stores; prior incremental sync 2026-08-10, full-history backfill 2026-07-25)
+**Last updated:** 2026-08-16 (Prime Video watch-history sync covering Aug 7 to Aug 15, nine titles new to this log; Netflix checked, nothing new since Apex on 2026-08-09; prior incremental sync 2026-08-10, full-history backfill 2026-07-25)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -48,10 +48,19 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 ## 2026
 
-- **Reacher (Season 4)** · Prime Video (status recorded live on-site 2026-08-12, backfilled here 2026-08-16) · finished
+- **Reacher (Season 4)** · Prime Video (Prime watch history 2026-08-12 and 2026-08-15; synced 2026-08-16) · in progress — releases weekly through Sep 16, so the on-site "watched" flag of 2026-08-12 meant caught up, not finished
+- **Grantchester (Season 11)** · Prime Video / PBS Masterpiece (Prime watch history 2026-08-15; synced 2026-08-16) · in progress — final season. Cozy British period mystery, clerical-detective procedural (Rishi Nair, Robson Green, Al Weaver)
+- **Lark Rise to Candleford (Season 1)** · Prime Video (Prime watch history 2026-08-13; synced 2026-08-16) · in progress — cozy British period drama, pastoral Victorian village ensemble, BBC One 2008 (Olivia Hallinan, Julia Sawalha, Brendan Coyle)
+- **Steal (Season 1)** · Prime Video (Prime watch history 2026-08-12; synced 2026-08-16) · in progress — heist thriller, corporate-conspiracy crime drama, ordinary-person-in-over-her-head (Sophie Turner, Jacob Fortune-Lloyd, Archie Madekwe)
+- **Professor T (Season 5)** · Prime Video / PBS Masterpiece (Prime watch history 2026-08-11; synced 2026-08-16) · in progress — cerebral quirky-detective crime drama, academic sleuth procedural (Ben Miller, Juliet Stevenson, Zoë Wanamaker)
+- **Dutton Ranch (Season 1)** · Prime Video / Paramount+ (Prime watch history 2026-08-10; synced 2026-08-16) · in progress — neo-Western, ranch-empire land-war saga, confirmed Yellowstone-universe sequel (Kelly Reilly, Cole Hauser, Ed Harris)
+- **The Westies** · MGM+ (Prime watch history 2026-08-09; synced 2026-08-16) · in progress — the on-site "watched" flag of 2026-07-30 was premature, viewing continued after it
+- **The Agency (Season 2)** · Prime Video / Paramount+ (Prime watch history 2026-08-07 and 2026-08-09; synced 2026-08-16) · in progress — espionage thriller, slow-burn tradecraft procedural, remake of Le Bureau des Légendes (Michael Fassbender, Jeffrey Wright, Richard Gere)
+- **Sterling Point (Season 1)** · Prime Video (Prime watch history 2026-08-09; synced 2026-08-16) · in progress — coming-of-age mystery, YA family-secrets drama, island-set inheritance mystery (Ella Rubin, Keen Ruffalo, Jay Duplass)
+- **Special Ops: Lioness (Season 1)** · Prime Video / Paramount+ (Prime watch history 2026-08-08; synced 2026-08-16) · rewatch — military espionage thriller, undercover-infiltration drama (Zoe Saldaña, Nicole Kidman, Laysla De Oliveira). Note: S3 is separately in progress, so this is a revisit of the original season
+- **Gardeners' World Winter Specials 2021** · Prime Video (Prime watch history 2026-08-08; synced 2026-08-16) · in progress — slow TV horticulture, seasonal how-to gardening, comfort factual, BBC Two (Monty Don, Adam Frost)
 - **Say Nothing (Limited Series)** · Hulu (dismissed as finished on-site 2026-08-12, backfilled here 2026-08-16) · finished
 - **Scarpetta** · Prime Video (status recorded live on-site 2026-07-31, backfilled here 2026-08-16) · finished
-- **The Westies** · MGM+ (status recorded live on-site 2026-07-30, backfilled here 2026-08-16) · finished
 - **Apex** · Netflix (dismissed as finished on-site 2026-08-10, backfilled here 2026-08-16) · finished
 - **Special Ops: Lioness (Season 3)** · Paramount+ (off-platform, reported by Susan directly, 2026-08-10) · in progress
 - **Ted Lasso (Season 4)** · Apple TV+ (reported by Susan directly, 2026-08-10) · in progress
