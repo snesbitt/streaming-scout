@@ -17,6 +17,14 @@
 // localStorage/live-API render path this project has already been bitten
 // by twice, not the permanent baked-in one.
 //
+// 2026-08-16: this originally only checked ONE direction, and a manual
+// review found the opposite one had been silently drifting for weeks. The
+// live store said watched for The Westies (2026-07-30), Scarpetta
+// (2026-07-31) and Reacher S4 (2026-08-12), yet all three were still baked
+// into index.html as currently-watching, a live Top Pick, and an upcoming
+// release respectively. The original check passed the whole time, because
+// nothing was missing; something was stale. Both directions are now checked.
+//
 // Live-network check — same placement/reasoning as check-dismiss-drift.mjs:
 // schedule-only, not part of the push/PR `npm test` job.
 //
@@ -45,6 +53,36 @@ async function main() {
 
   const missing = watching.filter((entry) => entry.title && !indexHtml.includes(normalize(entry.title)));
 
+  // Direction 2: anything marked "watched" live that is STILL presented as
+  // current or upcoming in the static page. Deliberately narrow — it only
+  // looks inside the row markup for the three sections that make a
+  // present/future claim, so a finished title referenced in a comment, a
+  // taste-profile bar or an already-correct historical mention never trips
+  // it. Merely appearing somewhere in index.html is not drift.
+  const watched = (statuses || []).filter((s) => s && s.status === "watched" && s.title);
+  const rowRe = /<div class="(watching-row|pick-row|soon-row)"[^>]*data-title="([^"]+)"/g;
+  const liveClaims = new Map();
+  for (const m of readFileSync("index.html", "utf8").matchAll(rowRe)) {
+    liveClaims.set(normalize(m[2]), m[1]);
+  }
+  const SECTION = {
+    "watching-row": "Currently Watching",
+    "pick-row": "Top Picks",
+    "soon-row": "Coming Soon",
+  };
+  const stale = watched
+    .map((entry) => ({ entry, section: liveClaims.get(normalize(entry.title)) }))
+    .filter((x) => x.section);
+
+  if (stale.length) {
+    console.error(`Status drift check FAILED: ${stale.length} title(s) marked "watched" live but still presented as current or upcoming in index.html:\n`);
+    for (const { entry, section } of stale) {
+      console.error(`  - "${entry.title}" (watched ${entry.updatedAt || "unknown date"}) — still rendered in ${SECTION[section]}.`);
+    }
+    console.error("\nRemove the stale row from index.html and record the title as finished in data/STREAMING_LOG.md. Not auto-fixed: dropping a row is a content decision, and a rebuild may want to replace it rather than just delete it.");
+    process.exit(1);
+  }
+
   if (missing.length) {
     console.error(`Status drift check FAILED: ${missing.length} title(s) marked "watching" live but with no matching static markup in index.html:\n`);
     for (const m of missing) {
@@ -54,7 +92,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Status drift check passed: all ${watching.length} live "watching" title(s) have matching static markup in index.html.`);
+  console.log(`Status drift check passed: all ${watching.length} live "watching" title(s) have static markup, and none of the ${watched.length} "watched" title(s) are still shown as current or upcoming.`);
 }
 
 main().catch((err) => {

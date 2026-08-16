@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-08-10 (incremental sync; prior full-history backfill 2026-07-25)
+**Last updated:** 2026-08-16 (backfilled five titles from the live status/dismiss stores; prior incremental sync 2026-08-10, full-history backfill 2026-07-25)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -48,10 +48,14 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 ## 2026
 
+- **Reacher (Season 4)** · Prime Video (status recorded live on-site 2026-08-12, backfilled here 2026-08-16) · finished
+- **Say Nothing (Limited Series)** · Hulu (dismissed as finished on-site 2026-08-12, backfilled here 2026-08-16) · finished
+- **Scarpetta** · Prime Video (status recorded live on-site 2026-07-31, backfilled here 2026-08-16) · finished
+- **The Westies** · MGM+ (status recorded live on-site 2026-07-30, backfilled here 2026-08-16) · finished
+- **Apex** · Netflix (dismissed as finished on-site 2026-08-10, backfilled here 2026-08-16) · finished
 - **Special Ops: Lioness (Season 3)** · Paramount+ (off-platform, reported by Susan directly, 2026-08-10) · in progress
 - **Ted Lasso (Season 4)** · Apple TV+ (reported by Susan directly, 2026-08-10) · in progress
 - **The Hardacres (Season 2)** · BritBox (off-platform, reported by Susan directly, 2026-08-10) · in progress
-- **Apex** · Netflix (reported by Susan directly, 2026-08-09) · in progress (Charlize Theron, Taron Egerton survival/action thriller)
 - **Sugar (Season 2)** · Apple TV+ (reported by Susan directly, 2026-08-08; Apple TV+ watch-history sync not yet verified working, see STREAMING_PROFILE.md) · in progress
 - **Tucci in Italy (Seasons 1–2)** · Nat Geo (off-platform — reported by Susan directly, 2026-07-25) · in progress
 - **Slow Horses (Seasons 1–5)** · Apple TV+ (off-platform — reported by Susan directly, 2026-07-26) · finished, loved — watch for S6
