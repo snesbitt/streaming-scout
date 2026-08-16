@@ -1,0 +1,11 @@
+# Netlify CLI local state
+.netlify/
+
+# Dependencies
+node_modules/
+
+# OS cruft
+.DS_Store
+
+# Stale git locks moved aside by cloud-bridge sessions
+_to_delete_locks/
