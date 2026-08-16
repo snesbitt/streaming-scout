@@ -48,3 +48,6 @@ entries as of this sync are captured below.
 - **Tucci in Italy** — Currently Watching — dismissed on-site 2026-08-05
 
 *(Synced from the live dismiss store 2026-08-09. Now kept in sync automatically — see the 2026-08-09 note above.)*
+
+- **Apex** — Currently Watching — dismissed on-site 2026-08-10 (auto-synced by CI)
+- **Say Nothing** — Currently Watching — dismissed on-site 2026-08-12 (auto-synced by CI)
