@@ -13,23 +13,39 @@ on:
     - cron: "0 13 * * 1"
     # 2026-08-14: a second weekly run, 2 hours after the one above and 1
     # hour after the "Streaming Scout dismissed-title sync" scheduled task
-    # (Mondays 14:00 UTC) — feeds the new `smoke` job below, a real answer
-    # to roadmap.html Phase 06 / guide.html step 06's own "no automated
-    # check that a Monday update actually published" gap. Deliberately a
-    # second cron entry rather than reusing the one above: the `smoke` job
-    # (see its own `if:` below) only runs on a schedule/manual trigger,
-    # never on push — hitting the live site right after a push races
-    # Netlify's own deploy, which can take longer than the push itself to
-    # go live (confirmed the hard way on vinylscout.org, 2026-08-14 — its
-    # deploy record was still showing the previous commit 30+ minutes
-    # after a push landed on GitHub). A periodic check that doesn't assume
-    # "just pushed" == "just deployed" is a more honest signal than a
-    # push-triggered one would be.
+    # (Mondays 14:00 UTC) — feeds the `smoke` and `live-drift` jobs below, a
+    # real answer to roadmap.html Phase 06 / guide.html step 06's own "no
+    # automated check that a Monday update actually published" gap.
+    # Deliberately a second cron entry rather than reusing the one above:
+    # both `smoke` and `live-drift` (see their own `if:` below) only run on
+    # a schedule/manual trigger, never on push — hitting the live site right
+    # after a push races Netlify's own deploy, which can take longer than
+    # the push itself to go live (confirmed the hard way on vinylscout.org,
+    # 2026-08-14 — its deploy record was still showing the previous commit
+    # 30+ minutes after a push landed on GitHub). A periodic check that
+    # doesn't assume "just pushed" == "just deployed" is a more honest
+    # signal than a push-triggered one would be.
     - cron: "0 15 * * 1"
   workflow_dispatch: {}
-    # 2026-08-14: lets Susan (or a Claude session) trigger the smoke job
-    # on demand from the Actions tab's "Run workflow" button, without
+    # 2026-08-14: lets Susan (or a Claude session) trigger the smoke/drift
+    # jobs on demand from the Actions tab's "Run workflow" button, without
     # waiting for Monday.
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  # 2026-08-16: issues:write and pull-requests:write are new. issues:write
+  # is used by the failure-reporting step in the smoke/status-drift jobs
+  # below (opens/updates a tracking issue). pull-requests:write is used
+  # only by the dismiss-drift job's auto-fix step, which opens a PR when it
+  # finds and fixes real drift. Both use the default, automatically-scoped
+  # GITHUB_TOKEN — no PAT or other secret involved anywhere in this file.
+  # This repo's standing rule that only Susan pushes from her own Terminal
+  # is about interactive Claude sessions, not this repo's own CI robot
+  # acting through GitHub's own scoped token within a single Actions run —
+  # same trust boundary as any other bot (e.g. Dependabot) opening a PR.
+  # The `test` job itself never needs write access to anything.
 
 jobs:
   test:
@@ -48,6 +64,11 @@ jobs:
 
       - name: Run tests
         run: npm test
+        # As of 2026-08-16, `npm test` also runs check-tap-targets.mjs and
+        # check-pick-meta-length.mjs (both offline, no network) alongside
+        # the existing logic tests and content-drift check — see each
+        # script's own header comment for what real, previously-hand-caught
+        # bug each one is a trip-wire for.
 
   # 2026-08-14: closes the "no automated health check yet" gap roadmap.html
   # Phase 06 and guide.html step 06 both explicitly call out. Mirrors Vinyl
@@ -73,3 +94,116 @@ jobs:
 
       - name: Smoke test the live site
         run: npm run smoke
+
+      - name: Report failure as a GitHub issue
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = "Weekly smoke test failed";
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "automated-check-failure",
+            });
+            const match = existing.find(i => i.title === title);
+            const body = `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n` +
+              `scripts/smoke.mjs failed against https://streamingscout.org on a scheduled run. ` +
+              `This checks that the live site is fundamentally healthy (home page loads, internal docs stay blocked, both API functions reachable and validating input) — not that any specific recent change published. See the run log for which check(s) failed.`;
+            if (match) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: match.number, body });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ["automated-check-failure"],
+              });
+            }
+
+  # 2026-08-16: closes the gap CLAUDE.md's 2026-08-08 entry documents — a
+  # title marked "watching" live via /api/status only renders correctly
+  # forever once it's ALSO baked into index.html as a static .watching-row
+  # (2026-08-10/08-11 entries: two real bugs from this exact gap). Unlike
+  # the dismiss-drift job below, this ISN'T mechanically fixable — adding a
+  # correct .watching-row needs real editorial judgment (poster art,
+  # season/status text), so this stays report-only, same schedule-only
+  # placement as `smoke` (live-network, never push-triggered).
+  status-drift:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check live "watching" status against index.html's static markup
+        run: node scripts/check-status-drift.mjs
+
+      - name: Report failure as a GitHub issue
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = "Weekly status-drift check failed";
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "automated-check-failure",
+            });
+            const match = existing.find(i => i.title === title);
+            const body = `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n` +
+              `check-status-drift.mjs found a title marked "watching" live on streamingscout.org with no matching static markup in index.html — it's only rendering via the fragile live/localStorage path this project has been bitten by twice before (CLAUDE.md 2026-08-10, 2026-08-11). See the run log for which title(s). This needs a real .watching-row added by hand (poster art, season/status text) — not auto-fixable.`;
+            if (match) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: match.number, body });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ["automated-check-failure"],
+              });
+            }
+
+  # 2026-08-16: replaces the "Streaming Scout dismissed-title sync" Claude
+  # Code Remote scheduled task referenced in CLAUDE.md's 2026-08-09 entry,
+  # which no longer exists (verified via list_triggers — only the artwork
+  # sweep and the five-site review remain). That gap was fully mechanical
+  # (diff the live /api/dismiss store against data/EXCLUDED_TITLES.md,
+  # append what's missing in the file's existing format) with zero
+  # editorial judgment, so rather than recreate it as its own agentic
+  # session, this job runs check-dismiss-drift.mjs --fix directly in CI and
+  # opens a PR via GitHub's own bot identity (peter-evans/create-pull-request,
+  # using the default GITHUB_TOKEN, not a session pushing) when it finds and
+  # fixes anything. This is the actual "GitHub doing the work" version of
+  # that task: no Claude session involved at all, Susan just reviews and
+  # merges a PR if one shows up.
+  dismiss-drift:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch live dismissals and auto-fix data/EXCLUDED_TITLES.md if anything's missing
+        run: node scripts/check-dismiss-drift.mjs --fix
+
+      - name: Open a PR if EXCLUDED_TITLES.md changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "data/EXCLUDED_TITLES.md: sync titles dismissed live but missing from the file"
+          branch: auto/dismiss-drift-sync
+          delete-branch: true
+          title: "Auto: sync dismissed-title exclusions from the live site"
+          body: >
+            Opened automatically by the weekly `dismiss-drift` job in
+            `.github/workflows/test.yml`. `scripts/check-dismiss-drift.mjs --fix`
+            found one or more titles dismissed live via `/api/dismiss` that
+            weren't yet reflected in `data/EXCLUDED_TITLES.md`, and appended
+            them in the file's existing format. Review the diff and merge if
+            it looks right — these titles are otherwise vulnerable to
+            reappearing in the next Coming Soon/Top Picks rebuild.
+          labels: automated-pr

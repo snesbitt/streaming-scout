@@ -30,13 +30,45 @@ function assert(cond, msg) { if (!cond) throw new Error(msg); }
 console.log('Streaming Scout smoke test → ' + BASE + '\n');
 
 // 1. Home page loads and is the real app, not a Netlify error/placeholder page.
+let homeHtml = '';
 await check('home page', async () => {
   const res = await fetch(BASE + '/');
   assert(res.ok, 'GET / returned ' + res.status);
   assert((res.headers.get('content-type') || '').includes('text/html'), 'not text/html');
-  const html = await res.text();
-  assert(html.includes('Streaming Scout'), 'title text missing');
+  homeHtml = await res.text();
+  assert(homeHtml.includes('Streaming Scout'), 'title text missing');
   ok('home page loads and contains expected title text');
+});
+
+// 1b. Every static Currently Watching row has real poster art wired in, not
+// just the monogram fallback. Added 2026-08-16, targeting the exact bug
+// class CLAUDE.md documents on 2026-08-05 (poster art lost on reload) and
+// 2026-08-10/08-11 (a watching title with no static markup at all never
+// gets a real fix). This only proves the <img> element exists in the served
+// markup — not that its src actually resolves to a loading image (that
+// would need fetching every poster URL, out of scope for a fast smoke
+// check; see the periodic artwork sweep for that). Static rows are the
+// permanent-record path this project's own history shows is the one that
+// actually survives a reload/rebuild, so this is a meaningful, cheap proxy.
+await check('currently watching poster coverage', async () => {
+  assert(homeHtml, 'home page HTML not loaded (check 1 must run first)');
+  // Rows are siblings, not nested in each other, so splitting on the literal
+  // opening-tag marker is more robust than a regex trying to match a whole
+  // block through arbitrarily-nested inner divs (button/span markup varies
+  // row to row). Each chunk after the split holds exactly one row's own
+  // content up to (not including) the next row's opening tag.
+  const marker = '<div class="watching-row"';
+  const chunks = homeHtml.split(marker).slice(1);
+  assert(chunks.length > 0, 'no .watching-row blocks found in the static markup at all');
+  const monogramOnly = chunks
+    .map((chunk) => {
+      const m = /data-title="([^"]*)"/.exec(chunk);
+      return { title: m ? m[1] : '(untitled row)', hasImg: /<img\b/.test(chunk) };
+    })
+    .filter((r) => !r.hasImg)
+    .map((r) => r.title);
+  assert(monogramOnly.length === 0, `${monogramOnly.length} Currently Watching row(s) have no <img> at all (monogram-only): ${monogramOnly.join(', ')}`);
+  ok(`all ${chunks.length} Currently Watching row(s) have a real <img> element wired in`);
 });
 
 // 2. Internal docs/data files stay blocked (netlify.toml's own redirect

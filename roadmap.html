@@ -104,8 +104,8 @@
           <h3 class="phase__name">A real backend</h3>
           <span class="phase__status phase__status--progress">In progress</span>
         </div>
-        <p class="phase__focus">Infrastructure that matches the polish</p>
-        <p class="phase__covers">Netlify Functions with automated backups and health checks, on a GitHub repo that redeploys itself on push. Three pieces are live so far: dismiss and status, both bounded and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly; and, as of 2026-08-14, a scheduled health check (<code>scripts/smoke.mjs</code>, wired into CI on a weekly schedule plus on-demand) that confirms the live site is actually up and both Functions are reachable and validating input. Automated backups are still ahead.</p>
+        <p class="phase__focus">Infrastructure that matches the polish, and GitHub doing more of the upkeep itself</p>
+        <p class="phase__covers">Netlify Functions on a GitHub repo that redeploys itself on push. Dismiss and status are both live, bounded, and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly. As of 2026-08-14 a scheduled health check (<code>scripts/smoke.mjs</code>) confirms the live site is actually up and both Functions are reachable and validating input. As of 2026-08-16, GitHub Actions took on real ongoing upkeep, not just checks: a weekly job now diffs the live dismiss store against the exclusion file and opens its own pull request to fix any gap, using GitHub's own bot identity, not a person or a Claude session; a second weekly job flags (but doesn't auto-fix) any "currently watching" title missing its permanent on-page entry; and the smoke check now also confirms every Currently Watching row has real poster art, not just a placeholder. The weekly artwork-sourcing sweep still runs as a Claude session (finding and judging real key art isn't mechanical), but now lands its work on a reviewable branch with a ready pull-request link instead of asking for a blind push. Automated backups are still ahead.</p>
       </div>
     </section>
 

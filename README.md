@@ -56,31 +56,79 @@ across the next weekly rebuild. Top Picks and Coming Soon are static HTML
 baked into `index.html` at publish time from `EXCLUDED_TITLES.md`, not
 read live from the Blobs store, so keeping a title out of next week's
 freshly-rebuilt list still means pasting the copied message to Claude and
-updating that file. `app.js` still doesn't exist as a separate file; almost
-all client-side JS is still a single small inline `<script>` at the bottom
-of `index.html`; as of 2026-07-23 that script is a `type="module"` script
-and imports its date/dismiss logic from `src/logic.mjs` rather than
-defining it inline, so that logic now has real unit tests (see Tests,
-below).
+updating that file (or letting the `dismiss-drift` CI job below do it).
+`app.js` still doesn't exist as a separate file; almost all client-side JS
+is still a single small inline `<script>` at the bottom of `index.html`;
+as of 2026-07-23 that script is a `type="module"` script and imports its
+date/dismiss logic from `src/logic.mjs` rather than defining it inline, so
+that logic now has real unit tests (see Tests, below).
 
 ## Tests
 
-`src/logic.mjs` holds the pure logic behind two features: Coming Soon's
-date-based auto-promotion into Top Picks (added 2026-07-23, so titles like
-`Gone` move up on their own once the release date arrives, instead of
-needing a manual edit), and the dismiss system's list-merge logic. Both are
-plain functions with no DOM/localStorage/fetch dependency, so they're
-directly unit tested, using the same "export the pure logic for testability"
-pattern vinyl-scout's `audio-preview.mjs` and travel-intelligence's
-`fares.mjs` use. `index.html`'s inline script imports from this module
-rather than duplicating the logic, so the tested code and the live code
-are the same code, not two copies that can drift apart.
+`src/logic.mjs` holds the pure logic behind several features: Coming
+Soon's date-based auto-promotion into Top Picks, the dismiss system's
+list-merge logic, and the badge-label helpers behind the Currently
+Watching status text. All are plain functions with no DOM/localStorage/
+fetch dependency, so they're directly unit tested, using the same "export
+the pure logic for testability" pattern vinyl-scout's `audio-preview.mjs`
+and travel-intelligence's `fares.mjs` use. `index.html`'s inline script
+imports from this module rather than duplicating the logic, so the tested
+code and the live code are the same code, not two copies that can drift
+apart.
 
-Run `npm test` (`node tests/logic.test.mjs`): 13 assertions, no network,
-no DOM. Everything else on this site (the dismiss Function, the static
-Top Picks/Coming Soon markup, the poster-art fallback) doesn't have
-automated coverage yet; that's a real gap, not an oversight, and would be
-the next thing to close.
+Run `npm test`: 15 logic assertions (`tests/logic.test.mjs`, no network,
+no DOM), plus three offline static checks added over time — content drift
+(`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
+`data/STREAMING_PROFILE.md`), a tap-target regression guard
+(`scripts/check-tap-targets.mjs`, added 2026-08-16, confirms the
+`.pick-dismiss`/`.pick-watching`/`.pick-watched` padding that fixed two
+real click-target bugs — 2026-07-30 and 2026-08-05 — is still present),
+and a pick-meta copy check (`scripts/check-pick-meta-length.mjs`, added
+2026-08-16, catches leftover internal-process commentary in Coming Soon
+copy, the exact class of thing Susan flagged by hand 2026-08-08).
+`npm run smoke` and `npm run check:live-drift` are separate, live-network
+checks against the real deployed site — see "GitHub Actions / CI" below
+for where those actually run.
+
+## GitHub Actions / CI (added 2026-08-16, extending the 2026-08-07/08-14 work)
+
+`.github/workflows/test.yml` runs four jobs:
+
+- **`test`** — on every push and pull request, plus a weekly cron.
+  `npm ci && npm test` (all four offline checks above). This is the only
+  job that runs on push/PR; the three below are schedule/
+  `workflow_dispatch`-only so they never race Netlify's deploy (see the
+  workflow file's own comments for why that matters — confirmed the hard
+  way on a sibling site, whose deploy record lagged a landed, CI-passed
+  push by 30+ minutes).
+- **`smoke`** — weekly + on-demand. Read-only checks against the real live
+  site (home page loads, internal docs stay blocked, both API Functions
+  reachable and validating input, and — added 2026-08-16 — every Currently
+  Watching row has real poster art wired in, not just the monogram
+  fallback). Opens/updates a tracking GitHub issue on failure.
+- **`status-drift`** — weekly + on-demand. Checks whether anything marked
+  "watching" live via `/api/status` is missing a matching static
+  `.watching-row` in `index.html` (the exact gap behind two real bugs,
+  CLAUDE.md's 2026-08-10 and 2026-08-11 entries). Report-only — a real fix
+  needs editorial judgment (poster art, season text) — opens/updates a
+  tracking issue on failure.
+- **`dismiss-drift`** — weekly + on-demand. Checks whether anything
+  dismissed live via `/api/dismiss` is missing from
+  `data/EXCLUDED_TITLES.md`. This one auto-fixes: it's a purely mechanical
+  diff-and-append, so the job runs `check-dismiss-drift.mjs --fix` and
+  opens a PR via GitHub's own bot identity (the workflow's default token,
+  not a Claude session) when it finds and fixes anything. Susan reviews
+  and merges.
+
+**On the standing "Claude never pushes, only Susan pushes from her own
+Terminal" rule:** unchanged, and still applies to every interactive Claude
+session and scheduled Cowork task (the weekly artwork-sourcing sweep, for
+example, works on a dedicated branch and hands Susan a one-click
+PR-compare link instead of pushing to `main`). The `dismiss-drift` job
+above is a different trust boundary: it's this repo's own CI robot, acting
+through GitHub's automatically-scoped token within a single Actions run —
+the same pattern tools like Dependabot use — not a Claude session with
+push access.
 
 ## 2026-07-21 update: persistent data now lives in this repo
 
@@ -108,9 +156,9 @@ The one live piece is dismissals. Clicking a title's "×" calls
 `/api/dismiss` (`netlify/functions/dismiss.mjs`, backed by Netlify Blobs)
 so the dismissal syncs across every device immediately, in addition to
 hiding the row locally via `localStorage`. That's the only `fetch()` on
-the page. Making a dismissal stick through the *next* weekly rebuild
-still requires updating `data/EXCLUDED_TITLES.md`; see `CLAUDE.md` for
-that flow.
+the page. Making a dismissal stick through the *next* weekly rebuild used
+to require updating `data/EXCLUDED_TITLES.md` by hand; as of 2026-08-16
+the `dismiss-drift` CI job (see above) does this automatically via a PR.
 
 ## Before treating this as authoritative
 
