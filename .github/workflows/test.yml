@@ -229,6 +229,62 @@ jobs:
             reappearing in the next Coming Soon/Top Picks rebuild.
           labels: automated-pr
 
+  # 2026-08-17: the tick-button counterpart to dismiss-drift above. Susan
+  # confirmed the on-site tick means "seen it, take it away", not "I watched
+  # this on this date". Clicking it writes `watched` to /api/status and
+  # nothing else, so the row stays in index.html and the title stays absent
+  # from data/STREAMING_LOG.md, leaving the next rebuild free to recommend it
+  # straight back. That had to be cleaned up by hand twice on 2026-08-17
+  # alone, the second time within hours of the first.
+  #
+  # Mechanical enough to auto-fix, unlike status-drift: the entry text is
+  # fixed, the date comes from the live record, and the rows to remove are
+  # identified by exact title. scripts/check-watched-drift.mjs deliberately
+  # does NOT touch Currently Watching or In Theaters rows, where a tick may
+  # mean "finished this season" and the replacement is an editorial call.
+  #
+  # It removes the Top Picks / Coming Soon rows in the same commit as the log
+  # entry on purpose. The log entry alone would make check-picks-against-log
+  # fail on main and block every later push until a human deleted the row by
+  # hand, which is worse than the bug it fixes.
+  watched-drift:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Record titles ticked live, and drop their Top Picks / Coming Soon rows
+        run: node scripts/check-watched-drift.mjs --fix
+
+      - name: Open a PR if anything was recorded
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "data/STREAMING_LOG.md: record titles cleared with the tick button, and drop their rows"
+          branch: auto/watched-drift-sync
+          delete-branch: true
+          title: "Auto: record titles cleared on the live site"
+          body: >
+            Opened automatically by the weekly `watched-drift` job in
+            `.github/workflows/test.yml`.
+            `scripts/check-watched-drift.mjs --fix` found one or more titles
+            Susan cleared on the live site with the tick button that were not
+            yet in `data/STREAMING_LOG.md`, recorded them, and removed their
+            Top Picks / Coming Soon rows from `index.html`.
+            Check two things before merging. First, that each title really is
+            one she has seen rather than a mis-tap, since the log is what stops
+            it being recommended again. Second, that the dates read as CLEAR
+            dates: a tick carries no watch date, the entries say
+            "watch date unknown", and nothing downstream should treat these as
+            recent viewing. Currently Watching and In Theaters rows are left
+            alone by design.
+          labels: automated-pr
+
   # 2026-08-17: closes the last item on roadmap.html Phase 06, "automated
   # backups are still ahead," and closes it against the hole that is actually
   # still open rather than the one the phrase implies.

@@ -43,45 +43,17 @@
 
 import { readFileSync } from "node:fs";
 
+import { baseTitle, indexByBase, findCovered, titlesFromMarkdownList } from "./lib/titles.mjs";
+
 const html = readFileSync("index.html", "utf8");
 const log = readFileSync("data/STREAMING_LOG.md", "utf8");
 
-const SEASON_RE = /[,(]?\s*(?:season|series)\s+(\d+)\s*\+?\)?|\bs(\d+)\b|\(seasons?\s+([\d–—-]+)\+?\)/i;
-
-function seasonOf(title) {
-  const m = SEASON_RE.exec(title);
-  if (!m) return null;
-  const raw = m[1] || m[2] || m[3] || "";
-  const first = /(\d+)/.exec(raw);
-  return first ? Number(first[1]) : null;
-}
-
-function base(title) {
-  return title
-    .replace(/&amp;/g, "&")
-    .replace(/&#39;|&apos;/g, "'")
-    .replace(SEASON_RE, " ")
-    .toLowerCase()
-    .replace(/[‘’']/g, "")
-    .replace(/[^a-z0-9]+/g, " ")
-    .replace(/^(the|a|an)\s+/, "")
-    .trim();
-}
-
-// Logged watch history: lines like "- **Title** · Service · 2 plays · dates"
-const logged = new Map();
-for (const line of log.split("\n")) {
-  const m = /^\s*-\s*\*\*(.+?)\*\*/.exec(line);
-  if (!m) continue;
-  const title = m[1];
-  const b = base(title);
-  if (!b) continue;
-  const entry = logged.get(b) || { titles: [], seasons: new Set() };
-  entry.titles.push(title.trim());
-  const s = seasonOf(title);
-  if (s !== null) entry.seasons.add(s);
-  logged.set(b, entry);
-}
+// 2026-08-17: the title matching moved to scripts/lib/titles.mjs so this
+// check and check-watched-drift.mjs cannot drift apart about what counts as
+// the same title. The move also fixed a real defect in the copy that lived
+// here: a logged "(Seasons 1-3)" only ever registered season 1, so a pick for
+// season 2 read as a new season and passed. See that file's header.
+const logged = indexByBase(titlesFromMarkdownList(log));
 
 const ROW_RE = /<div class="pick-row"[^>]*data-title="([^"]+)"/g;
 
@@ -101,17 +73,18 @@ for (const match of html.matchAll(ROW_RE)) {
     continue;
   }
 
-  const hit = logged.get(base(title));
-  if (!hit) continue;
-
-  const pickSeason = seasonOf(title);
-  if (pickSeason === null) {
-    problems.push({ title, why: `already in the watch log as ${hit.titles.map((t) => `"${t}"`).join(", ")}` });
-  } else if (hit.seasons.has(pickSeason)) {
-    problems.push({ title, why: `season ${pickSeason} is already in the watch log as ${hit.titles.map((t) => `"${t}"`).join(", ")}` });
-  } else {
-    allowedSeasons.push(title);
+  const covered = findCovered(title, logged);
+  if (!covered) {
+    if (logged.has(baseTitle(title))) allowedSeasons.push(title);
+    continue;
   }
+  const as = covered.titles.map((t) => `"${t}"`).join(", ");
+  problems.push({
+    title,
+    why: covered.season === null
+      ? `already in the watch log as ${as}`
+      : `season ${covered.season} is already in the watch log as ${as}`,
+  });
 }
 
 if (!checked) {

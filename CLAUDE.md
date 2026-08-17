@@ -1360,3 +1360,60 @@ the watch log.
 
 **Delivered:** `data/STREAMING_LOG.md`, `data/TASTE_PROFILE.md`,
 `data/INTEGRITY_MANIFEST.json`, this file.
+## 2026-08-17, shipped: the tick button now reaches a permanent record on its own
+
+The proposal from the previous entry, built. A tick used to write `watched` to
+`/api/status` and stop there, so the row stayed in `index.html`, the title
+stayed absent from `data/STREAMING_LOG.md`, and the next rebuild was free to
+recommend it straight back. That was cleaned up by hand twice on 2026-08-17,
+the second time within hours of the first.
+
+**`scripts/check-watched-drift.mjs`**, the tick counterpart to
+`check-dismiss-drift.mjs`. Report-only by default, `--fix` in CI. It records
+each newly-ticked title in the log and removes its Top Picks and Coming Soon
+rows in the same change.
+
+Three decisions worth keeping:
+
+- **The date written is the CLEAR date, and the entry says "watch date
+  unknown".** A tick carries no watch date. Recording its click date as a
+  viewing date would inflate the apparent recency of exactly the titles Susan
+  rejects, every week, and several weights in `TASTE_PROFILE.md` lean on
+  recency.
+- **It removes the rows in the same commit as the log entry.** The log entry
+  alone would make `check-picks-against-log.mjs` fail on `main` and block every
+  later push until someone deleted the row by hand, which is worse than the bug.
+- **It does not touch Currently Watching or In Theaters rows.** A tick there
+  plausibly means "finished this season", and what replaces the row is an
+  editorial call, the same reasoning that keeps `status-drift` report-only.
+
+**A real defect fixed on the way.** The title matching moved into
+`scripts/lib/titles.mjs`, shared with `check-picks-against-log.mjs` so the two
+cannot disagree about whether a ticked title and a logged one are the same
+thing. The copy that previously lived inline had a genuine bug: a logged
+"(Seasons 1-3)" only ever registered season 1, so a pick or tick for season 2
+read as a new season and passed. The shared version expands ranges. (Note the
+contrast with `netlify/functions/*.mjs`, where duplication is deliberate
+because each Function is bundled separately; these scripts share one process,
+so the same reasoning points the other way.)
+
+**Tested, 14 assertion groups in `tests/watched-drift.test.mjs`**, against a
+synthetic `/api/status` and throwaway files: a later season counts as missing
+while an earlier season inside a logged range does not, `watching` flags are
+ignored, the entry carries the clear date and the unknown-watch-date wording,
+Top Picks and Coming Soon rows go while Currently Watching and In Theaters
+stay, the marker comment goes with its row, div balance survives, a second run
+is a no-op, a score-only meta records "service not recorded" rather than
+inventing a service, and a 500, a malformed body, an unreachable host or an
+unparseable log all abort rather than reading as "nothing to sync".
+
+**Also dry-run against real data**, not just fixtures: replayed the committed
+`backups/live-records/latest.json` through a local server and confirmed the
+script reports all six ticked titles as already recorded. The workflow YAML
+passed `@action-validator/cli` (run in the cloud sandbox, since the device VM
+has no network), per the standing rule from the Vinyl Scout schema-valid-YAML
+incident.
+
+**Delivered:** `scripts/check-watched-drift.mjs`, `scripts/lib/titles.mjs`,
+`tests/watched-drift.test.mjs` (all new), `scripts/check-picks-against-log.mjs`,
+`package.json`, `.github/workflows/test.yml`, this file.
