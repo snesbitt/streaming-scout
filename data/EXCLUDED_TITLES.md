@@ -51,3 +51,17 @@ entries as of this sync are captured below.
 
 - **Apex** — Currently Watching — dismissed on-site 2026-08-10 (auto-synced by CI)
 - **Say Nothing** — Currently Watching — dismissed on-site 2026-08-12 (auto-synced by CI)
+## 2026-08-17 additions
+
+Six titles dismissed on-site the same day, added here directly rather than
+waiting for the weekly sync, since Top Picks was rebuilt immediately afterwards
+and a rebuild reads this file. Five of the six are the cozy and period British
+cluster; see TASTE_PROFILE.md's negative-signal section for what that pattern
+argues for beyond these individual titles.
+
+- **1923** - Top Picks - dismissed on-site 2026-08-17
+- **Miss Austen** - Top Picks - dismissed on-site 2026-08-17
+- **Clarkson's Farm** - Top Picks - dismissed on-site 2026-08-17
+- **Colin From Accounts, season 3** - Coming Soon - dismissed on-site 2026-08-17
+- **The Marlow Murder Club, season 3** - Coming Soon - dismissed on-site 2026-08-17
+- **Agatha Christie's Tommy & Tuppence** - Coming Soon - dismissed on-site 2026-08-17
