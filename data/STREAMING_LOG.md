@@ -1062,3 +1062,14 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 - **Mon Oncle** · Netflix · 1 play · 2010-07-08
 - **Spartacus: Blood and Sand** · Netflix · 1 play · 2010-05-06
 - **The Pink Panther Classic Cartoon...** · Netflix · 1 play · 2010-02-17
+
+
+## Cleared from the page via the tick button (auto-synced)
+
+Titles Susan cleared from the live page with the tick button, carried here by
+the weekly watched-drift job so the next rebuild will not offer them again.
+The date is when she cleared it, NOT when she watched it: a tick carries no
+watch date. See "What the tick button means" above before using these dates
+for anything.
+
+- **Sr.** · Netflix (cleared via the on-site tick button, 2026-08-17, auto-synced by CI) · already seen, watch date unknown
