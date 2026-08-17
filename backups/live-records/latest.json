@@ -1,0 +1,180 @@
+{
+  "fetchedAt": "2026-08-17T01:37:56.751Z",
+  "source": "https://streamingscout.org",
+  "statuses": [
+    {
+      "title": "Scarpetta",
+      "status": "watched",
+      "meta": "93% · Prime",
+      "section": "Top Picks",
+      "updatedAt": "2026-07-31T02:11:48.031Z"
+    },
+    {
+      "title": "Ted Lasso, season 4",
+      "status": "watching",
+      "meta": "New",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-10T00:17:50.351Z"
+    },
+    {
+      "title": "Special Ops: Lioness, season 3",
+      "status": "watching",
+      "meta": "Season 3 · in progress",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-10T00:33:15.738Z"
+    },
+    {
+      "title": "The Hardacres, season 2",
+      "status": "watching",
+      "meta": "Season 2 · in progress",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-10T00:33:16.358Z"
+    },
+    {
+      "title": "The Westies",
+      "status": "watching",
+      "meta": "in progress",
+      "section": "Currently Watching",
+      "updatedAt": "2026-08-17T00:14:38.548Z"
+    },
+    {
+      "title": "Reacher, season 4",
+      "status": "watching",
+      "meta": "Season 4 · weekly through Sep 16 · in progress",
+      "section": "Currently Watching",
+      "updatedAt": "2026-08-17T00:15:21.254Z"
+    },
+    {
+      "title": "Becoming Led Zeppelin",
+      "status": "watched",
+      "meta": "87% · Netflix",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T01:13:52.361Z"
+    },
+    {
+      "title": "Bookish",
+      "status": "watched",
+      "meta": "88% · PBS Masterpiece",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T01:13:55.613Z"
+    },
+    {
+      "title": "A Working Man",
+      "status": "watched",
+      "meta": "89% · MGM+",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T01:13:57.815Z"
+    },
+    {
+      "title": "The Bear",
+      "status": "watched",
+      "meta": "85% · Hulu",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T01:14:24.915Z"
+    },
+    {
+      "title": "A Very English Scandal",
+      "status": "watched",
+      "meta": "80% · Prime",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T01:15:16.651Z"
+    }
+  ],
+  "dismissed": [
+    {
+      "title": "Wake Up Dead Man: A Knives Out Mystery",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-21T16:07:45.516Z"
+    },
+    {
+      "title": "Gone",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-26T01:38:09.154Z"
+    },
+    {
+      "title": "Hamnet",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-26T02:33:23.951Z"
+    },
+    {
+      "title": "Return to Paradise, season 2",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-28T12:52:48.325Z"
+    },
+    {
+      "title": "Dark Winds",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-28T12:53:17.818Z"
+    },
+    {
+      "title": "Coastal Unit",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-07-28T12:53:42.332Z"
+    },
+    {
+      "title": "The Choral",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-29T15:19:22.745Z"
+    },
+    {
+      "title": "Sunset Grove",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-29T15:19:52.941Z"
+    },
+    {
+      "title": "Vanity Fair (2018)",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-07-29T15:20:32.230Z"
+    },
+    {
+      "title": "The Noble Detective",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-29T22:31:14.221Z"
+    },
+    {
+      "title": "Prey",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-07-29T22:31:40.491Z"
+    },
+    {
+      "title": "Grantchester, season 11",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-30T17:53:36.365Z"
+    },
+    {
+      "title": "Kleo",
+      "section": "Top Picks",
+      "dismissedAt": "2026-07-31T02:12:02.040Z"
+    },
+    {
+      "title": "Tucci in Italy",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-08-05T17:15:41.173Z"
+    },
+    {
+      "title": "Apex",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-08-10T00:16:51.224Z"
+    },
+    {
+      "title": "Say Nothing",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-08-12T19:34:15.323Z"
+    },
+    {
+      "title": "1923",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T01:14:00.374Z"
+    },
+    {
+      "title": "Miss Austen",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T01:15:12.876Z"
+    },
+    {
+      "title": "Clarkson's Farm",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T01:15:27.374Z"
+    }
+  ]
+}
