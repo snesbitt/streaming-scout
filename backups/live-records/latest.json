@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-17T13:42:45.600Z",
+  "fetchedAt": "2026-08-17T22:32:24.856Z",
   "source": "https://streamingscout.org",
   "statuses": [
     {
@@ -78,6 +78,55 @@
       "meta": "80% · Prime",
       "section": "Top Picks",
       "updatedAt": "2026-08-17T01:15:16.651Z"
+    },
+    {
+      "title": "Abstract: The Art of Design",
+      "status": "watched",
+      "meta": "Netflix",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T16:04:45.098Z"
+    },
+    {
+      "title": "The Greatest Night in Pop",
+      "status": "watched",
+      "meta": "Netflix",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T16:05:06.728Z"
+    },
+    {
+      "title": "Tehran",
+      "status": "watched",
+      "meta": "84% · Apple TV+",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T16:05:12.395Z"
+    },
+    {
+      "title": "Mr. Scorsese",
+      "status": "watched",
+      "meta": "Apple TV+",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T20:04:37.093Z"
+    },
+    {
+      "title": "The Andy Warhol Diaries",
+      "status": "watched",
+      "meta": "Netflix",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T20:04:45.305Z"
+    },
+    {
+      "title": "Louis Armstrong's Black & Blues",
+      "status": "watched",
+      "meta": "Apple TV+",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T20:04:55.260Z"
+    },
+    {
+      "title": "Sr.",
+      "status": "watched",
+      "meta": "Netflix",
+      "section": "Top Picks",
+      "updatedAt": "2026-08-17T22:23:10.109Z"
     }
   ],
   "dismissed": [
@@ -190,6 +239,41 @@
       "title": "Agatha Christie's Tommy & Tuppence",
       "section": "Coming Soon",
       "dismissedAt": "2026-08-17T01:56:36.289Z"
+    },
+    {
+      "title": "Life on Our Planet",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T16:04:54.775Z"
+    },
+    {
+      "title": "Springsteen on Broadway",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T16:05:02.794Z"
+    },
+    {
+      "title": "Cooper and Fry, season 1",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-08-17T16:07:04.420Z"
+    },
+    {
+      "title": "Turning Point: The Bomb and the Cold War",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T16:12:45.127Z"
+    },
+    {
+      "title": "The Velvet Underground",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T22:22:48.425Z"
+    },
+    {
+      "title": "Number One on the Call Sheet",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T22:22:55.237Z"
+    },
+    {
+      "title": "Still: A Michael J. Fox Movie",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-17T22:23:02.744Z"
     }
   ]
 }
