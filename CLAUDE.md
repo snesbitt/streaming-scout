@@ -1156,3 +1156,44 @@ Masterpiece rows keep their existing working search links. Worth fixing with a
 real show-page URL for those two next time either service is open.
 
 **Delivered:** `index.html`, this file.
+## 2026-08-17: Great British Bake Off, Collection 14 added to Coming Soon
+
+Susan's direct add, with her own source (whats-on-netflix.com). Facts checked
+before writing rather than taken on the note alone, per the standing rule.
+
+Confirmed: Nigella Lawson replaces Prue Leith as judge (Variety, CNN, Today,
+all January 2026). Paul Hollywood continues. Netflix US follows the Channel 4
+UK premiere by days, on Fridays, per whats-on-netflix's own account of the
+pattern. The September 4 date that outlet gives is its own projection from
+prior years, not an announcement, so the row is marked `tbd` with "Early Sep
+2026" rather than a confirmed date, which matches what Susan asked for anyway.
+
+Two small things her note got slightly off, worth recording rather than
+silently correcting: Netflix US brands the show **The Great British Baking
+Show**, not Bake Off, and "Collection" numbering is Netflix's own, running
+behind Channel 4's series numbers (this is UK series 17). The row keeps Susan's
+"Bake Off" wording since that is what she calls it and what the poster says,
+and the Netflix link searches the Baking Show title so it actually resolves.
+
+No score badge, since the season has not aired and inventing one is not on.
+Several existing rows already ship without a score, so this needed no new
+convention.
+
+**Poster, and its one honest flaw.** No Collection 14 art exists yet. TMDB's
+show-level poster is real and loads (500x735) and was looked at, not just
+fetched, but it shows the Prue Leith and Matt Lucas lineup, so it pictures the
+judge this row is about replacing. The alternative, TMDB's series 16 season
+poster, is a clean wordmark with no cast at all but reads "SEASON SIXTEEN" in
+large type, which is a worse thing to have on a row about a different season.
+Chose the cast photo as the lesser problem and flagged it to Susan rather than
+quietly picking one. Worth swapping when real Collection 14 key art appears.
+
+**Noticed while working here, not fixed:** Coming Soon has the same dead-row
+problem Top Picks just had. The Marlow Murder Club season 3, Agatha Christie's
+Tommy & Tuppence and Cooper and Fry season 1 were all dismissed on 2026-08-17
+and are all still rows in this file. `check-picks-against-log.mjs` only covers
+`pick-row`, and the dismiss-drift job only syncs `EXCLUDED_TITLES.md`; nothing
+removes a dismissed row from the markup. Left for Susan's call rather than
+deleted in passing.
+
+**Delivered:** `index.html`, this file.
