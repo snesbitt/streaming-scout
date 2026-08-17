@@ -77,7 +77,13 @@ code and the live code are the same code, not two copies that can drift
 apart.
 
 Run `npm test`: 15 logic assertions (`tests/logic.test.mjs`, no network,
-no DOM), plus three offline static checks added over time — content drift
+no DOM), 27 concurrency assertion groups covering both Netlify Functions
+(`tests/blobs-concurrency.test.mjs`, added 2026-08-17, runs the real
+Function files against a fake `@netlify/blobs` that reproduces the roughly
+5-second read-consistency lag that used to lose concurrent writes; its
+first test asserts the OLD storage logic still fails, so a green suite
+cannot be an artefact of a too-forgiving fake), plus three offline static
+checks added over time — content drift
 (`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
 `data/STREAMING_PROFILE.md`), a tap-target regression guard
 (`scripts/check-tap-targets.mjs`, added 2026-08-16, confirms the
@@ -95,7 +101,7 @@ for where those actually run.
 `.github/workflows/test.yml` runs four jobs:
 
 - **`test`** — on every push and pull request, plus a weekly cron.
-  `npm ci && npm test` (all four offline checks above). This is the only
+  `npm ci && npm test` (all five offline checks above). This is the only
   job that runs on push/PR; the three below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
   workflow file's own comments for why that matters — confirmed the hard
