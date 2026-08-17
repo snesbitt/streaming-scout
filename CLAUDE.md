@@ -1114,3 +1114,45 @@ remembering before reading any single automated PR as the complete picture.
 `data/STREAMING_LOG.md`, `data/TASTE_PROFILE.md`, `data/INTEGRITY_MANIFEST.json`,
 this file. Backfilling the list back to twelve is the next step and is
 rebuild-sized, not a patch.
+## 2026-08-17, and finally: Top Picks backfilled to twelve against the corrected profile
+
+Eight replacements for the eight removed above. Every one checked against
+`data/STREAMING_LOG.md` (none previously watched), against the live dismiss
+store (none previously rejected), and against JustWatch for current US
+availability on a tracked service, before any markup was written.
+
+- **Bodyguard** (Netflix), political thriller. Rests on the Bourne films she
+  reported watching on 2026-08-17, not on the British-crime vein.
+- **Line of Duty** (BritBox), police corruption. Criminal Record's subject at
+  length. Deliberately the dark end of vein 1, not the village end the
+  dismissal record has been rejecting for weeks.
+- **Ripley** (Netflix), literary crime.
+- **Presumed Innocent** (Apple TV+), legal thriller. The Morning Show register.
+- **SAS Rogue Heroes** (MGM+), war action. Same service and shelf as A Working
+  Man, which she marked watched today.
+- **Mr. Scorsese** (Apple TV+), filmmaking documentary.
+- **The Andy Warhol Diaries** (Netflix), art and design documentary.
+- **Louis Armstrong's Black & Blues** (Apple TV+), music documentary.
+
+The last three are the corrected long-tail read in practice: maker-led craft
+documentary, which she watches, rather than natural history or archival
+political history, which she has now dismissed. Replacing Abstract with two
+single-artist profiles and a jazz documentary is a deliberate test of that
+reading, and the next dismissal round will say whether it holds.
+
+Poster art: all eight sourced from TMDB, confirmed loading at 500x750 (the
+Warhol poster is 500x735), and then rendered in a grid and looked at, per the
+standing rule that a 200 response is not proof the image is the right title.
+
+Result: twelve picks across twelve distinct clusters, the widest spread the
+list has ever had, and `check-pick-diversity.mjs` passes on real variety rather
+than on relabelling.
+
+**One weaker point, stated rather than hidden.** BritBox and MGM+ have no
+verified deep-link search URL from here: `britbox.com/us/search?q=` loads but
+returns nothing for the query (checked live, signed in), so those two rows link
+to the service home page rather than a search result. Netflix, Apple TV+ and
+Masterpiece rows keep their existing working search links. Worth fixing with a
+real show-page URL for those two next time either service is open.
+
+**Delivered:** `index.html`, this file.
