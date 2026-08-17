@@ -59,10 +59,31 @@ async function main() {
   const { dismissed } = await res.json();
 
   const excludedRaw = readFileSync("data/EXCLUDED_TITLES.md", "utf8");
-  const excludedLower = excludedRaw.toLowerCase();
+
+  // Match against the file's actual ENTRY LINES, not its whole text.
+  //
+  // This used to be `excludedRaw.toLowerCase().includes(title)`, which reads
+  // the explanatory prose as if it were the list. EXCLUDED_TITLES.md opens with
+  // a data-loss notice that names real titles in passing, so "Prey", "Kleo" and
+  // "The Choral" all appear in prose as well as in their own entries. Any one of
+  // them could have been genuinely missing from the list while this check
+  // reported everything accounted for. That is the dangerous direction for a
+  // drift check: a false negative means a dismissed title stays vulnerable to
+  // reappearing in the next rebuild, silently, which is the exact gap this
+  // script exists to close.
+  //
+  // Verified 2026-08-17 against the real file: three of sixteen titles matched
+  // on prose alone.
+  const excludedTitles = new Set(
+    excludedRaw
+      .split("\n")
+      .map((line) => /^\s*-\s*\*\*(.+?)\*\*/.exec(line))
+      .filter(Boolean)
+      .map((m) => normalize(m[1])),
+  );
 
   const missing = (dismissed || []).filter(
-    (entry) => entry && entry.title && !excludedLower.includes(normalize(entry.title)),
+    (entry) => entry && entry.title && !excludedTitles.has(normalize(entry.title)),
   );
 
   if (!missing.length) {

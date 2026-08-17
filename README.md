@@ -86,7 +86,11 @@ cannot be an artefact of a too-forgiving fake), 20 backup-guard assertion
 groups (`tests/backup-guards.test.mjs`, added 2026-08-17, drives
 `scripts/check-data-integrity.mjs` and `scripts/backup-live-records.mjs`
 end to end against a throwaway copy of `data/` and a local synthetic
-server, proving each one refuses what it claims to refuse), plus six
+server, proving each one refuses what it claims to refuse), 6 dismiss-drift
+assertion groups (`tests/dismiss-drift.test.mjs`, added 2026-08-17 after the
+check was found matching against the file's prose rather than its entry
+lines, which meant a genuinely missing title could be reported as
+accounted for), plus six
 offline static checks added over time — content drift
 (`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
 `data/STREAMING_PROFILE.md`), a tap-target regression guard
@@ -121,7 +125,7 @@ for where those actually run.
 `.github/workflows/test.yml` runs five jobs:
 
 - **`test`** — on every push and pull request, plus a weekly cron.
-  `npm ci && npm test` (all nine offline steps above). This is the only
+  `npm ci && npm test` (all ten offline steps above). This is the only
   job that runs on push/PR; the four below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
   workflow file's own comments for why that matters — confirmed the hard
