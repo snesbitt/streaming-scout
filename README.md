@@ -86,14 +86,19 @@ cannot be an artefact of a too-forgiving fake), 20 backup-guard assertion
 groups (`tests/backup-guards.test.mjs`, added 2026-08-17, drives
 `scripts/check-data-integrity.mjs` and `scripts/backup-live-records.mjs`
 end to end against a throwaway copy of `data/` and a local synthetic
-server, proving each one refuses what it claims to refuse), plus five
+server, proving each one refuses what it claims to refuse), plus six
 offline static checks added over time — content drift
 (`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
 `data/STREAMING_PROFILE.md`), a tap-target regression guard
 (`scripts/check-tap-targets.mjs`, added 2026-08-16, confirms the
 `.pick-dismiss`/`.pick-watching`/`.pick-watched` padding that fixed two
 real click-target bugs — 2026-07-30 and 2026-08-05 — is still present),
-a poster coverage check (`scripts/check-poster-coverage.mjs`, added
+a pick diversity check (`scripts/check-pick-diversity.mjs`, added
+2026-08-17, fails the build when Top Picks collapses into one or two
+genres -- Susan asked for diversified recommendations on 2026-07-25 and
+again on 2026-08-17, and nothing was enforcing it; deliberately loose,
+no cluster over half the list and at least four clusters once there are
+five or more picks), a poster coverage check (`scripts/check-poster-coverage.mjs`, added
 2026-08-17, fails the build if any title row in `index.html` would
 render as a bare monogram instead of real art -- artwork gaps had been
 found by Susan on the live site four separate times and nothing in the
@@ -116,7 +121,7 @@ for where those actually run.
 `.github/workflows/test.yml` runs five jobs:
 
 - **`test`** — on every push and pull request, plus a weekly cron.
-  `npm ci && npm test` (all eight offline steps above). This is the only
+  `npm ci && npm test` (all nine offline steps above). This is the only
   job that runs on push/PR; the four below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
   workflow file's own comments for why that matters — confirmed the hard

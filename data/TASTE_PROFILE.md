@@ -1,7 +1,7 @@
 # Taste Profile
 
 **Derived from:** STREAMING_LOG.md (auto-generated — do not hand-edit)
-**Last updated:** 2026-08-16 (Prime sync of Aug 7 to Aug 15 added nine titles; two new veins promoted, five actors added, no existing rank lowered. Prior update 2026-08-06: Gillian Anderson added per Susan's direct request.)
+**Last updated:** 2026-08-17 (six stated interests recorded from Susan directly, held separately from the log-derived veins because none is anchored to a logged title yet; science fiction added to Patterns to Avoid at her request; five already-seen titles folded into the log the same day. Prior update 2026-08-16, Prime sync of Aug 7 to Aug 15)
 
 ## 2026-08-16 sync: what the nine new titles changed
 
@@ -51,6 +51,40 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
   comedy in the OMITB register. This also confirms the spy vein and promotes
   cozy-mystery comedy to a real, completed-run interest — and adds Gary
   Oldman and the Martin/Short/Gomez trio as affinity signals.
+
+- **2026-08-17, Susan, directly:** her tastes are "much broader" than the page
+  reflects, said after a Coming Soon list of 28 titles came out almost entirely
+  crime and spy. Note this is the SECOND time she has said this: the
+  2026-07-25 diversification instruction above says the same thing and was not
+  being honoured. Treat a recommendation list that collapses into one or two
+  veins as a defect, not a coincidence.
+- **2026-08-17, Susan, directly:** six interests the streaming history cannot
+  see, given in answer to a direct question about what a Netflix and Prime log
+  would never reveal. **These are her word, not log-derived** (same status as
+  the Gillian Anderson entry below, and the same caution applies): art, design
+  and architecture; history and politics; nature and travel as distinct from
+  the existing food-travel vein; classic and older film; foreign-language drama
+  beyond the Nordic and French crime already logged; live performance and arts,
+  meaning theatre, opera, ballet, concert films. She also named music
+  documentary again unprompted, which is already vein 4 at 0.8 and finished
+  runs going back a decade, so its absence from recent recommendations is a
+  selection failure rather than a missing signal.
+- **2026-08-17, Susan, directly:** asked NOT to be interviewed for example
+  titles, preferring these recorded as stated and tested against real
+  recommendations. So they carry no anchor titles yet on purpose. Promote or
+  drop each one on evidence: a pick she takes up is the anchor, a pick she
+  dismisses is the counter-evidence. Do not quietly leave them unweighted
+  forever because they lack a log entry.
+- **2026-08-17, Susan, directly:** "when i delete them from the recs you offer
+  up take that to heart and remember as part of the broader logic." A dismissal
+  is negative taste evidence, not just a request to hide one row. Until now it
+  only ever produced a blocklist entry in EXCLUDED_TITLES.md, which stops that
+  exact title reappearing and teaches the profile nothing. Every rebuild must
+  now read the dismissal record for PATTERNS and act on them, per the section
+  below.
+- **2026-08-17, Susan, directly:** science fiction goes on the avoid list. It
+  was neither a vein nor an exclusion before, which made it a silent maybe.
+  Now explicit, recorded under Patterns to Avoid.
 
 ## Signature Genres
 
@@ -197,6 +231,89 @@ Weights reflect repeated, completed viewing across multiple titles in the log.
   Maestro (Cooper), Being the Ricardos (Kidman) — draws to actor-led award
   films
 
+## Stated Interests, not yet log-derived (added 2026-08-17)
+
+Six areas Susan named directly on 2026-08-17. They sit apart from the numbered
+veins above on purpose: every one of those is anchored to titles in
+STREAMING_LOG.md, and none of these are yet. They are recorded at a deliberately
+modest 0.5, which is enough to guarantee a place in a diversified Top Picks
+list without outranking sixteen years of demonstrated behaviour.
+
+The reason they are invisible to the log is structural, not accidental: the log
+is built from Netflix and Prime Video watch history, and most of this is watched
+elsewhere or not streamed at all. Absence of evidence here is not evidence of
+absence.
+
+- **Art, design and architecture** (0.5). Artist profiles, design and
+  architecture documentary, museum and exhibition film. Named as a long-tail
+  interest in her own 2026-07-25 instruction and never given a vein until now,
+  which is a straightforward miss.
+- **History and politics** (0.5). Historical and political documentary, war
+  history, biography. Sits naturally beside the prestige-drama and le Carre
+  ends of what she already watches.
+- **Nature and travel** (0.5). Landscape, wildlife, expedition, place-led
+  travel. Distinct from vein 6: the appeal is the place, not the meal.
+- **Classic and older film** (0.5). Pre-1990 cinema, restorations, film
+  history.
+- **Foreign-language drama** (0.5). Beyond the Nordic and French crime already
+  in vein 1, and beyond crime entirely: any genre, any language.
+- **Live performance and arts** (0.5). Theatre, opera, ballet, concert film,
+  arts documentary.
+
+**How to test these rather than assume them.** Each week's Top Picks should
+carry at least one title from this section. Take-up promotes; repeated dismissal
+demotes and eventually removes. Record the outcome here with a date either way,
+so that in a month this section is evidence rather than a list of good
+intentions.
+
+## Negative signal from dismissals (added 2026-08-17)
+
+Read this before every rebuild. Susan asked on 2026-08-17 that dismissals feed
+the recommendation logic rather than only the blocklist, and the record already
+says something loud.
+
+**How to read the record.** `GET /api/dismiss` returns a `section` per entry,
+which is what distinguishes meaning. A dismissal from **Top Picks or Coming
+Soon** means not interested and is real negative signal. A dismissal from
+**Currently Watching** means finished and carries no negative weight at all
+(Tucci in Italy, Apex and Say Nothing are all in this category and must not be
+read as rejections).
+
+**One honest caveat before drawing conclusions.** A Top Picks dismissal can also
+mean "I am already watching this, stop offering it." Grantchester season 11 was
+dismissed from Top Picks on 2026-07-30 and she is watching it now. So treat a
+single dismissal as weak evidence and a repeated pattern across many titles as
+strong. Do not demote a vein on one data point.
+
+**The pattern in the current record, 19 not-interested dismissals.** Roughly
+ten of them are the same cluster: the cozy and period British end of vein 1.
+Return to Paradise S2, The Noble Detective, The Choral, Sunset Grove, Coastal
+Unit, The Marlow Murder Club S3, Agatha Christie's Tommy & Tuppence, Miss
+Austen, Vanity Fair (2018) and Hamnet. Six of those were dismissed on
+2026-08-17 alone, in the same sitting as her telling the project her tastes are
+much broader than the page shows.
+
+**This contradicts the ranking, and the ranking should move.** Vein 1 sits at
+1.0 on sixteen years of history, which is real, but the history is not the same
+claim as current appetite, and the cozy/village/Christie sub-branch is being
+rejected consistently right now. Weight the sub-branch down rather than the
+whole vein: Broadchurch, Happy Valley and Dept. Q are a different proposition
+from Marlow Murder Club, and nothing in the record suggests she has gone off
+the darker end.
+
+**Two veins added on 2026-08-16 were contradicted within a day.** Neo-Western
+was promoted from Dutton Ranch S1 and then 1923 was dismissed on 2026-08-17.
+Country lifestyle rests on Gardeners' World and Clarkson's Farm was dismissed
+the same day. Both were flagged at the time as resting on a single title. That
+caution was correct, and the honest move is to hold them at their modest weight
+or drop them, not to keep building on them.
+
+**What to do with this each rebuild.** Fetch the dismissal record, split it by
+section, look for a genre or sub-genre appearing three or more times among the
+not-interested entries, and demote that cluster rather than only excluding the
+individual titles. Record what was demoted and on what evidence, with a date, so
+the next rebuild can tell a real trend from a bad week.
+
 ## Patterns to Avoid
 
 - **Teen/CW supernatural** — the 2020-03-06 one-day sampling spree (Vampire
@@ -206,6 +323,11 @@ Weights reflect repeated, completed viewing across multiple titles in the log.
   Ultimatum episode, never returned). Exceptions that ARE liked: craft/food
   competition (GBBO, Top Chef, Next in Fashion, Making the Cut) and Drag Race.
 - **Horror** — essentially absent (Suspiria once). Don't recommend.
+- **Science fiction**. Excluded at Susan's direct request, 2026-08-17. It was
+  previously neither a vein nor an exclusion, so it sat as a silent maybe that
+  could have leaked into any rebuild. Now explicit. Note this is a genre
+  exclusion, not a hard filter on anything speculative: The Odyssey and Babylon
+  Berlin stay, since neither is science fiction.
 - **Superhero/franchise blockbusters** — thin and incidental (one Black
   Panther); the action taste is grounded thrillers, not capes.
 - **Recency ≠ the whole taste** — the recent months skew hard to
