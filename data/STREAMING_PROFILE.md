@@ -109,15 +109,20 @@ has to rediscover it:
   https://cm-pressroom.pbs.org/. Richest single source for Susan specifically.
 - **Apple TV+** — https://www.apple.com/tv-pr/ Official newsroom, one dated
   release per title. No consolidated calendar, so walk `/tv-pr/news/2026/<month>/`.
-- **BritBox** — no official US press or schedule page exists. The ITV press
-  centre BritBox section is UK-only and stale; the BBC Studios Americas room has
-  nothing newer than 2024. Working proxy is the monthly writeup at
-  britishtv.com, which reproduces BritBox's own monthly US press list. BritBox
-  publishes its US slate roughly two weeks ahead, so September 2026 should
-  surface in the last week of August.
-- **Hulu** — no public Disney/Hulu page listing upcoming Hulu originals with
-  dates. Third-party aggregators only. Low cost to skip: Hulu's confirmed slate
-  after mid-August has nothing matching Susan's profile.
+- **BritBox** — https://www.britbox.com/us/coming_soon (upcoming originals,
+  premieres and exclusives) and https://www.britbox.com/us/channel-guide (a
+  rolling 7-day EPG for the BritBox LIVE channel). Both supplied by Susan
+  2026-08-16 after an earlier pass in this same session wrongly concluded no
+  official page existed. **Note the underscore**: `/us/coming_soon` is the real
+  path and the obvious `/us/coming-soon` returns a 404, which is the most likely
+  reason previous searches missed it. Do not go looking for a BritBox press site
+  again; this is the source. Caveat: it labels titles COMING SOON or NEW SEASON
+  without exact dates, so pair it with the channel guide or the monthly
+  britishtv.com writeup when a specific date is needed.
+- **Hulu** — https://press.hulu.com/schedule/ Official Hulu press schedule, a
+  month-by-month content calendar with dates and a downloadable version. Also
+  supplied by Susan 2026-08-16, correcting the same wrong conclusion. This is a
+  real official source and covers licensed additions as well as originals.
 
 ## Sync Cadence
 Weekly (Monday, via the `streaming-scout-weekly-resync` scheduled task)
