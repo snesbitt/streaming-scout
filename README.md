@@ -86,14 +86,20 @@ cannot be an artefact of a too-forgiving fake), 20 backup-guard assertion
 groups (`tests/backup-guards.test.mjs`, added 2026-08-17, drives
 `scripts/check-data-integrity.mjs` and `scripts/backup-live-records.mjs`
 end to end against a throwaway copy of `data/` and a local synthetic
-server, proving each one refuses what it claims to refuse), plus four
+server, proving each one refuses what it claims to refuse), plus five
 offline static checks added over time — content drift
 (`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
 `data/STREAMING_PROFILE.md`), a tap-target regression guard
 (`scripts/check-tap-targets.mjs`, added 2026-08-16, confirms the
 `.pick-dismiss`/`.pick-watching`/`.pick-watched` padding that fixed two
 real click-target bugs — 2026-07-30 and 2026-08-05 — is still present),
-a data integrity check (`scripts/check-data-integrity.mjs`, added
+a poster coverage check (`scripts/check-poster-coverage.mjs`, added
+2026-08-17, fails the build if any title row in `index.html` would
+render as a bare monogram instead of real art -- artwork gaps had been
+found by Susan on the live site four separate times and nothing in the
+repo ever checked; declare a genuine gap with an
+`<!-- no-art: reason -->` comment before the row rather than leaving it
+silent), a data integrity check (`scripts/check-data-integrity.mjs`, added
 2026-08-17, fails the build if any file in `data/` is emptied, deleted,
 renamed or sharply shrunk against `data/INTEGRITY_MANIFEST.json` -- git
 already keeps every version of those files, what it does not do is
@@ -110,7 +116,7 @@ for where those actually run.
 `.github/workflows/test.yml` runs five jobs:
 
 - **`test`** — on every push and pull request, plus a weekly cron.
-  `npm ci && npm test` (all six offline checks above). This is the only
+  `npm ci && npm test` (all seven offline checks above). This is the only
   job that runs on push/PR; the four below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
   workflow file's own comments for why that matters — confirmed the hard

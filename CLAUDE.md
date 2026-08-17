@@ -1004,3 +1004,26 @@ One harness bug worth recording because it looks exactly like a bug in the code 
 **Workflow YAML validated** with both `yaml.safe_load` and the real GitHub Actions schema validator (`@action-validator/cli`), per the standing rule from the Vinyl Scout schema-valid-YAML incident.
 
 **Delivered:** `scripts/check-data-integrity.mjs`, `scripts/backup-live-records.mjs`, `tests/backup-guards.test.mjs`, `data/INTEGRITY_MANIFEST.json` (all new), `.github/workflows/test.yml`, `package.json`, `README.md`, `roadmap.html`, `about.html`, this file.
+## 2026-08-17, later: 21 rows were shipping as bare monograms. Susan found it, again. Now a check finds it first.
+
+Susan, directly: "you're missing tons of artwork ... fix and DO BETTER." She was right, and the "do better" is the important half of this entry.
+
+**What was actually wrong.** 21 of the 48 title rows in index.html had no `<img>` at all. Thirteen were visible on the page: five Top Picks from the 2026-08-17 rebuild (Annika, The Old Man, Tehran, Lupin, Omnivore) and eight Coming Soon. The other eight were the rest of that same rebuild (1923, A Working Man, Bookish, Becoming Led Zeppelin, The Bear, Miss Austen, A Very English Scandal, Clarkson's Farm), sitting in the file with no art, waiting to be seen. The rebuild added thirteen picks and sourced art for none of them.
+
+**A false alarm on the way in, worth recording.** The first live-page scan reported 38 broken images. It was wrong. Rows hidden by the dismiss/status overlay keep their `loading="lazy"` images unloaded, so `naturalWidth === 0` reads as "broken" when nothing is broken at all. Scoping to rows the user can actually see, forcing `loading="eager"`, and scrolling the page first gave the real answer: nothing broken, 13 simply absent. Do not report an image as broken without ruling out that it was never asked to load.
+
+**The sourcing problem is solved, and this is the part to remember.** Four previous sweeps (2026-08-06, 08-07, 08-08, 08-14) all ran into the same wall: Wikipedia and Wikimedia are cache-only from a Claude session, IMDb blocks on robots.txt, and official press sites only cover tentpole titles, so ordinary catalogue shows were left as monograms and Susan was asked to supply art by hand. **themoviedb.org works, from a real browser on Susan's machine.** It has a poster for essentially every title here including unreleased ones, its pages can be fetched same-origin from a TMDB tab so a whole batch resolves without navigating once per title, and its CDN (`image.tmdb.org`) hotlinks fine from streamingscout.org. All 21 posters were sourced in one pass.
+
+Identity was confirmed per title rather than assumed, because the Reacher/Neagley ambiguity from 2026-08-08 is exactly how a plausible wrong image gets shipped: each candidate was matched on its synopsis, and the two genuinely ambiguous ones (Last Seen, American Hostage) were confirmed against their TMDB cast lists (Patrick Brammall and Maxine Peake; Jon Hamm and Mireille Enos) before use. Then all 21 were rendered in a grid and **looked at**, not just checked for a 200. Every one is the right title, at 500x750.
+
+**The real fix: `scripts/check-poster-coverage.mjs`.** Artwork gaps have now been found by Susan, on the live site, four separate times. `scripts/smoke.mjs` checks exactly one section (Currently Watching), only against the live site, only weekly. Nothing checked the rest, so the next gap was always going to be found the same way. This new check fails the build if any `pick-row`, `soon-row`, `watching-row` or `theater-row` in index.html has no `<img>` in its poster-wrap. Offline, in `npm test`, on every push and pull request, so a rebuild that adds picks without art cannot land.
+
+It found the eight hidden rows the live-page scan could not see, which is the whole argument for checking the source file rather than the rendered page.
+
+A genuine gap is still allowed, it just has to be declared: an `<!-- no-art: reason -->` comment immediately before the row passes the check and puts the reason in the diff. Animals and Here Comes the Flood were in exactly that state for weeks (no announced date, no marketing campaign, nothing in circulation) and both now have real posters, but the next title in that position should say so rather than going quiet.
+
+The check deliberately does not verify that each URL resolves; that needs a network fetch and a browser, and it is smoke.mjs's job against the live site. This is the cheap structural check, which is the one that was missing. It also fails loudly if it matches zero rows, so a future markup change cannot silently blind it.
+
+**Verified:** the coverage check fails on a deliberately stripped copy and passes on the real file; index.html parses clean with `html.parser`; div balance unchanged at 286/286; every new `<img>` carries the house attribute set (`decoding="async"`, `loading="lazy"`, `width="1000"`, `height="1500"`, a real `alt`, and the `onerror="this.remove()"` fallback); full `npm test` green on Susan's machine.
+
+**One thing for Susan to decide, not decided here:** TMDB asks for attribution when their images are used. Nothing visible was added to the page, since that is a copy decision, not a bug fix. A one-line credit in about.html's stack section would cover it.
