@@ -107,8 +107,18 @@ has to rediscover it:
 - **PBS Masterpiece** — https://www.pbs.org/wgbh/masterpiece/specialfeatures/masterpiece-mystery-on-pbs-fall-2026-shows-air-dates-where-to-watch/
   (seasonal grid) plus the full-year page and the press room at
   https://cm-pressroom.pbs.org/. Richest single source for Susan specifically.
-- **Apple TV+** — https://www.apple.com/tv-pr/ Official newsroom, one dated
-  release per title. No consolidated calendar, so walk `/tv-pr/news/2026/<month>/`.
+- **Apple TV+** — two pages, different jobs. https://tv.apple.com/ is the
+  service itself and the canonical entry point for Susan's own account, library
+  and what is newly available (supplied by Susan 2026-08-16, recorded here as
+  the Apple source of record). https://www.apple.com/tv-pr/ is the press
+  newsroom, one dated release per title, no consolidated calendar, so walk
+  `/tv-pr/news/2026/<month>/` for premiere dates.
+  **Standing caveat on tv.apple.com:** as of 2026-08-16 it still loads signed
+  out in Susan's browser, showing the "Get Apple TV free for 1 week" trial
+  splash with no account avatar. Re-checked twice. Being signed in to the Apple
+  TV app on a device does not carry into the browser session, so until Susan
+  signs in at tv.apple.com specifically, nothing account-scoped is readable from
+  here and Apple TV+ viewing still has to be reported in chat.
 - **BritBox** — https://www.britbox.com/us/coming_soon (upcoming originals,
   premieres and exclusives) and https://www.britbox.com/us/channel-guide (a
   rolling 7-day EPG for the BritBox LIVE channel). Both supplied by Susan
