@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-08-16 (Prime Video watch-history sync covering Aug 7 to Aug 15, nine titles new to this log; Netflix checked, nothing new since Apex on 2026-08-09; prior incremental sync 2026-08-10, full-history backfill 2026-07-25)
+**Last updated:** 2026-08-17 (five Top Picks marked already-seen on the site and folded in here: Becoming Led Zeppelin, Bookish, A Working Man, The Bear, A Very English Scandal. Prior update 2026-08-16, Prime Video watch-history sync covering Aug 7 to Aug 15)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -47,6 +47,12 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 
 ## 2026
+
+- **Becoming Led Zeppelin** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, rock history, archival (Jimmy Page, Robert Plant)
+- **Bookish (Season 1)** · PBS Masterpiece (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Postwar British detective, antiquarian bookseller sleuth, LGBTQ+ lead (Mark Gatiss, Polly Walker)
+- **A Working Man** · MGM+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Grounded action thriller, working-class hero (Jason Statham, David Harbour, dir. David Ayer)
+- **The Bear (Seasons 1+)** · Hulu (off-platform, reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Professional-kitchen drama, US prestige character drama (Jeremy Allen White, Ayo Edebiri)
+- **A Very English Scandal** · Prime Video (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. British true crime, LGBTQ+ history, dark comedy (Hugh Grant, Ben Whishaw)
 
 - **Reacher (Season 4)** · Prime Video (Prime watch history 2026-08-12 and 2026-08-15; synced 2026-08-16) · in progress — releases weekly through Sep 16, so the on-site "watched" flag of 2026-08-12 meant caught up, not finished
 - **Grantchester (Season 11)** · Prime Video / PBS Masterpiece (Prime watch history 2026-08-15; synced 2026-08-16) · in progress — final season. Cozy British period mystery, clerical-detective procedural (Rishi Nair, Robson Green, Al Weaver)
