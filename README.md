@@ -116,7 +116,7 @@ for where those actually run.
 `.github/workflows/test.yml` runs five jobs:
 
 - **`test`** — on every push and pull request, plus a weekly cron.
-  `npm ci && npm test` (all seven offline checks above). This is the only
+  `npm ci && npm test` (all eight offline steps above). This is the only
   job that runs on push/PR; the four below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
   workflow file's own comments for why that matters — confirmed the hard

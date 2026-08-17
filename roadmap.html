@@ -34,8 +34,8 @@
 <main>
   <div class="wrap">
     <p class="eyebrow">Roadmap · built in deliberate phases</p>
-    <h1 class="page-title">Five phases live. Five to go.</h1>
-    <p class="lede">The plugin, the dashboard, the domain, scheduled resync, and this month's content refresh are done. A real backend is underway. What's next is listed honestly below.</p>
+    <h1 class="page-title">Six phases live. Four to go.</h1>
+    <p class="lede">The plugin, the dashboard, the domain, scheduled resync, this month's content refresh and the backend are all done. Catching the account list up to reality is underway. What's next is listed honestly below.</p>
 
     <section class="phase phase--live" id="phase-01">
       <div class="phase__rail">1</div>
@@ -97,15 +97,15 @@
       </div>
     </section>
 
-    <section class="phase phase--progress" id="phase-06">
+    <section class="phase phase--live" id="phase-06">
       <div class="phase__rail">6</div>
       <div class="phase__body">
         <div class="phase__head">
           <h3 class="phase__name">A real backend</h3>
-          <span class="phase__status phase__status--progress">In progress</span>
+          <span class="phase__status phase__status--live">Live</span>
         </div>
         <p class="phase__focus">Infrastructure that matches the polish, and GitHub doing more of the upkeep itself</p>
-        <p class="phase__covers">Netlify Functions on a GitHub repo that redeploys itself on push. Dismiss and status are both live, bounded, and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly. As of 2026-08-14 a scheduled health check (<code>scripts/smoke.mjs</code>) confirms the live site is actually up and both Functions are reachable and validating input. As of 2026-08-16, GitHub Actions took on real ongoing upkeep, not just checks: a weekly job now diffs the live dismiss store against the exclusion file and opens its own pull request to fix any gap, using GitHub's own bot identity, not a person or a Claude session; a second weekly job flags (but doesn't auto-fix) any "currently watching" title missing its permanent on-page entry; and the smoke check now also confirms every Currently Watching row has real poster art, not just a placeholder. The weekly artwork-sourcing sweep still runs as a Claude session (finding and judging real key art isn't mechanical), but now lands its work on a reviewable branch with a ready pull-request link instead of asking for a blind push. As of 2026-08-17 the last item here, automated backups, is closed too, and closed against the hole that was actually open. The data folder has been version-controlled since July, so every past version is already recoverable; what it lacked was anything that would notice a truncation, and a check now fails the build if any data file is emptied, deleted or sharply shrunk without that being recorded on purpose. Separately, the watching and dismissed records held by the live site existed only inside Netlify with no backup at all, and a weekly job now snapshots them into the repo and opens its own pull request, refusing to overwrite a good snapshot with a smaller or empty one.</p>
+        <p class="phase__covers">Netlify Functions on a GitHub repo that redeploys itself on push. Dismiss and status are both live, bounded, and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly. As of 2026-08-14 a scheduled health check (<code>scripts/smoke.mjs</code>) confirms the live site is actually up and both Functions are reachable and validating input. As of 2026-08-16, GitHub Actions took on real ongoing upkeep, not just checks: a weekly job now diffs the live dismiss store against the exclusion file and opens its own pull request to fix any gap, using GitHub's own bot identity, not a person or a Claude session; a second weekly job flags (but doesn't auto-fix) any "currently watching" title missing its permanent on-page entry; and the smoke check now also confirms every Currently Watching row has real poster art, not just a placeholder. The weekly artwork-sourcing sweep still runs as a Claude session (finding and judging real key art isn't mechanical), but now lands its work on a reviewable branch with a ready pull-request link instead of asking for a blind push. As of 2026-08-17 the last item here, automated backups, is closed too, and closed against the hole that was actually open. The data folder has been version-controlled since July, so every past version is already recoverable; what it lacked was anything that would notice a truncation, and a check now fails the build if any data file is emptied, deleted or sharply shrunk without that being recorded on purpose. Separately, the watching and dismissed records held by the live site existed only inside Netlify with no backup at all, and a weekly job now snapshots them into the repo and opens its own pull request, refusing to overwrite a good snapshot with a smaller or empty one. Also as of 2026-08-17, every push is checked for title rows that would render without real poster art, after four separate rounds of gaps being spotted by eye on the live page instead.</p>
       </div>
     </section>
 

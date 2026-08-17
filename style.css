@@ -354,10 +354,16 @@ display: inline-block; margin-bottom: 4px;
 .watching-row .poster-wrap { width: 40px; height: 58px; }
 .watching-info { flex: 1; min-width: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .watching-row:last-child { border-bottom: none; }
+/* Padding matches .pick-dismiss/.pick-watching/.pick-watched deliberately.
+   Those three were bumped from 9px 6px to 13px 8px on 2026-08-05 because the
+   real computed box was only ~32-37px tall, short of the ~40-44px this project
+   promises for touch. .row-dismiss was left on the old value and measured
+   22x35 in a live browser on 2026-08-17, so it had the same defect for twelve
+   days. Keep all four in step. */
 .row-dismiss {
   display: inline-flex; align-items: center; justify-content: center;
   background: none; border: none; color: var(--ink-faint); font-size: 17px; line-height: 1;
-  cursor: pointer; font-family: var(--sans); padding: 9px 6px; flex-shrink: 0; align-self: center;
+  cursor: pointer; font-family: var(--sans); padding: 13px 8px; flex-shrink: 0; align-self: center;
 }
 .row-dismiss:hover { color: var(--bad); }
 .watching-title { font-size: 13px; font-weight: 700; }

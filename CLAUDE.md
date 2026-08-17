@@ -120,7 +120,7 @@ boundary between the two.
   colors and were deliberately darkened to clear WCAG AA (4.5:1) against
   both `--bg` and `--card` — don't lighten them back toward the original
   values without rechecking contrast.
-- `netlify/functions/dismiss.mjs` — the only backend Function. Open
+- `netlify/functions/dismiss.mjs` — one of two backend Functions. Open
   GET/POST/DELETE, no auth, by design (nothing sensitive in a "not
   interested" flag, same rationale as Vinyl Scout's wishlist API) but
   bounded: a 200-char cap on `title`/`section`, and the Blobs list evicts
@@ -138,14 +138,22 @@ boundary between the two.
   no dev dependencies.
 - `manifest.json`, `netlify.toml`, icon/PNG assets — static PWA/deploy
   config, nothing dynamic.
-- `tests/logic.test.mjs` — 13 assertions against `src/logic.mjs`, no
-  network, no DOM. Run with `npm test`. This covers the pure logic only;
-  there's still no CI workflow, and no coverage at all for the dismiss
-  Function, the static Top Picks/Coming Soon markup, or the poster-art
-  fallback — manual review (see "How to verify a deploy" below) is still
-  the only check for those. Don't let the presence of `npm test` read as
-  "this site is now fully tested" — it isn't; this is a real but narrow
-  start.
+- `tests/` and `scripts/` — what `npm test` actually runs, as of
+  2026-08-17: `tests/logic.test.mjs` (15 assertions on `src/logic.mjs`, no
+  network, no DOM), `tests/blobs-concurrency.test.mjs` (27 groups driving
+  both Netlify Functions against a fake Blobs store that reproduces the real
+  read lag), `tests/backup-guards.test.mjs` (20 groups driving the data
+  integrity and live-records backup scripts end to end), plus five offline
+  static checks: `check-data-integrity.mjs`, `check-poster-coverage.mjs`,
+  `check-content-drift.mjs`, `check-tap-targets.mjs`,
+  `check-pick-meta-length.mjs`. This description was stale for weeks (it
+  still claimed 13 assertions and no CI workflow long after both changed),
+  so keep it current or delete it rather than letting it drift again.
+  **Still not covered by any of it:** whether a poster URL actually
+  resolves, whether a rendered tap target is really 44px, and whether the
+  page looks right. Those need a browser. `npm test` passing does not mean
+  the site is fine; the live check in "How to verify a deploy" is still the
+  control of record.
 
 ## Deploy workflow
 
@@ -1025,19 +1033,5 @@ A genuine gap is still allowed, it just has to be declared: an `<!-- no-art: rea
 The check deliberately does not verify that each URL resolves; that needs a network fetch and a browser, and it is smoke.mjs's job against the live site. This is the cheap structural check, which is the one that was missing. It also fails loudly if it matches zero rows, so a future markup change cannot silently blind it.
 
 **Verified:** the coverage check fails on a deliberately stripped copy and passes on the real file; index.html parses clean with `html.parser`; div balance unchanged at 286/286; every new `<img>` carries the house attribute set (`decoding="async"`, `loading="lazy"`, `width="1000"`, `height="1500"`, a real `alt`, and the `onerror="this.remove()"` fallback); full `npm test` green on Susan's machine.
-
-### Same day, follow-through: 10 more rows had art, but the wrong shape of art
-
-Verifying the deploy turned up a second, quieter version of the same problem. Every row had an image, but twelve of them were landscape stills or thumbnails being centre-cropped into a portrait slot by `object-fit: cover`. Some were tiny: Black Doves S2 was a 148x148 square, The Gold S2 183x171, Grantchester S11 and Vanity Fair both 330px wide Wikipedia thumbs. They rendered, so nothing flagged them, but they looked like placeholders next to a real poster.
-
-Ten were replaced with proper 500x750 portrait posters from TMDB: Reacher S4, Grantchester S11, Sugar S2, Vanity Fair (2018), Neagley, Nocturne, Only Murders S6, Black Doves S2, The Gold S2, Babylon Berlin S5. Season-specific art where TMDB has it, show-level where it does not.
-
-**This also closes the Reacher/Neagley ambiguity carried since 2026-08-08.** Both rows used images from the same Amazon MGM press page, with no alt text distinguishing the Reacher S4 key art from the Neagley spinoff teaser, and that caveat sat unresolved in this file for nine days. Both now carry their own unambiguous poster, confirmed by looking at them.
-
-**Two deliberately left alone.** Kill Jackie's image is the one Susan supplied directly, and TMDB has no poster for it, so replacing hers with nothing would be a downgrade. Betrayal could not be identified with confidence against TMDB's candidates, and shipping a plausible-but-wrong poster is the exact failure this project keeps guarding against; it stays on its current image until someone can confirm which title it is.
-
-**A verification trap worth knowing.** A full-page screenshot taken immediately after forcing images to reload showed Reacher and The Westies as monograms, which looked like a real failure. It was not: `complete === true` does not mean painted, and those two are large remote images. A clean reload plus a zoom on that region showed both rendering correctly. Zoom in on the actual region before reporting an image as broken from a screenshot.
-
-**Not automated, and worth saying plainly:** the coverage check catches a missing image, not a badly-shaped one. Aspect ratio needs a decoded image, which needs a browser, so it stays a manual check for now. Prefer `image.tmdb.org` for new art, since those are always portrait posters.
 
 **One thing for Susan to decide, not decided here:** TMDB asks for attribution when their images are used. Nothing visible was added to the page, since that is a copy decision, not a bug fix. A one-line credit in about.html's stack section would cover it.
