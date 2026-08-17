@@ -51,3 +51,10 @@ entries as of this sync are captured below.
 
 - **Apex** — Currently Watching — dismissed on-site 2026-08-10 (auto-synced by CI)
 - **Say Nothing** — Currently Watching — dismissed on-site 2026-08-12 (auto-synced by CI)
+
+- **1923** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
+- **Miss Austen** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
+- **Clarkson's Farm** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
+- **Colin From Accounts, season 3** — Coming Soon — dismissed on-site 2026-08-17 (auto-synced by CI)
+- **The Marlow Murder Club, season 3** — Coming Soon — dismissed on-site 2026-08-17 (auto-synced by CI)
+- **Agatha Christie's Tommy & Tuppence** — Coming Soon — dismissed on-site 2026-08-17 (auto-synced by CI)
