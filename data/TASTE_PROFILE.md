@@ -1,7 +1,29 @@
 # Taste Profile
 
 **Derived from:** STREAMING_LOG.md (auto-generated — do not hand-edit)
-**Last updated:** 2026-08-06 (incremental: added Gillian Anderson to Actor Affinity per Susan's direct request — not log-derived, see entry for basis; prior update 2026-07-29: 2026-07-26 sync added Spooks S1, Return to Paradise S2, The Odyssey '97 — reinforces veins 1, 2, and 8 below; no rank changes)
+**Last updated:** 2026-08-16 (Prime sync of Aug 7 to Aug 15 added nine titles; two new veins promoted, five actors added, no existing rank lowered. Prior update 2026-08-06: Gillian Anderson added per Susan's direct request.)
+
+## 2026-08-16 sync: what the nine new titles changed
+
+Reinforced without moving ranks: **The Agency S2** (Fassbender, Wright, Gere) and
+**Special Ops: Lioness S1**, rewatched while S3 airs, both feed vein 2, which is
+now the most active vein by current viewing rather than just by history.
+**Professor T S5** and **Grantchester S11** feed vein 1. **Lark Rise to
+Candleford** feeds vein 8. **Gardeners' World Winter Specials** feeds the
+garden/country lifestyle line.
+
+Two genuinely new veins, listed below at deliberately modest weight because each
+rests on a single title so far:
+
+- **Neo-Western** — Dutton Ranch S1, a confirmed Yellowstone-universe sequel with
+  Kelly Reilly and Cole Hauser. Nothing in sixteen years of history anticipated
+  this. Watch whether it holds.
+- **Heist thriller** — Steal S1 (Sophie Turner). Adjacent to vein 3's grounded
+  action but distinct: the appeal is the plan, not the fighter.
+
+Also worth recording: **Sterling Point S1**, a coming-of-age family-secrets
+mystery, does not fit any existing vein cleanly. Left unweighted pending a
+second data point rather than inventing a category around one title.
 
 Genre and actor attributions below are knowledge-derived for these well-known
 titles (the account pages expose no metadata); each claim is anchored to named
@@ -89,6 +111,14 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
    House of Guinness, Remains of the Day, Gosford Park, The Odyssey '97
    miniseries (watched 2026-07-26, after seeing the Nolan film in theaters).
 
+9. **Neo-Western** (0.4, new 2026-08-16) — Dutton Ranch S1 only. Ranch-empire
+   land-war saga, modern Western melodrama. Single title, so held low
+   deliberately; promote if 1923-class titles get watched rather than just
+   recommended.
+10. **Heist thriller** (0.4, new 2026-08-16) — Steal S1 only. Reads as adjacent
+   to vein 3 but the pleasure is the plan rather than the puncher, which points
+   at Lupin-class and Gold-class titles rather than more Statham.
+
 ## Generic Genres (lower confidence on their own)
 
 - **Documentary (broad)** — heavy but split across specific veins above
@@ -119,6 +149,17 @@ Weights reflect repeated, completed viewing across multiple titles in the log.
   as Thatcher), so this is a forward-looking interest signal on Susan's
   word, not a completed-pattern claim. Should firm up (or adjust) once real
   viewing of Anderson-led titles shows up in the log.
+- **Michael Fassbender** (0.6, added 2026-08-16) — The Agency S2, in progress.
+  Slow-burn tradecraft lead; sits with Oldman rather than with the action shelf.
+- **Kelly Reilly / Cole Hauser** (0.5, added 2026-08-16) — Dutton Ranch S1, in
+  progress. The anchor for the new neo-Western vein; both are the reason to
+  weight it at all.
+- **Ben Miller** (0.5, added 2026-08-16) — Professor T S5, in progress. Quirky
+  academic-sleuth register, distinct from the police-procedural leads below.
+- **Robson Green** (0.5, added 2026-08-16) — Grantchester across seasons into
+  S11, the final season.
+- **Sophie Turner** (0.4, added 2026-08-16) — Steal S1 only. Thin, a single
+  title; recorded so a second data point can confirm or drop it.
 - **Gary Oldman** (0.85) — Slow Horses S1–5 complete (reported 2026-07-26),
   Darkest-Hour-class prestige leads
 - **Nicola Walker** (1.0) — Unforgotten S1–S3, Last Tango in Halifax (17 plays
