@@ -1317,3 +1317,46 @@ record of. One message beat a commit, a deploy and a live correction both times
 it would have been needed.
 
 **Delivered:** `index.html`, this file.
+## 2026-08-17, final: Susan confirmed what the tick button means, and it invalidates two things written earlier today
+
+Asked directly, she confirmed the on-site tick means **"seen it, take it away"**,
+not "I watched this on this date". That is a small sentence with real
+consequences, and two of them were already wrong in the repo.
+
+**Corrected: ten log entries implied a watch date they never had.** Every entry
+written from a tick today read "reported by Susan directly, 2026-08-17, via the
+on-site watched button". That reads as a viewing on 2026-08-17. It is not; it is
+a clearing on 2026-08-17, of viewing that could be from any year. All ten now
+read "cleared by Susan via the on-site tick button, 2026-08-17 ... already seen,
+watch date unknown", and `data/STREAMING_LOG.md` has a new section next to its
+entry format saying so once, properly.
+
+This is not pedantry. Several weights in `TASTE_PROFILE.md` lean on recency, and
+the titles Susan clears are precisely the ones a rebuild has just surfaced, so
+reading tick dates as watch dates would inflate the apparent recency of whatever
+she rejects, every single week. Abstract: The Art of Design is the proof
+available in this repo: nine plays from 2017 to 2019, ticked in 2026. Recorded
+in `TASTE_PROFILE.md` as "authoritative when excluding, undated when weighting".
+
+**Retracted: the claim that the Netflix backfill is incomplete.** Earlier today,
+The Andy Warhol Diaries being absent from the log was written down as evidence
+that "the backfill is not complete for documentaries". That was too strong on
+one data point. A tick carries no service and no date, so its absence from the
+Netflix backfill is equally consistent with a different profile, or with viewing
+that predates the account. Reworded to an open question. The underlying question
+is still worth answering, it just was not answered.
+
+**The structural gap this exposes, not yet built.** A tick writes `watched` to
+`/api/status` and nothing else. That hides the row on Susan's devices and never
+reaches any permanent record, so the title stays in `index.html` and stays
+eligible for the next rebuild. That is exactly the dead-row problem cleaned up by
+hand twice today, and it will recur on every tick. The dismiss path already has
+its answer: a scheduled job carries the live store into a repo file and opens a
+pull request. The tick path needs the same shape, carrying `watched` entries
+into `STREAMING_LOG.md` as dated-as-cleared entries. Mechanical, no judgement
+required, and it would have prevented every instance of this found today. Left
+as a proposal rather than built unprompted, since it means a CI job writing to
+the watch log.
+
+**Delivered:** `data/STREAMING_LOG.md`, `data/TASTE_PROFILE.md`,
+`data/INTEGRITY_MANIFEST.json`, this file.

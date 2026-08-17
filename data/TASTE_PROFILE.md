@@ -321,6 +321,28 @@ demotes and eventually removes. Record the outcome here with a date either way,
 so that in a month this section is evidence rather than a list of good
 intentions.
 
+## What a tick means, and what it does not (confirmed 2026-08-17)
+
+Susan confirmed directly that the on-site tick means **"seen it, take it away"**,
+not "I watched this on this date". Every conclusion drawn from a tick has to
+respect that.
+
+**Safe to conclude:** she has seen it, so do not offer it again. That is real
+and it is the whole point of the control.
+
+**Not safe to conclude:** when, or on which service, or in what order relative
+to anything else. A tick in August 2026 can sit on top of viewing from 2017.
+Abstract: The Art of Design is the case in point: nine plays between 2017 and
+2019, ticked in 2026.
+
+**Why this matters here specifically.** Several weights in this file lean on
+recency ("steady since 2020", "current appetite" versus sixteen years of
+history). Reading a tick date as a watch date would quietly inflate the recency
+of anything she clears, and the titles she clears are exactly the ones a rebuild
+just surfaced, so the error would compound every week. Tick-sourced entries in
+STREAMING_LOG.md are marked "watch date unknown" for this reason. Treat them as
+undated when weighting, and as authoritative when excluding.
+
 ## Negative signal from dismissals (added 2026-08-17)
 
 Read this before every rebuild. Susan asked on 2026-08-17 that dismissals feed

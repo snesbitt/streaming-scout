@@ -21,6 +21,21 @@ don't expose cast); actor affinity lives in TASTE_PROFILE.md.
 
 **Title** · Service · episodes/plays · first watched → last watched
 
+## What the tick button means (confirmed by Susan 2026-08-17)
+
+The on-site control reads "Mark watched", but Susan uses it to mean **"seen it,
+take it away"**. It is a clear-from-the-page action, not a viewing record.
+
+Two consequences, both load-bearing:
+
+- **The date on a tick-sourced entry is the date she cleared it, not the date
+  she watched it.** Those entries now say so explicitly. Abstract: The Art of
+  Design is the proof: real plays run 2017-02-20 to 2019-09-28, and the tick
+  arrived in 2026. Never feed a tick date into anything that weights recency.
+- **A tick is not evidence of when, or even where.** It says only that the
+  title should stop being offered. Do not infer a service, a season or a watch
+  date from it beyond what the row already stated.
+
 
 ## 2026-07-26 (incremental sync, 2026-07-29)
 
@@ -54,16 +69,16 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 - **The Morning Show (Seasons 1+)** · Apple TV+ (off-platform, reported by Susan directly, 2026-08-17) · already seen. US prestige character drama, media workplace ensemble, Jennifer Aniston and Reese Witherspoon
 - **The Bourne series (all films)** · reported by Susan directly, 2026-08-17, service not specified · already seen. Grounded spy action, amnesiac operative, Matt Damon. Directly reinforces the Statham/Neeson/Reacher shelf and the espionage vein at once
 
-- **Becoming Led Zeppelin** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, rock history, archival (Jimmy Page, Robert Plant)
-- **Bookish (Season 1)** · PBS Masterpiece (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Postwar British detective, antiquarian bookseller sleuth, LGBTQ+ lead (Mark Gatiss, Polly Walker)
-- **A Working Man** · MGM+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Grounded action thriller, working-class hero (Jason Statham, David Harbour, dir. David Ayer)
-- **The Bear (Seasons 1+)** · Hulu (off-platform, reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Professional-kitchen drama, US prestige character drama (Jeremy Allen White, Ayo Edebiri)
-- **A Very English Scandal** · Prime Video (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. British true crime, LGBTQ+ history, dark comedy (Hugh Grant, Ben Whishaw)
-- **Tehran (Seasons 1+)** · Apple TV+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Israeli espionage thriller, deep cover, subtitled (Niv Sultan, Glenn Close)
-- **The Greatest Night in Pop** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, archival, the making of "We Are the World"
-- **Mr. Scorsese** · Apple TV+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Filmmaking documentary, maker profile, archival (Martin Scorsese, dir. Rebecca Miller)
-- **The Andy Warhol Diaries** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Art and design documentary, maker profile, archival (dir. Andrew Rossi). Not present in the Netflix backfill despite being a Netflix title, so the backfill is not complete for documentaries
-- **Louis Armstrong's Black & Blues** · Apple TV+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, jazz history, archival (dir. Sacha Jenkins)
+- **Becoming Led Zeppelin** · Netflix (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Music documentary, rock history, archival (Jimmy Page, Robert Plant)
+- **Bookish (Season 1)** · PBS Masterpiece (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Postwar British detective, antiquarian bookseller sleuth, LGBTQ+ lead (Mark Gatiss, Polly Walker)
+- **A Working Man** · MGM+ (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Grounded action thriller, working-class hero (Jason Statham, David Harbour, dir. David Ayer)
+- **The Bear (Seasons 1+)** · Hulu (off-platform, cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Professional-kitchen drama, US prestige character drama (Jeremy Allen White, Ayo Edebiri)
+- **A Very English Scandal** · Prime Video (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. British true crime, LGBTQ+ history, dark comedy (Hugh Grant, Ben Whishaw)
+- **Tehran (Seasons 1+)** · Apple TV+ (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Israeli espionage thriller, deep cover, subtitled (Niv Sultan, Glenn Close)
+- **The Greatest Night in Pop** · Netflix (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Music documentary, archival, the making of "We Are the World"
+- **Mr. Scorsese** · Apple TV+ (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Filmmaking documentary, maker profile, archival (Martin Scorsese, dir. Rebecca Miller)
+- **The Andy Warhol Diaries** · Netflix (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Art and design documentary, maker profile, archival (dir. Andrew Rossi). Not present in the Netflix backfill despite being a Netflix title. An open question, not a conclusion: could be a gap in the backfill, a different profile, or viewing that predates the account
+- **Louis Armstrong's Black & Blues** · Apple TV+ (cleared by Susan via the on-site tick button, 2026-08-17) · already seen, watch date unknown. Music documentary, jazz history, archival (dir. Sacha Jenkins)
 
 - **Reacher (Season 4)** · Prime Video (Prime watch history 2026-08-12 and 2026-08-15; synced 2026-08-16) · in progress — releases weekly through Sep 16, so the on-site "watched" flag of 2026-08-12 meant caught up, not finished
 - **Grantchester (Season 11)** · Prime Video / PBS Masterpiece (Prime watch history 2026-08-15; synced 2026-08-16) · in progress — final season. Cozy British period mystery, clerical-detective procedural (Rishi Nair, Robson Green, Al Weaver)
