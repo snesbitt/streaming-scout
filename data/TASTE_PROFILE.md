@@ -91,6 +91,14 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
   silently applied: a warm-ensemble comedy vein now exists, vein 3 gets its
   strongest single reinforcement, and the cozy-versus-dark split within vein 1
   is confirmed from the positive side as well as the negative.
+- **2026-08-17, Susan, directly, correcting how the classic-film interest should
+  be used:** "i've seen all those films a few times. what might be more helpful
+  is listing a few classics as they get rotated in to a given service." So this
+  is NOT a discovery problem and a canonical best-of list is useless to her. She
+  knows the canon and rewatches it. The useful signal is **availability**: which
+  classics happen to be reachable on a service she has, this month. Treat
+  rotation onto a service as the event worth surfacing, the same way Coming Soon
+  treats a premiere date.
 - **2026-08-17, Susan, directly:** science fiction goes on the avoid list. It
   was neither a vein nor an exclusion before, which made it a silent maybe.
   Now explicit, recorded under Patterns to Avoid.
@@ -360,6 +368,38 @@ section, look for a genre or sub-genre appearing three or more times among the
 not-interested entries, and demote that cluster rather than only excluding the
 individual titles. Record what was demoted and on what evidence, with a date, so
 the next rebuild can tell a real trend from a bad week.
+
+## How to check classic-film availability (added 2026-08-17)
+
+This vein needs a different method from every other one, because the question is
+not "what is good" but "what is on her services right now." Catalogue rotation
+is constant and undocumented.
+
+**Use JustWatch, filtered by provider and sorted by when it was added:**
+`justwatch.com/us/provider/<provider>/movies?sort_by=provider_added`. It tracks
+arrival on a service, which is the event that matters here. Note that
+`release_year_until` did not actually apply when tried on 2026-08-17, so expect
+a mixed-era list and pick the older titles out by hand.
+
+**Do not rely on TMDB for this.** Its provider data lags exactly where it
+matters: on 2026-08-17 it reported Dr. Strangelove as not streaming days after
+it reached Prime, and reported The Conversation as not streaming while JustWatch
+listed it among Prime's recent additions. TMDB is fine for a long-settled title
+and unreliable for a fresh rotation. Cross-check both and, when they disagree,
+say so rather than quietly picking one.
+
+**First pass, 2026-08-17, confirmed by both sources on Prime Video:** The French
+Connection, The 39 Steps, Patton, The Longest Day, Monty Python and the Holy
+Grail, The Good the Bad and the Ugly. Flagged but NOT confirmed: The
+Conversation, which would be the best fit of the lot (surveillance paranoia,
+Gene Hackman, straight into the espionage vein) if it is genuinely there.
+
+**Why the first attempt found nothing.** It searched canonical titles by name,
+Casablanca, Rear Window, 12 Angry Men, Some Like It Hot, The Third Man, and
+found none on her services, then reported classic film as an availability
+problem. Wrong question. Rotation-first finds real titles; canon-first finds
+none. The conclusion was accurate about those five films and useless as an
+answer.
 
 ## Patterns to Avoid
 
