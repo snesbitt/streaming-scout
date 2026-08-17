@@ -1248,3 +1248,40 @@ parses zero rows or zero exclusions. `index.html` parses clean, div balance
 **Delivered:** `scripts/check-rows-against-exclusions.mjs` (new), `index.html`,
 `data/EXCLUDED_TITLES.md`, `data/INTEGRITY_MANIFEST.json`, `package.json`, this
 file.
+## 2026-08-17, after the push: all three new documentaries were already seen, and that says something about the log, not the picks
+
+Live-checked the deploy rather than trusting the green build. Everything landed
+correctly: the Bake Off row is there, all seven dismissed rows are gone, and
+none of the eight removed picks came back. But only nine of the twelve picks
+render, and the three hidden ones are the three documentaries added hours
+earlier: Mr. Scorsese, The Andy Warhol Diaries, Louis Armstrong's Black & Blues.
+
+Susan had marked all three **watched**, not dismissed. So the corrected
+long-tail read was right, and then some: she does watch maker-led documentary,
+to the point that she had already seen every one chosen to test the theory.
+
+**The real lesson is about the watch log, not the picks.**
+`check-picks-against-log.mjs`, added the same day precisely to stop
+already-watched titles being recommended, could not have caught any of these.
+None of the three is in `data/STREAMING_LOG.md`. The check is only ever as good
+as the log, and the log is not complete.
+
+One of the three is genuinely diagnostic. The Andy Warhol Diaries is a **Netflix**
+title, and the 2026-07-25 backfill claims to have read Netflix viewing activity
+back to its first entry, which did capture Abstract's nine plays from 2017 to
+2019. So either the backfill is not as complete as its own note says, or Susan
+uses the watched button to mean "seen it, take it away" rather than strictly
+logging a play. Both are worth knowing and neither is guessable from here.
+Recorded against the log entry itself rather than left as an assumption.
+
+All three logged and removed, leaving nine picks across nine clusters.
+
+**Process change worth making rather than repeating this.** Backfilling picks
+straight into the file has now been partly undone twice in one day by titles
+Susan had already seen and the repo had no way to know about. Proposing
+candidates in chat first, and wiring in only the survivors, costs one message
+and avoids a commit, a deploy and a live-page correction each time. Doing that
+for the next three.
+
+**Delivered:** `index.html`, `data/STREAMING_LOG.md`,
+`data/INTEGRITY_MANIFEST.json`, this file.

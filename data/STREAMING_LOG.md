@@ -61,6 +61,9 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 - **A Very English Scandal** · Prime Video (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. British true crime, LGBTQ+ history, dark comedy (Hugh Grant, Ben Whishaw)
 - **Tehran (Seasons 1+)** · Apple TV+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Israeli espionage thriller, deep cover, subtitled (Niv Sultan, Glenn Close)
 - **The Greatest Night in Pop** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, archival, the making of "We Are the World"
+- **Mr. Scorsese** · Apple TV+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Filmmaking documentary, maker profile, archival (Martin Scorsese, dir. Rebecca Miller)
+- **The Andy Warhol Diaries** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Art and design documentary, maker profile, archival (dir. Andrew Rossi). Not present in the Netflix backfill despite being a Netflix title, so the backfill is not complete for documentaries
+- **Louis Armstrong's Black & Blues** · Apple TV+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, jazz history, archival (dir. Sacha Jenkins)
 
 - **Reacher (Season 4)** · Prime Video (Prime watch history 2026-08-12 and 2026-08-15; synced 2026-08-16) · in progress — releases weekly through Sep 16, so the on-site "watched" flag of 2026-08-12 meant caught up, not finished
 - **Grantchester (Season 11)** · Prime Video / PBS Masterpiece (Prime watch history 2026-08-15; synced 2026-08-16) · in progress — final season. Cozy British period mystery, clerical-detective procedural (Rishi Nair, Robson Green, Al Weaver)
