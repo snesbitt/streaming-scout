@@ -1285,3 +1285,35 @@ for the next three.
 
 **Delivered:** `index.html`, `data/STREAMING_LOG.md`,
 `data/INTEGRITY_MANIFEST.json`, this file.
+## 2026-08-17, closing out: four picks proposed in chat first, all four survived
+
+The process change from the previous entry, used immediately. Four candidates
+were verified for current US availability on a tracked service and checked
+against the log and the dismiss store, then put to Susan in chat before any
+markup was written. She had seen none of them, so all four went in rather than
+the three needed, which restores some headroom given how fast this list has
+been getting consumed.
+
+- **Sr.** (Netflix), Robert Downey Jr. filming his father, dir. Chris Smith.
+- **Still: A Michael J. Fox Movie** (Apple TV+), dir. Davis Guggenheim.
+- **The Velvet Underground** (Apple TV+), dir. Todd Haynes.
+- **Number One on the Call Sheet** (Apple TV+), two parts, dir. Reginald Hudlin
+  and Shola Lynch.
+
+Thirteen picks across thirteen distinct clusters. Posters sourced from TMDB,
+all confirmed loading at 500x750, and rendered in a grid and looked at.
+
+**The one cost worth naming:** three of the four are Apple TV+, taking that
+service to six of thirteen picks. That is a real concentration, and it follows
+from where maker-led documentary actually lives rather than from a preference.
+`check-pick-diversity.mjs` measures genre clusters, not services, so nothing
+would have flagged it. Worth watching, and worth considering a service-spread
+check if it keeps drifting that way, but not worth adding a check on a single
+observation.
+
+**The proposal-first loop is the thing to keep.** Two backfills in one day were
+partly undone within hours by titles Susan had already seen and the repo had no
+record of. One message beat a commit, a deploy and a live correction both times
+it would have been needed.
+
+**Delivered:** `index.html`, this file.
