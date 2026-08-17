@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-08-17 (five Top Picks marked already-seen on the site and folded in here: Becoming Led Zeppelin, Bookish, A Working Man, The Bear, A Very English Scandal. Prior update 2026-08-16, Prime Video watch-history sync covering Aug 7 to Aug 15)
+**Last updated:** 2026-08-17 (five Apple TV+ and film titles reported directly by Susan: Shrinking, Friends and Neighbors, Criminal Record, The Morning Show, the Bourne films. Apple TV+ watch-history sync is still blocked, so these are her word, which is the only route available for that service. Earlier the same day: five Top Picks marked already-seen)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -47,6 +47,12 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 
 ## 2026
+
+- **Shrinking (Seasons 1+)** · Apple TV+ (off-platform, reported by Susan directly, 2026-08-17) · already seen. Warm ensemble comedy-drama, grief and therapy, Harrison Ford and Jason Segel
+- **Friends and Neighbors (Season 1)** · Apple TV+ (off-platform, reported by Susan directly, 2026-08-17) · already seen. Dark suburban comedy-crime, Jon Hamm
+- **Criminal Record (Season 1)** · Apple TV+ (off-platform, reported by Susan directly, 2026-08-17) · already seen. British institutional crime drama, police corruption, Peter Capaldi and Cush Jumbo
+- **The Morning Show (Seasons 1+)** · Apple TV+ (off-platform, reported by Susan directly, 2026-08-17) · already seen. US prestige character drama, media workplace ensemble, Jennifer Aniston and Reese Witherspoon
+- **The Bourne series (all films)** · reported by Susan directly, 2026-08-17, service not specified · already seen. Grounded spy action, amnesiac operative, Matt Damon. Directly reinforces the Statham/Neeson/Reacher shelf and the espionage vein at once
 
 - **Becoming Led Zeppelin** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, rock history, archival (Jimmy Page, Robert Plant)
 - **Bookish (Season 1)** · PBS Masterpiece (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Postwar British detective, antiquarian bookseller sleuth, LGBTQ+ lead (Mark Gatiss, Polly Walker)

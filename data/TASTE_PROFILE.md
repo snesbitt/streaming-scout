@@ -82,6 +82,15 @@ titles from the log so it can be checked. Weights: 1.0 = strongest signal.
   exact title reappearing and teaches the profile nothing. Every rebuild must
   now read the dismissal record for PATTERNS and act on them, per the section
   below.
+- **2026-08-17, Susan, directly:** named five Apple TV+ and film titles she has
+  already seen, after the Apple watch-history sync was confirmed blocked at the
+  device level: Shrinking, Friends and Neighbors, Criminal Record, The Morning
+  Show, and the entire Bourne series. Apple TV+ has never been readable, so her
+  word is the only route for that service and these should be treated as solid
+  evidence, not soft signal. Three consequences, recorded below rather than
+  silently applied: a warm-ensemble comedy vein now exists, vein 3 gets its
+  strongest single reinforcement, and the cozy-versus-dark split within vein 1
+  is confirmed from the positive side as well as the negative.
 - **2026-08-17, Susan, directly:** science fiction goes on the avoid list. It
   was neither a vein nor an exclusion before, which made it a silent maybe.
   Now explicit, recorded under Patterns to Avoid.
@@ -231,6 +240,39 @@ Weights reflect repeated, completed viewing across multiple titles in the log.
   Maestro (Cooper), Being the Ricardos (Kidman) — draws to actor-led award
   films
 
+## 2026-08-17, second pass: what the five reported titles changed
+
+**A vein that did not exist.** Shrinking sits directly beside Ted Lasso, which
+is already in the log and in Currently Watching: warm ensemble comedy-drama
+where the comedy carries real grief. Only Murders in the Building is the third
+point, already recorded as loved. That is three completed or in-progress titles
+and no vein, which is an omission rather than an absence. Recorded as **warm
+ensemble comedy-drama (0.65)**. Note this was not offered to Susan when she was
+asked what the profile was blind to, because the log looked thin on comedy; it
+was not thin, it was unlabelled.
+
+**Vein 3 reinforced hard.** The entire Bourne series, on top of the Statham,
+Neeson, Reacher and Equalizer shelf already there. Grounded spy action rather
+than franchise spectacle, which is exactly the distinction Patterns to Avoid
+already draws about superhero films. Vein 3 stays at 0.8 and its description
+now has its cleanest anchor.
+
+**The cozy versus dark split inside vein 1, confirmed from both directions.**
+Criminal Record is British crime at the institutional, morally grim end,
+Capaldi and Cush Jumbo, and she watched it. On the same day she dismissed
+Marlow Murder Club, Tommy & Tuppence and Miss Austen. The negative evidence
+said demote the village end; the positive evidence says the darker end is
+healthy. Weight the sub-branches separately and stop treating vein 1 as one
+thing.
+
+**Actor affinity: Jon Hamm** gets a second data point, Friends and Neighbors
+alongside Mad Men-era prestige, and he leads American Hostage which is already
+on Coming Soon for 2026-09-20. Worth noting the Coming Soon pick was made
+before this signal existed, so it is corroboration rather than circular.
+
+**The Morning Show** feeds vein 5, US prestige character drama, which needed no
+promotion but had no recent anchor.
+
 ## Stated Interests, not yet log-derived (added 2026-08-17)
 
 Six areas Susan named directly on 2026-08-17. They sit apart from the numbered
@@ -259,6 +301,11 @@ absence.
   in vein 1, and beyond crime entirely: any genre, any language.
 - **Live performance and arts** (0.5). Theatre, opera, ballet, concert film,
   arts documentary.
+- **Warm ensemble comedy-drama** (0.65, added 2026-08-17). Listed here rather
+  than with the numbered veins only because it was derived on the same day; it
+  is genuinely log-anchored, unlike the six above. Ted Lasso (in progress),
+  Shrinking (seen), Only Murders in the Building (all five seasons, loved).
+  Comedy that carries grief, ensemble-led, no cynicism.
 
 **How to test these rather than assume them.** Each week's Top Picks should
 carry at least one title from this section. Take-up promotes; repeated dismissal
