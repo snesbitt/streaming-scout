@@ -65,3 +65,12 @@ argues for beyond these individual titles.
 - **Colin From Accounts, season 3** - Coming Soon - dismissed on-site 2026-08-17
 - **The Marlow Murder Club, season 3** - Coming Soon - dismissed on-site 2026-08-17
 - **Agatha Christie's Tommy & Tuppence** - Coming Soon - dismissed on-site 2026-08-17
+
+Four more the same day, after the six above were written. These arrived after
+that morning's CI sync had already run, which is why the automated pull request
+it opened is not the full picture for 2026-08-17.
+
+- **Life on Our Planet** - Top Picks - dismissed on-site 2026-08-17
+- **Springsteen on Broadway** - Top Picks - dismissed on-site 2026-08-17
+- **Turning Point: The Bomb and the Cold War** - Top Picks - dismissed on-site 2026-08-17
+- **Cooper and Fry, season 1** - Coming Soon - dismissed on-site 2026-08-17

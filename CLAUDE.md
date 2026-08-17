@@ -1197,3 +1197,54 @@ removes a dismissed row from the markup. Left for Susan's call rather than
 deleted in passing.
 
 **Delivered:** `index.html`, this file.
+## 2026-08-17, last: the same dead-row bug in Coming Soon, seven rows not three, and PR #7 must be closed rather than merged
+
+Following the Top Picks cleanup earlier today. The three dismissed Coming Soon
+rows flagged in passing turned out to be seven, and the automated pull request
+that was supposed to help is stale.
+
+**`scripts/check-rows-against-exclusions.mjs`, new, offline, in `npm test`.**
+Fails when any `pick-row`, `soon-row`, `watching-row` or `theater-row` in
+`index.html` shows a title listed in `data/EXCLUDED_TITLES.md`. It respects the
+section semantics that already matter elsewhere in this project: a Top Picks or
+Coming Soon dismissal means "not interested" and bars a pick or soon row, while
+a Currently Watching dismissal means "finished" and bars only Currently Watching
+and In Theaters rows, never a future pick. Getting that backwards would
+re-create the 2026-08-05 conflation bug in a check meant to prevent bugs.
+
+It compares against the file rather than the live API on purpose. The
+dismiss-drift CI job already carries the live store into `EXCLUDED_TITLES.md`,
+so the file is the repo's own record and the right thing for an offline check
+to trust. Two stages, each doing one job.
+
+**What it found on its first run: seven rows, not three.** Beyond today's four
+(The Marlow Murder Club S3, Tommy & Tuppence, Colin From Accounts S3, Cooper
+and Fry S1) it caught **Prey** and **Vanity Fair (2018)**, both dismissed
+2026-07-29 and still shipping nineteen days later, and **Tucci in Italy**, which
+Susan marked finished on 2026-08-05 and which was still a Currently Watching
+row. None were visible to her, because the client-side sync hides them. All
+seven removed.
+
+**PR #7 should be closed, not merged, and the earlier advice to merge it was
+wrong.** Its six entries are already on `main`; they were added by hand in the
+same sitting the titles were dismissed. The bot branch was cut from an older
+`main` that morning, so merging it now would duplicate all six. This is the
+second stale bot PR in two days (PR #6 was the first). The pattern is worth
+naming: a scheduled job's pull request is a snapshot of the repo at fire time,
+and on a day with real activity it goes out of date within hours. Check a bot PR
+against current `main` before merging rather than trusting that it is additive.
+
+The four dismissals that arrived after the job ran (Life on Our Planet,
+Springsteen on Broadway, Turning Point, Cooper and Fry S1) are now in
+`EXCLUDED_TITLES.md` by hand, with a note saying why the automated PR is not the
+full picture for the day.
+
+**Verified:** the check fails on a synthetic conflict in both directions, passes
+a finished-dismissal against a future pick row (the case it must not flag),
+honours a declared `<!-- re-added: reason -->` marker, and fails loudly if it
+parses zero rows or zero exclusions. `index.html` parses clean, div balance
+267/267, full `npm test` green.
+
+**Delivered:** `scripts/check-rows-against-exclusions.mjs` (new), `index.html`,
+`data/EXCLUDED_TITLES.md`, `data/INTEGRITY_MANIFEST.json`, `package.json`, this
+file.
