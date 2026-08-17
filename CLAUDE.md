@@ -1050,3 +1050,67 @@ Refreshed with `npm run data:manifest`, and then verified rather than assumed: a
 **Worth generalising: a shrink-tolerance trip-wire is only as good as when its baseline was captured.** Refreshing the manifest is a normal part of an intended shrink, which means the refresh command will sometimes be run in a session that has already damaged a file. `npm run data:manifest` is not a no-op to reach for at the end of a pass; run the check first, look at what it says, and only refresh when the current state is the state worth defending.
 
 **Delivered:** `CLAUDE.md`, `data/INTEGRITY_MANIFEST.json`.
+## 2026-08-17, later still: eight of twelve Top Picks were dead, and the worst three were recommendations for things already in her own log
+
+The Monday automation fired for the first real time and opened two PRs (the
+dismissed-title sync, and the first live-records backup snapshot, which is the
+seeding step that could not honestly be done from a sandbox). It also opened
+issue #4, the status-drift check failing. That issue is what started this, and
+the real finding was several times larger than what it reported.
+
+**What was actually wrong with the twelve-pick list.** Six were dead on arrival
+by Susan's own actions: three marked watched on-site (Tehran, Abstract: The Art
+of Design, The Greatest Night in Pop) and three dismissed (Life on Our Planet,
+Springsteen on Broadway, Turning Point: The Bomb and the Cold War). None had
+been removed from `index.html`, so they were invisible to her only because the
+live status and dismiss sync suppresses them client-side. The next rebuild, or
+any fresh browser, puts them straight back in front of her.
+
+**The two found after that are the ones that matter.** Cross-checking every
+remaining pick against `data/STREAMING_LOG.md` turned up **The Old Man** (Prime,
+2 plays, 2022 to 2025) and **Call My Agent!** (Prime, 2 plays, 2026-07-09 to
+2026-07-14). The rebuild recommended a show she finished five weeks earlier.
+Abstract belongs in this group too: 9 plays between 2017 and 2019, so it was
+never a watched-today problem, it was a bad pick from the start. Three of twelve
+picks were titles sitting in her own watch log, in this repo, which nothing
+compared against. The Old Man was also badged Hulu, which this file's own Phase
+10 notes lists as deliberately untracked.
+
+That leaves four genuinely valid picks: Annika, Lupin, Omnivore, Bad Sisters.
+
+**The fix that matters is not the eight removals, it is
+`scripts/check-picks-against-log.mjs`.** It parses every `pick-row` title and
+every `- **Title**` entry in the watch log, normalises both (articles,
+punctuation, season markers) and fails on a match. A pick carrying an explicit
+season marker is allowed when that season is not itself logged, because a new
+season of a finished show is a good recommendation and not a bug; the obvious
+case is Reacher season 4. A deliberate rewatch is allowed too, declared with
+`<!-- rewatch: reason -->` before the row, same convention as the `no-art`
+marker. It fails loudly if it parses zero picks or zero log entries, so a format
+change cannot silently blind it.
+
+Verified against reality rather than a fixture: run against `git show
+HEAD:index.html`, the file as actually shipped, it fails with exactly the three
+real titles. A synthetic case confirms a later season passes and the same season
+does not, and that the rewatch marker works.
+
+**Taste profile, per Susan's standing instruction that dismissals feed the
+logic.** The four later dismissals looked at first like the long-tail
+diversification failing outright, and that reading is wrong. In the same sitting
+she marked three long-tail documentaries as watched. Split by subject rather
+than breadth: she keeps music and rock history, design and craft, food and
+travel; she rejects natural history, filmed stage performance, and archival
+political history. The thread in what she keeps is a person making something.
+Recorded in `data/TASTE_PROFILE.md` with that reasoning rather than as a flat
+list of rejects.
+
+**Also worth noting about PR #7:** it is already incomplete. The sync job ran
+this morning and caught six of the day's ten dismissals; the last four came
+after it. Merging it is still right, a later run picks up the remainder. Worth
+remembering before reading any single automated PR as the complete picture.
+
+**Delivered:** `index.html` (eight pick rows removed),
+`scripts/check-picks-against-log.mjs` (new), `package.json`,
+`data/STREAMING_LOG.md`, `data/TASTE_PROFILE.md`, `data/INTEGRITY_MANIFEST.json`,
+this file. Backfilling the list back to twelve is the next step and is
+rebuild-sized, not a patch.

@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-08-17 (five Apple TV+ and film titles reported directly by Susan: Shrinking, Friends and Neighbors, Criminal Record, The Morning Show, the Bourne films. Apple TV+ watch-history sync is still blocked, so these are her word, which is the only route available for that service. Earlier the same day: five Top Picks marked already-seen)
+**Last updated:** 2026-08-17 (five Apple TV+ and film titles reported directly by Susan: Shrinking, Friends and Neighbors, Criminal Record, The Morning Show, the Bourne films. Apple TV+ watch-history sync is still blocked, so these are her word, which is the only route available for that service. Earlier the same day: five Top Picks marked already-seen. Later the same day: Tehran and The Greatest Night in Pop, both marked watched on-site, added after the status-drift check caught them still sitting in Top Picks. Abstract: The Art of Design was also marked watched but needed no new entry, it was already in the log from 2017 to 2019, which is the actual bug: it should never have been recommended)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -59,6 +59,8 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 - **A Working Man** · MGM+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Grounded action thriller, working-class hero (Jason Statham, David Harbour, dir. David Ayer)
 - **The Bear (Seasons 1+)** · Hulu (off-platform, reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Professional-kitchen drama, US prestige character drama (Jeremy Allen White, Ayo Edebiri)
 - **A Very English Scandal** · Prime Video (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. British true crime, LGBTQ+ history, dark comedy (Hugh Grant, Ben Whishaw)
+- **Tehran (Seasons 1+)** · Apple TV+ (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Israeli espionage thriller, deep cover, subtitled (Niv Sultan, Glenn Close)
+- **The Greatest Night in Pop** · Netflix (reported by Susan directly, 2026-08-17, via the on-site "watched" button) · already seen. Music documentary, archival, the making of "We Are the World"
 
 - **Reacher (Season 4)** · Prime Video (Prime watch history 2026-08-12 and 2026-08-15; synced 2026-08-16) · in progress — releases weekly through Sep 16, so the on-site "watched" flag of 2026-08-12 meant caught up, not finished
 - **Grantchester (Season 11)** · Prime Video / PBS Masterpiece (Prime watch history 2026-08-15; synced 2026-08-16) · in progress — final season. Cozy British period mystery, clerical-detective procedural (Rishi Nair, Robson Green, Al Weaver)

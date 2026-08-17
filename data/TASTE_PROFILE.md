@@ -363,6 +363,36 @@ the same day. Both were flagged at the time as resting on a single title. That
 caution was correct, and the honest move is to hold them at their modest weight
 or drop them, not to keep building on them.
 
+**Later the same day, four more dismissals, and they say something different.**
+Life on Our Planet, Springsteen on Broadway, Turning Point: The Bomb and the
+Cold War and Cooper and Fry season 1. The first three were long-tail variety
+picks, added specifically to widen the list beyond British crime. She threw out
+nearly all of them within hours.
+
+**Read that carefully, because the obvious conclusion is wrong.** It is not
+that the long tail was a mistake. In the same sitting she marked Abstract: The
+Art of Design, The Greatest Night in Pop and Becoming Led Zeppelin as watched,
+which is the opposite signal: three long-tail documentaries she has actually
+seen. The distinction is not breadth, it is subject.
+
+  Documentary she watches: music and rock history (Becoming Led Zeppelin, The
+  Greatest Night in Pop), design and craft (Abstract, nine plays across three
+  years), food and travel (Chef's Table, Bourdain, Omnivore).
+
+  Documentary she rejects: natural history (Life on Our Planet), filmed stage
+  and concert performance (Springsteen on Broadway), archival political history
+  (Turning Point: The Bomb and the Cold War).
+
+The common thread in what she keeps is a person making something. The common
+thread in what she rejects is a subject with no maker at its centre. Weight
+maker-led and craft-led documentary up, natural history and archival-political
+documentary down, and treat filmed stage performance as its own miss rather
+than evidence against music documentary generally.
+
+**Cooper and Fry season 1** is the eleventh cozy or period British mystery in
+the dismissal record and needs no further comment beyond confirming the
+sub-branch demotion above.
+
 **What to do with this each rebuild.** Fetch the dismissal record, split it by
 section, look for a genre or sub-genre appearing three or more times among the
 not-interested entries, and demote that cluster rather than only excluding the
