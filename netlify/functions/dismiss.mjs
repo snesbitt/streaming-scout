@@ -22,6 +22,12 @@
 // flood of junk entries ages itself out instead of either growing the store
 // without bound or leaving the endpoint permanently stuck once full.
 
+// KNOWN BUG, found 2026-08-16, not yet fixed. Same lost-update bug as
+// status.mjs, which has the full write-up: this file also does
+// read-modify-write against a single whole-list blob, so two writes inside
+// Netlify Blobs' read-consistency lag (measured at roughly 5s) will silently
+// drop one. Fix both together by giving each title its own blob key.
+
 import { getStore } from "@netlify/blobs";
 
 export const config = { path: "/api/dismiss" };

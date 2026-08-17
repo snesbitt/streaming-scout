@@ -16,6 +16,30 @@
 // on" gap; the clipboard message the client copies after a flag is how
 // Susan tells Claude to fold it into data/STREAMING_LOG.md for real.
 
+// KNOWN BUG, found 2026-08-16, not yet fixed. Concurrent writes are lost.
+//
+// Every mutating branch below does read-modify-write against a single
+// whole-list blob: get("list"), rebuild the array, setJSON("list"). Netlify
+// Blobs reads are eventually consistent, measured at roughly 5 seconds of lag
+// against the live site. So two writes inside that window both read the same
+// pre-write list, and whichever finishes second writes its copy back whole and
+// silently discards the first.
+//
+// Reproduced live: POST "Reacher, season 4" -> watching, then POST
+// "The Westies" -> watching a few seconds later. The Westies stuck; Reacher
+// reverted to watched. Re-posting Reacher alone, then waiting, worked. This is
+// almost certainly a contributor to the "a value is read correctly once but
+// never carried through" pattern CLAUDE.md keeps naming, since it needs no user
+// error at all: two quick clicks are enough.
+//
+// dismiss.mjs has the identical shape and the same bug.
+//
+// The fix is to stop keeping one list blob and give each title its own key, so
+// writes never overlap: setJSON(title, {...}) and enumerate with store.list()
+// on GET. That removes read-modify-write entirely rather than papering over it
+// with a retry. It needs a migration of the existing "list" blob, so it has not
+// been done in passing.
+
 import { getStore } from "@netlify/blobs";
 
 export const config = { path: "/api/status" };

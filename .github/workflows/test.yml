@@ -171,7 +171,10 @@ jobs:
             });
             const match = existing.find(i => i.title === title);
             const body = `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n` +
-              `check-status-drift.mjs found a title marked "watching" live on streamingscout.org with no matching static markup in index.html. It is only rendering via the fragile live/localStorage path this project has been bitten by twice before (CLAUDE.md 2026-08-10, 2026-08-11). See the run log for which title(s). This needs a real .watching-row added by hand (poster art, season/status text), not auto-fixable.`;
+              `check-status-drift.mjs found index.html and the live /api/status store disagreeing. It checks two directions; the run log says which one fired. ` +
+              `Direction 1, a title marked "watching" live with no matching static markup in index.html: it is only rendering via the fragile live/localStorage path this project has been bitten by twice before (CLAUDE.md 2026-08-10, 2026-08-11), and needs a real .watching-row added by hand with poster art and season/status text. ` +
+              `Direction 2, a title marked "watched" live but still rendered in Currently Watching, Top Picks or Coming Soon: either the row is stale, or the live flag is. Check actual viewing before assuming the page is at fault. The on-site "watched" button means "caught up for now" in practice, so for a weekly release the live flag is often the stale side (this happened 2026-08-16 with Reacher S4 and The Westies). ` +
+              `Neither direction is auto-fixed: both are content decisions.`;
             if (match) {
               await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: match.number, body });
             } else {
