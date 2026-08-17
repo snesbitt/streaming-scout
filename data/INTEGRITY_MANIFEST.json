@@ -3,16 +3,16 @@
   "updatedAt": "2026-08-17",
   "files": {
     "data/STREAMING_LOG.md": {
-      "bytes": 63336,
-      "lines": 1033,
-      "entries": 940,
+      "bytes": 65566,
+      "lines": 1045,
+      "entries": 950,
       "headings": 18
     },
     "data/TASTE_PROFILE.md": {
-      "bytes": 13671,
-      "lines": 215,
-      "entries": 42,
-      "headings": 6
+      "bytes": 26538,
+      "lines": 424,
+      "entries": 57,
+      "headings": 10
     },
     "data/STREAMING_PROFILE.md": {
       "bytes": 10191,
@@ -21,10 +21,10 @@
       "headings": 9
     },
     "data/EXCLUDED_TITLES.md": {
-      "bytes": 3594,
-      "lines": 54,
-      "entries": 16,
-      "headings": 3
+      "bytes": 4406,
+      "lines": 68,
+      "entries": 22,
+      "headings": 4
     }
   }
 }
