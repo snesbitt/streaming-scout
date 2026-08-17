@@ -228,3 +228,60 @@ jobs:
             it looks right. These titles are otherwise vulnerable to
             reappearing in the next Coming Soon/Top Picks rebuild.
           labels: automated-pr
+
+  # 2026-08-17: closes the last item on roadmap.html Phase 06, "automated
+  # backups are still ahead," and closes it against the hole that is actually
+  # still open rather than the one the phrase implies.
+  #
+  # data/ has been version-controlled since 2026-07-21, so every past version
+  # of the log, taste profile and exclusion list is already recoverable from
+  # git; the check-data-integrity.mjs trip-wire in `npm test` covers the other
+  # half of that (git keeps every version but does not notice a truncation).
+  # The watching/watched flags in the `title-status` Blobs store and the
+  # dismissals in `dismissed-titles` are the genuinely unbacked thing: they
+  # exist only inside Netlify, are written by an unauthenticated endpoint from
+  # any device, and if that store were wiped there would be nothing at all to
+  # restore from.
+  #
+  # Same shape as dismiss-drift above: schedule/workflow_dispatch only (it is
+  # a live-network job, and a push-triggered live check races Netlify's own
+  # deploy), and it opens a PR through GitHub's own bot identity rather than
+  # pushing. The script refuses to overwrite a good snapshot with a smaller or
+  # empty one, and writes nothing at all when the records have not changed, so
+  # a quiet week produces no PR.
+  backup:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Snapshot the live watching/dismissed records
+        run: node scripts/backup-live-records.mjs
+
+      - name: Open a PR if the snapshot changed
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "backups/live-records: snapshot the live watching and dismissed records"
+          branch: auto/live-records-backup
+          delete-branch: true
+          title: "Auto: back up the live watching and dismissed records"
+          body: >
+            Opened automatically by the weekly `backup` job in
+            `.github/workflows/test.yml`. `scripts/backup-live-records.mjs`
+            found the live `/api/status` and `/api/dismiss` records had
+            changed since the last snapshot and wrote a new dated copy under
+            `backups/live-records/`. These records live only in Netlify Blobs
+            and have no other backup, so merging this is what makes them
+            recoverable. Review the diff for anything that looks like loss
+            rather than normal activity, then merge. If records went missing,
+            do NOT merge: the previous snapshot is what you would restore
+            from. The script refuses to write a snapshot smaller than the
+            last one, so a shrink shows up as a failed job, not a quiet
+            overwrite.
+          labels: automated-pr

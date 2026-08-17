@@ -82,15 +82,24 @@ no DOM), 27 concurrency assertion groups covering both Netlify Functions
 Function files against a fake `@netlify/blobs` that reproduces the roughly
 5-second read-consistency lag that used to lose concurrent writes; its
 first test asserts the OLD storage logic still fails, so a green suite
-cannot be an artefact of a too-forgiving fake), plus three offline static
-checks added over time — content drift
+cannot be an artefact of a too-forgiving fake), 20 backup-guard assertion
+groups (`tests/backup-guards.test.mjs`, added 2026-08-17, drives
+`scripts/check-data-integrity.mjs` and `scripts/backup-live-records.mjs`
+end to end against a throwaway copy of `data/` and a local synthetic
+server, proving each one refuses what it claims to refuse), plus four
+offline static checks added over time — content drift
 (`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
 `data/STREAMING_PROFILE.md`), a tap-target regression guard
 (`scripts/check-tap-targets.mjs`, added 2026-08-16, confirms the
 `.pick-dismiss`/`.pick-watching`/`.pick-watched` padding that fixed two
 real click-target bugs — 2026-07-30 and 2026-08-05 — is still present),
-and a pick-meta copy check (`scripts/check-pick-meta-length.mjs`, added
-2026-08-16, catches leftover internal-process commentary in Coming Soon
+a data integrity check (`scripts/check-data-integrity.mjs`, added
+2026-08-17, fails the build if any file in `data/` is emptied, deleted,
+renamed or sharply shrunk against `data/INTEGRITY_MANIFEST.json` -- git
+already keeps every version of those files, what it does not do is
+notice; shrink one on purpose with `npm run data:manifest` in the same
+commit so the drop is reviewable), and a pick-meta copy check
+(`scripts/check-pick-meta-length.mjs`, added 2026-08-16, catches leftover internal-process commentary in Coming Soon
 copy, the exact class of thing Susan flagged by hand 2026-08-08).
 `npm run smoke` and `npm run check:live-drift` are separate, live-network
 checks against the real deployed site — see "GitHub Actions / CI" below
@@ -98,11 +107,11 @@ for where those actually run.
 
 ## GitHub Actions / CI (added 2026-08-16, extending the 2026-08-07/08-14 work)
 
-`.github/workflows/test.yml` runs four jobs:
+`.github/workflows/test.yml` runs five jobs:
 
 - **`test`** — on every push and pull request, plus a weekly cron.
-  `npm ci && npm test` (all five offline checks above). This is the only
-  job that runs on push/PR; the three below are schedule/
+  `npm ci && npm test` (all six offline checks above). This is the only
+  job that runs on push/PR; the four below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
   workflow file's own comments for why that matters — confirmed the hard
   way on a sibling site, whose deploy record lagged a landed, CI-passed
@@ -125,13 +134,21 @@ for where those actually run.
   opens a PR via GitHub's own bot identity (the workflow's default token,
   not a Claude session) when it finds and fixes anything. Susan reviews
   and merges.
+- **`backup`** — weekly + on-demand, added 2026-08-17. Snapshots the live
+  `/api/status` and `/api/dismiss` records into `backups/live-records/` and
+  opens a PR when they have changed. These records live only inside Netlify
+  Blobs and had no backup at all; `data/` has been version-controlled since
+  July, so git already covers that side. The script refuses to overwrite a
+  good snapshot with a smaller or empty one (a shrink fails the job rather
+  than quietly replacing the copy you would restore from) and writes nothing
+  when nothing changed, so a quiet week produces no PR.
 
 **On the standing "Claude never pushes, only Susan pushes from her own
 Terminal" rule:** unchanged, and still applies to every interactive Claude
 session and scheduled Cowork task (the weekly artwork-sourcing sweep, for
 example, works on a dedicated branch and hands Susan a one-click
-PR-compare link instead of pushing to `main`). The `dismiss-drift` job
-above is a different trust boundary: it's this repo's own CI robot, acting
+PR-compare link instead of pushing to `main`). The `dismiss-drift` and
+`backup` jobs above are a different trust boundary: they are this repo's own CI robot, acting
 through GitHub's automatically-scoped token within a single Actions run —
 the same pattern tools like Dependabot use — not a Claude session with
 push access.

@@ -3,11 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/logic.test.mjs && node --import ./tests/register-blobs-mock.mjs tests/blobs-concurrency.test.mjs && node scripts/check-content-drift.mjs && node scripts/check-tap-targets.mjs && node scripts/check-pick-meta-length.mjs",
+    "test": "node tests/logic.test.mjs && node --import ./tests/register-blobs-mock.mjs tests/blobs-concurrency.test.mjs && node tests/backup-guards.test.mjs && node scripts/check-data-integrity.mjs && node scripts/check-content-drift.mjs && node scripts/check-tap-targets.mjs && node scripts/check-pick-meta-length.mjs",
     "smoke": "node scripts/smoke.mjs",
     "smoke:local": "node scripts/smoke.mjs http://localhost:8888",
     "check:live-drift": "node scripts/check-dismiss-drift.mjs && node scripts/check-status-drift.mjs",
-    "check:live-drift:local": "node scripts/check-dismiss-drift.mjs http://localhost:8888 && node scripts/check-status-drift.mjs http://localhost:8888"
+    "check:live-drift:local": "node scripts/check-dismiss-drift.mjs http://localhost:8888 && node scripts/check-status-drift.mjs http://localhost:8888",
+    "backup:live": "node scripts/backup-live-records.mjs",
+    "data:manifest": "node scripts/check-data-integrity.mjs --update"
   },
   "dependencies": {
     "@netlify/blobs": "^10.7.9"
