@@ -1026,4 +1026,18 @@ The check deliberately does not verify that each URL resolves; that needs a netw
 
 **Verified:** the coverage check fails on a deliberately stripped copy and passes on the real file; index.html parses clean with `html.parser`; div balance unchanged at 286/286; every new `<img>` carries the house attribute set (`decoding="async"`, `loading="lazy"`, `width="1000"`, `height="1500"`, a real `alt`, and the `onerror="this.remove()"` fallback); full `npm test` green on Susan's machine.
 
+### Same day, follow-through: 10 more rows had art, but the wrong shape of art
+
+Verifying the deploy turned up a second, quieter version of the same problem. Every row had an image, but twelve of them were landscape stills or thumbnails being centre-cropped into a portrait slot by `object-fit: cover`. Some were tiny: Black Doves S2 was a 148x148 square, The Gold S2 183x171, Grantchester S11 and Vanity Fair both 330px wide Wikipedia thumbs. They rendered, so nothing flagged them, but they looked like placeholders next to a real poster.
+
+Ten were replaced with proper 500x750 portrait posters from TMDB: Reacher S4, Grantchester S11, Sugar S2, Vanity Fair (2018), Neagley, Nocturne, Only Murders S6, Black Doves S2, The Gold S2, Babylon Berlin S5. Season-specific art where TMDB has it, show-level where it does not.
+
+**This also closes the Reacher/Neagley ambiguity carried since 2026-08-08.** Both rows used images from the same Amazon MGM press page, with no alt text distinguishing the Reacher S4 key art from the Neagley spinoff teaser, and that caveat sat unresolved in this file for nine days. Both now carry their own unambiguous poster, confirmed by looking at them.
+
+**Two deliberately left alone.** Kill Jackie's image is the one Susan supplied directly, and TMDB has no poster for it, so replacing hers with nothing would be a downgrade. Betrayal could not be identified with confidence against TMDB's candidates, and shipping a plausible-but-wrong poster is the exact failure this project keeps guarding against; it stays on its current image until someone can confirm which title it is.
+
+**A verification trap worth knowing.** A full-page screenshot taken immediately after forcing images to reload showed Reacher and The Westies as monograms, which looked like a real failure. It was not: `complete === true` does not mean painted, and those two are large remote images. A clean reload plus a zoom on that region showed both rendering correctly. Zoom in on the actual region before reporting an image as broken from a screenshot.
+
+**Not automated, and worth saying plainly:** the coverage check catches a missing image, not a badly-shaped one. Aspect ratio needs a decoded image, which needs a browser, so it stays a manual check for now. Prefer `image.tmdb.org` for new art, since those are always portrait posters.
+
 **One thing for Susan to decide, not decided here:** TMDB asks for attribution when their images are used. Nothing visible was added to the page, since that is a copy decision, not a bug fix. A one-line credit in about.html's stack section would cover it.
