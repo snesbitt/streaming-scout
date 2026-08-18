@@ -1,18 +1,18 @@
 {
   "note": "Refreshed by scripts/check-data-integrity.mjs --update. Records how big each data file was when it was last known good, so a later truncation is caught. Shrinking a file on purpose is fine; refresh this in the same commit so the drop is reviewable.",
-  "updatedAt": "2026-08-17",
+  "updatedAt": "2026-08-18",
   "files": {
     "data/STREAMING_LOG.md": {
-      "bytes": 67948,
-      "lines": 1065,
-      "entries": 957,
-      "headings": 19
+      "bytes": 68457,
+      "lines": 1076,
+      "entries": 958,
+      "headings": 20
     },
     "data/TASTE_PROFILE.md": {
-      "bytes": 29364,
-      "lines": 476,
+      "bytes": 31496,
+      "lines": 512,
       "entries": 57,
-      "headings": 11
+      "headings": 12
     },
     "data/STREAMING_PROFILE.md": {
       "bytes": 10191,
@@ -21,9 +21,9 @@
       "headings": 9
     },
     "data/EXCLUDED_TITLES.md": {
-      "bytes": 4923,
-      "lines": 77,
-      "entries": 26,
+      "bytes": 5225,
+      "lines": 81,
+      "entries": 29,
       "headings": 4
     }
   }

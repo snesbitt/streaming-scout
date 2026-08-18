@@ -343,6 +343,42 @@ just surfaced, so the error would compound every week. Tick-sourced entries in
 STREAMING_LOG.md are marked "watch date unknown" for this reason. Treat them as
 undated when weighting, and as authoritative when excluding.
 
+## The maker-led documentary theory, tested and mostly wrong (2026-08-17, evening)
+
+Four documentary-adjacent picks were added to test the reading that Susan keeps
+maker-led craft documentary and rejects natural history and archival political
+history. Within the hour she resolved all four, and the result does not support
+the theory as stated.
+
+  Sr. (Robert Downey Sr.)                     ticked, already seen
+  Still: A Michael J. Fox Movie               dismissed, not interested
+  The Velvet Underground                      dismissed, not interested
+  Number One on the Call Sheet                dismissed, not interested
+
+**What survives.** She has genuinely seen a lot of this material: Abstract nine
+times over three years, Becoming Led Zeppelin, The Greatest Night in Pop, Mr.
+Scorsese, The Andy Warhol Diaries, Louis Armstrong's Black & Blues, and Sr. The
+appetite is real and it is deep. That is not in question.
+
+**What does not survive.** "She likes maker-led documentary, so offer more of
+it" is too coarse a rule to generate picks from. Three of three unseen ones were
+rejected on sight. The likeliest reading is that this vein is one she works
+through herself rather than one she wants surfaced, and that having seen the
+notable ones, what is left is the tail she already passed over.
+
+**What to do with it.** Keep the documentary weight for what it explains about
+her taste (a person making something, craft over subject), stop using it as a
+source of new Top Picks. One documentary in a list of twelve, not four. If a
+genuinely major one lands, it will show up through the Coming Soon path anyway.
+
+**The wider lesson, which is the valuable part.** Three of four picks in this
+list were resolved within an hour of being published, and the same happened
+earlier the same day with a different four. Susan resolves fast, so a theory
+about her taste can be tested in a single sitting rather than argued about. Add
+a small number of picks from a hypothesis, watch what happens to them, and let
+the result rewrite this file. That is a far better instrument than more careful
+reasoning over the same sixteen-year log.
+
 ## Negative signal from dismissals (added 2026-08-17)
 
 Read this before every rebuild. Susan asked on 2026-08-17 that dismissals feed
