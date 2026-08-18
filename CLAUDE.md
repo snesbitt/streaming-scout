@@ -1657,3 +1657,46 @@ something running on a schedule should be treated as unverified until checked
 against `list_triggers` in that session. Three for three so far.
 
 **Delivered:** `about.html`, `roadmap.html`, `guide.html`, this file.
+## 2026-08-17: a Monday task that reports the gap, because the resync itself cannot be scheduled
+
+Susan's call on the missing Monday task: recreate it, but resync only, not a
+full rebuild. Keeping control of when Top Picks changes while stopping the log
+from drifting, which is the gap that has actually been biting.
+
+**The honest version of that turned out to be a report, not a resync, and the
+reason is structural.** Pulling Netflix and Prime history means reading her
+already-authenticated browser through Claude in Chrome, and writing to the log
+means the device bridge. Neither exists in a scheduled cloud firing. The
+monthly five-site audit task learned this the hard way and carries the finding
+in its own prompt: "That bridge is structurally never available in a
+scheduled/cloud firing, confirmed repeatedly across multiple runs, not a
+transient issue." A Monday task that tried to resync would fail every week,
+which is precisely the failure mode this whole day has been about.
+
+**What was created instead** (`trig_01FoB2Dqoprp1ne27pdZZ6n9`, Mondays 13:30
+UTC, push notification on): a staleness report that works entirely over plain
+HTTPS, which does work unattended. It reads `data/STREAMING_LOG.md` from GitHub
+raw, reads the live `/api/status` and `/api/dismiss`, and reports how many days
+old the log is, which ticked or watching titles have no log entry, and the
+week's dismissals. Then a one-line verdict, explicitly allowed to be "No
+resync needed this week."
+
+Its prompt forbids it from calling itself a resync, and says why in the prompt
+itself, so a future session editing it cannot lose the reasoning. Season
+matching is specified (a logged "(Seasons 1-3)" covers season 2 but not season
+4) and a failed fetch must stop rather than report a partial picture as
+complete.
+
+**Why a report is worth having at all**, rather than nothing: the decision to
+run a resync is currently made on a guess about how stale things are. This
+turns that into a number, delivered on the day she is most likely to act on
+it. Every scheduled thing in this project that promised more than it could
+deliver has ended up as a lie on the site; this one is scoped to exactly what
+a cloud job can actually do.
+
+Both `roadmap.html` and `guide.html` updated to describe it accurately,
+including the reason the history pull stays manual, so the page explains the
+limit rather than looking like an unfinished feature.
+
+**Delivered:** `roadmap.html`, `guide.html`, this file, plus the scheduled task
+itself, which lives outside the repo.
