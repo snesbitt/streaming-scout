@@ -60,22 +60,36 @@ async function main() {
   // taste-profile bar or an already-correct historical mention never trips
   // it. Merely appearing somewhere in index.html is not drift.
   const watched = (statuses || []).filter((s) => s && s.status === "watched" && s.title);
-  const rowRe = /<div class="(watching-row|pick-row|soon-row)"[^>]*data-title="([^"]+)"/g;
+  // 2026-08-17: narrowed from (watching-row|pick-row|soon-row) to the two row
+  // types this check still owns. scripts/check-watched-drift.mjs now
+  // auto-fixes a ticked title's Top Picks and Coming Soon rows and opens a
+  // pull request for it in the same workflow run. Leaving those row types
+  // here meant both jobs fired on one condition: this one failed the run and
+  // opened a tracking issue while the fix PR was already sitting there
+  // waiting to be merged. Two signals, one problem, and the noisy one has no
+  // action attached. Confirmed live on run #63, where "Sr." tripped this
+  // check and PR #12 fixed it in the same run.
+  //
+  // Currently Watching and In Theaters rows stay here precisely because
+  // watched-drift deliberately will not touch them: a tick there may mean
+  // "finished this season" and what replaces the row is an editorial call.
+  // That is the case that still needs a person, which is what this
+  // report-only check is for. No coverage is lost; it moved.
+  const rowRe = /<div class="(watching-row|theater-row)"[^>]*data-title="([^"]+)"/g;
   const liveClaims = new Map();
   for (const m of readFileSync("index.html", "utf8").matchAll(rowRe)) {
     liveClaims.set(normalize(m[2]), m[1]);
   }
   const SECTION = {
     "watching-row": "Currently Watching",
-    "pick-row": "Top Picks",
-    "soon-row": "Coming Soon",
+    "theater-row": "In Theaters",
   };
   const stale = watched
     .map((entry) => ({ entry, section: liveClaims.get(normalize(entry.title)) }))
     .filter((x) => x.section);
 
   if (stale.length) {
-    console.error(`Status drift check FAILED: ${stale.length} title(s) marked "watched" live but still presented as current or upcoming in index.html:\n`);
+    console.error(`Status drift check FAILED: ${stale.length} title(s) marked "watched" live but still shown as something Susan is in the middle of:\n`);
     for (const { entry, section } of stale) {
       console.error(`  - "${entry.title}" (watched ${entry.updatedAt || "unknown date"}) — still rendered in ${SECTION[section]}.`);
     }
@@ -92,7 +106,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Status drift check passed: all ${watching.length} live "watching" title(s) have static markup, and none of the ${watched.length} "watched" title(s) are still shown as current or upcoming.`);
+  console.log(`Status drift check passed: all ${watching.length} live "watching" title(s) have static markup, and none of the ${watched.length} "watched" title(s) are still in Currently Watching or In Theaters. Top Picks and Coming Soon rows for ticked titles are check-watched-drift.mjs\u2019s job.`);
 }
 
 main().catch((err) => {

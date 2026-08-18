@@ -1417,3 +1417,53 @@ incident.
 **Delivered:** `scripts/check-watched-drift.mjs`, `scripts/lib/titles.mjs`,
 `tests/watched-drift.test.mjs` (all new), `scripts/check-picks-against-log.mjs`,
 `package.json`, `.github/workflows/test.yml`, this file.
+## 2026-08-17, first real run: the watched-drift job worked, and immediately exposed an overlap it created
+
+Run #63, the first with the new job. All six jobs ran. `watched-drift` did
+exactly what it was built for with no human involved: Susan ticked **Sr.** on
+the live site minutes after it was added to Top Picks, and the job recorded it
+in `data/STREAMING_LOG.md` with the clear date and the "watch date unknown"
+wording, removed its `pick-row` from `index.html`, and opened **PR #12**.
+
+**But `status-drift` failed in the same run, on the same title, for the same
+reason.** Its direction 2 was still watching `pick-row` and `soon-row`, which
+`watched-drift` now owns and auto-fixes. So one tick produced two signals: a
+pull request that fixes the problem, and a failed job that opens a tracking
+issue about the problem. The issue has no action attached to it, because the
+fix was already sitting in the PR queue. That is noise, and noise in a check is
+how a check gets ignored.
+
+**Narrowed `check-status-drift.mjs` to `watching-row` and `theater-row`.** No
+coverage left the system, it moved between jobs, and the split now follows what
+each job can actually do about what it finds. `watched-drift` takes Top Picks
+and Coming Soon, where deleting the row is unambiguous. `status-drift` keeps
+Currently Watching and In Theaters, which `watched-drift` deliberately refuses
+to touch because a tick there may mean "finished this season" and whether the
+row should survive is an editorial call. The report-only job is left holding
+exactly the part that needs a person.
+
+Verified by replaying run #63's exact condition offline: the committed backup
+snapshot plus an `Sr.` watched entry, served from a local server to both
+scripts against the real `index.html`. Before the change both failed; after it,
+`status-drift` passes and `watched-drift` alone reports Sr. One signal, with an
+action attached.
+
+**Worth keeping as a general lesson.** Adding an auto-fixing job next to an
+existing report-only job on overlapping conditions is a duplicate-alert bug
+waiting to happen, and it will not show up in tests, only on a real run with
+real drift. Check what the existing jobs already watch before adding one.
+
+**A process note, since it cost a round trip.** The commit for this change was
+lost when the device bridge dropped mid-command, and the loss was silent: the
+two code edits had already been written by earlier calls and survived, while
+the changelog entry and the commit itself did not. After any interrupted
+`device_bash` call, check `git log -1` AND `git ls-files -m` before assuming
+either that the work landed or that it did not. Half of it usually did.
+
+Separately: never put `#` comments in commands handed to Susan to paste. Her
+shell is zsh, which does not enable `interactive_comments` by default, so a `#`
+is not a comment and an apostrophe inside one (as in "today's") opens a quote
+and hangs the terminal at a `quote>` prompt. That happened this session.
+
+**Delivered:** `scripts/check-status-drift.mjs`, `.github/workflows/test.yml`,
+this file.
