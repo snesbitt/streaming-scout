@@ -189,7 +189,7 @@
             </div>
           </div>
         </div>
-        <p id="ss-empty-note" class="pick-meta" style="display:none; padding:6px 2px 0;">All picks dismissed for now. Ask Claude to rebuild Top Picks when you're ready for a fresh list.</p>
+        <p id="ss-empty-note" class="pick-meta" style="display:none; padding:6px 2px 0;">Every pick is dismissed. Ask Claude to rebuild Top Picks when you want a fresh list.</p>
       </div>
     </section>
 
@@ -359,7 +359,7 @@
             <p class="pick-meta">MHz Choice (US/Canada exclusive) &middot; Volker Bruch, Liv Lisa Fries &middot; the fifth and final season</p>
           </div>
         </div>
-        <p id="ss-empty-note-soon" class="pick-meta" style="display:none; padding:6px 2px 0;">All Coming Soon titles dismissed for now. Ask Claude to rebuild Coming Soon when you're ready for a fresh list.</p>
+        <p id="ss-empty-note-soon" class="pick-meta" style="display:none; padding:6px 2px 0;">Every Coming Soon title is dismissed. Ask Claude to rebuild the list when you want a fresh one.</p>
       </div>
     </section>
 
@@ -627,12 +627,12 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
   function copyOrToast(msg, doneMsg, title) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(msg).then(function () {
-        toast(doneMsg + ' Message copied; paste it to Claude to make it permanent.');
+        toast(doneMsg + ' Message copied, in case you want to tell Claude too.');
       }).catch(function () {
-        toast(doneMsg + ' for this device. Tell Claude "' + title + '" needs logging.');
+        toast(doneMsg + ' on this device. Nothing copied, so mention "' + title + '" to Claude if you want it logged now.');
       });
     } else {
-      toast(doneMsg + ' for this device. Tell Claude "' + title + '" needs logging.');
+      toast(doneMsg + ' on this device. Nothing copied, so mention "' + title + '" to Claude if you want it logged now.');
     }
   }
   window.ssDismiss = function (btn) {

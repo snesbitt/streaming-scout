@@ -35,10 +35,10 @@
   <div class="wrap">
     <p class="eyebrow">Guide</p>
     <h1 class="page-title">A personal recommendation engine, built and run by an AI agent</h1>
-    <p class="lede">Six steps, in sequence, written for anyone: no technical background needed. Every box below is a real part of the system, not a simplified illustration of one.</p>
+    <p class="lede">Six steps, written for anyone; no technical background needed. Every box below is a real part of the system, drawn from what actually runs.</p>
 
     <p class="callout" style="margin:0 0 1.4rem;">
-      <strong>This page is the how-to:</strong> the method and the exact prompt to build a site like this yourself, for any topic. For what this dashboard does today, its scoring, its stack, read <a href="/about">About</a> instead.
+      <strong>This page is the how-to.</strong> It has the method, plus the exact prompt you can copy to build a site like this for any topic. <a href="/about">About</a> covers what this particular dashboard does today and how it scores.
     </p>
 
     <nav class="pill-nav">
@@ -54,7 +54,7 @@
 
     <div class="step" id="tools">
       <div><span class="step-num">01</span><span class="step-title">Tools &amp; mode</span></div>
-      <p class="step-body">Built in Cowork, with one deliberate exception: Susan runs every git push from her own Terminal. Claude sessions write and commit, they never push, so nothing reaches the live site without her hand on it. The Chrome extension reads your already-authenticated Netflix and Prime sessions directly; no credential is ever requested, stored, or transmitted. Trust in a system starts with what it refuses to collect.</p>
+      <p class="step-body">Built in Cowork, with one deliberate exception: Susan runs every git push from her own Terminal. Claude sessions write and commit, they never push, so nothing reaches the live site without her hand on it. The Chrome extension reads your already-authenticated Netflix and Prime sessions directly. No credential is ever requested or stored.</p>
 
       <div class="mode-grid">
         <div class="mode-card mode-card--a">
@@ -65,53 +65,53 @@
         <div class="mode-card mode-card--b">
           <div class="mode-card__name">Cowork</div>
           <div class="mode-card__role">build &amp; maintain</div>
-          <ul><li>skill &amp; data files</li><li>the scoring script</li><li>this dashboard, end to end</li></ul>
+          <ul><li>skill &amp; data files</li><li>the documented scoring rules</li><li>the exclusion list</li><li>this dashboard, end to end</li></ul>
         </div>
         <div class="mode-card mode-card--c">
           <div class="mode-card__name">Chrome extension</div>
           <div class="mode-card__role">read your data</div>
-          <ul><li>Netflix &amp; Prime history</li><li>never touches credentials</li><li>hands data to Cowork for the rebuild</li></ul>
+          <ul><li>Netflix &amp; Prime history, handed straight to Cowork</li><li>never touches credentials</li></ul>
         </div>
         <div class="mode-card mode-card--d">
           <div class="mode-card__name">Scheduled tasks</div>
           <div class="mode-card__role">weekly upkeep</div>
-          <ul><li>Mondays, automatic</li><li>see Roadmap, phase 04</li><li>stops rather than publishing a partial state</li></ul>
+          <ul><li>Mondays, automatic</li><li>checks the live site</li><li>stops rather than publishing a partial state</li><li>see Roadmap, phase 04</li></ul>
         </div>
       </div>
 
-      <p class="mode-caption">No terminal in this stack: Cowork carries the build role end to end.</p>
+      <p class="mode-caption">Cowork carries the build role end to end. The only terminal involved is Susan's, for the push.</p>
     </div>
 
     <div class="step" id="data">
       <div><span class="step-num">02</span><span class="step-title">No metadata, so it gets researched</span></div>
-      <p class="step-body">Netflix and Prime's own history pages disclose a title and a date; nothing else. Every genre tag and cast credit across the full watch-history record was independently sourced through per-title research, not inferred from platform metadata. Watch status is likewise inferred from episode counts and gaps, never presented as scraped fact.</p>
-      <p class="step-body">Coming Soon draws only from named, verifiable sources: BritBox, PBS Masterpiece, Netflix Tudum, Den of Geek, What's on Netflix, and JustWatch, cited so each claim's reliability can be judged independently. Where verified art doesn't exist, the record says so by leaving the space empty, rather than substituting a guess that looks like it might be real.</p>
+      <p class="step-body">Netflix and Prime's own history pages disclose a title and a date; nothing else. So every genre tag and cast credit was researched title by title. Watch status is inferred from episode counts and gaps, and the page says as much rather than dressing it up as scraped fact.</p>
+      <p class="step-body">Coming Soon draws only from named, verifiable sources: BritBox, PBS Masterpiece, Netflix Tudum, Den of Geek, What's on Netflix, and JustWatch, cited so each claim's reliability can be judged independently. Where no verified art exists, the space stays empty. A plausible-looking guess would be worse than a gap.</p>
     </div>
 
     <div class="step" id="scoring">
       <div><span class="step-num">03</span><span class="step-title">Signature genres in full, generic at a third</span></div>
-      <p class="step-body">Broad categories (Comedy, Drama) are shared across too many unrelated titles to constitute meaningful evidence on their own. Genres with real recurrence in your own history (British Procedural, Spy Thriller, Mystery, Action Thriller) are weighted in full, with an added signal for cast overlap against titles you've already valued. A genre you've explicitly rejected is capped regardless of any other data pointing the other way: expressed preference overrides inferred pattern.</p>
+      <p class="step-body">Comedy and Drama are spread across too many unrelated titles to mean much on their own. Genres that actually recur in your history carry full weight: British and European crime drama, spy thrillers, grounded action, music documentaries, and the rest of your signature list, with an added signal when the cast overlaps something you already valued. A genre you've ruled out stays capped however well the rest of a title scores.</p>
 
       <div class="compare-row">
         <div class="compare-card compare-card--good">
           <p class="compare-card__kicker">Full weight</p>
-          <p>British Procedural, Spy Thriller, Mystery, Action Thriller: genres with real recurrence in your own watch history, plus cast-overlap bonus.</p>
+          <p>British and European crime drama, spy thrillers, grounded action, music documentaries and six more, all with real recurrence in your own watch history. Cast overlap adds on top.</p>
         </div>
         <div class="compare-card compare-card--bad">
           <p class="compare-card__kicker">Capped, regardless of score</p>
-          <p>Sci-fi, fantasy, rom-com: explicitly rejected. A high score elsewhere can't override a genre you've already ruled out.</p>
+          <p>Science fiction, horror, reality dating, superhero franchises. A high score elsewhere can't override a genre you've already ruled out.</p>
         </div>
       </div>
     </div>
 
     <div class="step" id="snapshot">
-      <div><span class="step-num">04</span><span class="step-title">A snapshot, not a live connection</span></div>
-      <p class="step-body">This reads from a single published snapshot rather than a live session; nothing touches your Netflix or Prime account while you're using it. Synchronization happens deliberately, in a Cowork session, at your request, and only then is the static record rebuilt. Automated jobs run weekly, but they check the site and carry your removals into the permanent record; they do not rebuild the recommendations for you. A Monday report does tell you how far behind the watch log has drifted and what a resync would pick up, so the decision to run one is informed rather than guessed at. The history pull itself needs your logged-in browser, which is why it stays a thing you start.</p>
+      <div><span class="step-num">04</span><span class="step-title">One published snapshot, refreshed when you ask</span></div>
+      <p class="step-body">Nothing touches your Netflix or Prime account while you're reading the page. You're looking at one published snapshot. Syncing happens deliberately, in a Cowork session, when you ask for it, and only then does the static record get rebuilt. The weekly automated jobs check the site and carry your removals into the permanent record; they don't rebuild the recommendations. A Monday report does tell you how far the watch log has drifted and what a resync would pick up, so the call to run one is informed. The history pull needs your logged-in browser, which is why it stays something you start.</p>
     </div>
 
     <div class="step" id="deploy">
       <div><span class="step-num">05</span><span class="step-title">Publishing changes automatically</span></div>
-      <p class="step-body">Every change publishes to the live site automatically, with no manual deploy step. That's what made the live buttons possible: removing a title, or marking it as already seen, updates every device immediately, not just the one you tapped.</p>
+      <p class="step-body">Every change publishes to the live site automatically, with no manual deploy step. That's what made the live buttons possible. Remove a title, or mark it as already seen, and every device you own catches up immediately.</p>
 
       <figure class="diagram">
         <svg viewBox="0 0 720 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and saves the update, Netlify publishes it automatically to streamingscout.org, and two always-on live buttons run alongside it whose results GitHub Actions records back into the repository">
@@ -153,14 +153,17 @@
 
     <div class="step" id="manual">
       <div><span class="step-num">06</span><span class="step-title">What's still manual</span></div>
-      <p class="step-body">Removing a title syncs everywhere instantly. As of 2026-08-16, keeping it off next week's rebuilt list no longer takes a message to anyone: a weekly GitHub Actions job compares what's been dismissed live against the permanent exclusion list, fixes any gap itself, and opens a pull request for Susan to merge: the fix is fully automatic, only the merge is manual. As of 2026-08-17 the &#10003; button works the same way: marking something already seen records it permanently and takes its row off the page, both done by GitHub Actions, so nothing you have already watched can come back in next week's list. What's still genuinely manual is the other button: marking something "currently watching" syncs live instantly, but turning that into a permanent entry (so it survives a rebuild and keeps its poster art) still needs a person's judgment call, since a good entry needs real artwork and accurate progress text, not just a diff-and-append. A weekly job flags when that's missing rather than guessing at it. A scheduled health check (added 2026-08-14) also runs weekly and confirms the live site loads and both Functions are working, plus that every Currently Watching row has real artwork, but it checks that the site is healthy in general, not that any one specific change actually published, so checking the live site by eye after a real update is still worth doing. Two more gaps closed on 2026-08-17. Your watching and dismissed flags used to exist only inside Netlify with no copy anywhere; a weekly job now saves them into the repository and opens a pull request to merge. And every push is now checked for titles that would show a plain monogram instead of real artwork, across the whole page rather than one section, after four separate rounds of missing posters being spotted by eye first. Three more checks were added the same day, each one aimed at something that had already gone wrong: a pick can no longer be something already in the watch log, a row can no longer survive for a title that was removed, and a list that collapses into a single genre fails outright.</p>
+      <p class="step-body">Removing a title syncs everywhere instantly. Since 2026-08-16, keeping it off next week's rebuilt list takes no message to anyone: a weekly GitHub Actions job compares what's been dismissed live against the permanent exclusion list, fixes any gap itself, and opens a pull request. The fix is automatic. Only the merge is manual. The &#10003; button has worked the same way since 2026-08-17, so nothing you've already watched can come back next week.</p>
+      <p class="step-body">One button is still genuinely manual. Marking something "currently watching" syncs live at once, but turning that into a permanent entry, one that survives a rebuild and keeps its poster art, wants real artwork and accurate progress text. That's a judgment call, not a diff-and-append. A weekly job flags when the entry is missing instead of guessing at it.</p>
+      <p class="step-body">A scheduled health check added on 2026-08-14 confirms weekly that the live site loads, that both Functions work, and that every Currently Watching row has real artwork. It tells you the site is healthy in general. It can't tell you that one specific change published, so a look at the live page after a real update is still worth the ten seconds.</p>
+      <p class="step-body">Two more gaps closed on 2026-08-17. Your watching and dismissed flags used to exist only inside Netlify with no copy anywhere; a weekly job now saves them into the repository and opens a pull request. Every push is also checked for titles that would show a plain monogram instead of real artwork, across the whole page, after four separate rounds of missing posters being spotted by eye first. Three more checks arrived the same day, each aimed at something that had already gone wrong: a pick can no longer be something already in the watch log, a row can no longer survive for a title that was removed, and a list that collapses into a single genre fails outright.</p>
     </div>
 
     <div class="step-divider"></div>
 
     <p class="eyebrow" id="build-your-own">Build your own · a starting point</p>
     <h2 style="margin:0 0 8px;">Copy this prompt to start</h2>
-    <p class="lede" style="font-size:15px;">This entire site (the recommendation logic, the dashboard, the domain, the self-updating schedule) started from a single written request to Claude. It was built in stages, in conversation, with every irreversible step (spending money, publishing, connecting accounts) held for explicit approval along the way. Below is a version of that starting request. Copy it, adapt it to your own topic, and paste it into a new Claude conversation.</p>
+    <p class="lede" style="font-size:15px;">This entire site (the recommendation logic, the dashboard, the domain, the self-updating schedule) started from a single written request to Claude. It was built in stages, in conversation, with every irreversible step (spending money, publishing, connecting accounts) held for explicit approval along the way. Below is a version of that starting request. Copy it and paste it into a new Claude conversation, with your own topic swapped in.</p>
 
     <div class="prompt-box">
       <button class="prompt-copy" id="startCopyBtn" onclick="startCopyPrompt()">Copy</button>
@@ -204,9 +207,9 @@ Please help me scope this into a first small version we can finish today, tell m
 
     <p class="eyebrow" style="margin-top:0.4rem;">What it takes on your end</p>
     <ul class="need-list">
-      <li>A Claude account with access to Cowork (or Claude Code, for a more technical, terminal-based version of the same idea).</li>
-      <li>A few short check-ins over the following days or weeks. This kind of project improves in passes, not one sitting.</li>
-      <li>A willingness to say yes or no when Claude asks. It will hold at anything with a real-world consequence rather than guess.</li>
+      <li>A Claude account with access to Cowork. Claude Code works too, if you'd rather do the terminal-based version of the same idea.</li>
+      <li>A few short check-ins over the following weeks, because this kind of project improves in passes.</li>
+      <li>A willingness to answer yes or no. Claude will hold at anything with a real-world consequence rather than guess.</li>
     </ul>
 
     <div class="step-divider"></div>
@@ -214,8 +217,8 @@ Please help me scope this into a first small version we can finish today, tell m
     <p class="eyebrow" id="field-notes">Field notes</p>
     <h2 style="margin:0 0 12px;">What we'd tell you before you start</h2>
     <div class="field-note" style="margin-top: 0;">
-      <p style="margin-bottom:10px;"><strong>A better formula can't fix a bad starting list.</strong> An early version ranked movies from a generic "trending now" list: the same list every visitor to a streaming site sees. A slapstick comedy nearly outscored a spy thriller starring Rami Malek, because both titles came from that same undifferentiated pool and every genre was weighted equally. The fix wasn't a smarter formula. It was pulling candidates only from Susan's own multi-year watch history instead. No amount of scoring sophistication rescues a candidate list that isn't personalized to begin with.</p>
-      <p><strong>Claude asks before it spends, every time, no exceptions.</strong> Registering this site's domain name is the clearest example: before buying streamingscout.org, Claude confirmed the exact domain and the $10.49 price with Susan, and would not complete the purchase without her card on file and her explicit go-ahead. That's not a one-time courtesy. It's the standing rule applied to every dollar this system touches.</p>
+      <p style="margin-bottom:10px;"><strong>A better formula can't fix a bad starting list.</strong> An early version ranked movies from a generic "trending now" list: the same list every visitor to a streaming site sees. A slapstick comedy nearly outscored a spy thriller starring Rami Malek, because both titles came from that same undifferentiated pool and every genre was weighted equally. The fix was to pull candidates only from Susan's own multi-year watch history. No formula rescues a starting list that was never personal in the first place.</p>
+      <p><strong>Claude asks before it spends, every time, no exceptions.</strong> Registering this site's domain name is the clearest example: before buying streamingscout.org, Claude confirmed the exact domain and the $10.49 price with Susan, and would not complete the purchase without her card on file and her explicit go-ahead. The same rule applies to every dollar this system touches.</p>
     </div>
 
   </div>

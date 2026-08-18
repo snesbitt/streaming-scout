@@ -76,8 +76,9 @@ imports from this module rather than duplicating the logic, so the tested
 code and the live code are the same code, not two copies that can drift
 apart.
 
-Run `npm test`: 15 logic assertions (`tests/logic.test.mjs`, no network,
-no DOM), 27 concurrency assertion groups covering both Netlify Functions
+Run `npm test`: fifteen steps in all. 15 logic assertions
+(`tests/logic.test.mjs`, no network, no DOM), 27 concurrency assertion
+groups covering both Netlify Functions
 (`tests/blobs-concurrency.test.mjs`, added 2026-08-17, runs the real
 Function files against a fake `@netlify/blobs` that reproduces the roughly
 5-second read-consistency lag that used to lose concurrent writes; its
@@ -86,17 +87,20 @@ cannot be an artefact of a too-forgiving fake), 20 backup-guard assertion
 groups (`tests/backup-guards.test.mjs`, added 2026-08-17, drives
 `scripts/check-data-integrity.mjs` and `scripts/backup-live-records.mjs`
 end to end against a throwaway copy of `data/` and a local synthetic
-server, proving each one refuses what it claims to refuse), 6 dismiss-drift
+server, proving each one refuses what it claims to refuse), 10 dismiss-drift
 assertion groups (`tests/dismiss-drift.test.mjs`, added 2026-08-17 after the
 check was found matching against the file's prose rather than its entry
 lines, which meant a genuinely missing title could be reported as
-accounted for), plus six
-offline static checks added over time — content drift
+accounted for), and 14 watched-drift assertion groups
+(`tests/watched-drift.test.mjs`, covering the tick button's own
+record-and-remove path, including the season-range logic that decides
+whether a later season of an already-logged show still counts as
+unwatched). Then ten offline static checks, added over time: content drift
 (`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
 `data/STREAMING_PROFILE.md`), a tap-target regression guard
 (`scripts/check-tap-targets.mjs`, added 2026-08-16, confirms the
 `.pick-dismiss`/`.pick-watching`/`.pick-watched` padding that fixed two
-real click-target bugs — 2026-07-30 and 2026-08-05 — is still present),
+real click-target bugs, 2026-07-30 and 2026-08-05, is still present),
 a pick diversity check (`scripts/check-pick-diversity.mjs`, added
 2026-08-17, fails the build when Top Picks collapses into one or two
 genres -- Susan asked for diversified recommendations on 2026-07-25 and
@@ -115,41 +119,54 @@ already keeps every version of those files, what it does not do is
 notice; shrink one on purpose with `npm run data:manifest` in the same
 commit so the drop is reviewable), and a pick-meta copy check
 (`scripts/check-pick-meta-length.mjs`, added 2026-08-16, catches leftover internal-process commentary in Coming Soon
-copy, the exact class of thing Susan flagged by hand 2026-08-08).
+copy, the exact class of thing Susan flagged by hand 2026-08-08), a
+picks-against-log check and a rows-against-exclusions check
+(`scripts/check-picks-against-log.mjs` and
+`scripts/check-rows-against-exclusions.mjs`, both added 2026-08-17, so a
+rebuild cannot recommend something already watched or keep shipping a row
+for a title that was removed), an em-dash check
+(`scripts/check-no-em-dash.mjs`, in character and entity form, across the
+public pages and the stylesheet), and a hardcoded-count check
+(`scripts/check-no-hardcoded-counts.mjs`, which fails the build if a public
+page states a raw "N titles" figure that will be stale within the week).
 `npm run smoke` and `npm run check:live-drift` are separate, live-network
-checks against the real deployed site — see "GitHub Actions / CI" below
-for where those actually run.
+checks against the real deployed site. See "GitHub Actions / CI" below for
+where those actually run.
 
 ## GitHub Actions / CI (added 2026-08-16, extending the 2026-08-07/08-14 work)
 
-`.github/workflows/test.yml` runs five jobs:
+`.github/workflows/test.yml` runs six jobs:
 
-- **`test`** — on every push and pull request, plus a weekly cron.
-  `npm ci && npm test` (all ten offline steps above). This is the only
-  job that runs on push/PR; the four below are schedule/
+- **`test`**: on every push and pull request, plus a weekly cron.
+  `npm ci && npm test`, all fifteen offline steps above. This is the only
+  job that runs on push/PR. The five below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
-  workflow file's own comments for why that matters — confirmed the hard
+  workflow file's own comments for why that matters, confirmed the hard
   way on a sibling site, whose deploy record lagged a landed, CI-passed
   push by 30+ minutes).
-- **`smoke`** — weekly + on-demand. Read-only checks against the real live
-  site (home page loads, internal docs stay blocked, both API Functions
-  reachable and validating input, and — added 2026-08-16 — every Currently
-  Watching row has real poster art wired in, not just the monogram
-  fallback). Opens/updates a tracking GitHub issue on failure.
-- **`status-drift`** — weekly + on-demand. Checks whether anything marked
+- **`smoke`**: weekly + on-demand. Read-only checks against the real live
+  site: home page loads, internal docs stay blocked, both API Functions
+  reachable and validating input, and, added 2026-08-16, every Currently
+  Watching row has real poster art wired in rather than the monogram
+  fallback. Opens/updates a tracking GitHub issue on failure.
+- **`status-drift`**: weekly + on-demand. Checks whether anything marked
   "watching" live via `/api/status` is missing a matching static
   `.watching-row` in `index.html` (the exact gap behind two real bugs,
-  CLAUDE.md's 2026-08-10 and 2026-08-11 entries). Report-only — a real fix
-  needs editorial judgment (poster art, season text) — opens/updates a
-  tracking issue on failure.
-- **`dismiss-drift`** — weekly + on-demand. Checks whether anything
+  CLAUDE.md's 2026-08-10 and 2026-08-11 entries). Report-only, since a real
+  fix needs editorial judgment about poster art and season text. Opens or
+  updates a tracking issue on failure.
+- **`dismiss-drift`**: weekly + on-demand. Checks whether anything
   dismissed live via `/api/dismiss` is missing from
   `data/EXCLUDED_TITLES.md`. This one auto-fixes: it's a purely mechanical
   diff-and-append, so the job runs `check-dismiss-drift.mjs --fix` and
   opens a PR via GitHub's own bot identity (the workflow's default token,
   not a Claude session) when it finds and fixes anything. Susan reviews
   and merges.
-- **`backup`** — weekly + on-demand, added 2026-08-17. Snapshots the live
+- **`watched-drift`**: weekly + on-demand. The tick button's counterpart to
+  `dismiss-drift`. Checks whether anything marked watched live via
+  `/api/status` is missing from `data/STREAMING_LOG.md`, and can record it
+  and strip the stale row itself.
+- **`backup`**: weekly + on-demand, added 2026-08-17. Snapshots the live
   `/api/status` and `/api/dismiss` records into `backups/live-records/` and
   opens a PR when they have changed. These records live only inside Netlify
   Blobs and had no backup at all; `data/` has been version-controlled since
@@ -164,9 +181,9 @@ session and scheduled Cowork task (the weekly artwork-sourcing sweep, for
 example, works on a dedicated branch and hands Susan a one-click
 PR-compare link instead of pushing to `main`). The `dismiss-drift` and
 `backup` jobs above are a different trust boundary: they are this repo's own CI robot, acting
-through GitHub's automatically-scoped token within a single Actions run —
-the same pattern tools like Dependabot use — not a Claude session with
-push access.
+through GitHub's automatically-scoped token within a single Actions run,
+the same pattern tools like Dependabot use. Neither is a Claude session
+with push access.
 
 ## 2026-07-21 update: persistent data now lives in this repo
 
@@ -201,7 +218,8 @@ the `dismiss-drift` CI job (see above) does this automatically via a PR.
 ## Before treating this as authoritative
 
 Do a careful diff/review against the live site before relying on this as
-the source of truth: parts of `roadmap.html` and `guide.html` were
+the source of truth. Parts of `roadmap.html` and `guide.html` were
 reconstructed from rendered text plus a verified template rather than
-extracted byte-for-byte, and the four icon/image binary assets are
-missing entirely.
+extracted byte-for-byte. The four icon/image binary assets, listed as
+missing in earlier drafts of this file, have since been recovered and are
+present in the repo.

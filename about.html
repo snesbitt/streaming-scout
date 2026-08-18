@@ -35,10 +35,10 @@
   <div class="wrap">
     <p class="eyebrow">About · how to read this dashboard</p>
     <h1 class="page-title">What to watch next, matched to what you actually watch.</h1>
-    <p class="lede">Ranked from Susan's real Netflix, Prime Video, and Apple TV+ watch history, plus BritBox, PBS Masterpiece, MGM+, and Paramount+ reviewed for what's coming next, not a generic trending chart. Anyone with the link can read it; only Susan's Cowork sessions update it.</p>
+    <p class="lede">Every ranking here comes out of Susan's own Netflix, Prime Video, and Apple TV+ history, with BritBox, PBS Masterpiece, MGM+, and Paramount+ checked separately for what's landing next. Read-only for everyone else. Only Susan's Cowork sessions change it.</p>
 
     <p class="callout" style="margin:0 0 1.4rem;">
-      <strong>This page is the reference:</strong> what this dashboard does today, its scoring, and its stack. For the method behind it, plus the prompt to build one for your own topic, read the <a href="/guide">Guide</a> instead.
+      <strong>This page is the reference.</strong> It covers what the dashboard does today and how it arrives at a number. The <a href="/guide">Guide</a> has the method behind it, plus a prompt you can copy to build one for your own topic.
     </p>
 
     <div class="stat-strip">
@@ -59,13 +59,14 @@
 
     <div class="about-section" id="what-it-is">
       <div class="about-section-head"><span class="about-num-badge">01</span><h3>what it is</h3></div>
-      <p>Ranks what to watch next from Susan's real Netflix, Prime Video, and Apple TV+ watch history (every title since 2010), matched against her stated taste (spy, action, British procedurals; no sci-fi, fantasy, rom-coms). BritBox, PBS Masterpiece, MGM+, and Paramount+ are reviewed regularly for what's coming next, badged plainly, though they don't sync watch history the way the first three do. Also tracks premieres months ahead, and what she's watching or seeing right now.</p>
-      <p>Automated upkeep runs weekly and the content rebuild happens whenever Susan asks Claude for one.</p>
+      <p>It ranks what to watch next. Candidates come from Susan's Netflix, Prime Video, and Apple TV+ history, every title back to 2010, scored against the genres that keep recurring there: British and European crime drama, spy thrillers, grounded action, music documentaries, prestige drama, food and food travel, LGBTQ+ film, British period drama. Horror, reality dating shows, superhero franchises, and science fiction are capped no matter what else a title has going for it.</p>
+      <p>BritBox, PBS Masterpiece, MGM+, and Paramount+ get reviewed for what's coming next and badged plainly. None of those four syncs watch history the way the first three do. The page also tracks premieres months out, and whatever Susan is watching or seeing this week.</p>
+      <p>Automated upkeep runs on Mondays. A content rebuild happens whenever Susan asks Claude for one.</p>
     </div>
 
     <div class="about-section" id="how-scored">
       <div class="about-section-head"><span class="about-num-badge">02</span><h3>how it's scored</h3></div>
-      <p>Every match percentage on this page comes from Claude applying three weighted signals to Susan's real watch history, freshly, each time the dashboard rebuilds. There's no stored formula behind these numbers today; there are just documented rules, followed the same way every time.</p>
+      <p>Every match percentage is worked out fresh at rebuild time, by Claude, against Susan's real watch history. No stored formula sits behind the numbers today. The rules are written down instead, and followed the same way every time.</p>
       <div class="card">
         <div class="factor-row">
           <div class="factor-row-head"><span class="factor-row-name">Signature genre match</span><span class="factor-row-weight">full weight</span></div>
@@ -79,7 +80,7 @@
           <div class="factor-row-head"><span class="factor-row-name">Generic genre match</span><span class="factor-row-weight">about 1/3 weight</span></div>
           <div class="bar-track"><div class="bar-fill faint" style="width:33%"></div></div>
         </div>
-        <p class="how-scored-note">A genre on Susan's Signature Genres list (British Procedural, Spy Thriller, Mystery, and similar) counts in full; broad buckets like Comedy or Drama count at roughly a third; shared cast with a loved title adds a bonus on top. Loved categories boost further, hated categories force-cap negative, and anything already watched or dismissed is dropped before ranking starts.</p>
+        <p class="how-scored-note">A genre on Susan's signature list counts in full: British and European crime drama, spy thrillers, grounded action, music documentaries, and six more. Broad buckets like Comedy or Drama count at roughly a third. Shared cast with a title she loved adds a bonus on top, and a genre she has ruled out gets capped however well the rest of it scores. Anything already watched or dismissed drops out before ranking starts.</p>
       </div>
       <p>Turning this into a literal, stored equation (the same pattern Travel Intelligence already uses for flight scoring) is on the roadmap: see <a href="/roadmap#phase-09" style="text-decoration:underline;">Phase 09</a>.</p>
     </div>
@@ -105,7 +106,7 @@
         <div class="stack-col siblings">
           <h4>Where it's headed</h4>
           <ul>
-            <li>Full Netlify Functions backend</li>
+            <li>A searchable view of the whole watch log, filterable by service, genre or actor</li>
             <li>A permanent "currently watching" entry created automatically too, not just flagged when it's missing. This is the one place a person is still genuinely needed: a good entry wants real artwork and accurate progress text, which is a judgment call rather than a diff</li>
           </ul>
         </div>
@@ -121,31 +122,31 @@
         </div>
         <div class="page-card">
           <h4 class="page-card__title">Top Picks</h4>
-          <p class="page-card__desc">Ranked candidates with matched genre and shared cast as the rationale, dismissible with ×.</p>
+          <p class="page-card__desc">Ranked candidates. The reason for each one sits right underneath it: matched genre, shared cast. Tap × to drop it.</p>
         </div>
         <div class="page-card">
           <h4 class="page-card__title">Taste Profile</h4>
-          <p class="page-card__desc">Signature vs. generic genres, actor affinity, and explicitly capped genres.</p>
+          <p class="page-card__desc">Signature genres set against generic ones, with actor affinity and the genres that stay capped.</p>
         </div>
         <div class="page-card">
           <h4 class="page-card__title">Coming Soon</h4>
-          <p class="page-card__desc">Premieres and next seasons, grouped by how confirmed the date is, also dismissible.</p>
+          <p class="page-card__desc">Premieres and next seasons, grouped by how firm the date is.</p>
         </div>
       </div>
     </div>
 
     <div class="about-section" id="roadmap-link">
       <div class="about-section-head"><span class="about-num-badge">05</span><h3>roadmap</h3></div>
-      <p>Built in deliberate phases. The plugin, the dashboard, the domain, scheduled upkeep, this month's content refresh and the backend are all live; a searchable view of the full watch log is next. See the full <a href="/roadmap" style="text-decoration:underline;">roadmap</a> and the <a href="/guide" style="text-decoration:underline;">guide</a> for how it's built.</p>
+      <p>Seven of ten phases are live: the plugin, the dashboard, the domain, scheduled upkeep, the content refresh, the backend, and the corrected service list. A searchable view of the full watch log is next. The <a href="/roadmap" style="text-decoration:underline;">roadmap</a> lists all ten, and the <a href="/guide" style="text-decoration:underline;">guide</a> covers how it gets built.</p>
     </div>
 
     <div class="about-section" id="wont-do">
       <div class="about-section-head"><span class="about-num-badge">06</span><h3>what it won't do</h3></div>
       <ul class="wont-list">
-        <li>No accounts, no passwords: reading it requires nothing.</li>
-        <li>No analytics, advertising, or third-party tracking.</li>
-        <li>No live connection to Susan's streaming accounts: one published snapshot, refreshed on a schedule rather than read from her accounts as you browse.</li>
-        <li>No selling or sharing the data.</li>
+        <li>Reading it requires nothing. No account, no password.</li>
+        <li>Nothing here tracks you: no analytics, no advertising, no third-party scripts.</li>
+        <li>The page never touches Susan's streaming accounts while you're on it. What you see is one published snapshot, refreshed on a schedule.</li>
+        <li>The data isn't sold or shared.</li>
       </ul>
     </div>
   </div>
