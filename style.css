@@ -163,7 +163,7 @@ opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; max-
 }
 
 /* roadmap: phase cards (rail-card style; markup format aligned with Vinyl Scout
-   2026-08-07 — chip-overview nav removed, status now lives on the outer
+   2026-08-07: chip-overview nav removed, status now lives on the outer
    .phase element (.phase--live/.phase--progress/.phase--future) instead of
    on .phase__rail and .phase__status separately, matching the canonical
    reference) */
@@ -369,7 +369,7 @@ display: inline-block; margin-bottom: 4px;
 .watching-title { font-size: 13px; font-weight: 700; }
 .watching-meta { font-size: 11px; color: var(--ink-dim); margin-left: 6px; }
 .watching-badge { font-size: 10px; color: var(--good); font-weight: 700; white-space: nowrap; }
-/* Availability badges — added per Susan's request: distinguish titles included
+/* Availability badges, added per Susan's request: distinguish titles included
    with a tracked subscription from ones requiring separate payment/rental. */
 .avail-badge {
   display: inline-flex;

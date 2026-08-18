@@ -1524,3 +1524,38 @@ dash was introduced.
 `scripts/check-watched-drift.mjs`, `tests/dismiss-drift.test.mjs`,
 `.github/workflows/test.yml`, `about.html`, `roadmap.html`, `guide.html`, this
 file.
+## 2026-08-17, last: the one hard style rule was being broken on the live site, in two ways a grep would miss
+
+Checking the docs pass against the deployed pages turned up something the pass
+itself had not looked for. This repo has exactly one hard style rule, Susan's:
+no em dashes, unconditionally. It was documented, it had been caught by hand
+once (2026-08-09, in a draft, fixed before commit), and nothing enforced it.
+
+**Eight had got in, in two forms.** `index.html` carried five literal em
+dashes: two in visible Coming Soon copy, and three inside the clipboard
+messages the row buttons generate, which is text Susan pastes into a chat as
+though she had typed it herself. `about.html` and `guide.html` carried three
+more as `&mdash;` entities, which render identically and are invisible to a
+grep for the character. That is why the earlier check in this session reported
+"0" for the HTML pages and was wrong. `style.css` had two more in comments.
+
+All ten replaced with a comma, a colon or a sentence break.
+
+**`scripts/check-no-em-dash.mjs`, in `npm test`.** Checks the four public
+pages, `start.html` and the stylesheet, for the literal character, `&mdash;`,
+and the numeric entities. Verified against a fixture containing one of each.
+
+Scope stated in the file rather than assumed: `data/` and this file are
+deliberately excluded. Both carry em dashes in older entries, and the standing
+rules block at the top here is synced from another repo. Rewriting historical
+records to satisfy a style rule would be worse than the inconsistency, and a
+check that fails on unfixable history gets switched off within a week.
+
+**Worth generalising.** A style rule that only exists in a document is a rule
+that is already being broken somewhere, and the version of a check that greps
+for the obvious form will pass while the encoded form goes through. When a rule
+is worth writing down, it is worth one small script, and that script should
+look for every form the thing can take.
+
+**Delivered:** `scripts/check-no-em-dash.mjs` (new), `index.html`,
+`about.html`, `guide.html`, `style.css`, `package.json`, this file.

@@ -243,7 +243,7 @@
           <div class="poster-wrap soon"><div class="poster-mono">SH</div><img loading="lazy" decoding="async" width="1000" height="1500" src="https://m.media-amazon.com/images/M/MV5BY2NkNTBiYWUtMGFiZS00MGI4LWE3YjMtZTU3NzhhZmEyYzlkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Slow Horses poster" onerror="this.remove()"></div>
           <div class="soon-body">
             <div class="soon-top"><span class="soon-title">Slow Horses, season 6</span><span class="pick-score">96%</span><span class="soon-date confirmed">Sep 16, 2026</span><span class="pick-actions"><button class="pick-watching" title="Currently watching: Slow Horses" aria-label="Currently watching: Slow Horses" onclick="ssWatching(this)">&#9654;</button><button class="pick-watched" title="Mark watched: Slow Horses" aria-label="Mark watched: Slow Horses" onclick="ssWatched(this)">&#10003;</button><button class="pick-dismiss" title="Not interested: remove Slow Horses" aria-label="Not interested: remove Slow Horses" onclick="ssDismiss(this)">&times;</button></span></div>
-            <p class="pick-meta">Apple TV+ · Gary Oldman · date CONFIRMED Jun 11: weekly from Sep 16 to Oct 21 — via Apple TV Press. You're caught up through S5</p>
+            <p class="pick-meta">Apple TV+ · Gary Oldman · date CONFIRMED Jun 11: weekly from Sep 16 to Oct 21, via Apple TV Press. You're caught up through S5</p>
           </div>
         </div>
         <div class="soon-row" data-title="Neagley" data-date="2026-09-16">
@@ -285,7 +285,7 @@
           <div class="poster-wrap soon"><div class="poster-mono">OM</div><img decoding="async" loading="lazy" width="1000" height="1500" src="https://image.tmdb.org/t/p/w500/1yjFVQZuW8aofZ5Cgol8iImsVFp.jpg" alt="Only Murders in the Building season 6 poster" onerror="this.remove()"></div>
           <div class="soon-body">
             <div class="soon-top"><span class="soon-title">Only Murders in the Building, season 6</span><span class="pick-score">92%</span><span class="soon-date">Renewed · date TBA</span><span class="pick-actions"><button class="pick-watching" title="Currently watching: Only Murders" aria-label="Currently watching: Only Murders" onclick="ssWatching(this)">&#9654;</button><button class="pick-watched" title="Mark watched: Only Murders" aria-label="Mark watched: Only Murders" onclick="ssWatched(this)">&#10003;</button><button class="pick-dismiss" title="Not interested: remove Only Murders" aria-label="Not interested: remove Only Murders" onclick="ssDismiss(this)">&times;</button></span></div>
-            <p class="pick-meta">Hulu · the London season, filming since May · guest stars David Tennant and Nicola Coughlan announced Jun 2026 — via Deadline. You're caught up through S5; watching for the premiere date</p>
+            <p class="pick-meta">Hulu · the London season, filming since May · guest stars David Tennant and Nicola Coughlan announced Jun 2026, via Deadline. You're caught up through S5; watching for the premiere date</p>
           </div>
         </div>
         <div class="soon-row" data-title="Maigret, season 2" data-date="2026-10-18">
@@ -659,7 +659,7 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
       deleteStatus(title);
     }
     var msg = (section === 'Currently Watching' || section === 'In Theaters')
-      ? 'Streaming Scout: I finished "' + title + '" — log it as watched and take it off ' + section + '.'
+      ? 'Streaming Scout: I finished "' + title + '". Log it as watched and take it off ' + section + '.'
       : 'Streaming Scout: exclude "' + title + '" from ' + section + '; don\'t re-add it.';
     copyOrToast(msg, 'Removed', title);
   };
@@ -680,8 +680,8 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
     updateEmptyNotes();
     postStatus(title, status, meta, section);
     var msg = status === 'watching'
-      ? 'Streaming Scout: I\'m currently watching "' + title + '" — log it as in progress and don\'t recommend it as new.'
-      : 'Streaming Scout: I watched "' + title + '" — log it in the watch history and don\'t recommend it again.';
+      ? 'Streaming Scout: I\'m currently watching "' + title + '". Log it as in progress and don\'t recommend it as new.'
+      : 'Streaming Scout: I watched "' + title + '". Log it in the watch history and don\'t recommend it again.';
     copyOrToast(msg, status === 'watching' ? 'Moved to Currently Watching' : 'Marked watched', title);
   }
   window.ssWatching = function (btn) { markStatus(btn, 'watching'); };
