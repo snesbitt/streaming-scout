@@ -18,11 +18,12 @@ import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { createServer } from "node:http";
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, cpSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const SCRIPT = resolve(process.cwd(), "scripts/check-dismiss-drift.mjs");
+const LIB_DIR = resolve(process.cwd(), "scripts/lib");
 const execFileAsync = promisify(execFile);
 
 let passed = 0;
@@ -74,10 +75,42 @@ const server = createServer((req, res) => {
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const BASE = `http://127.0.0.1:${server.address().port}`;
 
+// index.html has to exist because --fix now also removes the dismissed rows
+// from it (2026-08-17). Recording the dismissal without removing the markup
+// left main red, since check-rows-against-exclusions.mjs compares the two.
+const HTML = `<section>
+  <div class="pick-list">
+    <div class="pick-row" data-title="Hamnet">
+      <div class="pick-body"><p>unrelated, keep</p></div>
+    </div>
+
+    <div class="pick-row" data-title="Prey">
+      <div class="pick-body"><p>dismissed from Top Picks</p></div>
+    </div>
+  </div>
+  <div class="soon-list">
+    <div class="soon-row" data-title="Kleo">
+      <div class="soon-body"><p>dismissed from Coming Soon</p></div>
+    </div>
+  </div>
+  <div class="watching-list">
+    <div class="watching-row" data-title="Prey">
+      <div class="watching-info"><p>a not-interested dismissal must NOT touch this</p></div>
+    </div>
+    <div class="watching-row" data-title="Apex">
+      <div class="watching-info"><p>finished, should go</p></div>
+    </div>
+  </div>
+</section>
+`;
+
 function sandbox(contents = FILE_WITH_PROSE) {
   const dir = mkdtempSync(join(tmpdir(), "ss-drift-"));
   mkdirSync(join(dir, "data"));
+  mkdirSync(join(dir, "scripts/lib"), { recursive: true });
+  cpSync(LIB_DIR, join(dir, "scripts/lib"), { recursive: true });
   writeFileSync(join(dir, "data/EXCLUDED_TITLES.md"), contents);
+  writeFileSync(join(dir, "index.html"), HTML);
   return dir;
 }
 const dis = (title) => ({ title, section: "Top Picks", dismissedAt: "2026-08-17T00:00:00.000Z" });
@@ -142,6 +175,53 @@ await check("running --fix twice does not duplicate anything", async () => {
   await run(dir, [BASE, "--fix"]);
   const twice = readFileSync(join(dir, "data/EXCLUDED_TITLES.md"), "utf8");
   assert.equal(once, twice, "a second --fix run should be a no-op, or the weekly job proposes duplicates forever");
+  rmSync(dir, { recursive: true, force: true });
+});
+
+await check("--fix removes rows for a not-interested dismissal, and only those", async () => {
+  const dir = sandbox();
+  state.dismissed = [dis("Prey"), { ...dis("Kleo"), section: "Coming Soon" }];
+  const r = await run(dir, [BASE, "--fix"]);
+  assert.equal(r.code, 0, r.output);
+  const html = readFileSync(join(dir, "index.html"), "utf8");
+  assert.ok(!/<div class="pick-row" data-title="Prey"/.test(html), "the Top Picks row should be gone");
+  assert.ok(!/<div class="soon-row" data-title="Kleo"/.test(html), "the Coming Soon row should be gone");
+  assert.ok(/<div class="watching-row" data-title="Prey"/.test(html), '"not interested" must not remove a Currently Watching row');
+  assert.ok(/data-title="Hamnet"/.test(html), "an unrelated row must survive");
+  rmSync(dir, { recursive: true, force: true });
+});
+
+await check('a "finished" dismissal removes only the Currently Watching row', async () => {
+  const dir = sandbox();
+  state.dismissed = [{ ...dis("Apex"), section: "Currently Watching" }];
+  const r = await run(dir, [BASE, "--fix"]);
+  assert.equal(r.code, 0, r.output);
+  const html = readFileSync(join(dir, "index.html"), "utf8");
+  assert.ok(!/data-title="Apex"/.test(html), "the watching row should be gone");
+  assert.ok(/data-title="Hamnet"/.test(html), "finishing something must never remove a Top Pick: that is the 2026-08-05 conflation bug");
+  rmSync(dir, { recursive: true, force: true });
+});
+
+await check("--fix leaves index.html balanced", async () => {
+  const dir = sandbox();
+  state.dismissed = [dis("Prey"), { ...dis("Kleo"), section: "Coming Soon" }];
+  await run(dir, [BASE, "--fix"]);
+  const html = readFileSync(join(dir, "index.html"), "utf8");
+  const open = (html.match(/<div\b/g) || []).length;
+  const close = (html.match(/<\/div>/g) || []).length;
+  assert.equal(open, close, `div balance broken: ${open} vs ${close}\n${html}`);
+  rmSync(dir, { recursive: true, force: true });
+});
+
+await check("a second --fix run touches neither file", async () => {
+  const dir = sandbox();
+  state.dismissed = [dis("Prey")];
+  await run(dir, [BASE, "--fix"]);
+  const md1 = readFileSync(join(dir, "data/EXCLUDED_TITLES.md"), "utf8");
+  const html1 = readFileSync(join(dir, "index.html"), "utf8");
+  await run(dir, [BASE, "--fix"]);
+  assert.equal(readFileSync(join(dir, "data/EXCLUDED_TITLES.md"), "utf8"), md1);
+  assert.equal(readFileSync(join(dir, "index.html"), "utf8"), html1);
   rmSync(dir, { recursive: true, force: true });
 });
 

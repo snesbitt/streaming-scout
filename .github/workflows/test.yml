@@ -210,13 +210,13 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Fetch live dismissals and auto-fix data/EXCLUDED_TITLES.md if anything's missing
+      - name: Fetch live dismissals, record them and drop their rows
         run: node scripts/check-dismiss-drift.mjs --fix
 
-      - name: Open a PR if EXCLUDED_TITLES.md changed
+      - name: Open a PR if anything changed
         uses: peter-evans/create-pull-request@v8
         with:
-          commit-message: "data/EXCLUDED_TITLES.md: sync titles dismissed live but missing from the file"
+          commit-message: "data/EXCLUDED_TITLES.md: sync titles dismissed live, and remove their rows"
           branch: auto/dismiss-drift-sync
           delete-branch: true
           title: "Auto: sync dismissed-title exclusions from the live site"
@@ -224,10 +224,19 @@ jobs:
             Opened automatically by the weekly `dismiss-drift` job in
             `.github/workflows/test.yml`. `scripts/check-dismiss-drift.mjs --fix`
             found one or more titles dismissed live via `/api/dismiss` that
-            weren't yet reflected in `data/EXCLUDED_TITLES.md`, and appended
-            them in the file's existing format. Review the diff and merge if
-            it looks right. These titles are otherwise vulnerable to
-            reappearing in the next Coming Soon/Top Picks rebuild.
+            weren't yet reflected in `data/EXCLUDED_TITLES.md`, appended them
+            in the file's existing format, and removed their rows from
+            `index.html`. Review the diff and merge if it looks right. These
+            titles are otherwise vulnerable to reappearing in the next Coming
+            Soon/Top Picks rebuild.
+            The row removal was added 2026-08-17: recording the dismissal
+            without removing the markup leaves `main` red, because
+            `check-rows-against-exclusions.mjs` compares the two files in
+            `npm test` and a failing `test` job skips every other job here.
+            Which rows go depends on what the dismissal meant. A Top Picks or
+            Coming Soon dismissal removes those row types only; a Currently
+            Watching dismissal means "finished" and removes only Currently
+            Watching and In Theaters rows, never a future recommendation.
           labels: automated-pr
 
   # 2026-08-17: the tick-button counterpart to dismiss-drift above. Susan

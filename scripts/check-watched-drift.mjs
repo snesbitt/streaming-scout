@@ -54,6 +54,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { indexByBase, findCovered, normalizeTitle, titlesFromMarkdownList } from "./lib/titles.mjs";
+import { removeRows, SECTION_OF } from "./lib/rows.mjs";
 
 const args = process.argv.slice(2);
 const FIX = args.includes("--fix");
@@ -130,37 +131,25 @@ if (!nextLog.includes(HEADING)) {
 nextLog = `${nextLog.replace(/\s*$/, "")}\n\n${missing.map(entryLine).join("\n")}\n`;
 writeFileSync(LOG_PATH, nextLog);
 
-// Remove the now-redundant Top Picks / Coming Soon rows.
+// Remove the now-redundant Top Picks / Coming Soon rows. Currently Watching
+// and In Theaters are deliberately untouched, see the header.
 const html = readFileSync(HTML_PATH, "utf8");
 const wanted = new Set(missing.map((e) => normalizeTitle(e.title)));
-const lines = html.split("\n");
-const removed = [];
-
-for (let i = lines.length - 1; i >= 0; i -= 1) {
-  const open = /^(\s*)<div class="(pick-row|soon-row)"[^>]*data-title="([^"]+)"/.exec(lines[i]);
-  if (!open) continue;
-  const [, indent, rowClass, title] = open;
-  if (!wanted.has(normalizeTitle(title))) continue;
-
-  const close = lines.indexOf(`${indent}</div>`, i + 1);
-  if (close === -1) {
-    fail(`found the opening tag for "${title}" but no matching close at the same indent. Refusing to guess at the boundaries of a row.`);
-  }
-  let start = i;
-  if (start > 0 && /^\s*<!--.*-->\s*$/.test(lines[start - 1])) start -= 1;
-  let end = close + 1;
-  if (end < lines.length && lines[end].trim() === "") end += 1;
-  lines.splice(start, end - start);
-  removed.push(`${title} (${rowClass === "pick-row" ? "Top Picks" : "Coming Soon"})`);
+let removed = [];
+try {
+  const result = removeRows(html, ({ rowClass, title }) =>
+    (rowClass === "pick-row" || rowClass === "soon-row") && wanted.has(normalizeTitle(title)));
+  removed = result.removed;
+  if (removed.length) writeFileSync(HTML_PATH, result.html);
+} catch (err) {
+  fail(err.message);
 }
-
-if (removed.length) writeFileSync(HTML_PATH, lines.join("\n"));
 
 console.log(`Watched-drift fix applied: recorded ${missing.length} ticked title(s) in ${LOG_PATH}.`);
 for (const e of missing) console.log(`  + ${e.title}`);
 if (removed.length) {
   console.log(`\nRemoved ${removed.length} now-redundant row(s) from ${HTML_PATH}:`);
-  for (const r of removed) console.log(`  - ${r}`);
+  for (const r of removed) console.log(`  - ${r.title} (${SECTION_OF[r.rowClass]})`);
 } else {
   console.log(`\nNo Top Picks or Coming Soon rows needed removing.`);
 }

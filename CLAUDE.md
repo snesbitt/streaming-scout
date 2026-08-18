@@ -1467,3 +1467,60 @@ and hangs the terminal at a `quote>` prompt. That happened this session.
 
 **Delivered:** `scripts/check-status-drift.mjs`, `.github/workflows/test.yml`,
 this file.
+## 2026-08-17, evening: the asymmetry that turned main red, and a docs pass
+
+**main went red, and the cause was a gap I built.** Susan dismissed three of the
+four picks added an hour earlier. `dismiss-drift` correctly synced them into
+`data/EXCLUDED_TITLES.md` and left their rows in `index.html`, so
+`check-rows-against-exclusions.mjs` failed, which failed the `test` job, which
+skipped every other job in the workflow. `watched-drift` had been given row
+removal precisely so it would never leave the repo in that state; the same
+reasoning was never applied to `dismiss-drift`, which had existed longer.
+
+Fixed by giving `dismiss-drift --fix` the same ability, through a new shared
+`scripts/lib/rows.mjs` so there is one implementation rather than a second copy.
+Which rows go depends on what the dismissal meant, the same distinction the
+check enforces: Top Picks and Coming Soon dismissals are "not interested" and
+bar those two row types; a Currently Watching dismissal means "finished" and
+bars only Currently Watching and In Theaters. Getting that backwards would make
+finishing a show delete it from the recommendation pool, which is the
+2026-08-05 conflation bug, so `tests/dismiss-drift.test.mjs` asserts it
+explicitly. That suite went from 6 groups to 10; the whole suite is 71.
+
+**The four dismissals were also a clean experiment.** Those picks tested the
+reading that Susan keeps maker-led craft documentary. She ticked Sr. as already
+seen and dismissed the other three on sight. The appetite is real (Abstract nine
+times, Becoming Led Zeppelin, Mr. Scorsese, the Warhol diaries, Louis
+Armstrong) but it is not a source of new picks: what is left is the tail she has
+already passed over. Recorded in `TASTE_PROFILE.md`, along with the more useful
+observation that she resolves picks within the hour, so a hypothesis about her
+taste can be tested in one sitting rather than argued over the log.
+
+**Docs pass, per Susan's request that the pages and their visuals be current.**
+Real corrections rather than a polish:
+
+- `roadmap.html` Phase 10 said the tracked-service count was corrected to 7 and
+  then, two sentences later, "All six tracked services have one". Fixed.
+- `guide.html` said the project was "Built entirely in Cowork: no terminal, by
+  design". That has not been true for weeks: Susan runs every push from her own
+  Terminal, and that is the governance rule, not an exception to apologise for.
+  Rewritten to say so.
+- The guide's architecture diagram still showed one always-on live feature
+  ("Dismiss button: live everywhere"), in both the drawing and its aria-label.
+  There are two, and both now feed a permanent record through CI. Box widened
+  from 326 to 378 so the longer label fits rather than overflowing.
+- `about.html`'s stack list now says the Functions store one record per title,
+  covers both auto-fixing jobs rather than just the exclusions one, and names
+  the push-time checks. Its "where it's headed" entry for a permanent
+  currently-watching entry now says why that one still needs a person.
+- `roadmap.html` Phase 06 and `guide.html` step 06 both gained today's real
+  work: the per-title storage rewrite, the three new offline checks, and the
+  tick path closing on its own.
+
+Every page still parses clean, the content-drift check still passes, and no em
+dash was introduced.
+
+**Delivered:** `scripts/lib/rows.mjs` (new), `scripts/check-dismiss-drift.mjs`,
+`scripts/check-watched-drift.mjs`, `tests/dismiss-drift.test.mjs`,
+`.github/workflows/test.yml`, `about.html`, `roadmap.html`, `guide.html`, this
+file.

@@ -34,7 +34,10 @@
 //                                                             everything found
 // Node 18+ (global fetch).
 
-import { readFileSync, appendFileSync } from "node:fs";
+import { readFileSync, writeFileSync, appendFileSync } from "node:fs";
+
+import { normalizeTitle } from "./lib/titles.mjs";
+import { removeRows, SECTION_OF } from "./lib/rows.mjs";
 
 const args = process.argv.slice(2);
 const fix = args.includes("--fix");
@@ -98,7 +101,52 @@ async function main() {
     appendFileSync("data/EXCLUDED_TITLES.md", "\n" + lines.join("\n") + "\n");
     console.log(`Dismiss drift check: appended ${missing.length} missing title(s) to data/EXCLUDED_TITLES.md:\n`);
     for (const m of missing) console.log(`  - "${m.title}"`);
-    return; // exit 0 — caller (CI) diffs the file and opens a PR if it changed
+
+    // 2026-08-17: also take the rows off the page. Recording the dismissal
+    // without removing the markup is exactly half a fix, and the half that is
+    // missing turns main red: check-rows-against-exclusions.mjs compares these
+    // two files in `npm test`, so the `test` job fails and every other job in
+    // the workflow is skipped. That happened the day this was added, when
+    // three dismissals synced cleanly and their rows stayed put.
+    //
+    // Which rows go depends on what the dismissal meant, the same distinction
+    // check-rows-against-exclusions.mjs enforces: a Top Picks or Coming Soon
+    // dismissal is "not interested" and bars those two row types, while a
+    // Currently Watching dismissal is "finished" and bars only Currently
+    // Watching and In Theaters. Getting that backwards would make finishing a
+    // show delete it from the recommendation pool, which is the 2026-08-05
+    // conflation bug.
+    const notInterested = new Set();
+    const finished = new Set();
+    for (const m of missing) {
+      const section = String(m.section || "").toLowerCase();
+      (section.includes("currently watching") ? finished : notInterested).add(normalizeTitle(m.title));
+    }
+    const barred = {
+      "pick-row": notInterested,
+      "soon-row": notInterested,
+      "watching-row": finished,
+      "theater-row": finished,
+    };
+
+    let removed = [];
+    try {
+      const html = readFileSync("index.html", "utf8");
+      const result = removeRows(html, ({ rowClass, title }) => barred[rowClass].has(normalizeTitle(title)));
+      removed = result.removed;
+      if (removed.length) writeFileSync("index.html", result.html);
+    } catch (err) {
+      console.error(`Dismiss drift check FAILED while editing index.html: ${err.message}`);
+      process.exit(1);
+    }
+
+    if (removed.length) {
+      console.log(`\nRemoved ${removed.length} now-dismissed row(s) from index.html:`);
+      for (const r of removed) console.log(`  - ${r.title} (${SECTION_OF[r.rowClass]})`);
+    } else {
+      console.log(`\nNo rows in index.html needed removing.`);
+    }
+    return; // exit 0, the caller (CI) diffs the files and opens a PR if either changed
   }
 
   console.error(`Dismiss drift check FAILED: ${missing.length} title(s) dismissed live but missing from data/EXCLUDED_TITLES.md:\n`);
