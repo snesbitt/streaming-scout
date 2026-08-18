@@ -74,7 +74,7 @@
         </div>
         <div class="mode-card mode-card--d">
           <div class="mode-card__name">Scheduled tasks</div>
-          <div class="mode-card__role">weekly resync</div>
+          <div class="mode-card__role">weekly upkeep</div>
           <ul><li>Mondays, automatic</li><li>see Roadmap, phase 04</li><li>stops rather than publishing a partial state</li></ul>
         </div>
       </div>
@@ -106,7 +106,7 @@
 
     <div class="step" id="snapshot">
       <div><span class="step-num">04</span><span class="step-title">A snapshot, not a live connection</span></div>
-      <p class="step-body">This reads from a single published snapshot rather than a live session; nothing touches your Netflix or Prime account while you're using it. Synchronization happens deliberately, in a Cowork session, either at your request or on a fixed Monday schedule, and only then is the static record rebuilt.</p>
+      <p class="step-body">This reads from a single published snapshot rather than a live session; nothing touches your Netflix or Prime account while you're using it. Synchronization happens deliberately, in a Cowork session, at your request, and only then is the static record rebuilt. Automated jobs run weekly, but they check the site and carry your removals into the permanent record; they do not rebuild the recommendations for you.</p>
     </div>
 
     <div class="step" id="deploy">

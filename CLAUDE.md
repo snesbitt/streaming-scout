@@ -1605,3 +1605,55 @@ sentences that failed that test today were all specific numbers and all
 
 **Delivered:** `scripts/check-no-hardcoded-counts.mjs` (new), `roadmap.html`,
 `about.html`, `guide.html`, `package.json`, this file.
+## 2026-08-17, the one that actually mattered: the site advertised a Monday rebuild that does not exist
+
+Applying the review question from the previous entry ("what would have to
+change for this sentence to become false, and has it") to every remaining
+number and superlative on the three pages. The numbers came back clean. The
+schedule claims did not.
+
+**All three pages promised an automatic Monday resync. There is no such task.**
+`about.html` had a stat tile reading "Mon / weekly resync day" and a line
+saying the site "Refreshes itself Monday mornings via a scheduled task".
+`roadmap.html` Phase 04, marked Live, said "A Monday-morning task resyncs your
+watch history and rebuilds Top Picks and Coming Soon on its own".
+`guide.html` said synchronization happens "at your request or on a fixed
+Monday schedule".
+
+Checked against the real task list rather than against the page. Everything
+touching this project is: an artwork sweep on **Wednesdays** 17:07 UTC, a
+five-site review on **Fridays** 13:00 UTC, a daily freshness sweep, and a
+monthly audit. Plus this repo's own GitHub Actions crons, which are Mondays,
+but those run tests, the smoke check and the drift and backup jobs. **Nothing
+rebuilds the recommendations on a schedule.** A task once did; it is gone, the
+same way the dismissed-title sync task turned out to be gone on 2026-08-16.
+
+This is the third instance of the same failure in this project's history, and
+by far the most serious in what it implies. The 2026-07-21 data loss happened
+because a scheduled task silently pointed at a dead folder for weeks. The
+2026-08-16 pass found a second task that had quietly ceased to exist while its
+documentation still described it. This is the third: a task that no longer
+exists, still advertised on the public site as a working feature, for an
+unknown number of weeks.
+
+**Corrected on all three pages, and corrected honestly rather than quietly.**
+Phase 04 now states plainly what runs on its own (Monday CI, Wednesday artwork
+sweep, Friday review), what does not (an unprompted rebuild), and that a
+rebuild happens when Susan asks, which in practice is often. The About tile
+now reads "automated weekly checks", which is true. The guide no longer offers
+a Monday schedule it cannot keep.
+
+**What is NOT done here, and is Susan's call.** Recreating the Monday resync
+task would make the original claim true again, and it is a reasonable thing to
+want. It is deliberately not created unprompted: a standing task that rebuilds
+Top Picks on its own changes what she sees each week without her asking, which
+is a product decision rather than a doc fix. Raised with her instead.
+
+**The lesson, stated once and generally.** A scheduled task is the least
+verifiable thing in this whole system. It leaves no trace in the repo, it
+cannot be checked by any test here, and its absence looks exactly like its
+presence until someone reads the task list. Every claim in this repo about
+something running on a schedule should be treated as unverified until checked
+against `list_triggers` in that session. Three for three so far.
+
+**Delivered:** `about.html`, `roadmap.html`, `guide.html`, this file.
