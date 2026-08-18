@@ -1559,3 +1559,49 @@ look for every form the thing can take.
 
 **Delivered:** `scripts/check-no-em-dash.mjs` (new), `index.html`,
 `about.html`, `guide.html`, `style.css`, `package.json`, this file.
+## 2026-08-17, actually last: asked whether the three pages were current, checked properly, and they were not
+
+The honest answer to "and the roadmap guide and about are all current?" was
+that the pass before it had only verified the parts it touched. Auditing all
+three against the repo turned up five real errors, one of which had been wrong
+for weeks.
+
+- **roadmap.html advertised a "919-title, 2010-2026 log". The log holds 958
+  entries.** This is a documented convention being broken, not a slip:
+  CLAUDE.md's Conventions section has said since July not to hardcode a title
+  count, and says exactly why (only one page's rebuild step updates it, so it
+  drifts, and no reader can tell which page is right). Reworded to "every
+  title back to 2010", which cannot go stale.
+- **Phase 10 was marked "In progress" while its own text said "Closed
+  2026-08-16 ... the last real gap here".** A card contradicting itself. Now
+  Live. Its closing line, "Still open: Nat Geo and Hulu stay intentionally off
+  the tracked list", was also mislabelled: that is a decision, not an open
+  item, and it now says so.
+- **about.html said "a real backend is next".** It has been Live since
+  2026-08-14. Now names the searchable watch log as what is next, matching the
+  roadmap's own first Future phase.
+- **about.html's "won't do" list said the snapshot is "refreshed by hand".**
+  It is refreshed by the Monday scheduled task and by CI. Reworded to say what
+  the promise actually is: no live connection to her streaming accounts while
+  you browse.
+- **guide.html still called the dismiss button "the first fully live
+  feature".** There are two, and both now feed a permanent record.
+
+**Two of these are the same shape as the em-dash finding an hour earlier: a
+rule or a fact written down in one place, with nothing checking it.** So the
+title count now has `scripts/check-no-hardcoded-counts.mjs` in `npm test`,
+verified against the exact string that was live. It bans a three-or-more-digit
+number attached to "title(s)" on the public pages, and deliberately leaves
+small numbers, years and the tracked-service count alone, the last of which
+already has a real check against `data/` rather than a ban.
+
+**The pattern across today worth remembering.** Every doc error found this
+session was a claim that was true when written. Nothing here rots because
+someone was careless; it rots because the thing it describes moved. So the
+useful question when reviewing a page is not "is this well written" but "what
+would have to change for this sentence to become false, and has it". The
+sentences that failed that test today were all specific numbers and all
+"first/only/next" claims.
+
+**Delivered:** `scripts/check-no-hardcoded-counts.mjs` (new), `roadmap.html`,
+`about.html`, `guide.html`, `package.json`, this file.

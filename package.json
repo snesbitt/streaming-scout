@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/logic.test.mjs && node --import ./tests/register-blobs-mock.mjs tests/blobs-concurrency.test.mjs && node tests/backup-guards.test.mjs && node tests/dismiss-drift.test.mjs && node tests/watched-drift.test.mjs && node scripts/check-data-integrity.mjs && node scripts/check-poster-coverage.mjs && node scripts/check-picks-against-log.mjs && node scripts/check-rows-against-exclusions.mjs && node scripts/check-pick-diversity.mjs && node scripts/check-content-drift.mjs && node scripts/check-tap-targets.mjs && node scripts/check-pick-meta-length.mjs && node scripts/check-no-em-dash.mjs",
+    "test": "node tests/logic.test.mjs && node --import ./tests/register-blobs-mock.mjs tests/blobs-concurrency.test.mjs && node tests/backup-guards.test.mjs && node tests/dismiss-drift.test.mjs && node tests/watched-drift.test.mjs && node scripts/check-data-integrity.mjs && node scripts/check-poster-coverage.mjs && node scripts/check-picks-against-log.mjs && node scripts/check-rows-against-exclusions.mjs && node scripts/check-pick-diversity.mjs && node scripts/check-content-drift.mjs && node scripts/check-tap-targets.mjs && node scripts/check-pick-meta-length.mjs && node scripts/check-no-em-dash.mjs && node scripts/check-no-hardcoded-counts.mjs",
     "smoke": "node scripts/smoke.mjs",
     "smoke:local": "node scripts/smoke.mjs http://localhost:8888",
     "check:live-drift": "node scripts/check-dismiss-drift.mjs && node scripts/check-status-drift.mjs && node scripts/check-watched-drift.mjs",
