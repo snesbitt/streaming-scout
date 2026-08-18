@@ -74,3 +74,7 @@ it opened is not the full picture for 2026-08-17.
 - **Springsteen on Broadway** - Top Picks - dismissed on-site 2026-08-17
 - **Turning Point: The Bomb and the Cold War** - Top Picks - dismissed on-site 2026-08-17
 - **Cooper and Fry, season 1** - Coming Soon - dismissed on-site 2026-08-17
+
+- **The Velvet Underground** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
+- **Number One on the Call Sheet** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
+- **Still: A Michael J. Fox Movie** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
