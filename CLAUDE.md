@@ -1735,3 +1735,38 @@ non-technical execs. Rewritten end to end.
 **Delivered:** `roadmap.html`, `about.html`, this file. Committed locally,
 not pushed (cloud bridge has no network) - same standing rule as every other
 change here.
+
+## 2026-08-19 - Currently Watching rows now say which day the next episode drops
+
+Susan's ask, with an explicit "do not botch the CSS." No CSS was touched and no
+markup structure changed: the day went inside each row's existing
+`.watching-meta` span, so `.watching-row` / `.watching-info` / `.watching-badge`
+render exactly as before. Rows that gained words gain a wrapped line at 390px;
+nothing else moved. Verified by headless render at 390px and 1100px, before and
+after, comparing the Currently Watching card directly.
+
+Every day was researched against sources rather than inferred, and two shows
+turned out to have no next episode at all:
+
+| Row | Meta now says | Basis |
+|---|---|---|
+| Reacher, season 4 | Wednesdays through Sep 16 | Prime Video; "weekly" replaced with the actual day, same length. Several outlets print "Tuesdays" in prose while listing Wednesday dates; the dates are unanimous, so the dates won. |
+| The Westies | Sundays, finale Aug 23 | MGM+ 9pm ET Sundays; MGM+'s own August schedule. |
+| Grantchester, season 11 | season complete | Finished Aug 2, 2026. Final season. No day to give. |
+| Sugar, season 2 | season complete | Finished Aug 7, 2026. Apple's own press release documented the Friday cadence. |
+| Special Ops: Lioness, season 3 | Sundays through Sep 20 | Paramount+'s own page plus two outlets. |
+| Ted Lasso, season 4 | Wednesdays through Oct 7 | Apple TV+ official day is Wednesday; episodes surface Tuesday evening ET in practice, same drop moment. |
+| The Hardacres, season 2 | Wednesdays through Sep 9 | BritBox press release says "6 x 60' | Weekly Release"; Aug 5 premiere and Sep 9 finale are both Wednesdays. Note BritBox Premier subscribers got the full season early. |
+
+**Nothing keeps these current.** They are hand-written date claims on a public
+page, which is the exact drift class `check-no-hardcoded-counts.mjs` and
+`check-content-drift.mjs` exist to catch elsewhere. Three of them go stale on a
+known date (Westies Aug 23, Hardacres Sep 9, Reacher Sep 16), and a rebuild that
+regenerates Currently Watching from the Cowork skill will drop the days entirely
+unless the skill learns to add them. Neither guard was built this pass, since
+neither was asked for. If this becomes a recurring feature rather than a one
+time addition, the two things worth building are a check that fails when a
+"through <date>" has passed, and a step in the rebuild skill that re-researches
+the day per row.
+
+**Delivered:** `index.html`, this file. Committed locally, not pushed.
