@@ -28,8 +28,20 @@ function section(md, heading) {
   return nextHeading === -1 ? md.slice(bodyStart) : md.slice(bodyStart, nextHeading);
 }
 
+// Count the service bullets in a section, whatever their indentation.
+//
+// This used to be /^- /gm, which quietly depended on Hulu being written as a
+// nested "  - Hulu" under Services Tracked: it was excluded from the count,
+// the count matched about.html, and the check passed for the wrong reason.
+// Un-indenting that one line by two spaces would have changed the answer
+// without anyone touching a service. Leading whitespace and the bullet
+// character are both ignored here, so how a line is laid out cannot change
+// what it counts as. Continuation lines of a wrapped bullet do not start with
+// a bullet marker, so they are still skipped.
 function countBullets(text) {
-  return (text.match(/^- /gm) || []).length;
+  return text
+    .split("\n")
+    .filter((line) => /^[ \t]*[-*+][ \t]+\S/.test(line)).length;
 }
 
 // Check 1: About page's "N services tracked" stat matches the real count
@@ -46,6 +58,17 @@ function countBullets(text) {
     ),
   );
   const realCount = tracked + addons;
+
+  // A heading that gets renamed returns an empty section, which would read as
+  // a legitimate count of zero and compare against whatever about.html says.
+  // Zero services is never true here, so treat it as this check being stale.
+  if (tracked === 0 || addons === 0) {
+    failures.push(
+      `data/STREAMING_PROFILE.md: found ${tracked} service(s) under "Services Tracked" and ${addons} ` +
+        "under Premium/Channel Add-ons. One of those sections is missing, renamed or empty, so the " +
+        "count can't be trusted. Fix the file or this check's heading strings, whichever moved.",
+    );
+  }
 
   const statMatch = about.match(
     /<div class="stat-tile__num">(\d+)<\/div><div class="stat-tile__label">services tracked<\/div>/,

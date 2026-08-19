@@ -1,6 +1,6 @@
 # Streaming Profile
 
-**Last updated:** 2026-08-16 (Apple TV+ and Hulu watch-history sync tested live for the first time; both failed, see the dated note below. Prior update 2026-08-14.)
+**Last updated:** 2026-08-19 (Hulu confirmed tracked by Susan and its sync entry point written down here, see the dated notes below. Prior update 2026-08-16.)
 
 ## Services Tracked
 - Netflix — active
@@ -12,7 +12,37 @@
   TV+ was already active before this (see the policy note below, now
   partly superseded); this promotes it to the same tracked tier as
   Netflix/Prime for watch-history sync specifically.
-  - Hulu — promoted to full watch-history sync tier 2026-08-14 (Susan logged in via Claude in Chrome specifically for this). Previously candidates-only per the Other-Services Recommendations Policy below; that note is now superseded for Hulu specifically (Apple TV+ precedent). Sync flow not yet verified live — needs the same first-run check Apple TV+ is still pending.
+- Hulu — tracked. Promoted to the full watch-history sync tier 2026-08-14
+  (Susan logged in via Claude in Chrome specifically for this), and confirmed
+  tracked again by Susan 2026-08-19 after the failed first sync run described
+  below. Previously candidates-only per the Other-Services Recommendations
+  Policy below, which is superseded for Hulu. Its sync entry point and the
+  sign-in check that has to precede it are in "Watch-history sync entry
+  points" below. Sync has not yet been seen working end to end.
+
+## Watch-history sync entry points
+
+The `sync-watch-history` skill hardcodes Netflix and Prime Video in its
+navigation step and reads this file only for the list of tracked services.
+Anything else tracked takes its entry point from here. That gap is what broke
+Hulu's first live run: with no entry point recorded anywhere, the 2026-08-16
+attempt guessed `hulu.com/profile/history`, a page that no longer exists.
+
+- Hulu — start at https://www.hulu.com/hub/home, and check sign-in before
+  reading anything. A redirect to https://www.hulu.com/welcome is Hulu's
+  signed-out landing page, which means there is no history to read and the run
+  should stop and say so. That is what happened on 2026-08-16. When the page
+  loads signed in, the viewing history is the "Keep Watching" tray on it. Do
+  not retry https://www.hulu.com/profile/history, which returned 404 the same
+  day; Hulu appears to have retired the dedicated history page.
+- Apple TV+ — https://tv.apple.com/ loads signed out in Susan's browser (last
+  checked 2026-08-16), and no equivalent of Netflix's viewing-activity page is
+  known even for a signed-in session. Leave Apple TV+ viewing as report-in-chat
+  until both of those change.
+
+If a page does not yield a clean history list, say so plainly and log nothing.
+Never fill the gap by guessing at a URL. Guessing is how a 404 came to be
+recorded as a Hulu capability limit in the first place.
 
 ## Premium/Channel Add-ons (tracked for Coming Soon schedules, not watch-history sync)
 - BritBox (via Prime Video channel)
@@ -61,6 +91,9 @@ guess or fabricate entries. Until that live check happens, treat Apple TV+
 watch-history sync as "wired, not yet confirmed working" — not fully live.
 
 ## 2026-08-16 — Apple TV+ and Hulu watch-history sync: tested live, both failed
+
+**Superseded for Hulu on 2026-08-19, see the note below.** Apple TV+ still
+stands as written here.
 
 Both had been carried as "wired, not yet confirmed working" since 2026-08-05
 and 2026-08-14 respectively. A real Claude-in-Chrome sync attempt was finally
@@ -133,6 +166,35 @@ has to rediscover it:
   month-by-month content calendar with dates and a downloadable version. Also
   supplied by Susan 2026-08-16, correcting the same wrong conclusion. This is a
   real official source and covers licensed additions as well as originals.
+
+## 2026-08-19 — Hulu: tracked, and what is genuinely still broken
+
+Asked directly, Susan's call is that Hulu should be tracked and working. It is
+on the tracked list above, and `about.html` now counts 8 services to match.
+
+The 2026-08-16 note called this a capability limit rather than anything
+fixable. Half of that holds up. Two different things went wrong on that first
+live run, and only one of them is about Hulu's site:
+
+1. Nothing named a Hulu entry point. The `sync-watch-history` skill navigates
+   to Netflix and Prime Video by name and gets everything else from this file,
+   which listed Hulu as tracked without saying where to read it. So the run
+   guessed, and `/profile/history` is a retired page. That is now fixed here:
+   "Watch-history sync entry points" above carries Hulu's entry point, the
+   sign-in preflight, and the dead URL to stay away from.
+2. The browser session was signed out. `/hub/home` redirecting to `/welcome`
+   is what Hulu serves a signed-out visitor, and it also explains the 404.
+   Susan signed in on 2026-08-14, so the session did not survive two days.
+   Nothing in this repo can hold a browser session open. She has to be signed
+   in at hulu.com in the browser Claude in Chrome drives, at the moment a sync
+   runs.
+
+Hulu sync has still not been observed working end to end, and this pass could
+not run one, so treat it as tracked and wired but unproven until a real sync
+reports back. One change is left outside this repo: step 2 of the
+`sync-watch-history` skill should walk whichever services this file lists and
+take their entry points from the section above, instead of naming two services
+in its own text.
 
 ## Sync Cadence
 Weekly (Monday, via the `streaming-scout-weekly-resync` scheduled task)
