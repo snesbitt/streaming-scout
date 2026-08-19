@@ -1770,3 +1770,57 @@ time addition, the two things worth building are a check that fails when a
 the day per row.
 
 **Delivered:** `index.html`, this file. Committed locally, not pushed.
+
+## 2026-08-19 - the request contract of dismiss.mjs and status.mjs, finally under test
+
+The standing punch-list item said the two Functions had "no test coverage
+for their actual logic." That was written on 2026-08-14, and the
+2026-08-17 per-title storage change half-closed it without anyone
+noticing: `tests/blobs-concurrency.test.mjs` is a real suite and it
+covers the storage model properly (lost updates, the migration and its
+read-through, the 500-entry cap and its eviction order, 405 on an unknown
+method). What it does not touch is input validation. Every bound on these
+two endpoints was unverified, which matters more here than it would
+elsewhere, because both are unauthenticated by design: those bounds are
+the only thing between an open POST and arbitrary junk in the store.
+
+`tests/request-contract.test.mjs` (new, 40 assertions, wired into `npm
+test`) covers what was missing, running the same shared cases against
+both Functions rather than writing them twice and letting them drift:
+non-JSON bodies, missing and whitespace-only titles, title/section length
+bounds tested at the boundary rather than with something wildly too long,
+trimming on both POST and DELETE, blank sections normalising to null,
+DELETE without a title, and the 503-not-empty-list behaviour when the
+store is unreachable plus the retry after it recovers. Then the parts
+that differ: the status allow-list, `meta` clipping where title and
+section reject, and blob-key encoding checked through the handler against
+titles taken from this project's own awkward data (colons, commas,
+apostrophes, a quote, a slash, non-ASCII).
+
+**The part worth remembering.** Every one of the 39 assertions in the first draft passed
+on the first run, which is not evidence of anything on its own. Nine deliberate
+mutations were then made to the two Functions to check the suite could
+actually fail: off-by-one on the length bound, dropping the DELETE trim,
+removing `meta` clipping, caching a store failure forever, replacing the
+key encoding with something unsafe, gutting the status allow-list, and
+so on. Eight were caught. One was not, and it was the test that looked
+most obviously correct: "a repeat dismissal keeps the original
+dismissedAt" passed even with `dismiss.mjs` rewritten to overwrite the
+entry unconditionally. `advance()` moves the fake Blobs clock, not
+`Date`, so both POSTs landed in the same millisecond of real time and the
+timestamps matched whether or not the entry had been rewritten. The
+assertion was true for the wrong reason. Fixed by pinning `Date` to two
+distinct instants around each call, and a mirror test added for
+`status.mjs`, which is supposed to move `updatedAt` on every write.
+
+Worth generalising: a green suite written after the fact proves the tests
+agree with the code, not that they constrain it. Mutating the source to
+confirm each test can fail costs a few minutes and is the only thing that
+told the difference here.
+
+Also noticed while running the full suite, not acted on: the punch list
+still carries "Babylon Berlin S5 has no poster art" and
+"MGM+/Paramount+ lack a Coming Soon source." The first is stale, the
+2026-08-14 entry above sourced that art and `check-poster-coverage.mjs`
+now reports every row covered with one declared exception (Legacy of
+Spies).
