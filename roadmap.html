@@ -13,6 +13,12 @@
 <style>/* Self-hosted fonts (latin), was Google Fonts; files from the official Fontsource/IBM npm releases, 2026-07-26 */
 @font-face{font-family:"Lora";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/lora-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:"Lora";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/lora-latin-400-italic.woff2) format("woff2")}
+/* Page-scoped: status groups replaced the numbered phase sequence on 2026-08-19.
+   The old order rendered 1, 2, 3, 4, 8, 6, 5, 7, 9, 10, so a reader hit three
+   Future phases before a Live one. Grouping by status fixes that and drops the
+   numbering, which no longer told a reader anything. */
+.phase-group + .phase-group { margin-top: 30px; }
+.phase-group h2.section-title { margin-bottom: 12px; }
 </style>
 <link rel="stylesheet" href="style.css">
 </head><body>
@@ -33,129 +39,148 @@
 
 <main>
   <div class="wrap">
-    <p class="eyebrow">Roadmap · built in deliberate phases</p>
-    <h1 class="page-title">Seven phases live. Three to go.</h1>
-    <p class="lede">Done: the plugin, the dashboard, the domain, scheduled upkeep, the content refresh, the backend, and the service list finally matching what Susan actually subscribes to. Three phases are still open. They're below, described as they stand rather than as they were pitched.</p>
+    <p class="eyebrow">Roadmap</p>
+    <h1 class="page-title">What is built, and what is still open.</h1>
+    <p class="lede">The site runs. Recommendations, the dashboard, the weekly upkeep and the backend behind it are all in use. One service is half connected and three ideas are still ahead. Each item below says what it does for you rather than how it works.</p>
 
-    <section class="phase phase--live" id="phase-01">
-      <div class="phase__rail">1</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">The plugin</h3>
-          <span class="phase__status phase__status--live">Live</span>
-        </div>
-        <p class="phase__focus">Recommendations built from what you actually watched</p>
-        <p class="phase__covers">Five Cowork skills read your Netflix and Prime Video history straight from the browser. Genre and cast come from web research, title by title. Every candidate is then scored against a taste profile built out of years of real viewing. Broad genres count for about a third of a title's score; genres you've shown you love count in full, with a bonus when the cast overlaps a show you finished and loved. The Coming Soon feed draws on BritBox, PBS Masterpiece, Den of Geek, and Netflix Tudum.</p>
-      </div>
-    </section>
+    <div class="phase-group">
+      <h2 class="section-title">Done</h2>
 
-    <section class="phase phase--live" id="phase-02">
-      <div class="phase__rail">2</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">The snapshot dashboard</h3>
-          <span class="phase__status phase__status--live">Live</span>
+      <section class="phase phase--live" id="recommendations">
+        <div class="phase__rail">✓</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Recommendations from what you actually watched</h3>
+            <span class="phase__status phase__status--live">Live</span>
+          </div>
+          <p class="phase__focus">Scored against years of your own viewing</p>
+          <p class="phase__covers">Streaming Scout reads your Netflix and Prime Video history and scores every candidate against a taste profile built from years of your own viewing. Titles get a lift when the cast overlaps a show you finished and loved. The Coming Soon feed is sourced from the services and trade sites that publish real schedules, so it reflects what is actually landing.</p>
         </div>
-        <p class="phase__focus">A page you can open on a phone</p>
-        <p class="phase__covers">A static site with the latest Top Picks, Taste Profile, and Coming Soon feed, rebuilt to the shared house style: Lora, cream shell, the same wordmark family as the other sites. Installable to the Home Screen. Contrast meets WCAG AA, and every poster and control has a fallback, so nothing shows up broken.</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="phase phase--live" id="phase-03">
-      <div class="phase__rail">3</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">A real domain</h3>
-          <span class="phase__status phase__status--live">Live</span>
+      <section class="phase phase--live" id="dashboard">
+        <div class="phase__rail">✓</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">A page that works on your phone</h3>
+            <span class="phase__status phase__status--live">Live</span>
+          </div>
+          <p class="phase__focus">Open it from the Home Screen</p>
+          <p class="phase__covers">Top Picks, your taste profile and what is coming soon, all on one page you can install like an app. Contrast meets accessibility standards, and a missing poster degrades to a clean placeholder instead of a broken image.</p>
         </div>
-        <p class="phase__focus">One address, not a netlify.app subdomain</p>
-        <p class="phase__covers">streamingscout.org, registered through Netlify's own domain search and connected as the project's primary domain. DNS and the HTTPS certificate provision automatically.</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="phase phase--live" id="phase-04">
-      <div class="phase__rail">4</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">Scheduled resync</h3>
-          <span class="phase__status phase__status--live">Live</span>
+      <section class="phase phase--live" id="domain">
+        <div class="phase__rail">✓</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Its own address</h3>
+            <span class="phase__status phase__status--live">Live</span>
+          </div>
+          <p class="phase__focus">streamingscout.org</p>
+          <p class="phase__covers">A real domain rather than a hosting subdomain. The security certificate renews itself, so there is nothing to maintain.</p>
         </div>
-        <p class="phase__focus">Stays current without being asked</p>
-        <p class="phase__covers">The upkeep that runs on its own is narrower than this phase promised. GitHub Actions runs every Monday: it checks the live site, and it carries anything removed or marked as seen into the permanent record as a pull request. A second Monday report says how stale the watch log has gone and exactly what a resync would pick up. An artwork sweep runs Wednesdays, a full-site review Fridays. The one job you would most expect is missing: a standing task that resyncs the watch history and rebuilds Top Picks unprompted. It can't be scheduled. Reading Netflix and Prime history means reading Susan's own logged-in browser, and a cloud job has no way in. So there's a report that measures the gap instead of a job that would quietly fail every week. One such task did exist and no longer does, which surfaced on 2026-08-17 by checking the task list rather than trusting this page. Rebuilds happen when Susan asks, which in practice is often; each one honors the exclusion list and stops rather than publishing a partial result if a step fails. Persistent data now lives in this repo's data folder, after an earlier version pointed at a folder that vanished between runs and cost most of the watch history. Susan still runs the push that publishes it.</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="phase phase--live" id="phase-08">
-      <div class="phase__rail">8</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">Content refresh &amp; 2026 polish</h3>
-          <span class="phase__status phase__status--live">Live</span>
+      <section class="phase phase--live" id="weekly-upkeep">
+        <div class="phase__rail">✓</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Weekly upkeep that runs itself</h3>
+            <span class="phase__status phase__status--live">Live</span>
+          </div>
+          <p class="phase__focus">With one honest exception</p>
+          <p class="phase__covers">Scheduled jobs check the live site, carry your dismissals into the permanent record and sweep the artwork. The watch history is the exception. Reading Netflix and Prime needs your own signed-in browser, which no scheduled job can borrow, so instead of a job that would fail quietly every week you get a weekly report on how stale the history has gone. Refreshes run when you ask, and one that hits a problem stops rather than publishing half an answer.</p>
         </div>
-        <p class="phase__focus">Grounded in the whole history</p>
-        <p class="phase__covers">A full resync onto the complete watch history, every title back to 2010. Top Picks came back rebuilt across distinct veins with a real actor list behind each one, and Currently Watching and Coming Soon caught up to what's actually airing. Fonts are now self-hosted and posters lazy-load below the fold, for a faster page.</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="phase phase--live" id="phase-06">
-      <div class="phase__rail">6</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">A real backend</h3>
-          <span class="phase__status phase__status--live">Live</span>
+      <section class="phase phase--live" id="full-history">
+        <div class="phase__rail">✓</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Rebuilt on the full history</h3>
+            <span class="phase__status phase__status--live">Live</span>
+          </div>
+          <p class="phase__covers">A complete resync brought in every title back to 2010. Top Picks came back wider and better evidenced, Currently Watching and Coming Soon caught up to what was really airing, and the page got faster.</p>
         </div>
-        <p class="phase__focus">Infrastructure that matches the polish, and GitHub doing more of the upkeep itself</p>
-        <p class="phase__covers">Netlify Functions on a GitHub repo that redeploys itself on push. Dismiss and status are both live, bounded, and Blobs-backed, so hiding a title or flagging it as watching/watched syncs across devices instantly. As of 2026-08-14 a scheduled health check (<code>scripts/smoke.mjs</code>) confirms the live site is actually up and both Functions are reachable and validating input. As of 2026-08-16, GitHub Actions does ongoing upkeep of its own, not only checking. A weekly job diffs the live dismiss store against the exclusion file and opens its own pull request to fix any gap, under GitHub's bot identity rather than anyone's account; a second weekly job flags (but doesn't auto-fix) any "currently watching" title missing its permanent on-page entry; and the smoke check now also confirms every Currently Watching row has real poster art, not just a placeholder. The weekly artwork-sourcing sweep still runs as a Claude session (finding and judging real key art isn't mechanical), but now lands its work on a reviewable branch with a ready pull-request link instead of asking for a blind push. As of 2026-08-17 the last item here, automated backups, is closed too, and closed against the hole that was actually open. The data folder has been version-controlled since July, so every past version is already recoverable; what it lacked was anything that would notice a truncation, and a check now fails the build if any data file is emptied, deleted or sharply shrunk without that being recorded on purpose. Separately, the watching and dismissed records held by the live site existed only inside Netlify with no backup at all, and a weekly job now snapshots them into the repo and opens its own pull request, refusing to overwrite a good snapshot with a smaller or empty one. Also as of 2026-08-17, every push is checked for title rows that would render without real poster art, after four separate rounds of gaps being spotted by eye on the live page instead. Later the same day three more checks landed, each aimed at a mistake that had already happened: nothing can be recommended that is already in the watch log (a rebuild had offered back a show finished five weeks earlier), no row can survive for a title already removed (seven were found still shipping, two of them nineteen days old), and a list that collapses into one genre fails the build. Both Functions were also rewritten to store one record per title instead of rewriting a single shared list, which had been quietly discarding one of any two changes made within a few seconds of each other. And the loop finally closes on its own: removing a title, or marking it already seen, is now recorded and taken off the page by GitHub Actions, which opens a pull request for review rather than waiting for anyone to remember.</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="phase phase--future" id="phase-05">
-      <div class="phase__rail">5</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">Browse the full watch log</h3>
-          <span class="phase__status phase__status--future">Future</span>
+      <section class="phase phase--live" id="backend">
+        <div class="phase__rail">✓</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Choices that stick, and checks that catch mistakes</h3>
+            <span class="phase__status phase__status--live">Live</span>
+          </div>
+          <p class="phase__focus">The part that stops the same errors recurring</p>
+          <p class="phase__covers">Hiding a title or marking it as watching syncs across your devices at once, and survives the next rebuild. Automated checks now block the mistakes this site actually made, among them recommending a show you already finished, leaving a removed title on the page, and shipping a row with no real artwork. Records are backed up weekly. Choosing good artwork still needs a person, so that work arrives as a change you can review first.</p>
         </div>
-        <p class="phase__focus">See the evidence, not just the answer</p>
-        <p class="phase__covers">A searchable view of the full logged watch history, filterable by service, genre, or actor, so you can see what's behind a recommendation.</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="phase phase--future" id="phase-07">
-      <div class="phase__rail">7</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">Protect saved changes</h3>
-          <span class="phase__status phase__status--future">Future</span>
+      <section class="phase phase--live" id="tracked-services">
+        <div class="phase__rail">✓</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">The service list matches your subscriptions</h3>
+            <span class="phase__status phase__status--live">Live</span>
+          </div>
+          <p class="phase__covers">The tracked list had fallen behind what you were actually watching. It now matches, every tracked service has a named source for its release schedule, and an automated check catches the number drifting again. Nat Geo stays off the list deliberately, because there is no account to read, so what you watch there gets logged from what you report.</p>
         </div>
-        <p class="phase__focus">A shared link can't quietly change what's recommended</p>
-        <p class="phase__covers">Dismissing a title is open to anyone with the link today, since a "not interested" flag felt low-stakes at first. This gates it behind the same shared edit key Vinyl Scout's catalog uses, remembered per device so it doesn't cost a retype every visit. Browsing stays open to anyone.</p>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <section class="phase phase--future" id="phase-09">
-      <div class="phase__rail">9</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">A real scoring formula</h3>
-          <span class="phase__status phase__status--future">Future</span>
-        </div>
-        <p class="phase__focus">A score you could re-add by hand</p>
-        <p class="phase__covers">Every match percentage today comes from Claude applying the same documented weighting rules fresh each rebuild. This turns that into a literal stored formula: fixed weights per genre and actor, one small function that combines them, the same shape Travel Intelligence uses for flight scoring. Judging what genre a brand-new title even is stays a judgment call.</p>
-      </div>
-    </section>
+    <div class="phase-group">
+      <h2 class="section-title">In progress</h2>
 
-    <section class="phase phase--live" id="phase-10">
-      <div class="phase__rail">10</div>
-      <div class="phase__body">
-        <div class="phase__head">
-          <h3 class="phase__name">Catch the account list up to reality</h3>
-          <span class="phase__status phase__status--live">Live</span>
+      <section class="phase phase--progress" id="hulu">
+        <div class="phase__rail">●</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Hulu, fully connected</h3>
+            <span class="phase__status phase__status--progress">In progress</span>
+          </div>
+          <p class="phase__focus">Schedules yes, history not yet</p>
+          <p class="phase__covers">Hulu joined the tracked list on 19 August, so its upcoming releases already show up. Its watch history does not sync yet. The first live attempt ran into a signed-out session and a history page Hulu has retired; the page it should use instead is now recorded, so what remains is one change to the sync step and being signed in when it runs.</p>
         </div>
-        <p class="phase__focus">The tracked-services list stopped matching what's actually watched</p>
-        <p class="phase__covers">Started as an audit after Currently Watching outgrew the four services the About page and Coming Soon skill knew about. Done: MGM+ and Paramount+ confirmed as real subscriptions and promoted to reviewed, badged services; the tracked-services stat and STREAMING_PROFILE.md corrected to 7 (2026-08-06), with an automated content-drift check now guarding that number against silently going stale again (2026-08-08). Closed 2026-08-16: MGM+ and Paramount+ now have named, per-service Coming Soon sources, the last real gap here. MGM+ press turned out to live inside the Amazon MGM Studios press site rather than a standalone MGM+ domain, which is why earlier passes missed it; Paramount+ has a proper chronological release feed at Paramount Press Express. Every one of the seven tracked services now has its best source written down in STREAMING_PROFILE.md. An earlier pass that day reported BritBox and Hulu as having none; both were wrong, and Susan supplied the real pages. BritBox's lives at a URL with an underscore, and the hyphenated spelling returns a 404, which is the likeliest reason it was missed. One thing worth stating rather than leaving implicit: Nat Geo stays off the tracked list on purpose. It has no account page to sync, so what Susan watches there gets logged from what she reports directly. That is a design decision.</p>
-      </div>
-    </section>
+      </section>
+    </div>
+
+    <div class="phase-group">
+      <h2 class="section-title">Next</h2>
+
+      <section class="phase phase--future" id="browse-log">
+        <div class="phase__rail">○</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Browse the full watch log</h3>
+            <span class="phase__status phase__status--future">Next</span>
+          </div>
+          <p class="phase__covers">Today you see the recommendation. This adds a searchable view of everything logged, filterable by service, genre or actor, so you can see the history a pick came from.</p>
+        </div>
+      </section>
+
+      <section class="phase phase--future" id="protect-changes">
+        <div class="phase__rail">○</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">Protect saved changes</h3>
+            <span class="phase__status phase__status--future">Next</span>
+          </div>
+          <p class="phase__covers">Anyone with the link can dismiss a title today, which seemed low stakes when a "not interested" flag was all it changed. This puts saved changes behind the same edit key Vinyl Scout uses, remembered per device so it is not a retype every visit. Browsing stays open to anyone.</p>
+        </div>
+      </section>
+
+      <section class="phase phase--future" id="scoring-formula">
+        <div class="phase__rail">○</div>
+        <div class="phase__body">
+          <div class="phase__head">
+            <h3 class="phase__name">A scoring formula on paper</h3>
+            <span class="phase__status phase__status--future">Next</span>
+          </div>
+          <p class="phase__covers">Match percentages are worked out fresh at each rebuild from the same written rules. Turning that into a stored formula with fixed weights would make any score reproducible by hand, the way flight scoring already works on Travel Intelligence. Deciding which genre a brand new title belongs to stays a judgment call.</p>
+        </div>
+      </section>
+    </div>
 
   </div>
 </main>

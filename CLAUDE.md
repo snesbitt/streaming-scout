@@ -1700,3 +1700,38 @@ limit rather than looking like an unfinished feature.
 
 **Delivered:** `roadmap.html`, `guide.html`, this file, plus the scheduled task
 itself, which lives outside the repo.
+
+## 2026-08-19 - roadmap.html rewritten short, grouped by status
+
+Susan's ask: make the roadmap concise, a few sentences per item, written for
+non-technical execs. Rewritten end to end.
+
+- **Numbering dropped, status groups added.** The page now has three groups
+  (Done, In progress, Next) instead of ten numbered phases. This closes the
+  "scrambled roadmap phase ordering in the DOM" item EDITORIAL_STYLE.md's
+  2026-08-18 pass left open: the old DOM order was 1, 2, 3, 4, 8, 6, 5, 7, 9,
+  10, so a reader hit three Future phases before a Live one. Phase numbers
+  were carrying no meaning for a reader and are gone; the `.phase` component,
+  its modifier classes and `style.css` are untouched, and the numeric rail
+  now holds a status glyph. Section headings reuse the existing
+  `h2.section-title`. Only page-scoped spacing was added.
+- **Every card cut to a few sentences.** Roughly 10.5k of prose down to about
+  3.5k. Outcome first, implementation dropped or compressed. The real
+  caveats all survive, shorter: the watch-history resync that cannot be
+  scheduled (needs Susan's signed-in browser), the guardrail checks and what
+  they cannot catch, and Nat Geo being off the tracked list on purpose.
+- **Phase 10 split.** The tracked-services correction is done and stays under
+  Done. Hulu's watch-history sync is not, and is now its own In progress card
+  rather than a caveat buried at the end of a Live phase. Statuses matched to
+  what is actually true, per the honesty rule.
+- **`about.html`** linked to `/roadmap#phase-09` with the anchor text "Phase
+  09". Repointed to `/roadmap#scoring-formula` with the text "the roadmap",
+  since numbered phases no longer exist. All other roadmap anchors are now
+  descriptive slugs; nothing else in the repo referenced them.
+- Verified: `npm test` green (em dash, hardcoded count, content drift and the
+  rest), plus a real headless render at 390px and 1100px. The live site check
+  still has to happen after the push.
+
+**Delivered:** `roadmap.html`, `about.html`, this file. Committed locally,
+not pushed (cloud bridge has no network) - same standing rule as every other
+change here.
