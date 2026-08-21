@@ -1884,3 +1884,106 @@ poster needs a visual spot-check" (both images loaded in a real browser at
 **Delivered:** `guide.html`, `scripts/check-content-drift.mjs`,
 `data/STREAMING_PROFILE.md`, `data/INTEGRITY_MANIFEST.json`, this file.
 Committed locally, not pushed.
+
+## 2026-08-21 - the About page told visitors the site was read-only, and five other stale claims
+
+Picked this up as a documentation punch list. Two things were true before any
+of it got written: the prose fixes had already been made in the working tree
+by an earlier pass and never committed, and the check that was supposed to
+prevent this class of drift was watching one page out of the two making the
+same claim. This entry is mostly about the second.
+
+**The one that mattered.** `about.html`'s lede said "Read-only for everyone
+else. Only Susan's Cowork sessions change it." That has never been true.
+`dismiss.mjs` has carried "open POST/DELETE, no edit key" since it shipped and
+`status.mjs` says the same, so anyone with the link can dismiss a title or mark
+one watched with no account and no key. Since 2026-08-16/17 that is not even
+where it stops: the `dismiss-drift` and `watched-drift` jobs carry those
+anonymous writes into `data/EXCLUDED_TITLES.md` and `data/STREAMING_LOG.md` and
+delete rows from `index.html` by auto-PR. A stranger's tap changes the
+permanent record. `roadmap.html` had said "Anyone with the link can dismiss a
+title today" for days, so the site contradicted itself, and the half a visitor
+reads first was the wrong half. The lede now says what is actually true and
+points at the roadmap item for gating it, described as planned rather than
+built. The "what it won't do" list says the same thing rather than implying a
+protection that does not exist.
+
+Also corrected, each verified against the thing it describes rather than
+against the punch list: the copyable prompt's item 5 promised a scheduled
+self-refresh that the 2026-08-17 entry above already recorded as not existing
+(it now describes the staleness report, which is what actually runs); the
+roadmap summary still counted "seven of ten phases" including a "plugin" item,
+three days after the roadmap dropped numbered phases for eleven items in three
+status groups and while omitting the only In-progress one; `guide.html` linked
+to `/roadmap#phase-04`, an id that stopped existing on 2026-08-19; the step 05
+diagram ran Claude straight to Netlify with no GitHub box, contradicting the
+same page's "Claude sessions write and commit, they never push"; About named
+four Coming Soon services when the profile records six and eight signature
+genres when the profile lists ten; poster art was credited solely to TMDB when
+`index.html` pulls 25 images from TMDB, 6 from Amazon, 4 from Wikimedia and 5
+from `posters/` in this repo; and the cadence was flattened to "Mondays" when
+Monday is only GitHub Actions and the staleness report, with the artwork sweep
+on Wednesdays, the five-site review on Fridays, a daily freshness sweep and a
+monthly audit. The Hulu promotion date on the roadmap said 19 August; the
+profile records 2026-08-14, with 19 August being Susan re-confirming it after
+the failed first sync.
+
+**Why the existing check did not catch the About page.** Check 2 in
+`scripts/check-content-drift.mjs` was added on 2026-08-19 specifically to stop
+the Coming Soon source list drifting, and it worked: `guide.html` has been
+correct ever since. It read only `guide.html`. About made the same claim, went
+stale two days earlier, and stayed stale precisely because the guarded page
+next to it looked fine. A check that watches one of two pages making a claim is
+a check that certifies the other one drifting. Check 2 now loops over a PAGES
+list, and the comment says to add to that list rather than write a second copy.
+
+Four more checks, each aimed at something that had actually gone wrong here
+rather than at something imaginable: signature-genre counts on both pages
+against `TASTE_PROFILE.md` (both the full enumeration and the "named four, and
+N more" shorthand, which can drift independently); the upkeep cadence, reading
+GitHub Actions crons straight out of `.github/workflows/*.yml` and comparing
+against a dated snapshot of the Claude scheduled tasks, which CI genuinely
+cannot list for itself; every `#` cross-reference on the three public pages
+resolving to an id that exists on the page it points at; and no page using the
+vocabulary of access control about the live buttons without saying the
+protection is absent or planned.
+
+**Mutation-tested, per the standing lesson from the 2026-08-19 entry above.**
+Eleven deliberate breakages, one at a time, restoring between each: the About
+source list reverted to its pre-08-16 set, the lede numeral, the genre
+enumeration, the "and six more" shorthand, a dropped Wednesday, a Friday
+changed to a Tuesday, the stat tile label unscoped, the Monday cron in
+`test.yml` moved to Tuesday, a live anchor pointed back at `#phase-04`, the old
+"Read-only for everyone else" sentence reinstated, and `dismiss.mjs` losing the
+"no edit key" note the openness check keys on. All eleven failed, each with a
+message naming the file and what to fix. The `test.yml` one matters most: it
+proves the cadence check is reading the real cron rather than agreeing with a
+constant next to it.
+
+Two judgment calls worth recording. The cadence check cannot read Susan's
+scheduled tasks, because they live on her account and no token in CI could list
+them, so they sit in the file as a dated snapshot with an instruction to
+re-verify via `list_triggers` when one changes. And `roadmap.html`'s "Next"
+sections are stripped before the access-control check runs, because describing
+an edit key that does not exist yet is exactly what that group of the roadmap
+is for.
+
+**Not fixed, flagged instead.** `data/STREAMING_PROFILE.md`'s "## Sync Cadence"
+section still reads "Weekly (Monday, via the `streaming-scout-weekly-resync`
+scheduled task)". That task does not exist; `list_triggers` confirms it, and
+`scripts/check-dismiss-drift.mjs` already carries a comment saying it was
+verified gone. It is the same false-cadence claim this pass spent its time
+removing from the public pages, one layer down. Left alone deliberately: `data/`
+is guarded by `INTEGRITY_MANIFEST.json`, so editing it means regenerating the
+manifest, which is a wider blast radius than a documentation pass should take on
+its own. Worth a small dedicated pass. That same comment in
+`check-dismiss-drift.mjs` is itself now stale in the other direction, listing
+only two remaining tasks when there are five touching this site.
+
+`.gitignore` gained `_to_delete/`, which was untracked but unignored, so any
+`git add -A` would have swept a quarantine folder of stale git locks into the
+repo.
+
+**Delivered:** `about.html`, `guide.html`, `roadmap.html`,
+`scripts/check-content-drift.mjs`, `.gitignore`, this file. Committed locally,
+not pushed.

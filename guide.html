@@ -75,7 +75,7 @@
         <div class="mode-card mode-card--d">
           <div class="mode-card__name">Scheduled tasks</div>
           <div class="mode-card__role">weekly upkeep</div>
-          <ul><li>Mondays, automatic</li><li>checks the live site</li><li>stops rather than publishing a partial state</li><li>see Roadmap, phase 04</li></ul>
+          <ul><li>Monday CI, Wednesday artwork sweep, Friday review</li><li>checks the live site</li><li>stops rather than publishing a partial state</li><li><a href="/roadmap#weekly-upkeep">see Roadmap, weekly upkeep</a></li></ul>
         </div>
       </div>
 
@@ -111,43 +111,48 @@
 
     <div class="step" id="deploy">
       <div><span class="step-num">05</span><span class="step-title">Publishing changes automatically</span></div>
-      <p class="step-body">Every change publishes to the live site automatically, with no manual deploy step. That's what made the live buttons possible. Remove a title, or mark it as already seen, and every device you own catches up immediately.</p>
+      <p class="step-body">A push to GitHub publishes to the live site on its own, with no manual deploy step after it. Susan does the pushing, so the automatic part starts at GitHub, not at Claude. Having that continuous deployment in place is what made the live buttons possible, and those need no push at all: remove a title, or mark it as already seen, and every device you own catches up immediately.</p>
 
       <figure class="diagram">
-        <svg viewBox="0 0 720 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and saves the update, Netlify publishes it automatically to streamingscout.org, and two always-on live buttons run alongside it whose results GitHub Actions records back into the repository">
+        <svg viewBox="0 0 720 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and commits the update, Susan pushes the commit to GitHub, Netlify publishes it automatically to streamingscout.org, and two always-on live buttons run alongside it whose results GitHub Actions records back into the repository">
           <defs>
             <marker id="ssArr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M0,0 L10,5 L0,10 z" fill="#a89f8f"/>
             </marker>
           </defs>
           <g font-family="-apple-system, Helvetica, sans-serif">
-            <rect x="8" y="20" width="150" height="70" rx="8" fill="#e3d9d9" stroke="#6b3a3a"/>
-            <text x="83" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">Netflix / Prime</text>
-            <text x="83" y="68" text-anchor="middle" font-size="12" fill="#4e2c2c">read-only, your session</text>
+            <rect x="10" y="20" width="124" height="70" rx="8" fill="#e3d9d9" stroke="#6b3a3a"/>
+            <text x="72" y="48" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Netflix / Prime</text>
+            <text x="72" y="68" text-anchor="middle" font-size="10" fill="#4e2c2c">read-only, your session</text>
 
-            <rect x="196" y="20" width="150" height="70" rx="8" fill="#ece2d0" stroke="#9c7a35"/>
-            <text x="271" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">Claude / Cowork</text>
-            <text x="271" y="68" text-anchor="middle" font-size="12" fill="#5c4c22">builds &amp; saves the update</text>
+            <rect x="154" y="20" width="124" height="70" rx="8" fill="#ece2d0" stroke="#9c7a35"/>
+            <text x="216" y="48" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Claude / Cowork</text>
+            <text x="216" y="68" text-anchor="middle" font-size="10" fill="#5c4c22">builds and commits</text>
 
-            <rect x="384" y="20" width="150" height="70" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
-            <text x="459" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">Netlify</text>
-            <text x="459" y="68" text-anchor="middle" font-size="12" fill="#3d4238">publishes it automatically</text>
+            <rect x="298" y="20" width="124" height="70" rx="8" fill="#e6e2da" stroke="#7a7264"/>
+            <text x="360" y="48" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">GitHub</text>
+            <text x="360" y="68" text-anchor="middle" font-size="10" fill="#4a453c">Susan pushes to main</text>
 
-            <rect x="572" y="20" width="140" height="70" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
-            <text x="642" y="48" text-anchor="middle" font-size="14" font-weight="600" fill="#2a2620">streamingscout.org</text>
-            <text x="642" y="68" text-anchor="middle" font-size="12" fill="#3d4a58">the live site, updated</text>
+            <rect x="442" y="20" width="124" height="70" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
+            <text x="504" y="48" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Netlify</text>
+            <text x="504" y="68" text-anchor="middle" font-size="10" fill="#3d4238">publishes automatically</text>
 
-            <line x1="158" y1="55" x2="194" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
-            <line x1="346" y1="55" x2="382" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
-            <line x1="534" y1="55" x2="570" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+            <rect x="586" y="20" width="124" height="70" rx="8" fill="#e2e6ec" stroke="#6d7e93"/>
+            <text x="648" y="48" text-anchor="middle" font-size="12" font-weight="600" fill="#2a2620">streamingscout.org</text>
+            <text x="648" y="68" text-anchor="middle" font-size="10" fill="#3d4a58">the live site, updated</text>
 
-            <rect x="170" y="132" width="378" height="60" rx="8" fill="#e7e9df" stroke="#4c6b4f" stroke-width="1.3"/>
-            <text x="359" y="155" text-anchor="middle" font-size="13" font-weight="600" fill="#3d5240">Live buttons: remove, and mark as seen</text>
-            <text x="359" y="174" text-anchor="middle" font-size="12" fill="#3d5240">sync instantly, then GitHub Actions records them permanently</text>
-            <line x1="459" y1="90" x2="384" y2="130" stroke="#8fae93" stroke-width="1.3" stroke-dasharray="4 3"/>
+            <line x1="134" y1="55" x2="152" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+            <line x1="278" y1="55" x2="296" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+            <line x1="422" y1="55" x2="440" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+            <line x1="566" y1="55" x2="584" y2="55" stroke="#a89f8f" stroke-width="1.5" marker-end="url(#ssArr2)"/>
+
+            <rect x="160" y="132" width="400" height="60" rx="8" fill="#e7e9df" stroke="#4c6b4f" stroke-width="1.3"/>
+            <text x="360" y="155" text-anchor="middle" font-size="13" font-weight="600" fill="#3d5240">Live buttons: remove, and mark as seen</text>
+            <text x="360" y="174" text-anchor="middle" font-size="12" fill="#3d5240">no push needed; GitHub Actions records them permanently</text>
+            <line x1="504" y1="90" x2="440" y2="130" stroke="#8fae93" stroke-width="1.3" stroke-dasharray="4 3"/>
           </g>
         </svg>
-        <figcaption>How an update travels from Claude's workspace to the live site.</figcaption>
+        <figcaption>How an update travels from Claude's workspace to the live site, with Susan's push in the middle.</figcaption>
       </figure>
     </div>
 
@@ -163,7 +168,7 @@
 
     <p class="eyebrow" id="build-your-own">Build your own · a starting point</p>
     <h2 style="margin:0 0 8px;">Copy this prompt to start</h2>
-    <p class="lede" style="font-size:15px;">This entire site (the recommendation logic, the dashboard, the domain, the self-updating schedule) started from a single written request to Claude. It was built in stages, in conversation, with every irreversible step (spending money, publishing, connecting accounts) held for explicit approval along the way. Below is a version of that starting request. Copy it and paste it into a new Claude conversation, with your own topic swapped in.</p>
+    <p class="lede" style="font-size:15px;">This entire site (the recommendation logic, the dashboard, the domain, the scheduled checks) started from a single written request to Claude. It was built in stages, in conversation, with every irreversible step (spending money, publishing, connecting accounts) held for explicit approval along the way. Below is a version of that starting request. Copy it and paste it into a new Claude conversation, with your own topic swapped in.</p>
 
     <div class="prompt-box">
       <button class="prompt-copy" id="startCopyBtn" onclick="startCopyPrompt()">Copy</button>
@@ -174,7 +179,7 @@ Here's the pattern I want it to follow:
 2. Rank new candidates against what I've actually liked before, not a generic popularity or trending list.
 3. Publish it as a small, real website I can bookmark and check from my phone. No login needed for me to view it day to day.
 4. Let me dismiss things I'm not interested in with one click, and have that stick permanently.
-5. Refresh itself on a schedule, so it stays current without me having to ask every time.
+5. Run its upkeep on a schedule: check that it still works, and tell me when the data has gone stale so I know when to refresh it. If a refresh needs me signed in somewhere, say so rather than promising it will happen unattended.
 6. Be honest in the interface about what's automatic versus what still needs me. Never invent or guess at data it can't verify.
 
 Please help me scope this into a first small version we can finish today, tell me exactly what you'd need from me at each step (any account access, any purchase like a domain name, anything you can't do without my say-so), and don't do anything irreversible without checking with me first.</pre>
@@ -201,7 +206,7 @@ Please help me scope this into a first small version we can finish today, tell m
       <div class="next-card">
         <div class="next-card__n">04</div>
         <h4>It grows in later sessions</h4>
-        <p>Everything on this site, the domain, the self-refresh, the dismiss button, arrived in later passes, not all at once. See the <a href="/roadmap">Roadmap</a> for the real order it happened in.</p>
+        <p>Everything on this site, the domain, the scheduled checks, the dismiss button, arrived in later passes, not all at once. See the <a href="/roadmap">Roadmap</a> for the real order it happened in.</p>
       </div>
     </div>
 

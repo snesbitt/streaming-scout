@@ -35,7 +35,7 @@
   <div class="wrap">
     <p class="eyebrow">About · how to read this dashboard</p>
     <h1 class="page-title">What to watch next, matched to what you actually watch.</h1>
-    <p class="lede">Every ranking here comes out of Susan's own watch history: Netflix and Prime Video synced from the browser, Apple TV+ and Hulu logged from what she reports. Four more services are checked for what's landing next. Read-only for everyone else. Only Susan's Cowork sessions change it.</p>
+    <p class="lede">Every ranking here comes out of Susan's own watch history: Netflix and Prime Video synced from the browser, Apple TV+ and Hulu logged from what she reports. Six services have a named source of their own for what's landing next. Only Susan's Cowork sessions rebuild the page, but its buttons are open: anyone with the link can dismiss a title or mark one watched, with no account and no key, and an automated job then carries that into the permanent record. Putting those buttons behind a key is on the <a href="/roadmap#protect-changes">roadmap</a>, not built yet.</p>
 
     <p class="callout" style="margin:0 0 1.4rem;">
       <strong>This page is the reference.</strong> It covers what the dashboard does today and how it arrives at a number. The <a href="/guide">Guide</a> has the method behind it, plus a prompt you can copy to build one for your own topic.
@@ -45,7 +45,7 @@
       <div class="stat-tile"><div class="stat-tile__num">16-yr</div><div class="stat-tile__label">Netflix + Prime history</div></div>
       <div class="stat-tile"><div class="stat-tile__num">8</div><div class="stat-tile__label">services tracked</div></div>
       <div class="stat-tile"><div class="stat-tile__num">0</div><div class="stat-tile__label">accounts or logins</div></div>
-      <div class="stat-tile"><div class="stat-tile__num">Mon</div><div class="stat-tile__label">automated weekly checks</div></div>
+      <div class="stat-tile"><div class="stat-tile__num">Mon</div><div class="stat-tile__label">weekly checks on GitHub</div></div>
     </div>
 
     <nav class="pill-nav">
@@ -59,9 +59,9 @@
 
     <div class="about-section" id="what-it-is">
       <div class="about-section-head"><span class="about-num-badge">01</span><h3>what it is</h3></div>
-      <p>It ranks what to watch next. Candidates come from Susan's own watch history, every title back to 2010, scored against the genres that keep recurring there: British and European crime drama, spy thrillers, grounded action, music documentaries, prestige drama, food and food travel, LGBTQ+ film, British period drama. Horror, reality dating shows, superhero franchises, and science fiction are capped no matter what else a title has going for it.</p>
-      <p>BritBox, PBS Masterpiece, MGM+, and Paramount+ get reviewed for what's coming next and badged plainly. Watch history syncs from Netflix and Prime Video only. Viewing anywhere else gets logged when Susan reports it. The page also tracks premieres months out, and whatever Susan is watching or seeing this week.</p>
-      <p>Automated upkeep runs on Mondays. A content rebuild happens whenever Susan asks Claude for one.</p>
+      <p>It ranks what to watch next. Candidates come from Susan's own watch history, every title back to 2010, scored against the genres that keep recurring there: British and European crime drama, spy thrillers, grounded action, music documentaries, prestige drama, food and food travel, LGBTQ+ film, British period drama, neo-Western, and heist thrillers. Horror, reality dating shows, superhero franchises, and science fiction are capped no matter what else a title has going for it.</p>
+      <p>BritBox, PBS Masterpiece, Apple TV+, MGM+, Paramount+ and Hulu each have their own official schedule or press page, and what turns up gets reviewed for what's coming next and badged plainly. Watch history syncs from Netflix and Prime Video only. Viewing anywhere else gets logged when Susan reports it. The page also tracks premieres months out, and whatever Susan is watching or seeing this week.</p>
+      <p>Automated upkeep is spread across the week rather than being a Monday event. GitHub Actions runs the checks on Mondays, alongside a Monday report on how stale the watch log has gone. Scheduled Claude tasks cover the rest: an artwork sweep on Wednesdays, a review across all five of Susan's sites on Fridays, a freshness sweep daily, and an audit monthly. None of them rebuild the recommendations. That happens when Susan asks Claude for one, and only then.</p>
     </div>
 
     <div class="about-section" id="how-scored">
@@ -87,7 +87,7 @@
 
     <div class="about-section" id="the-stack">
       <div class="about-section-head"><span class="about-num-badge">03</span><h3>the stack</h3></div>
-      <p>Static HTML, plus two small Netlify Functions: dismiss (for the "not interested"/"finished" buttons) and status (for the currently-watching/watched buttons). Deploys via GitHub: pushing to main triggers Netlify's Git-connected continuous deployment automatically. Susan is always the one who pushes, from her own terminal, whether it's a change she made herself or one a Claude session prepared and left ready to go. Nothing pushes to main unattended. Poster artwork comes from The Movie Database (TMDB), which is not endorsing this site.</p>
+      <p>Static HTML, plus two small Netlify Functions: dismiss (for the "not interested"/"finished" buttons) and status (for the currently-watching/watched buttons). Deploys via GitHub: pushing to main triggers Netlify's Git-connected continuous deployment automatically. Susan is always the one who pushes, from her own terminal, whether it's a change she made herself or one a Claude session prepared and left ready to go. Nothing pushes to main unattended. Poster artwork comes from four places: mostly The Movie Database (TMDB), plus Amazon's own image host, Wikimedia Commons, and a handful of files kept in this repo. None of them are endorsing this site.</p>
 
       <div class="stack-compare">
         <div class="stack-col this-site">
@@ -137,7 +137,7 @@
 
     <div class="about-section" id="roadmap-link">
       <div class="about-section-head"><span class="about-num-badge">05</span><h3>roadmap</h3></div>
-      <p>Seven of ten phases are live: the plugin, the dashboard, the domain, scheduled upkeep, the content refresh, the backend, and the corrected service list. A searchable view of the full watch log is next. The <a href="/roadmap" style="text-decoration:underline;">roadmap</a> lists all ten, and the <a href="/guide" style="text-decoration:underline;">guide</a> covers how it gets built.</p>
+      <p>Seven of eleven items are done: the recommendations, the dashboard, the domain, the weekly upkeep, the rebuild on the full history, the backend, and the corrected service list. One is in progress: Hulu, whose schedules are in and whose watch history is not. Three are still ahead: a searchable view of the full watch log, an edit key for the buttons, and a scoring formula on paper. The <a href="/roadmap" style="text-decoration:underline;">roadmap</a> groups all eleven by status, and the <a href="/guide" style="text-decoration:underline;">guide</a> covers how it gets built.</p>
     </div>
 
     <div class="about-section" id="wont-do">
@@ -145,7 +145,8 @@
       <ul class="wont-list">
         <li>Reading it requires nothing. No account, no password.</li>
         <li>Nothing here tracks you: no analytics, no advertising, no third-party scripts.</li>
-        <li>The page never touches Susan's streaming accounts while you're on it. What you see is one published snapshot, refreshed on a schedule.</li>
+        <li>The page never touches Susan's streaming accounts while you're on it. What you see is one published snapshot, rebuilt when Susan asks for a rebuild rather than on a schedule.</li>
+        <li>It doesn't stop you changing what it shows. The dismiss and watched buttons accept a request from anyone with the link, with no key, and an automated pull request carries those choices into the stored records. That's a gap rather than a feature: see <a href="/roadmap#protect-changes">Protect saved changes</a> on the roadmap.</li>
         <li>The data isn't sold or shared.</li>
       </ul>
     </div>

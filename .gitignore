@@ -9,3 +9,4 @@ node_modules/
 
 # Stale git locks moved aside by cloud-bridge sessions
 _to_delete_locks/
+_to_delete/
