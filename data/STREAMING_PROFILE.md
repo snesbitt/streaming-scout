@@ -227,7 +227,25 @@ now has a second check that fails when a service listed here has no mention
 in that sentence, so the two cannot drift apart again.
 
 ## Sync Cadence
-Weekly (Monday, via the `streaming-scout-weekly-resync` scheduled task)
+On demand, in a session. There is no automatic resync, and nothing schedules one.
+
+A watch-history pull needs Susan's already-authenticated Netflix and Prime
+sessions read through Claude in Chrome, plus the device bridge to reach this
+repo. Neither exists in a scheduled cloud firing — a structural limit, confirmed
+across repeated runs, not a transient failure. Corrected 2026-08-21: this line
+previously named a `streaming-scout-weekly-resync` task, which does not exist and
+had not for some time.
+
+What actually runs on a schedule, none of it rebuilding recommendations:
+
+| When | Task |
+|---|---|
+| Mon 13:30 UTC | Watch-log staleness report — measures the gap, never closes it |
+| Mon (CI) | `npm test`, plus the dismiss/watched drift jobs that open auto-PRs |
+| Wed 17:07 UTC | Artwork sweep — fills missing poster art |
+| Fri 13:00 UTC | Full-site review across all five sites |
+| Daily 11:00 UTC | Freshness sweep across the portfolio |
+| Monthly, 1st | End-to-end audit and repair, all five sites |
 
 ## Notes
 Bootstrapped 2026-07-21 after the prior profile was found to be unrecoverable — it had

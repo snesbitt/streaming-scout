@@ -1987,3 +1987,31 @@ repo.
 **Delivered:** `about.html`, `guide.html`, `roadmap.html`,
 `scripts/check-content-drift.mjs`, `.gitignore`, this file. Committed locally,
 not pushed.
+
+## 2026-08-21 (later) — the phantom resync task, one layer down
+
+The doc pass earlier today removed "refresh itself on a schedule" from every
+public page. The same false claim was still sitting in `data/STREAMING_PROFILE.md`'s
+`## Sync Cadence`, naming a `streaming-scout-weekly-resync` task that does not
+exist. That file is what a session reads to learn how this project works, so it
+was the copy most likely to put the claim back onto the pages later.
+
+Replaced with what is actually true — syncing is on-demand only, because a watch-
+history pull needs Claude in Chrome against Susan's authenticated sessions plus
+the device bridge, and neither exists in a scheduled cloud firing — plus a table
+of what really does run.
+
+`scripts/check-dismiss-drift.mjs`'s 2026-08-16 note was also wrong in the other
+direction: it said "only a weekly artwork sweep and a five-site review remain."
+Re-verified against `list_triggers`. **Five** scheduled tasks touch this site:
+Monday watch-log staleness report (`30 13 * * 1`), Wednesday artwork sweep
+(`7 17 * * 3`), Friday five-site review (`0 13 * * 5`), daily portfolio freshness
+sweep (`0 11 * * *`), monthly end-to-end audit (`0 6 1 * *`). None resyncs watch
+history or rebuilds recommendations.
+
+Manifest refreshed with `--update` in this same commit, per the file's own rule,
+so the size change is reviewable rather than absorbed.
+
+**Also settled today:** the portfolio is **five** sites, not four. Two scheduled
+tasks name them outright — "five sites (Vinyl, Streaming, Fitness, Travel, Hub)".
+`project-hub` is the fifth.

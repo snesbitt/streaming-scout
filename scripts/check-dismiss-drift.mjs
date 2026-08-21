@@ -11,7 +11,12 @@
 //
 // 2026-08-16: the weekly "Streaming Scout dismissed-title sync" Claude Code
 // Remote scheduled task that entry describes no longer exists (verified via
-// list_triggers — only a weekly artwork sweep and a five-site review remain).
+// list_triggers). Re-verified 2026-08-21 — the count in the original note was
+// wrong. Five scheduled tasks touch this site, none of which resyncs watch
+// history or rebuilds recommendations: the Monday watch-log staleness report
+// (30 13 * * 1), the Wednesday artwork sweep (7 17 * * 3), the Friday five-site
+// review (0 13 * * 5), the daily portfolio freshness sweep (0 11 * * *), and the
+// monthly end-to-end audit (0 6 1 * *).
 // Rather than recreate it as its own agentic session, this gap is fully
 // mechanical (diff two lists, append in an existing format) with zero
 // editorial judgment involved, so it's a better fit for --fix mode below,
