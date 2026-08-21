@@ -1824,3 +1824,63 @@ still carries "Babylon Berlin S5 has no poster art" and
 2026-08-14 entry above sourced that art and `check-poster-coverage.mjs`
 now reports every row covered with one declared exception (Legacy of
 Spies).
+
+## 2026-08-19, later - the MGM+/Paramount+ punch-list item was already closed, but guide.html never got the memo
+
+Picked this up as "MGM+ and Paramount+ still lack a dedicated Coming Soon
+source." That has not been true since 2026-08-16, when both were found and
+every service's best source was written down in
+`data/STREAMING_PROFILE.md`. What was still true, and worse, is that
+`guide.html` step 06 kept telling visitors Coming Soon drew from six named
+sources when it had drawn from ten for three days. The 2026-08-14 entry
+above records checking guide.html against the source list and finding it
+accurate, which it was at the time; nothing re-checked it after the list
+grew two days later. A public page was quietly wrong and no test could
+have noticed.
+
+Three things done:
+
+1. `guide.html` step 06 rewritten to name the per-service sources
+   (BritBox, PBS Masterpiece, Apple TV+, MGM+, Paramount+, Hulu) and to
+   distinguish them from the cross-service ones (Netflix Tudum, Den of
+   Geek, What's on Netflix, JustWatch).
+2. `scripts/check-content-drift.mjs` gained a second check, which is what
+   that file explicitly asks for whenever a new "the page said X but the
+   data said Y" instance is caught by hand. It reads the service names out
+   of the profile's Coming Soon sources section and fails if step 06's
+   sentence does not mention one of them. The section heading is located
+   by its stable words rather than its dated full string, so re-dating the
+   entry cannot silently switch the check off.
+3. Both sources re-checked live in a browser, since the 2026-08-16 entry
+   asked for a monthly pass and this sandbox cannot reach either host.
+   Both are up. One date has landed: American Hostage, September 20, 2026.
+   Details and a new warning about a 404-ing Paramount+ URL are in the
+   profile.
+
+**On the check, and the reason it took three tries.** First version
+asserted only that the parsed service list was non-empty. Mutating the
+profile so that MGM+ and Paramount+ alone lost their bold lead-in left
+four bullets still parsing, the list still non-empty, and the check still
+passing, having silently stopped looking at the two services it was
+written for. That is the same failure this file already documents in Check
+1, whose original `/^- /gm` depended on one line's indentation and passed
+for the wrong reason for weeks. Fixed by comparing the parsed name count
+against the raw bullet count, so a formatting change fails loudly. All
+three mutations (stale sentence, renamed heading, unparseable bullets) now
+fail the check.
+
+The pattern is getting hard to miss: two separate checks in this repo have
+now shipped in a state where they would have passed while blind. Writing
+the check is the easy half. Deliberately breaking the thing it watches, and
+confirming it screams, is the half that decides whether it was worth
+writing.
+
+Also closed while here, both stale rather than done: "Babylon Berlin S5 has
+no poster art" (sourced 2026-08-14, and `check-poster-coverage.mjs` reports
+every row covered bar the declared Legacy of Spies gap) and "Reacher S4's
+poster needs a visual spot-check" (both images loaded in a real browser at
+500x750, correct show, correct art).
+
+**Delivered:** `guide.html`, `scripts/check-content-drift.mjs`,
+`data/STREAMING_PROFILE.md`, `data/INTEGRITY_MANIFEST.json`, this file.
+Committed locally, not pushed.

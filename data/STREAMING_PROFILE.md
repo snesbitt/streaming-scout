@@ -196,6 +196,36 @@ reports back. One change is left outside this repo: step 2 of the
 take their entry points from the section above, instead of naming two services
 in its own text.
 
+## 2026-08-19 — MGM+ and Paramount+ sources re-checked live, both still good
+
+The 2026-08-16 entry above said the MGM+ list was worth re-checking monthly
+for dates landing on the TBA titles. Done today, in a real browser (this
+sandbox cannot reach either host directly).
+
+- **MGM+** — page live and unchanged in shape. One date has landed since
+  2026-08-16: **American Hostage, season 1, September 20, 2026**. Everything
+  else is still explicitly TBA: Treasure Island, A Tale of Two Cities,
+  Embassy, Legacy of Spies, The Magnificent Seven, New Wave, Robin Hood
+  season 2. Legacy of Spies being undated is also why it is the one title
+  `scripts/check-poster-coverage.mjs` reports as having no art yet, so those
+  two facts move together and a date landing there is worth acting on twice.
+- **Paramount+** — press-release feed live and current, most recent item
+  dated 08/18/2026, dates stated directly in headlines as described. Still
+  the strongest of the six.
+  **Do not guess a "streaming soon" URL here.** The site's own nav shows a
+  "Streaming Soon" tab, and the obvious
+  `paramountpressexpress.com/paramount-plus/streaming-soon/` returns a 404
+  (checked 2026-08-19). Same trap as BritBox's `/us/coming_soon` underscore.
+  `/paramount-plus/releases/` is the recorded source and it works; if a
+  dedicated upcoming page is ever wanted, follow the nav link rather than
+  constructing the path.
+
+Also fixed today, and the reason this was worth a pass at all: `guide.html`
+step 06 still told visitors Coming Soon drew from the pre-08-16 set of six
+sources, three days after it started drawing from ten. `scripts/check-content-drift.mjs`
+now has a second check that fails when a service listed here has no mention
+in that sentence, so the two cannot drift apart again.
+
 ## Sync Cadence
 Weekly (Monday, via the `streaming-scout-weekly-resync` scheduled task)
 
