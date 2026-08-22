@@ -54,7 +54,7 @@
 
     <div class="step" id="tools">
       <div><span class="step-num">01</span><span class="step-title">Tools &amp; mode</span></div>
-      <p class="step-body">Built in Cowork, with one deliberate exception: Susan runs every git push from her own Terminal. Claude sessions write and commit, they never push, so nothing reaches the live site without her hand on it. The Chrome extension reads your already-authenticated Netflix and Prime sessions directly. No credential is ever requested or stored.</p>
+      <p class="step-body">Built in Cowork, with one deliberate exception: every push runs from Susan's own machine, with her credentials, and only when she says so. Usually she types it herself; occasionally she reviews a batch and tells a Claude session to run it for her. Either way she authorises each one, no credential ever lives in the cloud session, and nothing reaches the live site without her say-so. The Chrome extension reads your already-authenticated Netflix and Prime sessions directly. No credential is ever requested or stored.</p>
 
       <div class="mode-grid">
         <div class="mode-card mode-card--a">
@@ -111,10 +111,10 @@
 
     <div class="step" id="deploy">
       <div><span class="step-num">05</span><span class="step-title">Publishing changes automatically</span></div>
-      <p class="step-body">A push to GitHub publishes to the live site on its own, with no manual deploy step after it. Susan does the pushing, so the automatic part starts at GitHub, not at Claude. Having that continuous deployment in place is what made the live buttons possible, and those need no push at all: remove a title, or mark it as already seen, and every device you own catches up immediately.</p>
+      <p class="step-body">A push to GitHub publishes to the live site on its own, with no manual deploy step after it. The push is the human gate, so the automatic part starts at GitHub, not before it. Having that continuous deployment in place is what made the live buttons possible, and those need no push at all: remove a title, or mark it as already seen, and every device you own catches up immediately.</p>
 
       <figure class="diagram">
-        <svg viewBox="0 0 720 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and commits the update, Susan pushes the commit to GitHub, Netlify publishes it automatically to streamingscout.org, and two always-on live buttons run alongside it whose results GitHub Actions records back into the repository">
+        <svg viewBox="0 0 720 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome extension reads Netflix and Prime read-only, Claude builds and commits the update, the commit reaches GitHub only when Susan says so, Netlify publishes it automatically to streamingscout.org, and two always-on live buttons run alongside it whose results GitHub Actions records back into the repository">
           <defs>
             <marker id="ssArr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M0,0 L10,5 L0,10 z" fill="#a89f8f"/>
@@ -131,7 +131,7 @@
 
             <rect x="298" y="20" width="124" height="70" rx="8" fill="#e6e2da" stroke="#7a7264"/>
             <text x="360" y="48" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">GitHub</text>
-            <text x="360" y="68" text-anchor="middle" font-size="10" fill="#4a453c">Susan pushes to main</text>
+            <text x="360" y="68" text-anchor="middle" font-size="10" fill="#4a453c">pushed at Susan's say-so</text>
 
             <rect x="442" y="20" width="124" height="70" rx="8" fill="#e7e9df" stroke="#4c6b4f"/>
             <text x="504" y="48" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2a2620">Netlify</text>
