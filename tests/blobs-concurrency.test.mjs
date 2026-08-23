@@ -40,15 +40,24 @@ async function load(name) {
 
 const settle = () => advance(LAG_MS + 1);
 
+// Phase 7 (2026-08-23): writes on both endpoints now require the edit key.
+// This suite covers storage behaviour and input validation, not auth (that is
+// tests/write-auth.test.mjs), so it authenticates and gets on with it: set the
+// secret the Functions read, and send it on every write. Without this, every
+// POST/DELETE below would 401 before reaching the logic under test.
+process.env.EDIT_SECRET = process.env.EDIT_SECRET || "test-edit-key-not-a-real-secret";
+const EDIT_HEADERS = { "x-edit-key": process.env.EDIT_SECRET };
+
 function post(path, body) {
   return new Request("https://streamingscout.org" + path, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...EDIT_HEADERS },
     body: JSON.stringify(body),
   });
 }
 const get = (path) => new Request("https://streamingscout.org" + path);
-const del = (path) => new Request("https://streamingscout.org" + path, { method: "DELETE" });
+const del = (path) =>
+  new Request("https://streamingscout.org" + path, { method: "DELETE", headers: { ...EDIT_HEADERS } });
 
 const body = (res) => res.json();
 
@@ -224,9 +233,12 @@ await check("validation and method rules are unchanged", async () => {
     (await handler(new Request("https://streamingscout.org/api/status", { method: "PUT" }))).status,
     405,
   );
+  // Authenticated on purpose: this asserts the JSON parser rejects a malformed
+  // body with 400. Without the key it would 401 at the gate and never reach the
+  // parser, which would quietly turn a validation test into an auth test.
   const bad = new Request("https://streamingscout.org/api/status", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...EDIT_HEADERS },
     body: "{not json",
   });
   assert.equal((await handler(bad)).status, 400);

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// scripts/smoke.mjs — post-deploy health check for the LIVE site.
+// scripts/smoke.mjs, post-deploy health check for the LIVE site.
 //
 // Asserts the deployed site is actually healthy, not just that the build
 // went green. Read-only on purpose: both API endpoints here (dismiss.mjs,
 // status.mjs) are intentionally unauthenticated (open POST/DELETE, no edit
-// key — see each file's own header for why), so a real write-round-trip
+// key, see each file's own header for why), so a real write-round-trip
 // check would insert real junk into Susan's live stores. Mirrors the same
 // pattern and same non-goal already established in Vinyl Scout's own
 // scripts/smoke.mjs.
@@ -22,7 +22,7 @@ const bad = (m) => { fail++; console.log('  FAIL ' + m); };
 
 async function check(name, fn) {
   try { await fn(); }
-  catch (err) { bad(name + ' — ' + err.message); }
+  catch (err) { bad(name + ', ' + err.message); }
 }
 
 function assert(cond, msg) { if (!cond) throw new Error(msg); }
@@ -73,7 +73,7 @@ await check('home page', async () => {
 // class CLAUDE.md documents on 2026-08-05 (poster art lost on reload) and
 // 2026-08-10/08-11 (a watching title with no static markup at all never
 // gets a real fix). This only proves the <img> element exists in the served
-// markup — not that its src actually resolves to a loading image (that
+// markup, not that its src actually resolves to a loading image (that
 // would need fetching every poster URL, out of scope for a fast smoke
 // check; see the periodic artwork sweep for that). Static rows are the
 // permanent-record path this project's own history shows is the one that
@@ -100,7 +100,7 @@ await check('currently watching poster coverage', async () => {
 });
 
 // 2. Internal docs/data files stay blocked (netlify.toml's own redirect
-// rules — CLAUDE.md, README.md, package.json, data/*.md should all 404 to
+// rules, CLAUDE.md, README.md, package.json, data/*.md should all 404 to
 // index.html, not serve their real contents publicly).
 await check('internal files blocked', async () => {
   const res = await fetchWithRetry(BASE + '/CLAUDE.md');
@@ -126,16 +126,32 @@ await check('status API', async () => {
   ok('GET /api/status → ' + data.statuses.length + ' entries, shape valid');
 });
 
-// 5. Malformed input is rejected with 400, not a 500 (endpoints are wired
-// and validating, not just present).
-await check('dismiss input validation', async () => {
+// 5. An unauthenticated write is rejected at the gate.
+//
+// This assertion checked for 400 (missing "title") until Phase 7 (2026-08-23).
+// Writes now require the edit key, so an unauthenticated POST is refused before
+// validation ever runs, 401, not 400. That makes this the live proof the gate
+// is actually on in production, which is worth more than re-proving validation
+// that tests/request-contract.test.mjs already covers offline.
+//
+// A 400 here would mean the gate is NOT active: either EDIT_SECRET is unset in
+// Netlify (the Functions fail closed, so that would 401 too) or an ungated
+// build is deployed. Either way, investigate rather than relaxing this.
+await check('unauthenticated writes are rejected', async () => {
   const res = await fetchWithRetry(BASE + '/api/dismiss', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({}), // missing required "title"
+    body: JSON.stringify({}), // no key, and no "title" either
   });
-  assert(res.status === 400, 'POST /api/dismiss with no title returned ' + res.status + ' (expected 400)');
-  ok('POST /api/dismiss (no title) → 400 (validated, no junk written)');
+  assert(res.status === 401, 'POST /api/dismiss with no edit key returned ' + res.status + ' (expected 401)');
+  ok('POST /api/dismiss (no edit key) → 401 (writes are gated in production)');
+});
+
+// 5b. Reading is still open to anyone: no key, no account, no prompt.
+await check('reads stay open', async () => {
+  const res = await fetchWithRetry(BASE + '/api/dismiss');
+  assert(res.status === 200, 'GET /api/dismiss returned ' + res.status + ' (expected 200)');
+  ok('GET /api/dismiss → 200 (browsing needs nothing)');
 });
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

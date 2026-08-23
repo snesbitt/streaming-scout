@@ -513,67 +513,55 @@ function sentences(text) {
   }
 }
 
-// Check 6: no public page claims the Netlify Functions are protected while
-// they are in fact open.
+// Check 6: the public pages agree with the endpoints about who can write.
 //
-// Caught by hand 2026-08-21. about.html's lede said "Read-only for everyone
-// else. Only Susan's Cowork sessions change it." Both Functions have been
-// open since the day they shipped (dismiss.mjs: "open POST/DELETE, no edit
-// key"; status.mjs the same), and since 2026-08-16/17 the dismiss-drift and
-// watched-drift jobs carry those anonymous writes into data/ and delete rows
-// from index.html by auto-PR. roadmap.html had said so plainly for days. The
-// site contradicted itself, and the half a visitor is most likely to read
-// first was the wrong half.
+// This check ran in the opposite direction until 2026-08-23. Both Functions
+// were open, and about.html's lede claimed "Read-only for everyone else. Only
+// Susan's Cowork sessions change it." while roadmap.html said plainly that
+// anyone with the link could dismiss a title. The site contradicted itself and
+// the half a visitor reads first was the wrong half.
 //
-// Planned protection is not current protection, so roadmap.html's "Next"
-// sections are excluded: describing an edit key that does not exist yet is
-// what that group of the roadmap is for.
+// Phase 7 gated POST and DELETE behind the edit key, so the failure mode
+// inverted: the risk now is a page still telling visitors the buttons are open
+// to anyone, which would be wrong in the other direction and would read as an
+// invitation. GET is still open and pages should still say so.
+//
+// Keyed on checkWriteAuth in the source, not on a comment. The previous version
+// keyed on the string "no edit key", which survived this phase as HISTORY in
+// dismiss.mjs's v1 header, so it went on passing against a state that had
+// changed underneath it. A check that reads a comment is checking prose about
+// the code, not the code.
 {
   const dismissSrc = readFileSync("netlify/functions/dismiss.mjs", "utf8");
   const statusSrc = readFileSync("netlify/functions/status.mjs", "utf8");
-  const stillOpen = /no edit key/i.test(dismissSrc) && /no edit key/i.test(statusSrc);
+  const gated = (src) =>
+    /function checkWriteAuth/.test(src) &&
+    /(?:POST|DELETE)[\s\S]{0,120}checkWriteAuth\(req\)/.test(src);
+  const bothGated = gated(dismissSrc) && gated(statusSrc);
 
-  if (!stillOpen) {
-    // If the endpoints were actually gated, that is good news and this check
-    // has to be rewritten rather than left asserting the opposite. Fail loudly
-    // rather than passing on an assumption that no longer holds.
+  if (!bothGated) {
     failures.push(
-      'netlify/functions/: dismiss.mjs and/or status.mjs no longer carry the "no edit key" note this check ' +
-        "keys on. Either they were gated (in which case the pages should now say so, and this check needs " +
-        "rewriting) or the comment was reworded. Resolve it, do not delete this check.",
+      "netlify/functions/: dismiss.mjs and/or status.mjs no longer gate POST/DELETE behind checkWriteAuth. " +
+        "Phase 7 put them behind the edit key on 2026-08-23. If that was undone deliberately, the public " +
+        "pages have to say the buttons are open again, and this check needs rewriting to match. Resolve it, " +
+        "do not delete this check.",
     );
   } else {
-    // An exclusivity claim is only acceptable if the same sentence carves out
-    // the buttons. "Read-only for everyone else." carves out nothing.
-    const EXCLUSIVITY = [
-      /read-only for (?:everyone|anyone) else/i,
-      /only Susan[^.]{0,60}\b(?:can|change|changes|edit|edits)\b/i,
-      /no one else can (?:change|edit|dismiss)/i,
-    ];
-    const CARVE_OUT = /\bopen\b|anyone with the link|no key|no account|unauthenticated|without a key/i;
-
-    // A sentence that talks about the buttons AND uses the vocabulary of
-    // access control has to be saying the protection is absent or planned.
-    const BUTTONS = /\bdismiss\b|\bdismissal\b|\bbuttons\b|watch status|saved changes|\bFunctions?\b/i;
-    const GATING = /\bedit key\b|\bpassphrase\b|\bpassword\b|\bauthenticated\b|\bgated\b|\bprotected\b|sign in to/i;
-    const DISCLAIMED = /\bno\b|\bnot\b|\bwithout\b|roadmap|planned|would\b|\byet\b|\bopen\b|\bahead\b|\bstill\b/i;
+    // Now that writes are gated, a page saying they are open is the error.
+    // "Open" claims about READING are fine and expected, so a sentence only
+    // fails when it ties openness to a WRITE.
+    const WRITE_WORDS = /\bdismiss\b|\bdismissal\b|\bmark(?:ed|ing)? (?:one )?watched\b|saved changes|\bwrite(?:s)?\b|\bchange(?:s)?\b/i;
+    const OPEN_CLAIM = /anyone with the link|no edit key|no key\b|without a key|unauthenticated|open to anyone|needs? nothing to (?:change|dismiss)/i;
+    // Phrasing that is describing the PAST or a limitation being closed.
+    const HISTORICAL = /\buntil\b|\bused to\b|\bpreviously\b|\bwas\b|\bwere\b|\bhad been\b|\bbefore\b|\bno longer\b|\bnow\b/i;
 
     for (const file of ["index.html", "about.html", "guide.html", "roadmap.html", "start.html"]) {
-      let html = readFileSync(file, "utf8");
-      html = html.replace(/<section class="phase phase--future"[\s\S]*?<\/section>/g, " ");
+      const html = readFileSync(file, "utf8");
       for (const sentence of sentences(visibleText(html))) {
-        if (EXCLUSIVITY.some((re) => re.test(sentence)) && !CARVE_OUT.test(sentence)) {
+        if (WRITE_WORDS.test(sentence) && OPEN_CLAIM.test(sentence) && !HISTORICAL.test(sentence)) {
           failures.push(
-            `${file} claims exclusive write access: "${sentence.trim()}" ` +
-              "That is not true while dismiss.mjs and status.mjs take an unauthenticated POST/DELETE from " +
-              "anyone with the link. Say what is actually true, or gate the endpoints.",
-          );
-        }
-        if (BUTTONS.test(sentence) && GATING.test(sentence) && !DISCLAIMED.test(sentence)) {
-          failures.push(
-            `${file} describes the live buttons in the language of access control without saying the ` +
-              `protection is absent or planned: "${sentence.trim()}" ` +
-              "Both Functions are open. Reword it, or gate the endpoints.",
+            `${file} still tells visitors the write buttons are open: "${sentence.trim()}" ` +
+              "Phase 7 gated POST/DELETE on 2026-08-23. Say what is true now, or phrase it as history.",
           );
         }
       }
@@ -590,6 +578,6 @@ if (failures.length) {
   console.log(
     "Content drift check passed: tracked-service count, Coming Soon source lists on guide.html and " +
       "about.html, signature-genre counts, upkeep cadence against the real crons, every in-page anchor, " +
-      "and no page claiming the Functions are protected while they are open.",
+      "and the public pages agreeing with the endpoints about who can write.",
   );
 }

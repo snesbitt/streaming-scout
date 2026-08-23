@@ -2039,3 +2039,60 @@ because the API answer is what hid this.
 
 Not in `npm test` — that suite is offline by design. `npm run check:deploy`, or
 `--wait` to poll for three minutes right after a push.
+
+## 2026-08-23 — Phase 7, "Protect saved changes"
+
+Dismissing a title and marking one watched now need the edit key. Reading does
+not, and that is the whole shape of it: GET stays open on both Functions, POST
+and DELETE do not.
+
+**Why it stopped being low stakes.** The endpoints were deliberately open, and
+the reasoning held while a dismissal was a local "not interested" flag. It
+stopped holding on 2026-08-16/17, when the `dismiss-drift` and `watched-drift`
+jobs began carrying anonymous writes into `data/EXCLUDED_TITLES.md` and
+`data/STREAMING_LOG.md` and deleting rows from `index.html` by auto-PR. At that
+point a stranger with the link could reach the permanent record.
+
+**Its own key, not Vinyl Scout's.** Susan's call. Same mechanism, same
+`EDIT_SECRET` variable name, different value; Netlify env vars are per-site so
+they never collide. The roadmap card said "the same edit key Vinyl Scout uses"
+and that sentence had to change with it, since a shared mechanism is not a
+shared secret.
+
+**localStorage, not sessionStorage.** One entry per device. Phase 8 on Vinyl
+Scout already settled this: a per-visit prompt is what got its wishlist writes
+opened up in the first place, and these are phone actions.
+
+### Three things this turned up
+
+**A refused write failed silently.** The three write calls are fire-and-forget
+by design, with a `.catch()` for offline. But a 401 *resolves* a fetch promise
+rather than rejecting it, so `.catch()` never saw one: a wrong key would have
+stopped syncing forever while the page looked fine. `authedWrite()` now checks
+the status, drops the bad key so the next write can ask again, and says so.
+Worth remembering generally, a rejected request is a successful HTTP round trip.
+
+**Two existing suites broke, correctly.** `blobs-concurrency` and
+`request-contract` POST without a key and expect 400s. They now authenticate and
+carry a note saying why. One case inside the concurrency suite built its Request
+inline rather than through the `post()` helper and needed the header separately,
+which is the argument for helpers.
+
+**A drift check was passing on stale evidence.** Check 6 in
+`check-content-drift.mjs` keyed on the string "no edit key" in the Function
+source to decide whether the endpoints were open. That string survived this
+phase as *history* in dismiss.mjs's v1 header, so the check went on passing
+against a state that had changed underneath it. It had a self-guard meant to
+fire in exactly this case and the guard never ran. Rewritten to key on
+`checkWriteAuth` in the source, and inverted: the failure mode now is a page
+still telling visitors the buttons are open. It caught two sentences in
+about.html the moment it was flipped.
+
+### Needs Susan
+
+`EDIT_SECRET` has to be set on streamingscout.org in Netlify **before this
+deploys**. The gate fails closed, so until it exists every write is rejected,
+including hers. Set it first, then push.
+
+Not done, deliberately: no rate limiting beyond the existing `MAX_LIST_SIZE`
+bound, which was the answer to an open endpoint and is unchanged.

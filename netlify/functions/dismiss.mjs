@@ -2,14 +2,14 @@
 // version: 3
 // v1 (2026-07-17): first real backend for streaming-scout. Continuous
 // deployment from GitHub was wired up 2026-07-16 (see README's "Important
-// architecture note"), which unblocks Netlify Functions — this is the first
+// architecture note"), which unblocks Netlify Functions, this is the first
 // one actually built and shipped. Persists dismissed Top Picks / Coming Soon
 // titles in a Netlify Blobs store so a dismiss syncs across every device
 // immediately, the same governance model vinyl-scout's wishlist API uses
-// (open POST/DELETE, no edit key — a passphrase on mobile isn't practical
+// (open POST/DELETE, no edit key, a passphrase on mobile isn't practical
 // for a list this casual, and there's nothing sensitive in a "not interested"
 // flag). This does NOT make an exclusion permanent across the next weekly
-// rebuild — that still means updating EXCLUDED_TITLES.md and pushing, since
+// rebuild, that still means updating EXCLUDED_TITLES.md and pushing, since
 // Top Picks/Coming Soon are static HTML baked in at rebuild time, not read
 // from this store. What this closes is the "which device did I dismiss that
 // on" gap, not the "will next week's rebuild bring it back" gap.
@@ -18,7 +18,7 @@
 // could be abused: MAX_FIELD_LENGTH rejects any title/section over 200 chars
 // instead of persisting arbitrary-length junk, and MAX_LIST_SIZE caps the
 // Blobs list at 500 entries by evicting the oldest entry (FIFO) once a new
-// dismissal would exceed it, rather than rejecting new writes outright — a
+// dismissal would exceed it, rather than rejecting new writes outright, a
 // flood of junk entries ages itself out instead of either growing the store
 // without bound or leaving the endpoint permanently stuck once full.
 // v3 (2026-08-17): one blob per title instead of one whole-list blob, to fix
@@ -211,7 +211,37 @@ async function enforceCap(store, newKey) {
   }
 }
 
+
+// Phase 7 (2026-08-23): "Protect saved changes."
+//
+// Writes are gated; reads are not. Browsing this site still requires nothing:
+// no account, no key, GET stays open. Only POST and DELETE need the key.
+//
+// Same mechanism as Vinyl Scout's `checkWriteAuth`, deliberately copied rather
+// than shared. There is no code path between the two sites and inventing one
+// for four lines would be worse than the duplication. **Its own secret value,
+// though**. Netlify env vars are per-site, so `EDIT_SECRET` here is independent
+// of the one on vinylscout.org. One mechanism, two keys, by Susan's call.
+//
+// Fails closed. If `EDIT_SECRET` is unset, every write is rejected rather than
+// waved through. An unset secret is a misconfiguration, not permission.
+//
+// The check runs BEFORE getStore() in the handler below. Vinyl Scout's own
+// Phase 8 review caught the opposite order: an unauthorized request in an
+// environment where Blobs can't initialize returned 500 instead of 401, leaking
+// infrastructure state to a caller who had not authenticated. Keep it first.
+function checkWriteAuth(req) {
+  const expected = process.env.EDIT_SECRET;
+  const provided = req.headers.get("x-edit-key");
+  return !!(expected && provided && provided === expected);
+}
+
 export default async (req) => {
+  // Auth first, before the store is touched. See checkWriteAuth above.
+  if ((req.method === "POST" || req.method === "DELETE") && !checkWriteAuth(req)) {
+    return json({ error: "unauthorized: wrong or missing edit key" }, 401);
+  }
+
   const store = getStore("dismissed-titles");
 
   try {

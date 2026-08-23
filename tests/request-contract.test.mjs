@@ -12,10 +12,12 @@
 // dismiss/status Functions having "no coverage for their actual logic"
 // predates the concurrency suite and was only ever half-closed by it.
 //
-// Both endpoints are unauthenticated by design (see dismiss.mjs's v1 header),
-// so their validation bounds are the only thing standing between an open POST
-// and arbitrary junk in the store. That makes these bounds worth pinning down
-// rather than assuming.
+// Both endpoints were unauthenticated by design until Phase 7 (2026-08-23),
+// when POST and DELETE went behind the edit key; GET is still open. Their
+// validation bounds mattered most while the write path was open to anyone, and
+// they still matter: the key stops strangers, not a malformed request from a
+// caller who has it. That makes these bounds worth pinning down rather than
+// assuming, which is why this suite predates the gate and outlives it.
 //
 // Same harness as the concurrency suite: the real @netlify/blobs import is
 // redirected by tests/register-blobs-mock.mjs, so the Functions run exactly as
@@ -51,14 +53,23 @@ async function load(name) {
 const settle = () => advance(LAG_MS + 1);
 const body = (res) => res.json();
 
+// Phase 7 (2026-08-23): writes on both endpoints now require the edit key.
+// This suite covers input validation and blob-key encoding, not auth (that is
+// tests/write-auth.test.mjs), so it authenticates and gets on with it: set the
+// secret the Functions read, and send it on every write. Without this, every
+// POST/DELETE below would 401 before reaching the logic under test.
+process.env.EDIT_SECRET = process.env.EDIT_SECRET || "test-edit-key-not-a-real-secret";
+const EDIT_HEADERS = { "x-edit-key": process.env.EDIT_SECRET };
+
 function post(path, payload) {
   return new Request("https://streamingscout.org" + path, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...EDIT_HEADERS },
     body: typeof payload === "string" ? payload : JSON.stringify(payload),
   });
 }
-const del = (path) => new Request("https://streamingscout.org" + path, { method: "DELETE" });
+const del = (path) =>
+  new Request("https://streamingscout.org" + path, { method: "DELETE", headers: { ...EDIT_HEADERS } });
 
 // The two endpoints share almost all of their validation, so the shared cases
 // run against both rather than being written twice and drifting apart. Each
@@ -214,7 +225,7 @@ for (const ep of ENDPOINTS) {
   // The migration guard caches a promise at module scope. If a failure were
   // cached, the endpoint would stay dead for the life of the instance rather
   // than recovering when Blobs came back.
-  await check(`${ep.name}: a store failure is not cached — the next request retries`, async () => {
+  await check(`${ep.name}: a store failure is not cached, the next request retries`, async () => {
     resetStores();
     const store = getStore(ep.store);
     const realGet = store.get.bind(store);
@@ -238,7 +249,7 @@ console.log("=== Blob key encoding ===");
 
 // Real titles from this project's own data carry colons, commas, apostrophes
 // and non-ASCII. keyForTitle is not exported, so it is exercised through the
-// handler and read back off the fake store's key space — which is the thing
+// handler and read back off the fake store's key space, which is the thing
 // that actually has to be legal, rather than a copy of the function.
 const AWKWARD_TITLES = [
   "Special Ops: Lioness, season 3",
@@ -322,7 +333,7 @@ await check("status: an over-long meta is truncated to 200, not rejected", async
   const res = await handler(
     post("/api/status", { title: "Long meta", status: "watched", meta: "m".repeat(250) }),
   );
-  assert.equal(res.status, 200, "meta was rejected — it is supposed to clip");
+  assert.equal(res.status, 200, "meta was rejected, it is supposed to clip");
   const entry = (await body(res)).statuses.find((e) => e.title === "Long meta");
   assert.equal(entry.meta.length, 200, "meta was not clipped to the field bound");
 });
@@ -345,7 +356,7 @@ console.log("=== dismiss.mjs only ===");
 //
 // The wall clock has to be faked for this to mean anything. advance() moves the
 // fake Blobs clock, not Date, and both POSTs otherwise land in the same
-// millisecond of real time — so the timestamps match whether or not the entry
+// millisecond of real time, so the timestamps match whether or not the entry
 // was rewritten, and the assertion passes for the wrong reason. That was true
 // of the first draft of this test: mutating dismiss.mjs to overwrite the entry
 // unconditionally did not fail it. Pinning Date to two distinct instants is

@@ -436,6 +436,55 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
   function setDismissed(list) { localStorage.setItem(KEY, JSON.stringify(list)); }
   function getStatusMap() { try { return JSON.parse(localStorage.getItem(STATUS_KEY) || '{}'); } catch (e) { return {}; } }
   function setStatusMap(map) { localStorage.setItem(STATUS_KEY, JSON.stringify(map)); }
+
+  // Phase 7 (2026-08-23): "Protect saved changes."
+  //
+  // Reading this site still needs nothing. Only the writes that sync across
+  // devices carry a key, and it is asked for once per device, not once per
+  // visit: localStorage, not sessionStorage. Phase 8 on Vinyl Scout settled
+  // that trade-off. A per-visit prompt is what got its wishlist writes opened
+  // up in the first place, and these are phone actions taken standing in front
+  // of a row.
+  //
+  // The prompt fires on the first WRITE, never on load, so browsing is never
+  // interrupted by it.
+  var EDIT_KEY_STORE = 'ss-edit-key';
+  function getEditSecret(promptIfMissing) {
+    var s = '';
+    try { s = localStorage.getItem(EDIT_KEY_STORE) || ''; } catch (e) {}
+    if (s || !promptIfMissing) return s;
+    s = window.prompt('Enter the edit key to save this across your devices:') || '';
+    if (s) { try { localStorage.setItem(EDIT_KEY_STORE, s); } catch (e) {} }
+    return s;
+  }
+  function clearEditSecret() {
+    try { localStorage.removeItem(EDIT_KEY_STORE); } catch (e) {}
+  }
+
+  // A rejected write is the failure mode worth designing for. These calls are
+  // fire-and-forget by design (the local change is already applied), but a 401
+  // RESOLVES the fetch promise rather than rejecting it, so the existing
+  // .catch() would never see one: a wrong key would silently stop syncing
+  // forever while the page looked fine. So check the status explicitly, drop
+  // the bad key so the next write can ask again, and say so out loud. This
+  // site's rule is no silent failures, and a write that quietly stops working
+  // is exactly that.
+  function authedWrite(url, opts) {
+    if (!window.fetch) return;
+    var key = getEditSecret(true);
+    var o = opts || {};
+    o.headers = o.headers || {};
+    o.headers['X-Edit-Key'] = key;
+    return fetch(url, o).then(function (res) {
+      if (res && res.status === 401) {
+        clearEditSecret();
+        window.alert('That edit key was not accepted, so this change is saved on this device only. It will ask again next time you change something.');
+      }
+      return res;
+    }).catch(function () {
+      /* offline or unreachable: local change already applied, nothing to undo */
+    });
+  }
   function isDismissedFor(title, reasons) {
     return getDismissed().some(function (e) { return e.title === title && reasons.indexOf(e.reason) !== -1; });
   }
@@ -481,26 +530,26 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
     }).catch(function () { /* offline or Function unavailable; local map still applies */ });
   }
   function postDismiss(title, section) {
-    if (!window.fetch) return;
-    fetch('/api/dismiss', {
+    // best-effort cross-device sync; the local dismiss is already applied
+    authedWrite('/api/dismiss', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: title, section: section })
-    }).catch(function () { /* best-effort cross-device sync; local dismiss already applied */ });
+    });
   }
   function postStatus(title, status, meta, section) {
-    if (!window.fetch) return;
-    fetch('/api/status', {
+    // best-effort cross-device sync; the local status is already applied
+    authedWrite('/api/status', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: title, status: status, meta: meta, section: section })
-    }).catch(function () { /* best-effort cross-device sync; local status already applied */ });
+    });
   }
   function deleteStatus(title) {
-    if (!window.fetch) return;
-    fetch('/api/status?title=' + encodeURIComponent(title), {
+    // best-effort cross-device sync; the local status is already cleared
+    authedWrite('/api/status?title=' + encodeURIComponent(title), {
       method: 'DELETE'
-    }).catch(function () { /* best-effort cross-device sync; local status already cleared */ });
+    });
   }
   function promoteReleased() {
     var pickList = document.querySelector('#top-picks .pick-list');
