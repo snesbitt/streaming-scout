@@ -239,6 +239,36 @@ jobs:
             Watching and In Theaters rows, never a future recommendation.
           labels: automated-pr
 
+      # 2026-08-28: same pattern as the smoke/status-drift jobs above. Until
+      # now this job (and watched-drift and backup below) had no failure
+      # alerting at all - a bad run just vanished into the Actions log,
+      # unlike smoke and status-drift, which were already tracked. Given
+      # this repo's own history of scheduled tasks silently ceasing to exist
+      # (CLAUDE.md 2026-08-09, 2026-08-16), silent failure here is the worse
+      # of the two risks. Catches either step above failing: the live fetch
+      # itself, or create-pull-request failing to push/open the PR.
+      - name: Report failure as a GitHub issue
+        if: failure()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const title = "Weekly dismiss-drift sync failed";
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "automated-check-failure",
+            });
+            const match = existing.find(i => i.title === title);
+            const body = `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n` +
+              `The dismiss-drift job failed against https://streamingscout.org on a scheduled run. Either scripts/check-dismiss-drift.mjs --fix failed to read /api/dismiss, or the create-pull-request step failed to open the follow-up PR. This job is what carries a live dismissal into data/EXCLUDED_TITLES.md; a silent failure here means a dismissed title can reappear in the next Coming Soon/Top Picks rebuild with nothing to stop it. See the run log for which step failed.`;
+            if (match) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: match.number, body });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ["automated-check-failure"],
+              });
+            }
+
   # 2026-08-17: the tick-button counterpart to dismiss-drift above. Susan
   # confirmed the on-site tick means "seen it, take it away", not "I watched
   # this on this date". Clicking it writes `watched` to /api/status and
@@ -294,6 +324,31 @@ jobs:
             recent viewing. Currently Watching and In Theaters rows are left
             alone by design.
           labels: automated-pr
+
+      # 2026-08-28: same pattern as the smoke/status-drift jobs above - see
+      # the identical step on dismiss-drift for why this was missing and why
+      # it matters here specifically.
+      - name: Report failure as a GitHub issue
+        if: failure()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const title = "Weekly watched-drift sync failed";
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "automated-check-failure",
+            });
+            const match = existing.find(i => i.title === title);
+            const body = `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n` +
+              `The watched-drift job failed against https://streamingscout.org on a scheduled run. Either scripts/check-watched-drift.mjs --fix failed to read /api/status, or the create-pull-request step failed to open the follow-up PR. This job is what carries a live "cleared" tick into data/STREAMING_LOG.md and drops the matching Top Picks/Coming Soon rows; a silent failure here means a title Susan already ticked away can keep getting recommended. See the run log for which step failed.`;
+            if (match) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: match.number, body });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ["automated-check-failure"],
+              });
+            }
 
   # 2026-08-17: closes the last item on roadmap.html Phase 06, "automated
   # backups are still ahead," and closes it against the hole that is actually
@@ -351,3 +406,30 @@ jobs:
             last one, so a shrink shows up as a failed job, not a quiet
             overwrite.
           labels: automated-pr
+
+      # 2026-08-28: same pattern as the smoke/status-drift jobs above - see
+      # the identical step on dismiss-drift for why this was missing. Doubly
+      # important here: backup-live-records.mjs's own refuse-to-shrink guard
+      # means a real data loss in the live stores surfaces as exactly this
+      # kind of silent job failure unless something reports it.
+      - name: Report failure as a GitHub issue
+        if: failure()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const title = "Weekly backup snapshot failed";
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "automated-check-failure",
+            });
+            const match = existing.find(i => i.title === title);
+            const body = `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n` +
+              `The backup job failed against https://streamingscout.org on a scheduled run. scripts/backup-live-records.mjs aborts on a failed/non-OK fetch, a malformed response, or a snapshot smaller than the last good one (a possible sign of real data loss in the live title-status/dismissed-titles stores, which have no other backup) - or the create-pull-request step failed to open the follow-up PR. See the run log for which one it was; a shrink is the case to treat as urgent.`;
+            if (match) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: match.number, body });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ["automated-check-failure"],
+              });
+            }
