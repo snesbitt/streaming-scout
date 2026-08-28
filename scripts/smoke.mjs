@@ -134,9 +134,10 @@ await check('status API', async () => {
 // is actually on in production, which is worth more than re-proving validation
 // that tests/request-contract.test.mjs already covers offline.
 //
-// A 400 here would mean the gate is NOT active: either EDIT_SECRET is unset in
-// Netlify (the Functions fail closed, so that would 401 too) or an ungated
-// build is deployed. Either way, investigate rather than relaxing this.
+// A 400 here would mean the gate is NOT active: either an ungated build is
+// deployed, or EDIT_SECRET is unset in Netlify (which, since 2026-08-28, is
+// its own distinct 500 rather than a 401 — see check 5c below). Either way,
+// investigate rather than relaxing this.
 await check('unauthenticated writes are rejected', async () => {
   const res = await fetchWithRetry(BASE + '/api/dismiss', {
     method: 'POST',
@@ -152,6 +153,23 @@ await check('reads stay open', async () => {
   const res = await fetchWithRetry(BASE + '/api/dismiss');
   assert(res.status === 200, 'GET /api/dismiss returned ' + res.status + ' (expected 200)');
   ok('GET /api/dismiss → 200 (browsing needs nothing)');
+});
+
+// 5c. A WRONG edit key is rejected 401, not the 500 an unset EDIT_SECRET
+// would produce (see netlify/functions/dismiss.mjs's checkWriteAuth,
+// 2026-08-28). This is a safe, read-only-in-effect way to prove EDIT_SECRET
+// is actually configured on the live site: a 401 here can only happen if the
+// server had a real secret to compare against and this key did not match it.
+// Deliberately does not perform a real write with the right key, so it can
+// run unattended on schedule without touching Susan's live records.
+await check('wrong edit key is rejected 401 (proves EDIT_SECRET is configured)', async () => {
+  const res = await fetchWithRetry(BASE + '/api/dismiss', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-edit-key': 'definitely-not-the-real-key' },
+    body: JSON.stringify({}),
+  });
+  assert(res.status === 401, 'POST /api/dismiss with a wrong edit key returned ' + res.status + ' (expected 401; a 500 would mean EDIT_SECRET is unset in Netlify)');
+  ok('POST /api/dismiss (wrong edit key) → 401 (EDIT_SECRET is configured)');
 });
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

@@ -224,7 +224,12 @@ async function enforceCap(store, newKey) {
 // of the one on vinylscout.org. One mechanism, two keys, by Susan's call.
 //
 // Fails closed. If `EDIT_SECRET` is unset, every write is rejected rather than
-// waved through. An unset secret is a misconfiguration, not permission.
+// waved through. An unset secret is a misconfiguration, not permission — and,
+// as of 2026-08-28, reported as one. checkWriteAuth used to collapse both
+// "no secret configured" and "wrong key presented" into the same 401, which
+// made a misconfigured EDIT_SECRET indistinguishable from an ordinary,
+// expected rejection. It now returns which case applies so the handler can
+// tell them apart.
 //
 // The check runs BEFORE getStore() in the handler below. Vinyl Scout's own
 // Phase 8 review caught the opposite order: an unauthorized request in an
@@ -232,14 +237,24 @@ async function enforceCap(store, newKey) {
 // infrastructure state to a caller who had not authenticated. Keep it first.
 function checkWriteAuth(req) {
   const expected = process.env.EDIT_SECRET;
+  if (!expected) return "misconfigured";
   const provided = req.headers.get("x-edit-key");
-  return !!(expected && provided && provided === expected);
+  return provided && provided === expected ? "ok" : "unauthorized";
 }
 
 export default async (req) => {
   // Auth first, before the store is touched. See checkWriteAuth above.
-  if ((req.method === "POST" || req.method === "DELETE") && !checkWriteAuth(req)) {
-    return json({ error: "unauthorized: wrong or missing edit key" }, 401);
+  if (req.method === "POST" || req.method === "DELETE") {
+    const auth = checkWriteAuth(req);
+    if (auth === "misconfigured") {
+      // Distinct from the 401 below on purpose: an unset EDIT_SECRET is a
+      // real deploy misconfiguration, not a caller presenting a bad key.
+      // Never echoes the secret's value; there isn't one to echo.
+      return json({ error: "server misconfigured: EDIT_SECRET not set" }, 500);
+    }
+    if (auth === "unauthorized") {
+      return json({ error: "unauthorized: wrong or missing edit key" }, 401);
+    }
   }
 
   const store = getStore("dismissed-titles");

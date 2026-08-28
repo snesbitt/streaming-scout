@@ -88,14 +88,23 @@ for (const c of CASES) {
     assert.equal(res.status, 401, `expected 401, got ${res.status}`);
   });
 
-  await check(`${c.name}: fails CLOSED when EDIT_SECRET is unset`, async () => {
+  await check(`${c.name}: fails CLOSED when EDIT_SECRET is unset, as a distinct 500`, async () => {
     resetStores();
     delete process.env.EDIT_SECRET;
-    // An unset secret is a misconfiguration, not permission. Even a caller
-    // presenting a key must be rejected, and a caller presenting the empty
-    // string must not match the empty expectation.
-    assert.equal((await handler(req(c.url, "POST", { key: KEY, body: c.post }))).status, 401, "key presented");
-    assert.equal((await handler(req(c.url, "POST", { key: "", body: c.post }))).status, 401, "empty key vs empty secret");
+    // An unset secret is a misconfiguration, not permission, and as of
+    // 2026-08-28 is reported as one: a 500, not the 401 a caller presenting
+    // a wrong or missing key gets. The two used to be indistinguishable from
+    // outside. Even a caller presenting a key must still be rejected, and a
+    // caller presenting the empty string must not match the empty
+    // expectation — both land on the same 500, not a 401.
+    const withKey = await handler(req(c.url, "POST", { key: KEY, body: c.post }));
+    assert.equal(withKey.status, 500, "key presented");
+    const withKeyBody = await withKey.json();
+    assert.equal(withKeyBody.error, "server misconfigured: EDIT_SECRET not set");
+
+    const emptyKey = await handler(req(c.url, "POST", { key: "", body: c.post }));
+    assert.equal(emptyKey.status, 500, "empty key vs empty secret");
+
     process.env.EDIT_SECRET = KEY;
   });
 
