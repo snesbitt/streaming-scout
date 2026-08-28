@@ -25,6 +25,24 @@ on:
     # 30+ minutes after a push landed on GitHub). A periodic check that
     # doesn't assume "just pushed" == "just deployed" is a more honest
     # signal than a push-triggered one would be.
+    #
+    # 2026-08-28: that "feeds the smoke and live-drift jobs" claim above
+    # wasn't actually true until this date. Every one of those jobs' `if:`
+    # conditions matched on `github.event_name == 'schedule'`, which is true
+    # for EITHER cron entry - GitHub Actions does not distinguish which
+    # schedule fired a run from the event name alone. So both crons fired
+    # the full live-network job set (smoke, deploy-fresh, status-drift,
+    # dismiss-drift, watched-drift, backup) every Monday: once at 13:00,
+    # racing the not-yet-run dismissed-title sync exactly as the comment
+    # above says this cron exists to avoid, and again at 15:00 as intended.
+    # That meant every scheduled PR and every tracking issue was a candidate
+    # to be opened or commented on twice, two hours apart. Those jobs' `if:`
+    # now also checks `github.event.schedule` (the specific cron string that
+    # triggered the run) so only this 15:00 entry feeds them; `workflow_dispatch`
+    # still runs everything on demand. The `test` job above is deliberately
+    # left unrestricted - it is cheap, offline and deterministic, and running
+    # it again 2 hours later is harmless, which is not true of a job that
+    # hits the live site or opens a PR.
     - cron: "0 15 * * 1"
   workflow_dispatch: {}
     # 2026-08-14: lets Susan (or a Claude session) trigger the smoke/drift
@@ -100,7 +118,7 @@ jobs:
   # not-yet-finished Netlify deploy.
   smoke:
     needs: test
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -152,7 +170,7 @@ jobs:
   # vinylscout.org.
   deploy-fresh:
     needs: test
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -197,7 +215,7 @@ jobs:
   # placement as `smoke` (live-network, never push-triggered).
   status-drift:
     needs: test
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -251,7 +269,7 @@ jobs:
   # merges a PR if one shows up.
   dismiss-drift:
     needs: test
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -340,7 +358,7 @@ jobs:
   # hand, which is worse than the bug it fixes.
   watched-drift:
     needs: test
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -423,7 +441,7 @@ jobs:
   # a quiet week produces no PR.
   backup:
     needs: test
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
