@@ -136,6 +136,57 @@ jobs:
               });
             }
 
+  # 2026-08-28: wires scripts/check-deploy-fresh.mjs into CI. The script
+  # itself existed since 2026-08-21 (written after vinylscout.org spent 8
+  # days frozen on a locked deploy, invisible to every check in this
+  # portfolio because they all watch whether DATA is fresh, not whether the
+  # deployed SITE matches the repo) but was runnable only by hand -
+  # `npm run check:deploy` - which means it depended on someone remembering
+  # to run it. Given this repo's own history of scheduled tasks silently
+  # ceasing to exist (CLAUDE.md 2026-08-09, 2026-08-16) and of the exact
+  # underlying bug this script exists to catch, "someone has to remember"
+  # was not good enough. Same schedule-only placement as `smoke`: never
+  # push-triggered, so it never races Netlify's own deploy, and it reads
+  # the live site rather than asking Netlify's API whether the deploy is
+  # "ready" - that question was answered "yes" for all 8 days on
+  # vinylscout.org.
+  deploy-fresh:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Check the live site matches this commit
+        run: npm run check:deploy
+
+      - name: Report failure as a GitHub issue
+        if: failure()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const title = "Weekly deploy-freshness check failed";
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "automated-check-failure",
+            });
+            const match = existing.find(i => i.title === title);
+            const body = `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\n` +
+              `scripts/check-deploy-fresh.mjs found https://streamingscout.org serving something other than this commit (or could not reach it). This is the exact failure mode that left vinylscout.org frozen on a locked deploy for 8 days in 2026-08: every build succeeded and Netlify's API said the deploy was "ready", it just was not the one being served. Check the Netlify deploy log for a locked or stuck deploy before assuming this is a transient network blip. See the run log for which file(s) mismatched.`;
+            if (match) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: match.number, body });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ["automated-check-failure"],
+              });
+            }
+
   # 2026-08-16: closes the gap CLAUDE.md's 2026-08-08 entry documents — a
   # title marked "watching" live via /api/status only renders correctly
   # forever once it's ALSO baked into index.html as a static .watching-row
