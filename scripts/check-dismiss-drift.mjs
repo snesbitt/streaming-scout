@@ -43,6 +43,7 @@ import { readFileSync, writeFileSync, appendFileSync } from "node:fs";
 
 import { normalizeTitle } from "./lib/titles.mjs";
 import { removeRows, SECTION_OF } from "./lib/rows.mjs";
+import { fetchWithRetry } from "./lib/fetch-with-retry.mjs";
 
 const args = process.argv.slice(2);
 const fix = args.includes("--fix");
@@ -59,7 +60,7 @@ function formatDate(iso) {
 }
 
 async function main() {
-  const res = await fetch(BASE + "/api/dismiss");
+  const res = await fetchWithRetry(BASE + "/api/dismiss");
   if (!res.ok) {
     console.error(`Could not reach ${BASE}/api/dismiss (status ${res.status}). Skipping drift check — this is a reachability failure, not a confirmed drift.`);
     process.exit(1);

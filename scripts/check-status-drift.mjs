@@ -33,6 +33,7 @@
 // index.html, 1 otherwise. Node 18+ (global fetch).
 
 import { readFileSync } from "node:fs";
+import { fetchWithRetry } from "./lib/fetch-with-retry.mjs";
 
 const BASE = (process.argv[2] || "https://streamingscout.org").replace(/\/$/, "");
 
@@ -41,7 +42,7 @@ function normalize(s) {
 }
 
 async function main() {
-  const res = await fetch(BASE + "/api/status");
+  const res = await fetchWithRetry(BASE + "/api/status");
   if (!res.ok) {
     console.error(`Could not reach ${BASE}/api/status (status ${res.status}). Skipping drift check — this is a reachability failure, not a confirmed drift.`);
     process.exit(1);

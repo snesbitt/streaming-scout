@@ -55,6 +55,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { indexByBase, findCovered, normalizeTitle, titlesFromMarkdownList } from "./lib/titles.mjs";
 import { removeRows, SECTION_OF } from "./lib/rows.mjs";
+import { fetchWithRetry } from "./lib/fetch-with-retry.mjs";
 
 const args = process.argv.slice(2);
 const FIX = args.includes("--fix");
@@ -70,7 +71,7 @@ function fail(message) {
 
 let payload;
 try {
-  const res = await fetch(`${BASE}/api/status?cb=${Date.now()}`, { headers: { accept: "application/json" } });
+  const res = await fetchWithRetry(`${BASE}/api/status?cb=${Date.now()}`, { headers: { accept: "application/json" } });
   if (!res.ok) fail(`GET ${BASE}/api/status returned ${res.status}. Not treating an unreachable endpoint as "nothing to sync".`);
   payload = await res.json();
 } catch (err) {

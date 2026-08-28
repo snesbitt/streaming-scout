@@ -34,6 +34,7 @@
 // Node 18+ (global fetch).
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { fetchWithRetry } from "./lib/fetch-with-retry.mjs";
 
 const args = process.argv.slice(2);
 const allowShrink = args.includes("--allow-shrink");
@@ -46,25 +47,8 @@ const LATEST = `${DIR}/latest.json`;
 // 2026-08-16 a single dropped connection failed the smoke job and opened a
 // noisy issue against a site that was verifiably healthy. A backup that
 // cries wolf gets ignored, and an ignored backup is not a backup.
-const TIMEOUT_MS = 10000;
-const ATTEMPTS = 3;
-
-async function fetchWithRetry(url) {
-  let lastErr;
-  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
-    try {
-      return await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS) });
-    } catch (err) {
-      lastErr = err;
-      const why = err.name === "TimeoutError" ? `timed out after ${TIMEOUT_MS}ms` : err.message;
-      if (attempt < ATTEMPTS) {
-        console.log(`  .. ${url} attempt ${attempt}/${ATTEMPTS} failed (${why}), retrying`);
-        await new Promise((r) => setTimeout(r, 1000 * attempt));
-      }
-    }
-  }
-  throw new Error(`network error after ${ATTEMPTS} attempts: ${lastErr.message}`);
-}
+// 2026-08-28: extracted to scripts/lib/fetch-with-retry.mjs, shared with
+// smoke.mjs and the three drift checks.
 
 async function fetchList(path, key) {
   const res = await fetchWithRetry(BASE + path);

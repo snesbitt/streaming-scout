@@ -14,6 +14,8 @@
 //
 // Exits 0 if every check passes, 1 otherwise. Node 18+ (global fetch).
 
+import { fetchWithRetry } from './lib/fetch-with-retry.mjs';
+
 const BASE = (process.argv[2] || 'https://streamingscout.org').replace(/\/$/, '');
 
 let pass = 0, fail = 0;
@@ -27,33 +29,17 @@ async function check(name, fn) {
 
 function assert(cond, msg) { if (!cond) throw new Error(msg); }
 
-// 2026-08-16: every network call goes through this instead of bare fetch().
-// Run #23 failed the whole job (and opened a GitHub issue) on a single
-// `fetch failed`, which is undici's raw network error, not an HTTP status.
-// /api/status was verifiably healthy at the time, so that was a transient
-// blip or a Netlify Function cold start, not a real outage. A smoke check
-// that cries wolf gets ignored, so: a hard per-attempt timeout plus two
-// retries with backoff. A genuine outage still fails all three attempts and
-// still reports; one dropped connection no longer does.
-const ATTEMPTS = 3;
-const TIMEOUT_MS = 10000;
-
-async function fetchWithRetry(url, init) {
-  let lastErr;
-  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
-    try {
-      return await fetch(url, { ...init, signal: AbortSignal.timeout(TIMEOUT_MS) });
-    } catch (err) {
-      lastErr = err;
-      const why = err.name === 'TimeoutError' ? 'timed out after ' + TIMEOUT_MS + 'ms' : err.message;
-      if (attempt < ATTEMPTS) {
-        console.log('  ..   ' + url + ' attempt ' + attempt + '/' + ATTEMPTS + ' failed (' + why + '), retrying');
-        await new Promise((r) => setTimeout(r, 1000 * attempt));
-      }
-    }
-  }
-  throw new Error('network error after ' + ATTEMPTS + ' attempts: ' + lastErr.message);
-}
+// 2026-08-16: every network call goes through fetchWithRetry instead of a
+// bare fetch(). Run #23 failed the whole job (and opened a GitHub issue) on
+// a single `fetch failed`, which is undici's raw network error, not an HTTP
+// status. /api/status was verifiably healthy at the time, so that was a
+// transient blip or a Netlify Function cold start, not a real outage. A
+// smoke check that cries wolf gets ignored, so: a hard per-attempt timeout
+// plus two retries with backoff. A genuine outage still fails all three
+// attempts and still reports; one dropped connection no longer does.
+// 2026-08-28: extracted to scripts/lib/fetch-with-retry.mjs, shared with
+// backup-live-records.mjs and the three drift checks - see that file's own
+// header for why.
 
 console.log('Streaming Scout smoke test → ' + BASE + '\n');
 
