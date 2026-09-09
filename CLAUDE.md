@@ -2096,3 +2096,17 @@ including hers. Set it first, then push.
 
 Not done, deliberately: no rate limiting beyond the existing `MAX_LIST_SIZE`
 bound, which was the answer to an open endpoint and is unchanged.
+
+## 2026-09-09 — check:freshness: the script the daily sweep expected
+
+The daily portfolio freshness sweep is specified to run
+`npm run check:freshness` here, and no such script existed — its Step 1
+has been a no-op. Shipped scripts/check-freshness.mjs (read-only, zero
+deps, no network): [STALE] past 10 days on data/TASTE_PROFILE.md's
+Last-updated stamp, [REVIEW] for STREAMING_LOG.md at the same mark
+(syncing needs Susan's logged-in browser, so a quiet log is a prompt,
+not a CI failure). Exit 1 on [STALE] only; kept out of npm test because
+it fails on the calendar, not the code. First run correctly flagged
+both stamps at 2026-08-17. Same day, pushed separately (31bd974): the
+Right Now relabels — Westies and Hardacres S2 to season complete,
+Tony's stale (limited) tag dropped.
