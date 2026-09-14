@@ -2165,3 +2165,38 @@ close both open issues.
 edited script. The 500 above was read from the live site in a browser.
 
 **Delivered:** `scripts/smoke.mjs`, this file. Committed on `main`, not pushed.
+
+## 2026-09-14, later - authedWrite only handled 401, so three weeks of 500s were invisible
+
+Follow-up to the EDIT_SECRET finding above, and the reason Susan had no way
+to notice it from using the site.
+
+`authedWrite` in index.html checked for exactly one failure: a 401, where it
+cleared the stored key and told her. Every other non-ok status fell straight
+through `return res`. The local change had already been written to
+localStorage before the fetch, so a 500 produced no alert, no retry, and no
+visible difference. Every tick and dismiss since Phase 7 looked like it saved,
+on whichever device she was holding, while nothing reached the server and
+cross-device sync was dead.
+
+The file's own comment two lines up says this site's rule is no silent
+failures, and names the 401 case as "the failure mode worth designing for".
+It was right about the mechanism and too narrow about the trigger.
+
+Now any non-ok response is surfaced, with the status in the message and a
+plain statement that the change is local-only. The key is deliberately NOT
+cleared on a 500: that is the server being broken, not the key being wrong,
+and discarding a good key would make the next write prompt for one that was
+already correct. Only a 401 clears it, as before.
+
+Worth stating the general shape, because this is the third instance today
+across the portfolio: **every one of these bugs was a correct check aimed at
+too narrow a case.** The backup job asserted a commit but not a file. The
+freshness check existed but ran nowhere. This one caught the wrong key and
+not the broken server. None of them were missing; all of them were pointed
+slightly off.
+
+**Verified:** `npm test` green end to end, exit 0, including the em-dash check
+that governs index.html.
+
+**Delivered:** `index.html`, this file.

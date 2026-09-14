@@ -476,9 +476,27 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
     o.headers = o.headers || {};
     o.headers['X-Edit-Key'] = key;
     return fetch(url, o).then(function (res) {
-      if (res && res.status === 401) {
+      if (!res) return res;
+      if (res.status === 401) {
         clearEditSecret();
         window.alert('That edit key was not accepted, so this change is saved on this device only. It will ask again next time you change something.');
+      } else if (!res.ok) {
+        // 2026-09-14: this branch used to not exist, and the gap was not
+        // theoretical. EDIT_SECRET was never set on the live site after the
+        // Phase 7 write gate shipped, so every write returned 500 "server
+        // misconfigured" for three weeks. Only 401 was handled, so a 500 fell
+        // straight through this function: no alert, no retry, and the local
+        // change already written to localStorage. Every tick and dismiss
+        // looked like it saved, on every device, while nothing reached the
+        // server and cross-device sync was dead.
+        //
+        // The key is deliberately NOT cleared here. A 500 is the server being
+        // broken, not the key being wrong, and throwing away a good key would
+        // make the next write prompt for one that was already correct.
+        window.alert(
+          'The server rejected this change (error ' + res.status + '), so it is saved on this device only. ' +
+          'Your edit key is fine. This usually means EDIT_SECRET is not set on the site.'
+        );
       }
       return res;
     }).catch(function () {
