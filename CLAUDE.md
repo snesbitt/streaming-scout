@@ -2110,3 +2110,58 @@ it fails on the calendar, not the code. First run correctly flagged
 both stamps at 2026-08-17. Same day, pushed separately (31bd974): the
 Right Now relabels — Westies and Hardacres S2 to season complete,
 Tony's stale (limited) tag dropped.
+
+## 2026-09-14 - EDIT_SECRET was never set, every write on the live site is failing, and the alarm has been ringing for two weeks
+
+Found while working a portfolio-wide punch list. Verified live, not inferred:
+
+- `GET https://streamingscout.org/api/dismiss` returns 200 with real data.
+  Reads are fine.
+- A write to the same endpoint returns
+  `500 {"error":"server misconfigured: EDIT_SECRET not set"}`.
+- Netlify's env-var list for the streamingscout.org project is **empty**.
+  Not "EDIT_SECRET is wrong", not "EDIT_SECRET is unset among others". Zero
+  variables of any kind.
+
+So since Phase 7 shipped its write gate, the dismiss button, the watching
+tick and the watched tick have all failed on the live site. `checkWriteAuth`
+fails closed, which is the correct design and exactly what it is doing.
+
+**The part worth recording is that none of this was undetected.** The 2026-08-23
+"Needs Susan" note in this file said the secret had to be set in Netlify
+before that change deployed. The 2026-08-28 pass then split a misconfigured
+gate (500) from an ordinary rejection (401) specifically so it could be told
+apart, and `scripts/smoke.mjs` check 5c asserts the 401 with the message "a
+500 would mean EDIT_SECRET is unset in Netlify". That check is wired into
+`test.yml`'s Monday 15:00 UTC smoke job, which opens a GitHub issue on
+failure.
+
+It has been doing that. There are two open issues on this repo right now:
+**"Weekly smoke test failed"** and **"Weekly status-drift check failed"**. The
+monitoring worked. Every layer did its job. The signal reached a channel
+nobody read.
+
+That is a different failure from the two found in the other repos today. The
+Fitness Log had no detection at all and got some built. Vinyl Scout had a
+correct check wired into nothing and got it scheduled. Here the check exists,
+runs, fails, and files a report every Monday. **No amount of additional
+monitoring fixes this one.** The fix is to set the secret and close the
+issues, and, if weekly GitHub issue mail is not a channel Susan actually
+reads, to move the alarm somewhere she does.
+
+**Fixed here:** `scripts/smoke.mjs`'s header still described both endpoints as
+"intentionally unauthenticated (open POST/DELETE, no edit key)", which stopped
+being true on 2026-08-23. The file's own check 5c already tested the gate; only
+the prose above it was stale. A comment asserting a gate does not exist is how
+the next reader decides not to check it.
+
+**Needs Susan, and only Susan:** set `EDIT_SECRET` on the streamingscout.org
+project in Netlify (Site configuration, Environment variables), then redeploy.
+A session should not generate or handle that value. Confirm with
+`npm run smoke` - check 5c flips from 500 to 401 the moment it is set. Then
+close both open issues.
+
+**Verified:** `npm test` green end to end, exit 0. `node --check` on the
+edited script. The 500 above was read from the live site in a browser.
+
+**Delivered:** `scripts/smoke.mjs`, this file. Committed on `main`, not pushed.

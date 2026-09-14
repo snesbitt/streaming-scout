@@ -2,12 +2,19 @@
 // scripts/smoke.mjs, post-deploy health check for the LIVE site.
 //
 // Asserts the deployed site is actually healthy, not just that the build
-// went green. Read-only on purpose: both API endpoints here (dismiss.mjs,
-// status.mjs) are intentionally unauthenticated (open POST/DELETE, no edit
-// key, see each file's own header for why), so a real write-round-trip
-// check would insert real junk into Susan's live stores. Mirrors the same
+// went green. Read-only on purpose: a real write-round-trip check would
+// insert real junk into Susan's live stores, so every write-path check here
+// stops at the auth boundary and reads the status code. Mirrors the same
 // pattern and same non-goal already established in Vinyl Scout's own
 // scripts/smoke.mjs.
+//
+// 2026-09-14: this header used to say both endpoints were "intentionally
+// unauthenticated (open POST/DELETE, no edit key)". That stopped being true
+// on 2026-08-23, when Phase 7 put an EDIT_SECRET gate in front of every write
+// on dismiss.mjs and status.mjs. The file's own check 5c already tested that
+// gate; only the description above it was stale. Corrected rather than left,
+// because a comment saying a gate does not exist is how the next reader
+// decides not to check it.
 //
 // Usage:  npm run smoke                       (defaults to https://streamingscout.org)
 //         node scripts/smoke.mjs <baseUrl>
