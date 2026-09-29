@@ -2242,3 +2242,22 @@ cloud. Section "In Theaters" has no automated refresh at all.
 
 **Verified:** npm test green end to end.
 **Delivered:** index.html, this file. Committed on main, not pushed.
+
+### 2026-09-29, later: In Theaters is now scored against the taste profile
+
+Susan: In Theaters must map to her viewing history and preferences, not be a
+list of what is playing. Each row now carries a reason tied to a logged anchor.
+Heart of the Beast: director David Ayer made The Beekeeper and A Working Man
+(vein 3). Primetime: Mindhunter and Griselda (vein 5), same studio as Tony.
+Tony: the Bourdain shelf. Added Linkin Park: Unshatter (music documentary, vein
+4, limited run from 2026-09-30, dir. Joe Hahn, TMDB id 1388805, poster looked at).
+
+Considered and rejected on evidence: Heaven in Stone and Glass (two nights only,
+Sep 20 and 23, already over), Ai Weiwei's Turandot (US theatrical date not
+confirmed), Practical Magic 2, Hope and Whalefall (horror or sci-fi, on the
+avoid list), The Uprising (fits British history but went to digital 2026-09-29).
+Next to add when they open: Verity (Oct 2), The Social Reckoning (Oct 9), Sense
+and Sensibility (Oct 16, vein 8), Club Kid (A24, Nov 6, vein 7).
+
+**Verified:** npm test green through poster coverage and exclusions checks.
+**Delivered:** index.html, this file. Committed on main, not pushed.
