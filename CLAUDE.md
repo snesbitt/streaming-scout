@@ -2219,3 +2219,26 @@ left alone rather than guessed.
 **Verified:** npm test green end to end, exit 0 (in the Cowork session).
 
 **Delivered:** index.html, this file.
+
+## 2026-09-29 - In Theaters refreshed, and the EDIT_SECRET blocker confirmed again
+
+Susan hit "The server rejected this change (error 500)" deleting The Odyssey and
+clicking Currently Watching rows. Same root cause as 2026-09-14: `EDIT_SECRET`
+is unset on the streamingscout.org Netlify project (Netlify MCP listed zero
+environment variables). Not set by a session, per the standing rule. Susan sets
+it in Netlify, then redeploys, then `npm run smoke` check 5c flips 500 to 401.
+
+In Theaters had two rows (The Odyssey, Tony) and had not been refreshed since
+2026-08-08. Added Heart of the Beast (Paramount, dir. David Ayer, opened
+2026-09-25) and Primetime (A24, dir. Lance Oppenheim, opened 2026-09-25). Dates,
+directors and cast read from Deadline, Wikipedia, Gold Derby and TechRadar.
+Posters from TMDB (movie ids 1263337 and 1375441), identity matched on synopsis,
+both rendered and looked at in a browser. Tony still unconfirmed as out of
+cinemas, left alone. The Uprising skipped: on digital 2026-09-29 after a weak
+run. Verity (Oct 2) and Sense and Sensibility (Oct 16) are next to add.
+
+The weekly resync task has failed two Mondays running because it runs in the
+cloud. Section "In Theaters" has no automated refresh at all.
+
+**Verified:** npm test green end to end.
+**Delivered:** index.html, this file. Committed on main, not pushed.
