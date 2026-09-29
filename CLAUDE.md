@@ -2200,3 +2200,22 @@ slightly off.
 that governs index.html.
 
 **Delivered:** `index.html`, this file.
+
+## 2026-09-29 - Right Now: two finished seasons still said "thru" a passed date
+
+Reacher season 4 ended 2026-09-16 (8 episodes, verified against the episode
+list) and Special Ops: Lioness season 3 ended 2026-09-20 (verified against
+coverage of the finale). Both Currently Watching rows still read "Wednesdays
+thru Sep 16" / "Sundays thru Sep 20" with "in progress". Both metas now read
+"season complete", matching the Westies/Grantchester/Sugar rows. Rows kept,
+not removed: whether a finished season keeps its row is Susan's call, per the
+status-drift job's own scope note.
+
+Checked and current, no change: The Odyssey stays In Theaters (home release
+2026-11-17, still in cinemas), Ted Lasso S4 "thru Oct 7" is correct. Tony is
+possibly out of theatres (reported digital 2026-09-15, not confirmed by A24);
+left alone rather than guessed.
+
+**Verified:** npm test green end to end, exit 0 (in the Cowork session).
+
+**Delivered:** index.html, this file.
