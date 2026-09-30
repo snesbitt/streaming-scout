@@ -721,12 +721,12 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
   function copyOrToast(msg, doneMsg, title) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(msg).then(function () {
-        toast(doneMsg + ' Message copied, in case you want to tell Claude too.');
+        toast(doneMsg + '. A note for Claude is on your clipboard. Paste it into a chat only if you want it logged now.');
       }).catch(function () {
-        toast(doneMsg + ' on this device. Nothing copied, so mention "' + title + '" to Claude if you want it logged now.');
+        toast(doneMsg + '. Nothing was copied, so mention "' + title + '" to Claude if you want it logged now.');
       });
     } else {
-      toast(doneMsg + ' on this device. Nothing copied, so mention "' + title + '" to Claude if you want it logged now.');
+      toast(doneMsg + '. Nothing was copied, so mention "' + title + '" to Claude if you want it logged now.');
     }
   }
   window.ssDismiss = function (btn) {

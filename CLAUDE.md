@@ -2261,3 +2261,5 @@ and Sensibility (Oct 16, vein 8), Club Kid (A24, Nov 6, vein 7).
 
 **Verified:** npm test green through poster coverage and exclusions checks.
 **Delivered:** index.html, this file. Committed on main, not pushed.
+
+- 2026-09-30: EDIT_SECRET is now set by Susan on Netlify (graceful-lebkuchen-0dd57d) and redeployed. Delete confirmed working on the live site. The 500 popup is resolved; a wrong key now gives 401. npm run smoke check 5c should now show 401.
