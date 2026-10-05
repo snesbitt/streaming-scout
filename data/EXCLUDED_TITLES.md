@@ -78,3 +78,10 @@ it opened is not the full picture for 2026-08-17.
 - **The Velvet Underground** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
 - **Number One on the Call Sheet** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
 - **Still: A Michael J. Fox Movie** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
+
+- **Last Seen** — Coming Soon — dismissed on-site 2026-08-19 (auto-synced by CI)
+- **Sugar, season 2** — Currently Watching — dismissed on-site 2026-08-19 (auto-synced by CI)
+- **SAS Rogue Heroes** — Top Picks — dismissed on-site 2026-08-20 (auto-synced by CI)
+- **Bad Sisters** — Top Picks — dismissed on-site 2026-09-30 (auto-synced by CI)
+- **Bodyguard** — Top Picks — dismissed on-site 2026-09-30 (auto-synced by CI)
+- **Lupin, part 4** — Coming Soon — dismissed on-site 2026-09-30 (auto-synced by CI)
