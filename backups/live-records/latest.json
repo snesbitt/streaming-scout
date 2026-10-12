@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-17T22:32:24.856Z",
+  "fetchedAt": "2026-10-12T22:23:13.009Z",
   "source": "https://streamingscout.org",
   "statuses": [
     {
@@ -274,6 +274,36 @@
       "title": "Still: A Michael J. Fox Movie",
       "section": "Top Picks",
       "dismissedAt": "2026-08-17T22:23:02.744Z"
+    },
+    {
+      "title": "Last Seen",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-08-19T02:25:36.636Z"
+    },
+    {
+      "title": "Sugar, season 2",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-08-19T02:43:54.613Z"
+    },
+    {
+      "title": "SAS Rogue Heroes",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-20T15:02:56.935Z"
+    },
+    {
+      "title": "Bad Sisters",
+      "section": "Top Picks",
+      "dismissedAt": "2026-09-30T17:22:27.032Z"
+    },
+    {
+      "title": "Bodyguard",
+      "section": "Top Picks",
+      "dismissedAt": "2026-09-30T17:22:37.585Z"
+    },
+    {
+      "title": "Lupin, part 4",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-09-30T17:23:26.386Z"
     }
   ]
 }
