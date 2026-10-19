@@ -1073,3 +1073,5 @@ watch date. See "What the tick button means" above before using these dates
 for anything.
 
 - **Sr.** · Netflix (cleared via the on-site tick button, 2026-08-17, auto-synced by CI) · already seen, watch date unknown
+
+- **Animals** · service not recorded (cleared via the on-site tick button, 2026-10-14, auto-synced by CI) · already seen, watch date unknown
