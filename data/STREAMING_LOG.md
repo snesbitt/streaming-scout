@@ -94,7 +94,7 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 - **Say Nothing (Limited Series)** · Hulu (dismissed as finished on-site 2026-08-12, backfilled here 2026-08-16) · finished
 - **Scarpetta** · Prime Video (status recorded live on-site 2026-07-31, backfilled here 2026-08-16) · finished
 - **Apex** · Netflix (dismissed as finished on-site 2026-08-10, backfilled here 2026-08-16) · finished
-- **Special Ops: Lioness (Season 3)** · Paramount+ (off-platform, reported by Susan directly, 2026-08-10) · in progress
+- **Special Ops: Lioness (Season 3)** · Paramount+ (off-platform, reported by Susan directly, 2026-08-10; ticked watched on-site 2026-10-16, season was complete) · finished
 - **Ted Lasso (Season 4)** · Apple TV+ (reported by Susan directly, 2026-08-10) · in progress
 - **The Hardacres (Season 2)** · BritBox (off-platform, reported by Susan directly, 2026-08-10) · in progress
 - **Sugar (Season 2)** · Apple TV+ (reported by Susan directly, 2026-08-08; Apple TV+ watch-history sync not yet verified working, see STREAMING_PROFILE.md) · in progress
