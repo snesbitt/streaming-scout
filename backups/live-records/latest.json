@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-17T22:32:24.856Z",
+  "fetchedAt": "2026-10-26T20:18:05.102Z",
   "source": "https://streamingscout.org",
   "statuses": [
     {
@@ -17,13 +17,6 @@
       "updatedAt": "2026-08-10T00:17:50.351Z"
     },
     {
-      "title": "Special Ops: Lioness, season 3",
-      "status": "watching",
-      "meta": "Season 3 · in progress",
-      "section": "Top Picks",
-      "updatedAt": "2026-08-10T00:33:15.738Z"
-    },
-    {
       "title": "The Hardacres, season 2",
       "status": "watching",
       "meta": "Season 2 · in progress",
@@ -36,13 +29,6 @@
       "meta": "in progress",
       "section": "Currently Watching",
       "updatedAt": "2026-08-17T00:14:38.548Z"
-    },
-    {
-      "title": "Reacher, season 4",
-      "status": "watching",
-      "meta": "Season 4 · weekly through Sep 16 · in progress",
-      "section": "Currently Watching",
-      "updatedAt": "2026-08-17T00:15:21.254Z"
     },
     {
       "title": "Becoming Led Zeppelin",
@@ -127,6 +113,55 @@
       "meta": "Netflix",
       "section": "Top Picks",
       "updatedAt": "2026-08-17T22:23:10.109Z"
+    },
+    {
+      "title": "Neagley",
+      "status": "watching",
+      "meta": "New",
+      "section": "Top Picks",
+      "updatedAt": "2026-10-14T14:56:44.565Z"
+    },
+    {
+      "title": "The Great British Bake Off, Collection 14",
+      "status": "watching",
+      "meta": "",
+      "section": "Coming Soon",
+      "updatedAt": "2026-10-14T14:57:03.537Z"
+    },
+    {
+      "title": "Animals",
+      "status": "watched",
+      "meta": "",
+      "section": "Coming Soon",
+      "updatedAt": "2026-10-14T14:57:21.745Z"
+    },
+    {
+      "title": "American Hostage",
+      "status": "watching",
+      "meta": "New",
+      "section": "Top Picks",
+      "updatedAt": "2026-10-16T14:00:40.320Z"
+    },
+    {
+      "title": "Special Ops: Lioness, season 3",
+      "status": "watched",
+      "meta": "New",
+      "section": "Top Picks",
+      "updatedAt": "2026-10-16T14:00:44.637Z"
+    },
+    {
+      "title": "Kill Jackie",
+      "status": "watching",
+      "meta": "85%",
+      "section": "Coming Soon",
+      "updatedAt": "2026-10-17T19:43:35.793Z"
+    },
+    {
+      "title": "Slow Horses, season 6",
+      "status": "watched",
+      "meta": "New",
+      "section": "Top Picks",
+      "updatedAt": "2026-10-24T15:52:14.883Z"
     }
   ],
   "dismissed": [
@@ -274,6 +309,66 @@
       "title": "Still: A Michael J. Fox Movie",
       "section": "Top Picks",
       "dismissedAt": "2026-08-17T22:23:02.744Z"
+    },
+    {
+      "title": "Last Seen",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-08-19T02:25:36.636Z"
+    },
+    {
+      "title": "Sugar, season 2",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-08-19T02:43:54.613Z"
+    },
+    {
+      "title": "SAS Rogue Heroes",
+      "section": "Top Picks",
+      "dismissedAt": "2026-08-20T15:02:56.935Z"
+    },
+    {
+      "title": "Bad Sisters",
+      "section": "Top Picks",
+      "dismissedAt": "2026-09-30T17:22:27.032Z"
+    },
+    {
+      "title": "Bodyguard",
+      "section": "Top Picks",
+      "dismissedAt": "2026-09-30T17:22:37.585Z"
+    },
+    {
+      "title": "Lupin, part 4",
+      "section": "Coming Soon",
+      "dismissedAt": "2026-09-30T17:23:26.386Z"
+    },
+    {
+      "title": "Primetime",
+      "section": "In Theaters",
+      "dismissedAt": "2026-10-14T14:56:16.698Z"
+    },
+    {
+      "title": "Special Ops: Lioness, season 3",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-10-14T14:56:23.732Z"
+    },
+    {
+      "title": "Reacher, season 4",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-10-14T14:56:25.834Z"
+    },
+    {
+      "title": "Omnivore",
+      "section": "Top Picks",
+      "dismissedAt": "2026-10-14T14:56:50.740Z"
+    },
+    {
+      "title": "Slow Horses, season 6",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-10-16T14:00:32.045Z"
+    },
+    {
+      "title": "MobLand, season 2",
+      "section": "Currently Watching",
+      "dismissedAt": "2026-10-24T15:52:00.557Z"
     }
   ]
 }
