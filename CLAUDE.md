@@ -177,7 +177,7 @@ the exact push command block.
 
 As of 2026-08-14, there IS an automated *health* check (`scripts/smoke.mjs`
 + the `smoke` job in `.github/workflows/test.yml`) — but it is schedule-
-triggered (weekly, Mondays 15:00 UTC, plus manual `workflow_dispatch`), not
+triggered (weekly, Mondays 20:00 UTC since 2026-10-26, plus manual `workflow_dispatch`), not
 push-triggered, and read-only against whatever is live at the moment it
 runs. It answers "is the site fundamentally healthy right now" — home page
 loads, `/CLAUDE.md` stays blocked, `/api/dismiss` and `/api/status` are
@@ -2263,3 +2263,5 @@ and Sensibility (Oct 16, vein 8), Club Kid (A24, Nov 6, vein 7).
 **Delivered:** index.html, this file. Committed on main, not pushed.
 
 - 2026-09-30: EDIT_SECRET is now set by Susan on Netlify (graceful-lebkuchen-0dd57d) and redeployed. Delete confirmed working on the live site. The 500 popup is resolved; a wrong key now gives 401. npm run smoke check 5c should now show 401.
+
+- 2026-10-26: Both Monday crons in `.github/workflows/test.yml` moved from 13:00 and 15:00 UTC to 18:00 and 20:00 UTC, at Susan's request, so no scheduled run starts before 10 am Pacific (18:00 UTC is 10:00 PST and 11:00 PDT). The 2 hour gap is unchanged. The six `if:` conditions that match the second cron string moved with it. `npm test` passed. Left alone on purpose: older entries in this file that name 15:00 UTC describe the design as it was on those dates. `data/STREAMING_PROFILE.md` still lists the old Claude task times (Mon 13:30 UTC, Wed 17:07 UTC, Fri 13:00 UTC, daily 11:00 UTC), which no longer match the live scheduled tasks; that is a separate drift fix. Committed on main, not pushed.

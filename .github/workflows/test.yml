@@ -6,11 +6,17 @@ on:
   pull_request:
     branches: [main]
   schedule:
+    # 2026-10-26: both Monday crons moved from 13:00 and 15:00 UTC to 18:00 and
+    # 20:00 UTC, so no run starts before 10 am Pacific all year (18:00 UTC is
+    # 10:00 PST and 11:00 PDT). The 2 hour gap is unchanged. The six `if:`
+    # conditions below match the second cron string exactly, so they moved
+    # with it: when this string changes, change them all in the same commit.
+    # Prose below that names 13:00 or 15:00 describes the 2026-08 design.
     # Weekly, independent of any push: catches content drift (About page
     # copy vs. data/STREAMING_PROFILE.md, see scripts/check-content-drift.mjs)
     # even on a week with no code changes at all. Runs the same job as a
     # normal push, so no separate workflow file or new failure mode.
-    - cron: "0 13 * * 1"
+    - cron: "0 18 * * 1"
     # 2026-08-14: a second weekly run, 2 hours after the one above and 1
     # hour after the "Streaming Scout dismissed-title sync" scheduled task
     # (Mondays 14:00 UTC) — feeds the `smoke` and `live-drift` jobs below, a
@@ -43,7 +49,7 @@ on:
     # left unrestricted - it is cheap, offline and deterministic, and running
     # it again 2 hours later is harmless, which is not true of a job that
     # hits the live site or opens a PR.
-    - cron: "0 15 * * 1"
+    - cron: "0 20 * * 1"
   workflow_dispatch: {}
     # 2026-08-14: lets Susan (or a Claude session) trigger the smoke/drift
     # jobs on demand from the Actions tab's "Run workflow" button, without
@@ -118,7 +124,7 @@ jobs:
   # not-yet-finished Netlify deploy.
   smoke:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 20 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -170,7 +176,7 @@ jobs:
   # vinylscout.org.
   deploy-fresh:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 20 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -215,7 +221,7 @@ jobs:
   # placement as `smoke` (live-network, never push-triggered).
   status-drift:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 20 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -269,7 +275,7 @@ jobs:
   # merges a PR if one shows up.
   dismiss-drift:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 20 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -358,7 +364,7 @@ jobs:
   # hand, which is worse than the bug it fixes.
   watched-drift:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 20 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -441,7 +447,7 @@ jobs:
   # a quiet week produces no PR.
   backup:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 15 * * 1')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 20 * * 1')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
