@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-08-17 (five Apple TV+ and film titles reported directly by Susan: Shrinking, Friends and Neighbors, Criminal Record, The Morning Show, the Bourne films. Apple TV+ watch-history sync is still blocked, so these are her word, which is the only route available for that service. Earlier the same day: five Top Picks marked already-seen. Later the same day: Tehran and The Greatest Night in Pop, both marked watched on-site, added after the status-drift check caught them still sitting in Top Picks. Abstract: The Art of Design was also marked watched but needed no new entry, it was already in the log from 2017 to 2019, which is the actual bug: it should never have been recommended)
+**Last updated:** 2026-10-27 (Prime Video incremental sync covering 2026-08-17 to 2026-10-27; Netflix signed out so not read. Previous update 2026-08-17: five Apple TV+ and film titles reported directly by Susan: Shrinking, Friends and Neighbors, Criminal Record, The Morning Show, the Bourne films. Apple TV+ watch-history sync is still blocked, so these are her word, which is the only route available for that service. Earlier the same day: five Top Picks marked already-seen. Later the same day: Tehran and The Greatest Night in Pop, both marked watched on-site, added after the status-drift check caught them still sitting in Top Picks. Abstract: The Art of Design was also marked watched but needed no new entry, it was already in the log from 2017 to 2019, which is the actual bug: it should never have been recommended)
 
 
 ## 2026-07-25 — full-history backfill note
@@ -62,6 +62,53 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 
 ## 2026
+
+- **Maigret (Season 2)** · Prime Video (Prime watch history 2026-10-25 and 2026-10-27; synced 2026-10-27) · in progress. Classic detective procedural. Which Maigret adaptation this is was not confirmed from the history page
+- **War and Peace (Season 1)** · Prime Video (Prime watch history 2026-10-26; synced 2026-10-27) · in progress. Period epic miniseries, literary adaptation
+- **Mayday** · Prime Video (Prime watch history 2026-10-25; synced 2026-10-27) · watched. Film; genre not confirmed
+- **Blue Ridge: The Series** · Prime Video (Prime watch history 2026-10-25; synced 2026-10-27) · in progress. Genre not confirmed
+- **Safe** · Prime Video (rewatch, Prime watch history 2026-10-25; first logged 2024-10-14; synced 2026-10-27) · watched again
+- **The Terminal List (Season 2)** · Prime Video (Prime watch history 2026-10-24; synced 2026-10-27) · in progress. Military revenge thriller (Chris Pratt)
+- **MobLand (Season 2)** · Prime Video / Paramount+ (Prime watch history 2026-09-28 to 2026-10-23, six viewing days; synced 2026-10-27) · in progress. Crime family drama, London gangland (Tom Hardy, Pierce Brosnan, Helen Mirren)
+- **Tenzing** · Prime Video (Prime watch history 2026-10-22; synced 2026-10-27) · watched. Film; genre not confirmed
+- **On Call (Season 1)** · Prime Video (Prime watch history 2026-10-22; synced 2026-10-27) · in progress. Police procedural, LAPD patrol drama
+- **Slow Horses (Season 6)** · Prime Video / Apple TV+ (Prime watch history 2026-10-08 to 2026-10-22, five viewing days; synced 2026-10-27) · in progress. Espionage thriller with dry comedy, MI5 exiles (Gary Oldman, Jack Lowden, Kristin Scott Thomas). Seasons 1 to 5 already loved
+- **The Return of Sherlock Holmes** · Prime Video (Prime watch history 2026-10-17; synced 2026-10-27) · in progress. Classic British detective series (Jeremy Brett)
+- **Marble Hall Murders (Season 1)** · Prime Video / PBS Masterpiece (Prime watch history 2026-09-08 to 2026-10-17, six viewing days; synced 2026-10-27) · in progress. Cozy British mystery from Anthony Horowitz (Lesley Manville, Tim McMullan)
+- **Neagley (Season 1)** · Prime Video (Prime watch history 2026-09-17 to 2026-10-09; synced 2026-10-27) · in progress. Reacher spin-off, grounded action thriller (Maria Sten)
+- **Spooks (Season 1)** · Prime Video (further viewing 2026-10-08; synced 2026-10-27) · in progress, additional episodes beyond the 2026-07-26 entry
+- **Tracker (Season 4)** · Prime Video (Prime watch history 2026-10-07; synced 2026-10-27) · in progress. Procedural action thriller (Justin Hartley)
+- **Killer Elite** · Prime Video (rewatch, Prime watch history 2026-10-06; first logged 2025-09-18; synced 2026-10-27) · watched again. Grounded spy action (Jason Statham)
+- **First Winter** · Prime Video (Prime watch history 2026-10-03; synced 2026-10-27) · in progress. Genre not confirmed
+- **Mark Felt: The Man Who Brought Down the White House** · Prime Video (Prime watch history 2026-10-03; synced 2026-10-27) · watched. Political thriller, true story (Liam Neeson)
+- **Belgravia (Season 1)** · Prime Video (Prime watch history 2026-10-02 to 2026-10-03; synced 2026-10-27) · in progress. Period drama, Julian Fellowes
+- **The German (Season 1)** · Prime Video (Prime watch history 2026-09-25 to 2026-09-28; synced 2026-10-27) · in progress. Genre not confirmed
+- **Cooper and Fry (Season 1)** · Prime Video (Prime watch history 2026-09-15; synced 2026-10-27) · in progress. British crime drama
+- **The Romanovs (Season 1)** · Prime Video (Prime watch history 2026-09-15; synced 2026-10-27) · in progress. History documentary series
+- **The Mummy of Tutankhamun** · Prime Video (Prime watch history 2026-09-11 to 2026-09-15; synced 2026-10-27) · in progress. History documentary
+- **The Undeclared War** · Prime Video (Prime watch history 2026-09-10 to 2026-09-15, four viewing days; synced 2026-10-27) · in progress. Cyber-espionage political thriller (Peter Kosminsky)
+- **The French Lieutenant's Woman** · Prime Video (Prime watch history 2026-09-11; synced 2026-10-27) · watched. Period romance film
+- **The Grand Tour (Season 1)** · Prime Video (Prime watch history 2026-09-09; synced 2026-10-27) · in progress. Motoring entertainment
+- **Mutiny** · Prime Video (Prime watch history 2026-09-08; synced 2026-10-27) · watched. Film; genre not confirmed
+- **Rogue Heroes (Season 1)** · Prime Video (Prime watch history 2026-09-03; synced 2026-10-27) · in progress. WWII SAS origin drama
+- **Queen Victoria's Men** · Prime Video (Prime watch history 2026-09-03; synced 2026-10-27) · in progress. British history documentary
+- **Great Estates From Above (Season 1)** · Prime Video (Prime watch history 2026-09-01; synced 2026-10-27) · in progress. British heritage documentary
+- **Bergerac (Season 1)** · Prime Video (Prime watch history 2026-08-27 to 2026-09-01; synced 2026-10-27) · in progress. British detective drama; which adaptation was not confirmed
+- **Crank** · Prime Video (Prime watch history 2026-08-31; synced 2026-10-27) · watched. Action film (Jason Statham)
+- **Ted Lasso (Season 1)** · Prime Video (Prime watch history 2026-08-31; synced 2026-10-27) · in progress. Warm sports comedy (Jason Sudeikis). Season 4 already in progress
+- **Northanger Abbey** · Prime Video (Prime watch history 2026-08-27; synced 2026-10-27) · watched. Austen period adaptation
+- **Mario Puzo's The Godfather, Coda: The Death of Michael Corleone** · Prime Video (Prime watch history 2026-08-27; synced 2026-10-27) · watched. Crime saga film
+- **Allied** · Prime Video (Prime watch history 2026-08-26; synced 2026-10-27) · watched. WWII spy romance thriller (Brad Pitt, Marion Cotillard)
+- **The Forsytes (Season 1)** · Prime Video (Prime watch history 2026-08-26; synced 2026-10-27) · in progress. Period family saga
+- **Blitz** · Prime Video (Prime watch history 2026-08-25; synced 2026-10-27) · watched. WWII home-front drama film
+- **Agent Zero** · Prime Video (Prime watch history 2026-08-23; synced 2026-10-27) · watched. Genre not confirmed
+- **A Woman of Substance (Season 1)** · Prime Video (Prime watch history 2026-08-23; synced 2026-10-27) · in progress. Period family saga
+- **Redemption** · Prime Video (Prime watch history 2026-08-22; synced 2026-10-27) · watched. Crime thriller film
+- **The Game (Season 1)** · Prime Video (Prime watch history 2026-08-20; synced 2026-10-27) · in progress. Genre not confirmed
+- **Gone (Season 1)** · Prime Video (Prime watch history 2026-08-19 to 2026-08-20; synced 2026-10-27) · in progress. Genre not confirmed
+- **Further viewing of titles already logged** (synced 2026-10-27): Lioness (Season 3) to 2026-09-20; Reacher (Season 4) to 2026-09-16; The Hardacres (Season 2) to 2026-08-26; The Westies to 2026-08-24; Grantchester (Season 11) to 2026-08-18; The Agency (Season 2) to 2026-08-18; Sterling Point (Season 1) to 2026-08-17
+- Prime sync note 2026-10-27: one history row, "Series 1" (2026-09-11), has no usable title and was not logged. Netflix was signed out in the browser, so no Netflix activity after the 2026-07-14 backfill was read.
+
 
 - **Shrinking (Seasons 1+)** · Apple TV+ (off-platform, reported by Susan directly, 2026-08-17) · already seen. Warm ensemble comedy-drama, grief and therapy, Harrison Ford and Jason Segel
 - **Friends and Neighbors (Season 1)** · Apple TV+ (off-platform, reported by Susan directly, 2026-08-17) · already seen. Dark suburban comedy-crime, Jon Hamm

@@ -1,7 +1,31 @@
 # Taste Profile
 
 **Derived from:** STREAMING_LOG.md (auto-generated — do not hand-edit)
-**Last updated:** 2026-08-17 (six stated interests recorded from Susan directly, held separately from the log-derived veins because none is anchored to a logged title yet; science fiction added to Patterns to Avoid at her request; five already-seen titles folded into the log the same day. Prior update 2026-08-16, Prime sync of Aug 7 to Aug 15)
+**Last updated:** 2026-10-27 (Prime Video sync summary added at the top. Previous update 2026-08-17: six stated interests recorded from Susan directly, held separately from the log-derived veins because none is anchored to a logged title yet; science fiction added to Patterns to Avoid at her request; five already-seen titles folded into the log the same day. Prior update 2026-08-16, Prime sync of Aug 7 to Aug 15)
+
+## 2026-10-27 sync: what the Prime Video catch-up changed
+
+Prime Video history was read for 2026-08-17 to 2026-10-27 (Netflix was signed out
+in the browser, so nothing new from Netflix). Roughly forty titles, mostly still
+in progress. What they say, kept to what the log shows:
+
+**Vein 2 (spy) is very current.** Slow Horses S6 (five viewing days), Spooks S1,
+Killer Elite, The Undeclared War, Allied and Rogue Heroes all sit in
+the last eight weeks. **Vein 3** is current too: The Terminal List S2, Neagley S1,
+Tracker S4, Crank and Reacher S4 to its end. **MobLand S2** (six viewing
+days) is the heaviest single title in the window.
+
+**Vein 1 stays active, and the cosy end is not dead.** Marble Hall Murders (six
+viewing days), Maigret S2, Bergerac, Belgravia and The Return of Sherlock Holmes
+were all watched after the 2026-08-17 dismissals of the cosy cluster. Read that as
+mixed signal, not a reversal: the dismissals were of specific titles.
+
+**Vein 8 (period and literary)** picked up Northanger Abbey, The Forsytes, A Woman
+of Substance and The French Lieutenant's Woman. **History documentary** is a new
+visible cluster (The Romanovs, The Mummy of Tutankhamun, Queen Victoria's Men,
+Great Estates From Above) and fits the stated History and politics interest.
+
+One history row, "Series 1" on 2026-09-11, has no usable title and was not logged.
 
 ## 2026-08-16 sync: what the nine new titles changed
 

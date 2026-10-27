@@ -78,3 +78,21 @@ it opened is not the full picture for 2026-08-17.
 - **The Velvet Underground** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
 - **Number One on the Call Sheet** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
 - **Still: A Michael J. Fox Movie** — Top Picks — dismissed on-site 2026-08-17 (auto-synced by CI)
+
+## 2026-10-27 sync (live dismiss record checked by the Monday refresh)
+
+Twelve on-site dismissals since 2026-08-19 were not yet recorded here. Entries from
+Currently Watching mean finished, not disliked.
+
+- **Last Seen** - Coming Soon - dismissed on-site 2026-08-19
+- **Sugar, season 2** - Currently Watching - dismissed on-site 2026-08-19
+- **SAS Rogue Heroes** - Top Picks - dismissed on-site 2026-08-20
+- **Bad Sisters** - Top Picks - dismissed on-site 2026-09-30
+- **Bodyguard** - Top Picks - dismissed on-site 2026-09-30
+- **Lupin, part 4** - Coming Soon - dismissed on-site 2026-09-30
+- **Primetime** - In Theaters - dismissed on-site 2026-10-14
+- **Special Ops: Lioness, season 3** - Currently Watching - dismissed on-site 2026-10-14
+- **Reacher, season 4** - Currently Watching - dismissed on-site 2026-10-14
+- **Omnivore** - Top Picks - dismissed on-site 2026-10-14
+- **Slow Horses, season 6** - Currently Watching - dismissed on-site 2026-10-16
+- **MobLand, season 2** - Currently Watching - dismissed on-site 2026-10-24
