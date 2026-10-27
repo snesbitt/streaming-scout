@@ -27,6 +27,15 @@ if [ -z "${CACHED_COMMIT_REF:-}" ]; then
   exit 1
 fi
 
+# Same commit as the last build -> a diff is trivially empty and would "skip",
+# but that is exactly how a stale site got stuck (2026-10-19 to 2026-10-27:
+# four production deploys cancelled while the live site stayed on 160ba48).
+# Never trust "nothing changed" when there is nothing to compare; build.
+if [ "$CACHED_COMMIT_REF" = "${COMMIT_REF:-}" ]; then
+  echo "netlify-ignore: cached ref equals this commit; nothing to compare, building."
+  exit 1
+fi
+
 # git diff --quiet exits 0 when the listed paths are unchanged (-> skip),
 # non-zero when they changed or refs can't be compared (-> build).
 if git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- \

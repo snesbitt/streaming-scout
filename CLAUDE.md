@@ -2267,3 +2267,15 @@ and Sensibility (Oct 16, vein 8), Club Kid (A24, Nov 6, vein 7).
 - 2026-10-26: Both Monday crons in `.github/workflows/test.yml` moved from 13:00 and 15:00 UTC to 18:00 and 20:00 UTC, at Susan's request, so no scheduled run starts before 10 am Pacific (18:00 UTC is 10:00 PST and 11:00 PDT). The 2 hour gap is unchanged. The six `if:` conditions that match the second cron string moved with it. `npm test` passed. Left alone on purpose: older entries in this file that name 15:00 UTC describe the design as it was on those dates. `data/STREAMING_PROFILE.md` still lists the old Claude task times (Mon 13:30 UTC, Wed 17:07 UTC, Fri 13:00 UTC, daily 11:00 UTC), which no longer match the live scheduled tasks; that is a separate drift fix. Committed on main, not pushed.
 
 - 2026-10-27: Cleared a title the weekly resync had re-recommended. Susan ticked "Animals" as already seen on 2026-10-14, but the resync does not read the live tick record, so it put Animals back in Top Picks. The watched-drift job had already caught it on 2026-10-26 and opened PR #16, but that PR was built on the main from before the resync and conflicted with it in `index.html`. Fix, mirroring what `scripts/check-watched-drift.mjs --fix` does: appended the two cleared entries from that PR to `data/STREAMING_LOG.md` (Animals, and Slow Horses, season 6) and removed the Animals Top Picks row. The Slow Horses, season 6 Coming Soon row was already gone after the rebuild. Top Picks is now 8 rows across 8 veins. `npm test` passed. The script itself could not run here, because the Mac sandbox cannot reach streamingscout.org, so the lines were copied from the bot's own branch (`auto/watched-drift-sync`, commit b987ad1). Note: the log now holds both an in-progress entry and a cleared entry for Slow Horses, season 6. The tick on 2026-10-24 is the later fact. PR #14 (dismiss-drift) needed nothing, because all 12 of its titles were already in `data/EXCLUDED_TITLES.md` from the resync. PR #13 (live-records backup) merges cleanly. Lesson: handle the open bot PRs before running the weekly resync, or the resync will not know what Susan ticked since the last one. Committed on main, not pushed.
+
+## 2026-10-27 — live site stuck on 2026-09-30; the deploy-skip script made it invisible
+
+streamingscout.org served `160ba48` (2026-09-30) from 2026-10-19 on. Four
+production deploys (`1e5c583`, `e376acf`, `01b425d`, `0af3779`) were cancelled
+by this repo's own `scripts/netlify-ignore.sh`; Netlify showed them as
+"Failed"/skipped and never alarmed. Found by comparing live page bytes with the
+repo, not by any data check. The cause on Netlify's side (what it passes as
+`CACHED_COMMIT_REF`) is inferred, not confirmed. Fix: the script now builds
+whenever `CACHED_COMMIT_REF` equals `COMMIT_REF`, since an empty diff against
+the same commit proves nothing. Cost: occasional extra builds. After the push,
+confirm with `npm run check:deploy --wait` that live matches `main`.
