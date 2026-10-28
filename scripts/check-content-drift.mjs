@@ -569,6 +569,53 @@ function sentences(text) {
   }
 }
 
+// Check 7: about.html's roadmap summary agrees with roadmap.html.
+//
+// Found by hand 2026-10-28. About said "Seven of eleven items are done" and
+// listed the edit key as still ahead, while roadmap.html had marked Protect
+// saved changes Live on 2026-08-23. No check compared the two pages, so the
+// count stayed wrong for two months. The counts here come from the status
+// pills on the roadmap, which are the source of truth.
+{
+  const rm = readFileSync("roadmap.html", "utf8");
+  const pill = (cls) =>
+    (rm.match(new RegExp('class="phase__status phase__status--' + cls + '"', "g")) || []).length;
+  const real = { done: pill("live"), progress: pill("progress"), ahead: pill("future") };
+  real.total = real.done + real.progress + real.ahead;
+
+  const aboutHtml = readFileSync("about.html", "utf8");
+  const region = regionBetween(aboutHtml, 'id="roadmap-link"', "</p>");
+  const prose = region === null ? null : visibleText(region);
+  const claim = prose && {
+    done: (prose.match(/(\w+) of (\w+) items are done/) || []),
+    progress: (prose.match(/(\w+) (?:is|are) in progress/) || []),
+    ahead: (prose.match(/(\w+) (?:is|are) still ahead/) || []),
+  };
+
+  if (!claim || !claim.done[1] || !claim.done[2] || !claim.progress[1] || !claim.ahead[1]) {
+    failures.push(
+      'about.html: could not read the roadmap summary in the "roadmap-link" section ("N of M items are done", ' +
+        '"N is in progress", "N are still ahead"). The copy or markup moved; update this check.',
+    );
+  } else {
+    const said = {
+      done: wordToNumber(claim.done[1]),
+      total: wordToNumber(claim.done[2]),
+      progress: wordToNumber(claim.progress[1]),
+      ahead: wordToNumber(claim.ahead[1]),
+    };
+    for (const key of ["done", "total", "progress", "ahead"]) {
+      if (said[key] !== real[key]) {
+        failures.push(
+          "about.html's roadmap summary says " + key + " = " + said[key] + " but roadmap.html has " + real[key] +
+            " (done " + real.done + ", in progress " + real.progress + ", ahead " + real.ahead + ", total " + real.total +
+            "). Update the summary in the roadmap-link section.",
+        );
+      }
+    }
+  }
+}
+
 if (failures.length) {
   console.error("Content drift check FAILED:\n");
   for (const f of failures) console.error("  - " + f);
@@ -578,6 +625,7 @@ if (failures.length) {
   console.log(
     "Content drift check passed: tracked-service count, Coming Soon source lists on guide.html and " +
       "about.html, signature-genre counts, upkeep cadence against the real crons, every in-page anchor, " +
-      "and the public pages agreeing with the endpoints about who can write.",
+      "the public pages agreeing with the endpoints about who can write, and the About roadmap summary " +
+      "agreeing with roadmap.html.",
   );
 }

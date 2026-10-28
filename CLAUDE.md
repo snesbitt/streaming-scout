@@ -2279,3 +2279,17 @@ repo, not by any data check. The cause on Netlify's side (what it passes as
 whenever `CACHED_COMMIT_REF` equals `COMMIT_REF`, since an empty diff against
 the same commit proves nothing. Cost: occasional extra builds. After the push,
 confirm with `npm run check:deploy --wait` that live matches `main`.
+
+
+## 2026-10-28: About roadmap summary fixed, and a check added so it cannot drift again
+
+about.html said "Seven of eleven items are done" and listed the edit key as still
+ahead. roadmap.html had marked Protect saved changes Live on 2026-08-23, so the
+real count is eight done, one in progress, two ahead. The lede also said the edit
+key was "not built yet". Both sentences were written before Phase 7 shipped and
+never updated. Nothing compared About's summary with the roadmap, so it stayed
+wrong for two months. Fixed both sentences. Added Check 7 to
+scripts/check-content-drift.mjs: it counts the status pills on roadmap.html and
+fails if About's "N of M items are done / in progress / still ahead" disagrees.
+Tested against the old About text from HEAD: it fails with the two expected
+messages. Not pushed.
