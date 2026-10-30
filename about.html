@@ -58,14 +58,14 @@
     </nav>
 
     <div class="about-section" id="what-it-is">
-      <div class="about-section-head"><span class="about-num-badge">01</span><h3>what it is</h3></div>
+      <div class="about-section-head"><span class="about-num-badge">01</span><h2>what it is</h2></div>
       <p>It ranks what to watch next. Candidates come from Susan's own watch history, every title back to 2010, scored against the genres that keep recurring there: British and European crime drama, spy thrillers, grounded action, music documentaries, prestige drama, food and food travel, LGBTQ+ film, British period drama, neo-Western, and heist thrillers. Horror, reality dating shows, superhero franchises, and science fiction are capped no matter what else a title has going for it.</p>
       <p>BritBox, PBS Masterpiece, Apple TV+, MGM+, Paramount+ and Hulu each have their own official schedule or press page, and what turns up gets reviewed for what's coming next and badged plainly. Watch history syncs from Netflix and Prime Video only. Viewing anywhere else gets logged when Susan reports it. The page also tracks premieres months out, and whatever Susan is watching or seeing this week.</p>
       <p>Automated upkeep is spread across the week rather than being a Monday event. GitHub Actions runs the checks on Mondays, alongside a Monday report on how stale the watch log has gone. Scheduled Claude tasks cover the rest: an artwork sweep on Wednesdays, a review across all five of Susan's sites on Fridays, a freshness sweep daily, and an audit monthly. None of them rebuild the recommendations. That happens when Susan asks Claude for one, and only then.</p>
     </div>
 
     <div class="about-section" id="how-scored">
-      <div class="about-section-head"><span class="about-num-badge">02</span><h3>how it's scored</h3></div>
+      <div class="about-section-head"><span class="about-num-badge">02</span><h2>how it's scored</h2></div>
       <p>Every match percentage is worked out fresh at rebuild time, by Claude, against Susan's real watch history. No stored formula sits behind the numbers today. The rules are written down instead, and followed the same way every time.</p>
       <div class="card">
         <div class="factor-row">
@@ -86,7 +86,7 @@
     </div>
 
     <div class="about-section" id="the-stack">
-      <div class="about-section-head"><span class="about-num-badge">03</span><h3>the stack</h3></div>
+      <div class="about-section-head"><span class="about-num-badge">03</span><h2>the stack</h2></div>
       <p>Static HTML, plus two small Netlify Functions: dismiss (for the "not interested"/"finished" buttons) and status (for the currently-watching/watched buttons). Deploys via GitHub: pushing to main triggers Netlify's Git-connected continuous deployment automatically. Every push is Susan's call and runs from her own machine, with her credentials: she types most of them herself, and occasionally reviews a prepared batch and tells a Claude session to run it. No GitHub credential lives in the cloud session, and nothing pushes to main unattended. Poster artwork comes from four places: mostly The Movie Database (TMDB), plus Amazon's own image host, Wikimedia Commons, and a handful of files kept in this repo. None of them are endorsing this site.</p>
 
       <div class="stack-compare">
@@ -114,7 +114,7 @@
     </div>
 
     <div class="about-section" id="on-the-page">
-      <div class="about-section-head"><span class="about-num-badge">04</span><h3>what's on the page</h3></div>
+      <div class="about-section-head"><span class="about-num-badge">04</span><h2>what's on the page</h2></div>
       <div class="page-card-grid">
         <div class="page-card">
           <h4 class="page-card__title">Right Now</h4>
@@ -136,12 +136,12 @@
     </div>
 
     <div class="about-section" id="roadmap-link">
-      <div class="about-section-head"><span class="about-num-badge">05</span><h3>roadmap</h3></div>
+      <div class="about-section-head"><span class="about-num-badge">05</span><h2>roadmap</h2></div>
       <p>Eight of eleven items are done: the recommendations, the dashboard, the domain, the weekly upkeep, the rebuild on the full history, the backend, the corrected service list, and the edit key for the buttons. One is in progress: Hulu, whose schedules are in and whose watch history is not. Two are still ahead: a searchable view of the full watch log and a scoring formula on paper. The <a href="/roadmap" style="text-decoration:underline;">roadmap</a> groups all eleven by status, and the <a href="/guide" style="text-decoration:underline;">guide</a> covers how it gets built.</p>
     </div>
 
     <div class="about-section" id="wont-do">
-      <div class="about-section-head"><span class="about-num-badge">06</span><h3>what it won't do</h3></div>
+      <div class="about-section-head"><span class="about-num-badge">06</span><h2>what it won't do</h2></div>
       <ul class="wont-list">
         <li>Reading it requires nothing. No account, no password.</li>
         <li>Nothing here tracks you: no analytics, no advertising, no third-party scripts.</li>
