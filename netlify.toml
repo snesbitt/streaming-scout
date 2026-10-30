@@ -46,6 +46,40 @@
   status = 404
   force = true
 
+# 2026-10-30: the same exposure existed for folders the 2026-07-23 audit did
+# not list. backups/ holds a snapshot of the live watching and dismissed
+# records (viewing activity), tests/ and .github/ are internal tooling, and
+# netlify/ is Function source. None of them is linked from any page.
+[[redirects]]
+  from = "/CLAUDE_HISTORY.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/backups/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tests/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.github/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
 [[headers]]
   for = "/index.html"
   [headers.values]
