@@ -1,6 +1,6 @@
 # Streaming Log
 
-**Last updated:** 2026-10-27 (Prime Video incremental sync covering 2026-08-17 to 2026-10-27; Netflix signed out so not read. Previous update 2026-08-17: five Apple TV+ and film titles reported directly by Susan: Shrinking, Friends and Neighbors, Criminal Record, The Morning Show, the Bourne films. Apple TV+ watch-history sync is still blocked, so these are her word, which is the only route available for that service. Earlier the same day: five Top Picks marked already-seen. Later the same day: Tehran and The Greatest Night in Pop, both marked watched on-site, added after the status-drift check caught them still sitting in Top Picks. Abstract: The Art of Design was also marked watched but needed no new entry, it was already in the log from 2017 to 2019, which is the actual bug: it should never have been recommended)
+**Last updated:** 2026-11-02 (Prime Video incremental sync covering 2026-10-28 to 2026-11-02: The Gold season 2 added, MobLand season 2 extended to 2026-10-30; Netflix signed out so not read. Previous: 2026-10-27 (Prime Video incremental sync covering 2026-08-17 to 2026-10-27; Netflix signed out so not read. Previous update 2026-08-17: five Apple TV+ and film titles reported directly by Susan: Shrinking, Friends and Neighbors, Criminal Record, The Morning Show, the Bourne films. Apple TV+ watch-history sync is still blocked, so these are her word, which is the only route available for that service. Earlier the same day: five Top Picks marked already-seen. Later the same day: Tehran and The Greatest Night in Pop, both marked watched on-site, added after the status-drift check caught them still sitting in Top Picks. Abstract: The Art of Design was also marked watched but needed no new entry, it was already in the log from 2017 to 2019, which is the actual bug: it should never have been recommended))
 
 
 ## 2026-07-25 — full-history backfill note
@@ -63,13 +63,14 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 ## 2026
 
+- **The Gold (Season 2)** · Prime Video (Prime watch history 2026-10-27; synced 2026-11-02) · in progress. British crime drama based on a true story, the Brink's-Mat gold heist. Genre from general knowledge, cast not confirmed from the history page
 - **Maigret (Season 2)** · Prime Video (Prime watch history 2026-10-25 and 2026-10-27; synced 2026-10-27) · in progress. Classic detective procedural. Which Maigret adaptation this is was not confirmed from the history page
 - **War and Peace (Season 1)** · Prime Video (Prime watch history 2026-10-26; synced 2026-10-27) · in progress. Period epic miniseries, literary adaptation
 - **Mayday** · Prime Video (Prime watch history 2026-10-25; synced 2026-10-27) · watched. Film; genre not confirmed
 - **Blue Ridge: The Series** · Prime Video (Prime watch history 2026-10-25; synced 2026-10-27) · in progress. Genre not confirmed
 - **Safe** · Prime Video (rewatch, Prime watch history 2026-10-25; first logged 2024-10-14; synced 2026-10-27) · watched again
 - **The Terminal List (Season 2)** · Prime Video (Prime watch history 2026-10-24; synced 2026-10-27) · in progress. Military revenge thriller (Chris Pratt)
-- **MobLand (Season 2)** · Prime Video / Paramount+ (Prime watch history 2026-09-28 to 2026-10-23, six viewing days; synced 2026-10-27) · in progress. Crime family drama, London gangland (Tom Hardy, Pierce Brosnan, Helen Mirren)
+- **MobLand (Season 2)** · Prime Video / Paramount+ (Prime watch history 2026-09-28 to 2026-10-30, seven viewing days; last synced 2026-11-02) · in progress. Crime family drama, London gangland (Tom Hardy, Pierce Brosnan, Helen Mirren)
 - **Tenzing** · Prime Video (Prime watch history 2026-10-22; synced 2026-10-27) · watched. Film; genre not confirmed
 - **On Call (Season 1)** · Prime Video (Prime watch history 2026-10-22; synced 2026-10-27) · in progress. Police procedural, LAPD patrol drama
 - **Slow Horses (Season 6)** · Prime Video / Apple TV+ (Prime watch history 2026-10-08 to 2026-10-22, five viewing days; synced 2026-10-27) · in progress. Espionage thriller with dry comedy, MI5 exiles (Gary Oldman, Jack Lowden, Kristin Scott Thomas). Seasons 1 to 5 already loved
