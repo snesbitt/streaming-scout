@@ -63,6 +63,7 @@ No new Netflix activity since the backfill (viewing activity ends 7/14/26, all l
 
 ## 2026
 
+- **The Great British Bake Off, Collection 14** · Netflix (marked Currently watching on the site by Susan 2026-10-14; Netflix history not read, signed out) · in progress. Baking competition, Paul Hollywood and Nigella Lawson
 - **The Gold (Season 2)** · Prime Video (Prime watch history 2026-10-27; synced 2026-11-02) · in progress. British crime drama based on a true story, the Brink's-Mat gold heist. Genre from general knowledge, cast not confirmed from the history page
 - **Maigret (Season 2)** · Prime Video (Prime watch history 2026-10-25 and 2026-10-27; synced 2026-10-27) · in progress. Classic detective procedural. Which Maigret adaptation this is was not confirmed from the history page
 - **War and Peace (Season 1)** · Prime Video (Prime watch history 2026-10-26; synced 2026-10-27) · in progress. Period epic miniseries, literary adaptation
