@@ -40,7 +40,7 @@
       <div class="grid2">
         <div class="card">
           <h3 class="card-title">In Theaters</h3>
-          <div class="theater-row" data-title="Heart of the Beast">
+          <div class="theater-row" data-title="Heart of the Beast" data-opened="2026-09-25">
             <div class="poster-wrap"><div class="poster-mono">HB</div><img decoding="async" width="500" height="750" src="https://image.tmdb.org/t/p/w500/1ApfSA8JTqeha3GTFEY8syV4auq.jpg" alt="Heart of the Beast poster" onerror="this.remove()"></div>
             <div class="pick-body">
               <p class="pick-title" style="display:block;">Heart of the Beast</p>
@@ -49,7 +49,7 @@
             </div>
             <button type="button" class="row-dismiss" title="Watched: remove Heart of the Beast" aria-label="Watched: remove Heart of the Beast" onclick="ssDismiss(this)">&times;</button>
           </div>
-          <div class="theater-row" data-title="A Talent for Murder">
+          <div class="theater-row" data-title="A Talent for Murder" data-opened="2026-10-23">
             <div class="poster-wrap"><div class="poster-mono">TM</div><img decoding="async" width="500" height="750" src="https://image.tmdb.org/t/p/w500/mstDPKNKgSGFvVFVdfzeMNkcyw2.jpg" alt="A Talent for Murder poster" onerror="this.remove()"></div>
             <div class="pick-body">
               <p class="pick-title" style="display:block;">A Talent for Murder</p>
@@ -58,7 +58,7 @@
             </div>
             <button type="button" class="row-dismiss" title="Watched: remove A Talent for Murder" aria-label="Watched: remove A Talent for Murder" onclick="ssDismiss(this)">&times;</button>
           </div>
-          <div class="theater-row" data-title="Sense and Sensibility">
+          <div class="theater-row" data-title="Sense and Sensibility" data-opened="2026-10-16">
             <div class="poster-wrap"><div class="poster-mono">SS</div><img decoding="async" width="500" height="750" src="https://image.tmdb.org/t/p/w500/czsyPHosFNbh4PPqXfqWu1aBXnA.jpg" alt="Sense and Sensibility poster" onerror="this.remove()"></div>
             <div class="pick-body">
               <p class="pick-title" style="display:block;">Sense and Sensibility</p>
@@ -67,7 +67,7 @@
             </div>
             <button type="button" class="row-dismiss" title="Watched: remove Sense and Sensibility" aria-label="Watched: remove Sense and Sensibility" onclick="ssDismiss(this)">&times;</button>
           </div>
-          <div class="theater-row" data-title="Club Kid">
+          <div class="theater-row" data-title="Club Kid" data-opened="2026-11-06">
             <div class="poster-wrap"><div class="poster-mono">CK</div><img decoding="async" width="500" height="750" src="https://image.tmdb.org/t/p/w500/o1qMU0ZB5XDX8IXJFFu3AkhOqjh.jpg" alt="Club Kid poster" onerror="this.remove()"></div>
             <div class="pick-body">
               <p class="pick-title" style="display:block;">Club Kid</p>
@@ -543,6 +543,12 @@ import { isReleased, serviceLabelFromBadgeTitle, newPickScoreLabel } from './src
     // their own × button ever produces.
     document.querySelectorAll('.watching-row, .theater-row').forEach(function (row) {
       if (isDismissedFor(row.dataset.title, ['finished'])) { row.style.display = 'none'; }
+    });
+    // In Theaters: retire a row 8 weeks after its opening date (data-opened),
+    // so a film that has left cinemas never lingers on the page.
+    document.querySelectorAll('.theater-row[data-opened]').forEach(function (row) {
+      var opened = Date.parse(row.dataset.opened + 'T00:00:00');
+      if (opened && Date.now() > opened + 56 * 86400000) { row.style.display = 'none'; }
     });
     updateEmptyNotes();
   }
