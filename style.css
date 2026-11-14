@@ -3,8 +3,8 @@
 --bg-alt: #e6dfcd;
 --card: #f8f4e9;
 --ink: #2a2620;
---ink-dim: #6d675a;
---ink-faint: #706753;
+--ink-dim: #625c4f;
+--ink-faint: #665f4d;
 --border: #ddd3ba;
 --accent: #6b3a3a;
 --accent-dim: #ece0dc;
@@ -276,7 +276,7 @@ font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 
 .page-card-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0.9rem 0 0.4rem; }
 @media (min-width: 640px) { .page-card-grid { grid-template-columns: 1fr 1fr; } }
 .page-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 0.8rem 0.95rem; }
-.page-card__title { margin: 0 0 4px; font-size: 13px; }
+.page-card .page-card__title { margin: 0 0 4px; font-size: 13px; }
 .page-card__desc { margin: 0; font-size: 12px; color: var(--ink-dim); }
 
 /* This site vs. where it's headed comparison -- Streaming-Scout-specific,
@@ -286,9 +286,9 @@ font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 
 .stack-col { border-radius: 8px; padding: 0.9rem 1rem; }
 .stack-col.this-site { background: #e2e6ec; border: 1px solid #6d7e93; }
 .stack-col.siblings { background: var(--card); border: 1px solid var(--border); }
-.stack-col h4 { margin: 0 0 6px; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; }
-.stack-col.this-site h4 { color: #3d4a58; }
-.stack-col.siblings h4 { color: var(--ink-dim); }
+.stack-col h3 { margin: 0 0 6px; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+.stack-col.this-site h3 { color: #3d4a58; }
+.stack-col.siblings h3 { color: var(--ink-dim); }
 .stack-col ul { margin: 0; padding-left: 16px; font-size: 12px; color: var(--ink); }
 .stack-col li { margin-bottom: 3px; }
 
@@ -335,7 +335,7 @@ figure.diagram figcaption { font-family: var(--sans); font-size: 12px; letter-sp
 @media (min-width: 640px) { .next-grid { grid-template-columns: 1fr 1fr; } }
 .next-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 0.8rem 0.95rem; }
 .next-card__n { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); font-size: 13px; }
-.next-card h4 { margin: 2px 0 4px; font-size: 13px; }
+.next-card h3 { margin: 2px 0 4px; font-size: 13px; }
 .next-card p { margin: 0; font-size: 12px; color: var(--ink-dim); }
 
 .need-list { list-style: none; padding: 0; margin: 0 0 1.7rem; }
@@ -404,3 +404,12 @@ nav.links { gap: 4px 13px; }
 .pick-dismiss, .pick-watching, .pick-watched, .row-dismiss { min-height: 44px; }
 /* A sticky header with a 44px link row takes a fifth of a phone screen. Pin it only where there is room. */
 @media (max-width: 639px) { header.site-nav { position: static; } }
+
+/* ---- 2026-11-14 audit: iPhone safe areas ---- */
+/* viewport-fit=cover lets the page run under the notch and home bar, so pad
+   the edges that touch the screen. The toast sits at the bottom edge. */
+.wrap, .nav-inner { padding-left: max(1.1rem, env(safe-area-inset-left)); padding-right: max(1.1rem, env(safe-area-inset-right)); }
+@media (min-width: 640px) { .wrap, .nav-inner { padding-left: max(1.5rem, env(safe-area-inset-left)); padding-right: max(1.5rem, env(safe-area-inset-right)); } }
+.ss-toast { bottom: calc(18px + env(safe-area-inset-bottom)); }
+footer.site-footer { padding-bottom: calc(2.2rem + env(safe-area-inset-bottom)); }
+@media (min-width: 640px) { footer.site-footer { padding-bottom: calc(3rem + env(safe-area-inset-bottom)); } }

@@ -124,15 +124,15 @@ boundary between the two.
   colors and were deliberately darkened to clear WCAG AA (4.5:1) against
   both `--bg` and `--card` — don't lighten them back toward the original
   values without rechecking contrast.
-- `netlify/functions/dismiss.mjs` — one of two backend Functions. Open
-  GET/POST/DELETE, no auth, by design (nothing sensitive in a "not
-  interested" flag, same rationale as Vinyl Scout's wishlist API) but
-  bounded: a 200-char cap on `title`/`section`, and the Blobs list evicts
+- `netlify/functions/dismiss.mjs` — one of two backend Functions. GET is
+  open; POST and DELETE need an `X-Edit-Key` header matching the site's
+  `EDIT_SECRET` (roadmap phase 8, shipped 2026-08-23) and fail closed with a
+  500 if that variable is unset. Bounded as well: a 200-char cap on `title`/`section`, and the Blobs list evicts
   its oldest entry once it would exceed 500. Backed by a Netlify Blobs
   store named `dismissed-titles`.
-- `netlify/functions/status.mjs` — added 2026-07-29. Same open,
-  bounded design as dismiss.mjs above (200-char field cap, 500-entry FIFO
-  Blobs list, no auth), in its own store (`title-status`) since a watch
+- `netlify/functions/status.mjs` — added 2026-07-29. Same
+  design as dismiss.mjs above (open GET, edit-key writes, 200-char field cap,
+  500-entry FIFO Blobs list), in its own store (`title-status`) since a watch
   status is a different signal than a dismissal. Tracks `watching`/
   `watched` per title so the Currently Watching (▶) and Watched (✓)
   buttons next to every pick sync across devices. Also does not touch

@@ -38,12 +38,13 @@ As of 2026-07-16 this repo is connected to GitHub, and Netlify is
 configured for Git-connected continuous deployment: pushes to `main`
 auto-deploy, the same governance model as thefitnesslog.org and
 vinylscout.org. As of 2026-07-17 the first real backend Function is
-shipped: `netlify/functions/dismiss.mjs`, an open GET/POST/DELETE
-endpoint (no edit key, same rationale as vinyl-scout's wishlist API:
-nothing sensitive in a "not interested" flag, and a passphrase on mobile
-isn't practical for a list this casual) backed by a Netlify Blobs store
-called `dismissed-titles`. On 2026-07-20 the Function was hardened without
-changing that no-auth design: a 200-character cap on `title`/`section`
+shipped: `netlify/functions/dismiss.mjs`, a GET/POST/DELETE endpoint backed
+by a Netlify Blobs store called `dismissed-titles`. It launched open, with
+no edit key. Since the "Protect saved changes" phase (roadmap phase 8) reads
+are still open, but POST and DELETE need the `X-Edit-Key` header to match the
+site's `EDIT_SECRET`, and fail closed (500) if that variable is unset.
+`status.mjs` works the same way. On 2026-07-20 the Function was also
+hardened: a 200-character cap on `title`/`section`
 rejects oversized input, and the stored list evicts its oldest entry
 (FIFO) once a new dismissal would push it past 500, so an open,
 unauthenticated POST can't grow the store without bound. `index.html`'s
@@ -76,7 +77,7 @@ imports from this module rather than duplicating the logic, so the tested
 code and the live code are the same code, not two copies that can drift
 apart.
 
-Run `npm test`: fifteen steps in all. 15 logic assertions
+Run `npm test`: seventeen steps in all. 15 logic assertions
 (`tests/logic.test.mjs`, no network, no DOM), 27 concurrency assertion
 groups covering both Netlify Functions
 (`tests/blobs-concurrency.test.mjs`, added 2026-08-17, runs the real
@@ -95,7 +96,9 @@ accounted for), and 14 watched-drift assertion groups
 (`tests/watched-drift.test.mjs`, covering the tick button's own
 record-and-remove path, including the season-range logic that decides
 whether a later season of an already-logged show still counts as
-unwatched). Then ten offline static checks, added over time: content drift
+unwatched). Two more suites cover the Functions' requests and edit-key
+writes (`tests/request-contract.test.mjs` and `tests/write-auth.test.mjs`).
+Then ten offline static checks, added over time: content drift
 (`scripts/check-content-drift.mjs`, About page's tracked-service count vs.
 `data/STREAMING_PROFILE.md`), a tap-target regression guard
 (`scripts/check-tap-targets.mjs`, added 2026-08-16, confirms the
@@ -135,10 +138,10 @@ where those actually run.
 
 ## GitHub Actions / CI (added 2026-08-16, extending the 2026-08-07/08-14 work)
 
-`.github/workflows/test.yml` runs six jobs:
+`.github/workflows/test.yml` runs seven jobs:
 
 - **`test`**: on every push and pull request, plus a weekly cron.
-  `npm ci && npm test`, all fifteen offline steps above. This is the only
+  `npm ci && npm test`, all seventeen offline steps above. This is the only
   job that runs on push/PR. The five below are schedule/
   `workflow_dispatch`-only so they never race Netlify's deploy (see the
   workflow file's own comments for why that matters, confirmed the hard
@@ -149,6 +152,10 @@ where those actually run.
   reachable and validating input, and, added 2026-08-16, every Currently
   Watching row has real poster art wired in rather than the monogram
   fallback. Opens/updates a tracking GitHub issue on failure.
+- **`deploy-fresh`**: weekly + on-demand, after `test`. Fetches the live
+  pages and compares each one with the same file in this commit
+  (`scripts/check-deploy-fresh.mjs`), so a deploy that built but never
+  published is caught. Opens or updates a tracking issue on failure.
 - **`status-drift`**: weekly + on-demand. Checks whether anything marked
   "watching" live via `/api/status` is missing a matching static
   `.watching-row` in `index.html` (the exact gap behind two real bugs,
