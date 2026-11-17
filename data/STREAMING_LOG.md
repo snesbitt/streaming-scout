@@ -1125,3 +1125,5 @@ for anything.
 
 - **Animals** · service not recorded (cleared via the on-site tick button, 2026-10-14, auto-synced by CI) · already seen, watch date unknown
 - **Slow Horses, season 6** · New (cleared via the on-site tick button, 2026-10-24, auto-synced by CI) · already seen, watch date unknown
+
+- **The Diplomat, season 4** · Netflix (cleared via the on-site tick button, 2026-11-09, auto-synced by CI) · already seen, watch date unknown
