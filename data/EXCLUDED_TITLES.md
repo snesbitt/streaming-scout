@@ -96,3 +96,6 @@ Currently Watching mean finished, not disliked.
 - **Omnivore** - Top Picks - dismissed on-site 2026-10-14
 - **Slow Horses, season 6** - Currently Watching - dismissed on-site 2026-10-16
 - **MobLand, season 2** - Currently Watching - dismissed on-site 2026-10-24
+
+- **Neagley** — Currently Watching — dismissed on-site 2026-11-09 (auto-synced by CI)
+- **American Hostage** — Currently Watching — dismissed on-site 2026-11-09 (auto-synced by CI)
