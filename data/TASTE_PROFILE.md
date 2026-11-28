@@ -1,7 +1,42 @@
 # Taste Profile
 
 **Derived from:** STREAMING_LOG.md (auto-generated — do not hand-edit)
-**Last updated:** 2026-10-27 (Prime Video sync summary added at the top. Previous update 2026-08-17: six stated interests recorded from Susan directly, held separately from the log-derived veins because none is anchored to a logged title yet; science fiction added to Patterns to Avoid at her request; five already-seen titles folded into the log the same day. Prior update 2026-08-16, Prime sync of Aug 7 to Aug 15)
+**Last updated:** 2026-11-27 (Netflix and Prime Video sync summary added at the top. Previous: 2026-10-27, Prime Video sync summary. Previous update 2026-08-17: six stated interests recorded from Susan directly, held separately from the log-derived veins because none is anchored to a logged title yet; science fiction added to Patterns to Avoid at her request; five already-seen titles folded into the log the same day. Prior update 2026-08-16, Prime sync of Aug 7 to Aug 15)
+
+## 2026-11-27 sync: what the Netflix and Prime Video catch-up changed
+
+Netflix was signed in this time, so it was read for the first time since the
+July backfill (2026-07-14 to 2026-11-15). Prime Video was read for 2026-11-03 to
+2026-11-27. Sixteen log entries, several of them rewatches. No vein changes rank.
+
+**Vein 2 (spy) is the most active vein.** The Diplomat S4 (six of eight
+episodes in three days), Black Doves S2 (all six episodes in two days), Kill
+Jackie S1, The Red Sea Diving Resort, and Casino Royale and No Time to Die as
+rewatches. Spy stays at 0.95 behind vein 1 only because vein 1 rests on sixteen
+years; by current viewing, spy leads.
+
+**Three stated interests now have anchors.** Under "Stated Interests" below:
+- History and politics: Irena's Vow, Denial (a rewatch) and The Red Sea Diving
+  Resort, all true-story WWII and Holocaust-adjacent or political rescue drama.
+- Art, design and architecture: Avedon, a maker-led photography documentary.
+  This fits the maker-led reading recorded on 2026-08-17.
+- Foreign-language drama, and live performance and arts: Belcanto, an Italian
+  period drama about opera. One title serves both.
+Each is one or two titles, so they stay at 0.5 for now; a second title on the
+next sync is the test.
+
+**The cosy Christie sub-branch is not dead.** Agatha Christie's Tommy &
+Tuppence was dismissed from Coming Soon on 2026-08-17 and then watched on two
+days in November. Together with Maigret S2 and Marble Hall Murders, that is
+mixed signal on the cosy end. Do not demote it further; hold it where it is.
+
+**Vein 3 and vein 8, light touches.** The Bank Job (rewatch) and Kill Jackie
+feed vein 3. Dangerous Liaisons S1 (six episodes) feeds vein 8, but it was also
+dismissed from Top Picks on 2026-11-23, nine days after that viewing. Read that
+as "already watching, stop offering", per the caveat under Negative signal.
+
+**Actor affinity:** Daniel Craig moves from 0.55 to 0.6 on two Bond rewatches
+in one week. Keri Russell / Matthew Rhys holds at 0.8 on The Diplomat S4.
 
 ## 2026-10-27 sync: what the Prime Video catch-up changed
 
@@ -261,7 +296,7 @@ Weights reflect repeated, completed viewing across multiple titles in the log.
   bare request, and fits the existing grounded-thriller action taste
   (Statham, Neeson) rather than the superhero/franchise pattern flagged
   below as thin.
-- **Daniel Craig** (0.55) — complete Craig-era Bond + Knives Out ×2
+- **Daniel Craig** (0.6, up from 0.55 on 2026-11-27) — complete Craig-era Bond + Knives Out ×2, plus Casino Royale and No Time to Die rewatched in November 2026
 - **Jennifer Saunders / UK ensemble regulars** (0.5) — Getting On (complete,
   July 2026), Motherland, Douglas is Cancelled
 - **Robin Wright / Kevin Spacey-era HoC ensemble** (0.45) — historic (House of
